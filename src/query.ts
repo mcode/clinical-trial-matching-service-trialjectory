@@ -43,8 +43,8 @@ export function createClinicalTrialLookup(
     patientBundle: fhir.Bundle
   ): Promise<SearchSet> {
     // Create the query based on the patient bundle:
-    const query = new APIQuery(patientBundle);
-    // And send the query to the server
+    const query = JSON.stringify(patientBundle, null, 2); //new APIQuery(patientBundle);
+    // And send the query to the server - For now, the full patient bundle is the query
     return sendQuery(endpoint, query, bearerToken, ctgService);
   };
 }
@@ -61,7 +61,38 @@ type QueryRequest = string;
  * TO-DO: Fill this out to match your implementation
  */
 export interface QueryTrial extends Record<string, unknown> {
-  name: string;
+  main_objectives: string[];
+  treatment_administration_type: string[];
+  nct_number: string;
+  title: string;
+  first_submitted: string;
+  locations: string;
+  url: string;
+  phases: string;
+  enrollment: number;
+  study_type: string;
+  control_type: string;
+  contact_name: string;
+  contact_phone: string;
+  contact_email: string;
+  brief_summary: string;
+  groups: string[];
+  countries: string[];
+  states: string[];
+  cities: string[];
+  closest_facility: TJFacility;
+}
+
+export interface TJFacility extends Record<string, string | number> {
+  facility_name: string;
+  facility_status: string;
+  facility_country: string;
+  facility_state: string;
+  facility_city: string;
+  facility_zip: string;
+  lat: number;
+  lng: number;
+  formatted_address: string;
 }
 
 /**
