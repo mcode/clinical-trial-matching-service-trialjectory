@@ -3,7 +3,7 @@
  * the underlying service to the FHIR ResearchStudy type.
  */
 
-import { ResearchStudy } from 'clinical-trial-matching-service';
+import { fhir, ResearchStudy } from 'clinical-trial-matching-service';
 import { QueryTrial, TJFacility } from './query';
 
 export const phaseCodeMap = new Map<string, string>([
@@ -37,7 +37,7 @@ function convertArrayToObjective(trialStringArray: string[]): fhir.Objective[] {
 export function convertToResearchStudy(trial: QueryTrial, id: number): ResearchStudy {
   const result = new ResearchStudy(id);
   // Add whatever fields can be added here, for example:
-  //result.status = 'active';
+  result.status = 'active'; // default
 
   if (trial.title) {
     result.title = trial.title;
@@ -79,7 +79,7 @@ export function convertToResearchStudy(trial: QueryTrial, id: number): ResearchS
   }
 
   if (trial.groups) {
-    const keywords = convertStringsToCodeableConcept(trial.groups);
+    const keywords = convertArrayToCodeableConcept(trial.groups);
     if (keywords.length > 0) result.keyword = keywords;
   }
 
@@ -91,7 +91,7 @@ export function convertToResearchStudy(trial: QueryTrial, id: number): ResearchS
     const site : TJFacility = trial.closest_facility;
     const location = result.addSite(site.facility_name);
     if (site.lat && site.lng) {
-      location.position = { latitude: site.lat, longitude: site.lng };
+      location.position = { latitude: parseFloat(site.lat), longitude: parseFloat(site.lng) };
     }
     if (site.facility_zip) {
       // Populate just enough of the address in the location

@@ -1,1 +1,52 @@
-{ }
+{
+  "main_objectives": [
+    "Extend overall survival" ],
+  "treatment_administration_type": [ "IV infusion",
+    "Oral Treatment (by mouth)"
+  ],
+  "nct_number": "NCT03371017",
+  "title": "A Study of the Efficacy and Safety of Atezolizumab Plus Chemotherapy for Patients With Early Relapsing Recurrent Triple-Negative Breast Cancer",
+  "first_submitted": "2017-12-07",
+  "url": "https://clinicaltrials.gov/ct2/show/record/NCT03371017",
+  "phases": "Phase 3",
+  "enrollment": 540,
+  "study_type": "Interventional",
+  "control_type": "Placebo",
+  "contact_name": "Reference Study ID Number: MO39193 www.roche.com/about_roche/roche_worldwide.htm",
+  "contact_phone": "888-662-6728 (U.S. and Canada)",
+  "contact_email": "global-roche-genentech-trials@gene.com",
+  "brief_summary": "This study will evaluate the efficacy and safety of atezolizumab plus chemotherapy compared with placebo plus chemotherapy in patients with inoperable recurrent triple-negative breast cancer (TNBC).",
+  "groups": [
+  "Chemotherapy",
+  "Immunotherapy" ],
+  "countries": [ "United States"],
+  "states": [
+    "Georgia",
+    "Tennessee",
+    "Missouri",
+    "Florida",
+    "Pennsylvania",
+    "Virginia",
+    "New Jersey"],
+  "cities": [
+    "Marietta",
+    "Nashville",
+    "Kansas City",
+    "Fort Myers",
+    "Saint Petersburg",
+    "Harrisburg",
+    "Falls Church",
+    "Paramus",
+    "Pittsburgh"],
+  "closest_facility": {
+  "facility_name": "Northwest Georgia Oncology Centers PC - Marietta",
+  "facility_status": "Active, not recruiting",
+  "facility_country": "United States",
+  "facility_state": "Georgia",
+  "facility_city": "Marietta",
+  "facility_zip": "30060",
+  "lat": "33.948815",
+  "lng": "-84.537945",
+  "formatted_address": "Marietta, GA 30060, USA"
+  }
+}

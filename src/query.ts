@@ -66,7 +66,7 @@ export interface QueryTrial extends Record<string, unknown> {
   nct_number: string;
   title: string;
   first_submitted: string;
-  locations: string;
+  locations?: string;
   url: string;
   phases: string;
   enrollment: number;
@@ -90,8 +90,8 @@ export interface TJFacility extends Record<string, string | number> {
   facility_state: string;
   facility_city: string;
   facility_zip: string;
-  lat: number;
-  lng: number;
+  lat: string;
+  lng: string;
   formatted_address: string;
 }
 
@@ -101,8 +101,11 @@ export interface TJFacility extends Record<string, string | number> {
  */
 export function isQueryTrial(o: unknown): o is QueryTrial {
   if (typeof o !== "object" || o === null) return false;
+  const trial = o as QueryTrial;
   // TO-DO: Make this match your format.
-  return typeof (o as QueryTrial).name === "string";
+  return (typeof trial.title === "string" &&
+      Array.isArray(trial.main_objectives)
+    );
 }
 
 // Generic type for the response data being received from the server.
@@ -299,12 +302,12 @@ export function convertResponseToSearchSet(
  */
 function sendQuery(
   endpoint: string,
-  query: APIQuery,
+  query: string, //APIQuery,
   bearerToken: string,
   ctgService?: ClinicalTrialGovService
 ): Promise<SearchSet> {
   return new Promise((resolve, reject) => {
-    const body = Buffer.from(query.toQuery(), "utf8");
+    const body = Buffer.from(query, "utf8"); //query.toQuery()
 
     const request = https.request(
       endpoint,
