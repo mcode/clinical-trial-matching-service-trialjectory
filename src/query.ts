@@ -103,8 +103,26 @@ export function isQueryTrial(o: unknown): o is QueryTrial {
   if (typeof o !== "object" || o === null) return false;
   const trial = o as QueryTrial;
   // TO-DO: Make this match your format.
-  return (typeof trial.title === "string" &&
-      Array.isArray(trial.main_objectives)
+  return (typeof trial.nct_number === "string" &&
+      typeof trial.title === "string" &&
+      typeof trial.first_submitted === "string" &&
+      (!trial.location || typeof trial.locations === "string") &&
+      typeof trial.url === "string" &&
+      typeof trial.phases === "string" &&
+      typeof trial.enrollment === "number" &&
+      typeof trial.study_type === "string" &&
+      typeof trial.control_type === "string" &&
+      typeof trial.contact_name === "string" &&
+      typeof trial.contact_phone === "string" &&
+      typeof trial.contact_email === "string" &&
+      typeof trial.brief_summary === "string" &&
+      typeof trial.closest_facility === "object" &&
+      Array.isArray(trial.main_objectives) &&
+      Array.isArray(trial.treatment_administration_type) &&
+      Array.isArray(trial.groups) &&
+      Array.isArray(trial.countries) &&
+      Array.isArray(trial.states) &&
+      Array.isArray(trial.cities)
     );
 }
 
