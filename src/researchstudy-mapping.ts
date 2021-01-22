@@ -7,7 +7,7 @@ import { fhir, ResearchStudy } from 'clinical-trial-matching-service';
 import { QueryTrial, TJFacility } from './query';
 
 export const phaseCodeMap = new Map<string, string>([
-  // this is guesswork
+  // this mapping needs to be verified
   ["N/A", "n-a"],
   ["Early Phase 1", "early-phase-1"],
   ["Phase 1", "phase-1"],
@@ -36,7 +36,6 @@ function convertArrayToObjective(trialStringArray: string[]): fhir.Objective[] {
 
 export function convertToResearchStudy(trial: QueryTrial, id: number): ResearchStudy {
   const result = new ResearchStudy(id);
-  // Add whatever fields can be added here, for example:
   result.status = 'active'; // default
 
   if (trial.title) {
@@ -47,7 +46,7 @@ export function convertToResearchStudy(trial: QueryTrial, id: number): ResearchS
     result.identifier = [{ use: 'official', system: 'http://clinicaltrials.gov', value: trial.nct_number }];
   }
 
-  if (trial.phases) { // Needs mapping
+  if (trial.phases) { // Needs mapping verified
     result.phase = {
       coding: [
         {
@@ -98,7 +97,6 @@ export function convertToResearchStudy(trial: QueryTrial, id: number): ResearchS
       location.address = { use: 'work', postalCode: site.facility_zip };
     }
   }
-  // skipped keywords and sponsor
 
   return result;
 }

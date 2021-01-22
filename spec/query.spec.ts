@@ -342,7 +342,6 @@ describe("convertResponseToSearchSet()", () => {
                            }
                          }],
       }).then((searchSet) => {
-        console.log(searchSet);
         expect(searchSet.entry.length).toEqual(1);
         expect(searchSet.entry[0].resource).toBeInstanceOf(ResearchStudy);
         expect(

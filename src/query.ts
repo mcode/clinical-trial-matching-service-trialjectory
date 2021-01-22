@@ -57,8 +57,6 @@ type QueryRequest = string;
 
 /**
  * Generic type for the trials returned.
- *
- * TO-DO: Fill this out to match your implementation
  */
 export interface QueryTrial extends Record<string, unknown> {
   main_objectives: string[];
@@ -102,7 +100,6 @@ export interface TJFacility extends Record<string, string | number> {
 export function isQueryTrial(o: unknown): o is QueryTrial {
   if (typeof o !== "object" || o === null) return false;
   const trial = o as QueryTrial;
-  // TO-DO: Make this match your format.
   return (typeof trial.nct_number === "string" &&
       typeof trial.title === "string" &&
       typeof trial.first_submitted === "string" &&
