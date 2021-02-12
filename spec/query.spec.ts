@@ -66,7 +66,7 @@ describe("isQueryTrial()", () => {
                          study_type: "Interventional",
                          control_type: "Placebo",
                          contact_name: "Reference Study ID Number: MO39193 www.roche.com/about_roche/roche_worldwide.htm",
-                         contact_phone: "888-662-6728 (U.S. and Canada)",
+                         contct_phone: "888-662-6728 (U.S. and Canada)",
                          contact_email: "global-roche-genentech-trials@gene.com",
                          brief_summary: "This study will evaluate the efficacy and safety of atezolizumab plus chemotherapy compared with placebo plus chemotherapy in patients with inoperable recurrent triple-negative breast cancer (TNBC).",
                          groups: [
@@ -304,7 +304,7 @@ describe("convertResponseToSearchSet()", () => {
                            study_type: "Interventional",
                            control_type: "Placebo",
                            contact_name: "Reference Study ID Number: MO39193 www.roche.com/about_roche/roche_worldwide.htm",
-                           contact_phone: "888-662-6728 (U.S. and Canada)",
+                           contct_phone: "888-662-6728 (U.S. and Canada)",
                            contact_email: "global-roche-genentech-trials@gene.com",
                            brief_summary: "This study will evaluate the efficacy and safety of atezolizumab plus chemotherapy compared with placebo plus chemotherapy in patients with inoperable recurrent triple-negative breast cancer (TNBC).",
                            groups: [
@@ -390,7 +390,7 @@ describe("convertResponseToSearchSet()", () => {
             study_type: "Interventional",
             control_type: "Placebo",
             contact_name: "Reference Study ID Number: MO39193 www.roche.com/about_roche/roche_worldwide.htm",
-            contact_phone: "888-662-6728 (U.S. and Canada)",
+            contct_phone: "888-662-6728 (U.S. and Canada)",
             contact_email: "global-roche-genentech-trials@gene.com",
             brief_summary: "This study will evaluate the efficacy and safety of atezolizumab plus chemotherapy compared with placebo plus chemotherapy in patients with inoperable recurrent triple-negative breast cancer (TNBC).",
             groups: [

@@ -60,7 +60,7 @@ export function convertToResearchStudy(trial: QueryTrial, id: number): ResearchS
   }
 
   if (trial.contactName) {
-    result.addContact(trial.contact_name, trial.contact_phone, trial.contact_email);
+    result.addContact(trial.contact_name, trial.contct_phone, trial.contact_email);
   }
 
   if (trial.countries) {

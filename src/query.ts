@@ -70,9 +70,9 @@ export interface QueryTrial extends Record<string, unknown> {
   enrollment: number;
   study_type: string;
   control_type: string;
-  contact_name: string;
-  contact_phone: string;
-  contact_email: string;
+  contact_name?: string;
+  contct_phone?: string;
+  contact_email?: string;
   brief_summary: string;
   groups: string[];
   countries: string[];
@@ -109,9 +109,9 @@ export function isQueryTrial(o: unknown): o is QueryTrial {
       typeof trial.enrollment === "number" &&
       typeof trial.study_type === "string" &&
       typeof trial.control_type === "string" &&
-      typeof trial.contact_name === "string" &&
-      typeof trial.contact_phone === "string" &&
-      typeof trial.contact_email === "string" &&
+      (!trial.contact_name ||  typeof trial.contact_name === "string") &&
+      (!trial.contct_phone || typeof trial.contct_phone === "string") &&
+      (!trial.contact_email || typeof trial.contact_email === "string") &&
       typeof trial.brief_summary === "string" &&
       typeof trial.closest_facility === "object" &&
       Array.isArray(trial.main_objectives) &&
@@ -125,7 +125,7 @@ export function isQueryTrial(o: unknown): o is QueryTrial {
 
 // Generic type for the response data being received from the server.
 export interface QueryResponse extends Record<string, unknown> {
-  matchingTrials: QueryTrial[];
+  trials: QueryTrial[];
 }
 
 /**
@@ -140,7 +140,7 @@ export function isQueryResponse(o: unknown): o is QueryResponse {
   // makes this type guard or the QueryResponse type sort of invalid. However,
   // the assumption is that a single unparsable trial should not cause the
   // entire response to be thrown away.
-  return Array.isArray((o as QueryResponse).matchingTrials);
+  return Array.isArray((o as QueryResponse).trials);
 }
 
 export interface QueryErrorResponse extends Record<string, unknown> {
@@ -284,7 +284,7 @@ export function convertResponseToSearchSet(
   const studies: ResearchStudy[] = [];
   // For generating IDs
   let id = 0;
-  for (const trial of response.matchingTrials) {
+  for (const trial of response.trials) {
     if (isQueryTrial(trial)) {
       studies.push(convertToResearchStudy(trial, id++));
     } else {
