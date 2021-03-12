@@ -66,7 +66,7 @@ describe("isQueryTrial()", () => {
                          study_type: "Interventional",
                          control_type: "Placebo",
                          contact_name: "Reference Study ID Number: MO39193 www.roche.com/about_roche/roche_worldwide.htm",
-                         contct_phone: "888-662-6728 (U.S. and Canada)",
+                         conatct_phone: "888-662-6728 (U.S. and Canada)",
                          contact_email: "global-roche-genentech-trials@gene.com",
                          brief_summary: "This study will evaluate the efficacy and safety of atezolizumab plus chemotherapy compared with placebo plus chemotherapy in patients with inoperable recurrent triple-negative breast cancer (TNBC).",
                          groups: [
@@ -116,11 +116,11 @@ describe("isQueryResponse()", () => {
   });
 
   it("returns true on a matching object", () => {
-    expect(isQueryResponse({ matchingTrials: [] })).toBeTrue();
-    expect(isQueryResponse({ matchingTrials: [{ name: "Trial" }] })).toBeTrue();
+    expect(isQueryResponse({ trials: [] })).toBeTrue();
+    expect(isQueryResponse({ trials: [{ name: "Trial" }] })).toBeTrue();
     // Currently this is true. It may make sense to make it false, but for now,
     // a single invalid trial does not invalidate the array.
-    expect(isQueryResponse({ matchingTrials: [{ invalid: true }] })).toBeTrue();
+    expect(isQueryResponse({ trials: [{ invalid: true }] })).toBeTrue();
   });
 });
 
@@ -289,7 +289,7 @@ describe("convertResponseToSearchSet()", () => {
   it("converts trials", () => {
     return expectAsync(
       convertResponseToSearchSet({
-        matchingTrials: [{
+        trials: [{
                            main_objectives: [
                              "Extend overall survival" ],
                            treatment_administration_type: [ "IV infusion",
@@ -304,7 +304,7 @@ describe("convertResponseToSearchSet()", () => {
                            study_type: "Interventional",
                            control_type: "Placebo",
                            contact_name: "Reference Study ID Number: MO39193 www.roche.com/about_roche/roche_worldwide.htm",
-                           contct_phone: "888-662-6728 (U.S. and Canada)",
+                           conatct_phone: "888-662-6728 (U.S. and Canada)",
                            contact_email: "global-roche-genentech-trials@gene.com",
                            brief_summary: "This study will evaluate the efficacy and safety of atezolizumab plus chemotherapy compared with placebo plus chemotherapy in patients with inoperable recurrent triple-negative breast cancer (TNBC).",
                            groups: [
@@ -353,10 +353,10 @@ describe("convertResponseToSearchSet()", () => {
 
   it("skips invalid trials", () => {
     const response: QueryResponse = {
-      matchingTrials: [],
+      trials: [],
     };
     // Push on an invalid object
-    response.matchingTrials.push(({
+    response.trials.push(({
       invalidObject: true,
     } as unknown) as QueryTrial);
     return expectAsync(convertResponseToSearchSet(response)).toBeResolved();
@@ -375,7 +375,7 @@ describe("convertResponseToSearchSet()", () => {
     return expectAsync(
       convertResponseToSearchSet(
         {
-          matchingTrials: [{
+          trials: [{
             main_objectives: [
               "Extend overall survival" ],
             treatment_administration_type: [ "IV infusion",
@@ -390,7 +390,7 @@ describe("convertResponseToSearchSet()", () => {
             study_type: "Interventional",
             control_type: "Placebo",
             contact_name: "Reference Study ID Number: MO39193 www.roche.com/about_roche/roche_worldwide.htm",
-            contct_phone: "888-662-6728 (U.S. and Canada)",
+            conatct_phone: "888-662-6728 (U.S. and Canada)",
             contact_email: "global-roche-genentech-trials@gene.com",
             brief_summary: "This study will evaluate the efficacy and safety of atezolizumab plus chemotherapy compared with placebo plus chemotherapy in patients with inoperable recurrent triple-negative breast cancer (TNBC).",
             groups: [
@@ -467,7 +467,7 @@ describe("ClinicalTrialLookup", () => {
   });
 
   it("generates a request", () => {
-    mockRequest.reply(200, { matchingTrials: [] });
+    mockRequest.reply(200, { trials: [] });
     return expectAsync(matcher(patientBundle)).toBeResolved();
   });
 

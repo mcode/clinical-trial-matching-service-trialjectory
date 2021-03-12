@@ -71,7 +71,7 @@ export interface QueryTrial extends Record<string, unknown> {
   study_type: string;
   control_type: string;
   contact_name?: string;
-  contct_phone?: string;
+  conatct_phone?: string;
   contact_email?: string;
   brief_summary: string;
   groups: string[];
@@ -110,7 +110,7 @@ export function isQueryTrial(o: unknown): o is QueryTrial {
       typeof trial.study_type === "string" &&
       typeof trial.control_type === "string" &&
       (!trial.contact_name ||  typeof trial.contact_name === "string") &&
-      (!trial.contct_phone || typeof trial.contct_phone === "string") &&
+      (!trial.conatct_phone || typeof trial.conatct_phone === "string") &&
       (!trial.contact_email || typeof trial.contact_email === "string") &&
       typeof trial.brief_summary === "string" &&
       typeof trial.closest_facility === "object" &&
@@ -330,8 +330,9 @@ function sendQuery(
         method: "POST",
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
-          "Content-Length": body.byteLength.toString(),
-          Authorization: "Bearer " + bearerToken,
+          //"Content-Length": body.byteLength.toString(),
+          "User-Agent": "Clinical-Trial-Matching-Wrapper"
+          //Authorization: "Bearer " + bearerToken,
         },
       },
       (result) => {
@@ -382,7 +383,7 @@ function sendQuery(
 
     request.on("error", (error) => reject(error));
 
-    request.write(body);
+    //request.write(body);
     request.end();
   });
 }

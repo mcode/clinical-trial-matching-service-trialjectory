@@ -59,8 +59,8 @@ export function convertToResearchStudy(trial: QueryTrial, id: number): ResearchS
     };
   }
 
-  if (trial.contactName) {
-    result.addContact(trial.contact_name, trial.contct_phone, trial.contact_email);
+  if (trial.contact_name) {
+    result.addContact(trial.contact_name, trial.conatct_phone, trial.contact_email);
   }
 
   if (trial.countries) {
