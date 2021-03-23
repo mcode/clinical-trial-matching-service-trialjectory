@@ -4,7 +4,7 @@
  */
 
 import {
-  ClinicalTrialGovService,
+  ClinicalTrialsGovService,
   fhir,
   ResearchStudy,
 } from "clinical-trial-matching-service";
@@ -364,7 +364,7 @@ describe("convertResponseToSearchSet()", () => {
 
   it("uses the backup service if provided", () => {
     // Note that we don't initialize the backup service so no files are created
-    const backupService = new ClinicalTrialGovService("temp");
+    const backupService = new ClinicalTrialsGovService("temp");
     // Instead we install a spy that takes over "updating" the research studies
     // by doing nothing
     const spy = spyOn(backupService, "updateResearchStudies").and.callFake(

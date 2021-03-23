@@ -6,7 +6,7 @@ import https from "https";
 import { IncomingMessage } from "http";
 import {
   fhir,
-  ClinicalTrialGovService,
+  ClinicalTrialsGovService,
   ServiceConfiguration,
   ResearchStudy,
   SearchSet,
@@ -22,13 +22,13 @@ export interface QueryConfiguration extends ServiceConfiguration {
  * Create a new matching function using the given configuration.
  *
  * @param configuration the configuration to use to configure the matcher
- * @param ctgService an optional ClinicalTrialGovService which can be used to
+ * @param ctgService an optional ClinicalTrialsGovService which can be used to
  *     update the returned trials with additional information pulled from
  *     ClinicalTrials.gov
  */
 export function createClinicalTrialLookup(
   configuration: QueryConfiguration,
-  ctgService?: ClinicalTrialGovService
+  ctgService?: ClinicalTrialsGovService
 ): (patientBundle: fhir.Bundle) => Promise<SearchSet> {
   // Raise errors on missing configuration
   if (typeof configuration.endpoint !== "string") {
@@ -272,13 +272,13 @@ export class APIQuery {
  * Convert a query response into a search set.
  *
  * @param response the response object
- * @param ctgService an optional ClinicalTrialGovService which can be used to
+ * @param ctgService an optional ClinicalTrialsGovService which can be used to
  *     update the returned trials with additional information pulled from
  *     ClinicalTrials.gov
  */
 export function convertResponseToSearchSet(
   response: QueryResponse,
-  ctgService?: ClinicalTrialGovService
+  ctgService?: ClinicalTrialsGovService
 ): Promise<SearchSet> {
   // Our final response
   const studies: ResearchStudy[] = [];
@@ -311,7 +311,7 @@ export function convertResponseToSearchSet(
  * @param query the query to send
  * @param bearerToken the bearer token to send along with the query to
  *     authenticate with the service
- * @param ctgService an optional ClinicalTrialGovService which can be used to
+ * @param ctgService an optional ClinicalTrialsGovService which can be used to
  *     update the returned trials with additional information pulled from
  *     ClinicalTrials.gov
  */
@@ -319,7 +319,7 @@ function sendQuery(
   endpoint: string,
   query: string, //APIQuery,
   bearerToken: string,
-  ctgService?: ClinicalTrialGovService
+  ctgService?: ClinicalTrialsGovService
 ): Promise<SearchSet> {
   return new Promise((resolve, reject) => {
     const body = Buffer.from(query, "utf8"); //query.toQuery()

@@ -3,7 +3,7 @@
 import createClinicalTrialLookup, { QueryConfiguration } from "./query";
 import ClinicalTrialMatchingService, {
   configFromEnv,
-  createClinicalTrialGovService,
+  createClinicalTrialsGovService,
 } from "clinical-trial-matching-service";
 import * as dotenv from "dotenv-flow";
 import * as path from "path";
@@ -37,9 +37,9 @@ export default async function startServer(
     configuration = configFromEnv("MATCHING_SERVICE_");
   }
 
-  // Create a ClinicalTrialGovService. It takes a path to a temporary directory
+  // Create a ClinicalTrialsGovService. It takes a path to a temporary directory
   // that is used to store its cache.
-  const ctgService = await createClinicalTrialGovService(
+  const ctgService = await createClinicalTrialsGovService(
     path.resolve(__dirname, "../ctgov-cache")
   );
   const getMatchingClinicalTrials = createClinicalTrialLookup(
