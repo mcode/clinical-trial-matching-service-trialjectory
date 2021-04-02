@@ -12,6 +12,7 @@ import {
   SearchSet,
 } from "clinical-trial-matching-service";
 import convertToResearchStudy from "./researchstudy-mapping";
+import * as mcode from './mcode';
 
 export interface QueryConfiguration extends ServiceConfiguration {
   endpoint?: string;
@@ -44,6 +45,8 @@ export function createClinicalTrialLookup(
   ): Promise<SearchSet> {
     // Create the query based on the patient bundle:
     const query = JSON.stringify(patientBundle, null, 2); //new APIQuery(patientBundle);
+    const extractedMCODE = new mcode.ExtractedMCODE(patientBundle);
+    console.log(extractedMCODE);
     // And send the query to the server - For now, the full patient bundle is the query
     return sendQuery(endpoint, query, bearerToken, ctgService);
   };
@@ -234,6 +237,7 @@ export class APIQuery {
         this.addCondition(resource);
       }
       // TO-DO Extract any additional resources that you defined
+
     }
   }
 
@@ -330,8 +334,12 @@ function sendQuery(
         method: "POST",
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
-          //"Content-Length": body.byteLength.toString(),
-          "User-Agent": "Clinical-Trial-Matching-Wrapper"
+          "Content-Length": body.byteLength.toString(),
+          "User-Agent": "Clinical-Trial-Matching-Wrapper",
+          "Cache-Control": "no-cache",
+          "Connection": "keep-alive",
+          "Accept": "*/*",
+          "Accept-Encoding": "gzip, deflate, br"
           //Authorization: "Bearer " + bearerToken,
         },
       },
