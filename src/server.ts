@@ -25,6 +25,7 @@ import * as path from "path";
 export default async function startServer(
   configuration?: QueryConfiguration
 ): Promise<ClinicalTrialMatchingService> {
+  console.log("TEST");
   // Use dotenv-flow to load local configuration from .env files
   dotenv.config({
     // The environment variable to use to set the environment

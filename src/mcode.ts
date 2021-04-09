@@ -368,6 +368,7 @@ export class ExtractedMCODE {
     return false;
   }
 
+  /*
   // Get Tumor Marker Values.
   getTumorMarkerValue(): string[] {
 
@@ -410,7 +411,7 @@ export class ExtractedMCODE {
       // NOTE: ER+ check always uses 1 as the matric parameter by default.
       tumorMarkerArray.push('er+');
     }
-    
+
     if (this.tumorMarker.some((tm) => this.isRBPositive(tm, 50))) {
       // NOTE: RB+ check always uses 50 as the matric parameter by default.
       tumorMarkerArray.push('rb+');
@@ -757,4 +758,5 @@ export class ExtractedMCODE {
       return '';
     }
   }
+  */
  }

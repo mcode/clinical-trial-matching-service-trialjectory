@@ -44,9 +44,9 @@ export function createClinicalTrialLookup(
     patientBundle: fhir.Bundle
   ): Promise<SearchSet> {
     // Create the query based on the patient bundle:
-    const query = JSON.stringify(patientBundle, null, 2); //new APIQuery(patientBundle);
-    const extractedMCODE = new mcode.ExtractedMCODE(patientBundle);
-    console.log(extractedMCODE);
+    console.log("about to make query");
+    const query = new APIQuery(patientBundle); // JSON.stringify(patientBundle, null, 2);
+    console.log("about to send the query");
     // And send the query to the server - For now, the full patient bundle is the query
     return sendQuery(endpoint, query, bearerToken, ctgService);
   };
@@ -204,14 +204,23 @@ export class APIQuery {
   /**
    * A set of conditions.
    */
-  conditions: { code: string; system: string }[] = [];
+  //conditions: { code: string; system: string }[] = [];
   // TO-DO Add any additional fields which need to be extracted from the bundle to construct query
-
+  biomarkers: string[];
+  stage: string;
+  cancerType: string;
+  cancerSubType: string;
+  ecog: number;
+  karnofsky: number;
+  medications: string[];
+  metastisis: string[];
+  age: number;
   /**
    * Create a new query object.
    * @param patientBundle the patient bundle to use for field values
    */
-  constructor(patientBundle: fhir.Bundle) {
+  constructor(patientBundle: fhir.Bundle) { // this goes through the patient bundle twice - should be revised
+    console.log("making API QUERY");
     for (const entry of patientBundle.entry) {
       if (!("resource" in entry)) {
         // Skip bad entries
@@ -233,12 +242,24 @@ export class APIQuery {
         }
       }
       // Gather all conditions the patient has
-      if (resource.resourceType === "Condition") {
-        this.addCondition(resource);
-      }
+      //if (resource.resourceType === "Condition") {
+      //  this.addCondition(resource);
+      //}
       // TO-DO Extract any additional resources that you defined
 
     }
+
+    const extractedMCODE = new mcode.ExtractedMCODE(patientBundle);
+    console.log(extractedMCODE);
+    this.biomarkers = [];
+    this.stage = "";
+    this.cancerType = "";
+    this.cancerSubType = "";
+    this.ecog = 0;
+    this.karnofsky = 0;
+    this.medications = [];
+    this.metastisis = [];
+    this.age = 0;
   }
 
   /**
@@ -246,11 +267,11 @@ export class APIQuery {
    * implementation may pull out specific data.
    * @param condition the condition to add
    */
-  addCondition(condition: fhir.Condition): void {
-    for (const coding of condition.code.coding) {
-      this.conditions.push(coding);
-    }
-  }
+  //addCondition(condition: fhir.Condition): void {
+  //  for (const coding of condition.code.coding) {
+  //    this.conditions.push(coding);
+  //  }
+  //}
 
   /**
    * Create the information sent to the server.
@@ -262,7 +283,16 @@ export class APIQuery {
       distance: this.travelRadius,
       phase: this.phase,
       status: this.recruitmentStatus,
-      conditions: this.conditions,
+      biomarkers: this.biomarkers,
+      stage: this.stage,
+      cancerType: this.cancerType,
+      cancerSubType: this.cancerSubType,
+      ecog: this.ecog,
+      karnofsky: this.karnofsky,
+      medications: this.medications,
+      metastisis: this.metastisis,
+      age: this.age
+      //conditions: this.conditions,
     });
   }
 
@@ -321,12 +351,14 @@ export function convertResponseToSearchSet(
  */
 function sendQuery(
   endpoint: string,
-  query: string, //APIQuery,
+  query: APIQuery, //string,
   bearerToken: string,
   ctgService?: ClinicalTrialsGovService
 ): Promise<SearchSet> {
   return new Promise((resolve, reject) => {
-    const body = Buffer.from(query, "utf8"); //query.toQuery()
+    const body = Buffer.from(query.toQuery(), "utf8"); //query.toQuery()
+    console.log("QUERY");
+    console.log(query.toQuery());
 
     const request = https.request(
       endpoint,
@@ -336,10 +368,10 @@ function sendQuery(
           "Content-Type": "application/json; charset=UTF-8",
           "Content-Length": body.byteLength.toString(),
           "User-Agent": "Clinical-Trial-Matching-Wrapper",
-          "Cache-Control": "no-cache",
-          "Connection": "keep-alive",
-          "Accept": "*/*",
-          "Accept-Encoding": "gzip, deflate, br"
+          //"Cache-Control": "no-cache",
+          //"Connection": "keep-alive",
+          //"Accept": "*/*",
+          //"Accept-Encoding": "gzip, deflate, br"
           //Authorization: "Bearer " + bearerToken,
         },
       },
@@ -391,7 +423,7 @@ function sendQuery(
 
     request.on("error", (error) => reject(error));
 
-    //request.write(body);
+    request.write(body);
     request.end();
   });
 }
