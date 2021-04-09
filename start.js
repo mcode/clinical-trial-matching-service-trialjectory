@@ -4,7 +4,7 @@
 // not intended to do any heavy lifting, this script is solely intended to be
 // executable to start the server.
 
-require('./dist/server').default().catch((error) => {
+require('./dist/src/server').default().catch((error) => {
   console.error('Unable to start server: %s', error);
   console.error(error);
 });

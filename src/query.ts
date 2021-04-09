@@ -44,9 +44,7 @@ export function createClinicalTrialLookup(
     patientBundle: fhir.Bundle
   ): Promise<SearchSet> {
     // Create the query based on the patient bundle:
-    console.log("about to make query");
     const query = new APIQuery(patientBundle); // JSON.stringify(patientBundle, null, 2);
-    console.log("about to send the query");
     // And send the query to the server - For now, the full patient bundle is the query
     return sendQuery(endpoint, query, bearerToken, ctgService);
   };
@@ -220,7 +218,6 @@ export class APIQuery {
    * @param patientBundle the patient bundle to use for field values
    */
   constructor(patientBundle: fhir.Bundle) { // this goes through the patient bundle twice - should be revised
-    console.log("making API QUERY");
     for (const entry of patientBundle.entry) {
       if (!("resource" in entry)) {
         // Skip bad entries
@@ -259,7 +256,7 @@ export class APIQuery {
     this.karnofsky = 0;
     this.medications = [];
     this.metastisis = [];
-    this.age = 0;
+    this.age = extractedMCODE.getAgeValue();
   }
 
   /**

@@ -368,6 +368,20 @@ export class ExtractedMCODE {
     return false;
   }
 
+  // Age
+  getAgeValue(): number {
+    if (this.birthDate == 'NA' || this.birthDate == null || this.birthDate == undefined) {
+      return null;
+    }
+    // Birthdate is in format: '1966-08-03'
+    const today: Date = new Date();
+    const checkDate: Date = new Date(this.birthDate);
+    // Time Difference (Milliseconds)
+    const millisecondsAge = today.getTime() - checkDate.getTime();
+    const milliseconds1Years = 1000 * 60 * 60 * 24 * 365;
+    return Math.round(millisecondsAge / milliseconds1Years);
+  }
+
   /*
   // Get Tumor Marker Values.
   getTumorMarkerValue(): string[] {
