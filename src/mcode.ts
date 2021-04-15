@@ -382,7 +382,6 @@ export class ExtractedMCODE {
     return Math.round(millisecondsAge / milliseconds1Years);
   }
 
-  /*
   // Get Tumor Marker Values.
   getTumorMarkerValue(): string[] {
 
@@ -695,7 +694,7 @@ export class ExtractedMCODE {
 
     if (metricComparator == '=') {
       quantValue = typeof quantValue == 'string' ? quantValue : quantValue.toString(); // we're doing string comparisons for these
-      return metricValues.some((value) => quantValue == value);
+      return metricValues.some((value: string | number) => quantValue == value);
     } else if (metricComparator == '>=') {
       return quantValue >= metricValues[0];
     } else if (metricComparator == '<') {
@@ -772,5 +771,5 @@ export class ExtractedMCODE {
       return '';
     }
   }
-  */
+
  }
