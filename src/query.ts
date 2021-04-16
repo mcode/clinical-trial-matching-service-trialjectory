@@ -248,13 +248,13 @@ export class APIQuery {
 
     const extractedMCODE = new mcode.ExtractedMCODE(patientBundle);
     console.log(extractedMCODE);
-    this.biomarkers = [];
-    this.stage = "";
+    this.biomarkers = extractedMCODE.getTumorMarkerValue();
+    this.stage = extractedMCODE.getStageValues();
     this.cancerType = "";
     this.cancerSubType = "";
-    this.ecog = 0;
-    this.karnofsky = 0;
-    this.medications = [];
+    this.ecog = extractedMCODE.ecogPerformaceStatus;
+    this.karnofsky = extractedMCODE.karnofskyPerformanceStatus;
+    this.medications = extractedMCODE.getMedicationStatementValues();
     this.metastisis = [];
     this.age = extractedMCODE.getAgeValue();
   }
