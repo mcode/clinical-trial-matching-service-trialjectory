@@ -368,6 +368,144 @@ export class ExtractedMCODE {
     return false;
   }
 
+  // TODO - This will almost certainly be changed after more details from Trialjectory.
+  // Primary Cancer Value
+  getPrimaryCancerValue(): string {
+    if (this.primaryCancerCondition.length == 0) {
+      return 'NOT_SURE';
+    }
+    // Cycle through each of the primary cancer objects and check that they satisfy this priority requirement.
+    for (const primaryCancerCondition of this.primaryCancerCondition) {
+      // Cycle through each of the primary Cancer condition's codes independently due to code-dependent conditions
+      for (const currentCoding of primaryCancerCondition.coding) {
+        // 3. Invasive Breast Cancer and Recurrent
+        if (
+          (primaryCancerCondition.histologyMorphologyBehavior.some((coding) =>
+            this.codeIsInSheet(coding, 'Morphology-Invasive')
+          ) ||
+            this.codeIsInSheet(currentCoding, 'Cancer-Invasive-Breast')) &&
+          this.codeIsInSheet(currentCoding, 'Cancer-Breast') &&
+          primaryCancerCondition.clinicalStatus.some((clinStat) => clinStat.code == 'recurrence')
+        ) {
+          return 'INVASIVE_BREAST_CANCER_AND_RECURRENT';
+        }
+      }
+    }
+    // Cycle through each of the primary cancer objects and check that they satisfy this priority requirement.
+    for (const primaryCancerCondition of this.primaryCancerCondition) {
+      // 4. Locally Recurrent
+      if (
+        primaryCancerCondition.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Breast')) &&
+        primaryCancerCondition.clinicalStatus.some((clinStat) => clinStat.code == 'recurrence')
+      ) {
+        return 'LOCALLY_RECURRENT';
+      }
+    }
+    // Cycle through each of the primary cancer objects and check that they satisfy this priority requirement.
+    for (const primaryCancerCondition of this.primaryCancerCondition) {
+      // 1. Breast Cancer
+      if (primaryCancerCondition.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Breast'))) {
+        return 'BREAST_CANCER';
+      }
+    }
+    // Cycle through each of the primary cancer objects and check that they satisfy this priority requirement.
+    for (const primaryCancerCondition of this.primaryCancerCondition) {
+      // 2. Concomitant invasive malignancies
+      if (
+        primaryCancerCondition.coding.some((code) => this.codeIsNotInSheet(code, 'Cancer-Breast')) &&
+        primaryCancerCondition.clinicalStatus.some((clinStat) => clinStat.code == 'active') &&
+        (this.TNMClinicalStageGroup.some((code) =>
+          this.codeIsInSheet(code, 'Stage-1', 'Stage-2', 'Stage-3', 'Stage-4')
+        ) ||
+          this.TNMPathologicalStageGroup.some((code) =>
+            this.codeIsInSheet(code, 'Stage-1', 'Stage-2', 'Stage-3', 'Stage-4')
+          ))
+      ) {
+        return 'CONCOMITANT_INVASIVE_MALIGNANCIES';
+      }
+    }
+    // Cycle through each of the primary cancer objects and check that they satisfy this priority requirement.
+    for (const primaryCancerCondition of this.primaryCancerCondition) {
+      // 5. Other malignancy - except skin or cervical
+      if (
+        (primaryCancerCondition.coding.some((code) => this.codeIsNotInSheet(code, 'Cancer-Breast')) &&
+          primaryCancerCondition.clinicalStatus.some((clinStat) => clinStat.code == 'active')) ||
+        (primaryCancerCondition.coding.some((code) => this.codeIsNotInSheet(code, 'Cancer-Cervical')) &&
+          primaryCancerCondition.clinicalStatus.some((clinStat) => clinStat.code == 'active') &&
+          (this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-0')) ||
+            this.TNMPathologicalStageGroup.some((coding) => this.codeIsInSheet(coding, 'Stage-0'))))
+      ) {
+        return 'OTHER_MALIGNANCY_EXCEPT_SKIN_OR_CERVICAL';
+      }
+    }
+    // None of the conditions are satisfied.
+    return 'NOT_SURE';
+  }
+
+  // TODO - This will almost certainly be changed with new details from Trialjectory.
+  // Secondary Cancer Value
+  getSecondaryCancerValue(): string {
+    if (this.secondaryCancerCondition.length == 0) {
+      return 'NOT_SURE';
+    }
+    // Cycle through each of the secondary cancer objects and check that they satisfy different requirements.
+    for (const secondaryCancerCondition of this.secondaryCancerCondition) {
+      // 2. Invasive Breast Cancer and Metastatics
+      if (
+        ((this.primaryCancerCondition.some((primCanCond) =>
+          primCanCond.histologyMorphologyBehavior.some((histMorphBehav) =>
+            this.codeIsInSheet(histMorphBehav, 'Morphology-Invasive')
+          )
+        ) &&
+          this.primaryCancerCondition.some((primCanCond) =>
+            primCanCond.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Breast'))
+          )) ||
+          this.primaryCancerCondition.some((primCanCond) =>
+            primCanCond.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Invasive-Breast'))
+          )) &&
+        (secondaryCancerCondition.coding.length != 0 ||
+          this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-4')) ||
+          this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-4')))
+      ) {
+        return 'INVASIVE_BREAST_CANCER_AND_METASTATIC';
+      }
+    }
+    // Cycle through each of the secondary cancer objects and check that they satisfy different requirements.
+    for (const secondaryCancerCondition of this.secondaryCancerCondition) {
+      // 1. Brain Metastasis
+      if (
+        secondaryCancerCondition.coding.some((coding) => this.codeIsInSheet(coding, 'Metastasis-Brain')) &&
+        secondaryCancerCondition.clinicalStatus.some((clinStat) => clinStat.code == 'active')
+      ) {
+        return 'BRAIN_METASTASIS';
+      }
+    }
+    // Cycle through each of the secondary cancer objects and check that they satisfy different requirements.
+    for (const secondaryCancerCondition of this.secondaryCancerCondition) {
+      // Leptomeningeal metastatic disease
+      if (
+        secondaryCancerCondition.bodySite.some(
+          (bdySte) => this.normalizeCodeSystem(bdySte.system) == 'SNOMED' && bdySte.code == '8935007'
+        )
+      ) {
+        return 'LEPTOMENINGEAL_METASTATIC_DISEASE';
+      }
+    }
+    // Cycle through each of the secondary cancer objects and check that they satisfy different requirements.
+    for (const secondaryCancerCondition of this.secondaryCancerCondition) {
+      // Metastatic
+      if (
+        secondaryCancerCondition.coding.length != 0 ||
+        this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-4')) ||
+        this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-4'))
+      ) {
+        return 'METASTATIC';
+      }
+    }
+    // None of the conditions are satisfied.
+    return 'NOT_SURE';
+  }
+
   /* Not Used (yet):
   Anastrozole, exemestane, letrozole, tamoxifen, toremifene, fulvestrant, raloxifene_hcl
   trastuzumab, trastuzumab_hyaluronidase_conjugate, trastuzumab_deruxtecan_conjugate
@@ -791,6 +929,15 @@ export class ExtractedMCODE {
       }
     }
     return false;
+  }
+
+  // Returns whether the given code is any code not in the given profile.
+  codeIsNotInSheet(coding: Coding, profile: string): boolean {
+    if (coding.code == undefined || coding.code == null) {
+      return false;
+    } else {
+      return !this.codeIsInSheet(coding, profile);
+    }
   }
 
   // Normalize the code system.
