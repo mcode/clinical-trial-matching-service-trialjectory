@@ -375,7 +375,7 @@ export class ExtractedMCODE {
   doxorubicin, epirubicin, cyclophosphamide, cisplatin, carboplatin, paclitaxel, docetaxel
   gemcitabine, capecitabine, vinblastine_sulfate, sacituzumab_govitecan_hziy, methotrexate
   fluorouracil, vinorelbine, eribuline, ixabepilone, etoposide, pemetrexed, irinotecan, topotecan
-  ifosfamide, nivolumab, avelumab, thiotepa, Olaparib, talazoparib, atezolizumab, 
+  ifosfamide, nivolumab, avelumab, thiotepa, Olaparib, talazoparib, atezolizumab,
   zoledronic_acid, pamidronate, denosumab, bevacizumab, everolimus, progestin
   fluoxymesterone, high_dose_estrogen, Palbociclib, ribociclib, abemaciclib, alpelisib
   */
@@ -412,7 +412,7 @@ export class ExtractedMCODE {
     return medicationValues;
   }
 
-  
+
   // Age
   getAgeValue(): number {
     if (this.birthDate == 'NA' || this.birthDate == null || this.birthDate == undefined) {
@@ -424,7 +424,72 @@ export class ExtractedMCODE {
     // Time Difference (Milliseconds)
     const millisecondsAge = today.getTime() - checkDate.getTime();
     const milliseconds1Years = 1000 * 60 * 60 * 24 * 365;
-    return Math.round(millisecondsAge / milliseconds1Years);
+    return Math.floor(millisecondsAge / milliseconds1Years);
+  }
+
+  // This will likely need to be updated. TrialJectory may be looking for more fine grained values for stage.
+  getStageValues(): string {
+    if (
+      this.primaryCancerCondition.length == 0 &&
+      this.TNMClinicalStageGroup.length == 0 &&
+      this.TNMPathologicalStageGroup.length == 0
+    ) {
+      return null;
+    }
+    // This value probably won't mean anything to TrialJectory
+    // Invasive Breast Cancer and Locally Advanced
+    /*
+    for (const primaryCancerCondition of this.primaryCancerCondition) {
+      if (
+        ((primaryCancerCondition.histologyMorphologyBehavior.some((histMorphBehav) =>
+          this.codeIsInSheet(histMorphBehav, 'Morphology-Invasive')
+        ) &&
+          primaryCancerCondition.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Breast'))) ||
+          primaryCancerCondition.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Invasive-Breast'))) &&
+        (this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-3', 'Stage-4')) ||
+          this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-3', 'Stage-4')))
+      ) {
+        return 'INVASIVE_BREAST_CANCER_AND_LOCALLY_ADVANCED';
+      }
+    } */
+    // Stage 0
+    if (
+      this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-0')) ||
+      this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-0'))
+    ) {
+      // This also meets requirements for NON_INVASIVE.
+      return 'ZERO';
+    }
+    // Stage 1
+    if (
+      this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-1')) ||
+      this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-1'))
+    ) {
+      return 'ONE';
+    }
+    // Stage 2
+    if (
+      this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-2')) ||
+      this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-2'))
+    ) {
+      return 'TWO';
+    }
+    // Stage 3
+    if (
+      this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-3')) ||
+      this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-3'))
+    ) {
+      return 'THREE';
+    }
+    // Stage 4
+    if (
+      this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-4')) ||
+      this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-4'))
+    ) {
+      return 'FOUR';
+    }
+
+    return null;
   }
 
   // Get Tumor Marker Values.
@@ -439,7 +504,7 @@ export class ExtractedMCODE {
     }
 
     // Array that Tumor Marker values will be added to as they apply.
-    let tumorMarkerArray: string[];
+    let tumorMarkerArray: string[] = [];
 
     if (this.tumorMarker.some((tm) => this.isHER2Negative(tm, ['0', '1', '2', '1+', '2+']))) {
       // NOTE: HER2- check always uses ['0', '1', '2', '1+', '2+'] as the quanitites by default.
