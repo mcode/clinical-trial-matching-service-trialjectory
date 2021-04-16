@@ -670,6 +670,70 @@ export class ExtractedMCODE {
     return medicationValues;
   }
 
+  // TODO - This will almost certainly be changed with new details from Trialjectory.
+  // Radiation Procedure
+  getRadiationProcedureValue(): string[] {
+    const radiationValues:string[] = [];
+    if (this.cancerRelatedRadiationProcedure.length == 0) {
+      return radiationValues;
+    }
+    for (const cancerRelatedRadiationProcedure of this.cancerRelatedRadiationProcedure) {
+      if (
+        cancerRelatedRadiationProcedure.coding &&
+        cancerRelatedRadiationProcedure.coding.some((coding) => this.codeIsInSheet(coding, 'Treatment-SRS-Brain'))
+      ) {
+        radiationValues.push('SRS');
+      }
+    }
+    for (const cancerRelatedRadiationProcedure of this.cancerRelatedRadiationProcedure) {
+      if (
+        cancerRelatedRadiationProcedure.coding &&
+        cancerRelatedRadiationProcedure.bodySite &&
+        cancerRelatedRadiationProcedure.coding.some(
+          (coding) => this.normalizeCodeSystem(coding.system) == 'SNOMED' && coding.code == '108290001'
+        ) &&
+        cancerRelatedRadiationProcedure.bodySite.some(
+          (coding) =>
+            this.normalizeCodeSystem(coding.system) == 'SNOMED' &&
+            (coding.code == '12738006' || coding.code == '119235005')
+        )
+      ) {
+        radiationValues.push('WBRT');
+      }
+    }
+    if (radiationValues.length == 0) {
+      radiationValues.push('RADIATION_THERAPY');
+    }
+    return radiationValues;
+  }
+
+  // TODO - This will almost certainly be changed with new details from Trialjectory.
+  // Surgical Procedure
+  getSurgicalProcedureValue(): string[] {
+    const surgicalValues:string[] = [];
+    if (this.cancerRelatedSurgicalProcedure.length == 0) {
+      return surgicalValues;
+    }
+    if (this.cancerRelatedSurgicalProcedure.some((coding) => this.codeIsInSheet(coding, 'Treatment-Resection-Brain'))) {
+      surgicalValues.push('RESECTION');
+    } else if (
+      this.cancerRelatedSurgicalProcedure.some((coding) => this.codeIsInSheet(coding, 'Treatment-Splenectomy'))
+    ) {
+      surgicalValues.push('SPLENECTOMY');
+    } else if (
+      this.cancerRelatedSurgicalProcedure.some(
+        (coding) => this.normalizeCodeSystem(coding.system) == 'SNOMED' && coding.code == '58390007'
+      )
+    ) {
+      surgicalValues.push('BONE_MARROW_TRANSPLANT');
+    } else if (
+      this.cancerRelatedSurgicalProcedure.some((coding) => this.codeIsInSheet(coding, 'Treatment-Organ_Transplant'))
+    ) {
+      surgicalValues.push('ORGAN_TRANSPLANT');
+    }
+    return surgicalValues;
+  }
+
   // Age
   getAgeValue(): number {
     if (this.birthDate == 'NA' || this.birthDate == null || this.birthDate == undefined) {

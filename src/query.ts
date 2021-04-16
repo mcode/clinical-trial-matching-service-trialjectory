@@ -211,6 +211,8 @@ export class APIQuery {
   ecog: number;
   karnofsky: number;
   medications: string[];
+  radiationProcedures: string[];
+  surgicalProcedures: string[];
   metastisis: string;
   age: number;
   /**
@@ -255,6 +257,8 @@ export class APIQuery {
     this.ecog = extractedMCODE.ecogPerformaceStatus;
     this.karnofsky = extractedMCODE.karnofskyPerformanceStatus;
     this.medications = extractedMCODE.getMedicationStatementValues();
+    this.radiationProcedures = extractedMCODE.getRadiationProcedureValue();
+    this.surgicalProcedures = extractedMCODE.getSurgicalProcedureValue();
     this.metastisis = extractedMCODE.getSecondaryCancerValue();
     this.age = extractedMCODE.getAgeValue();
   }
@@ -287,6 +291,8 @@ export class APIQuery {
       ecog: this.ecog,
       karnofsky: this.karnofsky,
       medications: this.medications,
+      radiationProcedures: this.radiationProcedures,
+      surgicalProcedures: this.surgicalProcedures,
       metastisis: this.metastisis,
       age: this.age
       //conditions: this.conditions,
