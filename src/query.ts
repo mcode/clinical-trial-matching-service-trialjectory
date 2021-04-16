@@ -211,7 +211,7 @@ export class APIQuery {
   ecog: number;
   karnofsky: number;
   medications: string[];
-  metastisis: string[];
+  metastisis: string;
   age: number;
   /**
    * Create a new query object.
@@ -250,12 +250,12 @@ export class APIQuery {
     console.log(extractedMCODE);
     this.biomarkers = extractedMCODE.getTumorMarkerValue();
     this.stage = extractedMCODE.getStageValues();
-    this.cancerType = "";
-    this.cancerSubType = "";
+    this.cancerType = extractedMCODE.getPrimaryCancerValue();
+    this.cancerSubType = extractedMCODE.getHistologyMorphologyValue();
     this.ecog = extractedMCODE.ecogPerformaceStatus;
     this.karnofsky = extractedMCODE.karnofskyPerformanceStatus;
     this.medications = extractedMCODE.getMedicationStatementValues();
-    this.metastisis = [];
+    this.metastisis = extractedMCODE.getSecondaryCancerValue();
     this.age = extractedMCODE.getAgeValue();
   }
 
