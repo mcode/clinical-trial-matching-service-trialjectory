@@ -310,10 +310,10 @@ export class ExtractedMCODE {
     }
     // Checking if the performanceStatus exists and also making sure it's not 0, as 0 is a valid score
     if (!this.ecogPerformaceStatus && this.ecogPerformaceStatus != 0) {
-      this.ecogPerformaceStatus = -1;
+      this.ecogPerformaceStatus = null;
     }
     if (!this.karnofskyPerformanceStatus && this.karnofskyPerformanceStatus != 0) {
-      this.karnofskyPerformanceStatus = -1;
+      this.karnofskyPerformanceStatus = null;
     }
   }
 
