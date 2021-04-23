@@ -827,120 +827,255 @@ export class ExtractedMCODE {
     // Array that Tumor Marker values will be added to as they apply.
     let tumorMarkerArray: string[] = [];
 
-    if (this.tumorMarker.some((tm) => this.isHER2Negative(tm, ['0', '1', '2', '1+', '2+']))) {
-      // NOTE: HER2- check always uses ['0', '1', '2', '1+', '2+'] as the quanitites by default.
-      tumorMarkerArray.push('her2-');
-    }
-
-    if ( this.tumorMarker.some((tm) => this.tumorMarker.some((tm) => this.isHER2Positive(tm)))){
-      tumorMarkerArray.push('her2+');
-    }
-
-    if (this.tumorMarker.some((tm) => this.isPRNegative(tm, 1))){
-      // NOTE: PR- check always uses 1 as the matric parameter by default.
-      tumorMarkerArray.push('pr-');
-    }
-
-    if (this.tumorMarker.some((tm) => this.isPRPositive(tm, 1))){
-      // NOTE: PR+ check always uses 1 as the matric parameter by default.
-      tumorMarkerArray.push('pr+');
+    if (this.tumorMarker.some((tm) => this.isERPositive(tm, 1))) {
+      // NOTE: ER+ check always uses 1 as the matric parameter by default.
+      tumorMarkerArray.push('ER+');
     }
 
     if (this.tumorMarker.some((tm) => this.isERNegative(tm, 1))) {
       // NOTE: ER- check always uses 1 as the matric parameter by default.
-      tumorMarkerArray.push('er-');
+      tumorMarkerArray.push('ER-');
     }
 
-    if (this.tumorMarker.some((tm) => this.isERPositive(tm, 1))) {
-      // NOTE: ER+ check always uses 1 as the matric parameter by default.
-      tumorMarkerArray.push('er+');
+    if (this.tumorMarker.some((tm) => this.isPRPositive(tm, 1))){
+      // NOTE: PR+ check always uses 1 as the matric parameter by default.
+      tumorMarkerArray.push('PR+');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isPRNegative(tm, 1))){
+      // NOTE: PR- check always uses 1 as the matric parameter by default.
+      tumorMarkerArray.push('PR-');
+    }
+
+    // BRCA1
+    if (this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '1100'))) {
+      tumorMarkerArray.push('BRCA1+');
+    }
+
+    if (this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '1100'))) {
+      tumorMarkerArray.push('BRCA1-');
+    }
+    // BRCA2
+    if (this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '1101'))) {
+      tumorMarkerArray.push('BRCA2+');
+    }
+
+    if (this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '1101'))) {
+      tumorMarkerArray.push('BRCA2-');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerPositiveCombo2(tm, 'Biomarker-ATM')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '795')) ){
+      tumorMarkerArray.push('ATM+');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerNegativeCombo2(tm, 'Biomarker-ATM')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '795')) ){
+      tumorMarkerArray.push('ATM-');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerPositiveCombo2(tm, 'Biomarker-CDH1')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '1748')) ){
+      tumorMarkerArray.push('CDH1+');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerNegativeCombo2(tm, 'Biomarker-CDH1')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '1748')) ){
+      tumorMarkerArray.push('CDH1-');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerPositiveCombo2(tm, 'Biomarker-CHK2')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '16627')) ){
+      tumorMarkerArray.push('CHEK2+');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerNegativeCombo2(tm, 'Biomarker-CHK2')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '16627')) ){
+      tumorMarkerArray.push('CHEK2-');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerPositiveCombo2(tm, 'Biomarker-NBN')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '7652')) ){
+      tumorMarkerArray.push('NBN+');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerNegativeCombo2(tm, 'Biomarker-NBN')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '7652')) ){
+      tumorMarkerArray.push('NBN-');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerPositiveCombo2(tm, 'Biomarker-NF1')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '7765')) ){
+      tumorMarkerArray.push('NF1+');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerNegativeCombo2(tm, 'Biomarker-NF1')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '7765')) ){
+      tumorMarkerArray.push('NF1-');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerPositiveCombo2(tm, 'Biomarker-PALB2')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '26144')) ){
+      tumorMarkerArray.push('PALB2+');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerNegativeCombo2(tm, 'Biomarker-PALB2')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '26144')) ){
+      tumorMarkerArray.push('PALB2-');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerPositiveCombo2(tm, 'Biomarker-PTEN')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '9588')) ){
+      tumorMarkerArray.push('PTEN+');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerNegativeCombo2(tm, 'Biomarker-PTEN')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '9588')) ){
+      tumorMarkerArray.push('PTEN-');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerPositiveCombo2(tm, 'Biomarker-STK11')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '11389')) ){
+      tumorMarkerArray.push('STK11+');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerNegativeCombo2(tm, 'Biomarker-STK11')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '11389')) ){
+      tumorMarkerArray.push('STK11-');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerPositiveCombo2(tm, 'Biomarker-P53')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '11998')) ){
+      tumorMarkerArray.push('P53+');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isBioMarkerNegativeCombo2(tm, 'Biomarker-P53')) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '11998')) ){
+      tumorMarkerArray.push('P53-');
     }
 
     if (this.tumorMarker.some((tm) => this.isRBPositive(tm, 50))) {
       // NOTE: RB+ check always uses 50 as the matric parameter by default.
-      tumorMarkerArray.push('rb+');
+      tumorMarkerArray.push('RB+');
     }
 
-    if (this.tumorMarker.some((tm) => this.isFGFRAmplification(tm, 1))) {
-      // NOTE: FGFR check always uses 1 as the matric parameter by default.
-      tumorMarkerArray.push('fgfr');
+    if (this.tumorMarker.some((tm) => this.isRBNegative(tm, 50))) {
+      // NOTE: RB- check always uses 50 as the matric parameter by default.
+      tumorMarkerArray.push('RB-');
     }
 
-    // TODO: Not sure how to treat the distinction between BRCA#, BRCA#-SOMATIC, BRCA#-GERMLINE. Assuming it should just do the BRCA# check, but I'm leaving the germline and somatic variations for now just in case.
+    if (this.tumorMarker.some((tm) => this.tumorMarker.some((tm) => this.isHER2Positive(tm)))){
+           tumorMarkerArray.push('HER2+');
+         }
 
-    // BRCA1-Germline (IS THIS NECESSARY?)
-    if (
-      this.cancerGeneticVariant.some(
-        (cancGenVar) =>
-          this.isBRCA(cancGenVar, '1100') &&
-          cancGenVar.component.genomicsSourceClass.some((genSourceClass) =>
-            genSourceClass.valueCodeableConcept.coding.some(
-              (valCodeCon) => this.normalizeCodeSystem(valCodeCon.system) == 'LOINC' && valCodeCon.code == 'LA6683-2'
-            )
-          )
-      )
-    ) {
-      tumorMarkerArray.push('brca1');
+    if (this.tumorMarker.some((tm) => this.isHER2Negative(tm, ['0', '1', '2', '1+', '2+']))) {
+      // NOTE: HER2- check always uses ['0', '1', '2', '1+', '2+'] as the quanitites by default.
+      tumorMarkerArray.push('HER2-');
     }
-    // BRCA2-Germline (IS THIS NECESSARY?)
-    if (
-      this.cancerGeneticVariant.some(
-        (cancGenVar) =>
-          this.isBRCA(cancGenVar, '1101') &&
-          cancGenVar.component.genomicsSourceClass.some((genSourceClass) =>
-            genSourceClass.valueCodeableConcept.coding.some(
-              (valCodeCon) => this.normalizeCodeSystem(valCodeCon.system) == 'LOINC' && valCodeCon.code == 'LA6683-2'
-            )
-          )
-      )
-    ) {
-      tumorMarkerArray.push('brca2');
+
+    if (this.tumorMarker.some((tm) => this.isFGFRPositive(tm, 1))) {
+      tumorMarkerArray.push('FGFR+');
     }
-    // BRCA1-somatic (IS THIS NECESSARY?)
-    if (
-      this.cancerGeneticVariant.some(
-        (cancGenVar) =>
-          this.isBRCA(cancGenVar, '1100') &&
-          cancGenVar.component.genomicsSourceClass.some((genSourceClass) =>
-            genSourceClass.valueCodeableConcept.coding.some(
-              (valCodeCon) => this.normalizeCodeSystem(valCodeCon.system) == 'LOINC' && valCodeCon.code == 'LA6684-0'
-            )
-          )
-      )
-    ) {
-      tumorMarkerArray.push('brca1');
+
+    if (this.tumorMarker.some((tm) => this.isFGFRNegative(tm, 1))) {
+      tumorMarkerArray.push('FGFR-');
     }
-    // BRCA2-somatic (IS THIS NECESSARY?)
-    if (
-      this.cancerGeneticVariant.some(
-        (cancGenVar) =>
-          this.isBRCA(cancGenVar, '1101') &&
-          cancGenVar.component.genomicsSourceClass.some((genSourceClass) =>
-            genSourceClass.valueCodeableConcept.coding.some(
-              (valCodeCon) => this.normalizeCodeSystem(valCodeCon.system) == 'LOINC' && valCodeCon.code == 'LA6684-0'
-            )
-          )
-      )
-    ) {
-      tumorMarkerArray.push('brca2');
+
+    if (this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '3467'))) {
+      tumorMarkerArray.push('ESR1+');
     }
-    // BRCA1
-    if (this.cancerGeneticVariant.some((cancGenVar) => this.isBRCA(cancGenVar, '1100'))) {
-      tumorMarkerArray.push('brca1');
+
+    if (this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '3467'))) {
+      tumorMarkerArray.push('ESR1-');
     }
-    // BRCA2
-    if (this.cancerGeneticVariant.some((cancGenVar) => this.isBRCA(cancGenVar, '1101'))) {
-      tumorMarkerArray.push('brca2');
+
+    if (this.tumorMarker.some((tm) => this.isPIK3CAPositive(tm)) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '8975')) ){
+      tumorMarkerArray.push('PIK3CA+');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isPIK3CANegative(tm)) ||
+      this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '8975')) ){
+      tumorMarkerArray.push('PIK3CA-');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isPDL1Positive(tm))) {
+      tumorMarkerArray.push('PDL1+');
+    }
+
+    if (this.tumorMarker.some((tm) => this.isPDL1Negative(tm))) {
+      tumorMarkerArray.push('PDL1-');
+    }
+
+    if (this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '8031')) ||
+       this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '8032')) ||
+       this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '8033')) ){
+      tumorMarkerArray.push('NTRK_FUSION+');
+    }
+
+    if (this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '8031')) ||
+       this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '8032')) ||
+       this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '8033')) ){
+      tumorMarkerArray.push('NTRK_FUSION-');
     }
 
     // Finally, return the fully appended array.
     return tumorMarkerArray;
   }
-  isBRCA(cancGenVar: CancerGeneticVariant, brcaCode: string): boolean {
+  isValueCodeableConceptPositive(valueCodeableConcept: Coding[]): boolean {
+    return valueCodeableConcept.some(
+                   (valCodeCon) =>
+                     (this.normalizeCodeSystem(valCodeCon.system) == 'SNOMED' && valCodeCon.code == '10828004') ||
+                     (this.normalizeCodeSystem(valCodeCon.system) == 'HL7' && valCodeCon.code == 'POS')
+                 );
+  }
+  isValueCodeableConceptNegative(valueCodeableConcept: Coding[]): boolean {
+    return valueCodeableConcept.some(
+                   (valCodeCon) =>
+                     (this.normalizeCodeSystem(valCodeCon.system) == 'SNOMED' && valCodeCon.code == '260385009') ||
+                     (this.normalizeCodeSystem(valCodeCon.system) == 'HL7' && valCodeCon.code == 'NEG')
+                 );
+  }
+  isInterpretationPositive(interpretation: Coding[]): boolean {
+    return interpretation.some(
+                     (interp) =>
+                       (interp.code == 'POS' || interp.code == 'DET' || interp.code == 'H') &&
+                       interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
+                   );
+  }
+  isInterpretationNegative(interpretation: Coding[]): boolean {
+    return interpretation.some(
+                     (interp) =>
+                       (interp.code == 'L' || interp.code == 'N' || interp.code == 'NEG' || interp.code == 'ND') &&
+                       interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
+                   );
+  }
+  isInterpretationPositiveCombo2(interpretation: Coding[]): boolean {
+    return interpretation.some(
+                     (interp) =>
+                       (interp.code == 'POS' || interp.code == 'ND' || interp.code == 'L') &&
+                       interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
+                   );
+  }
+  isInterpretationNegativeCombo2(interpretation: Coding[]): boolean {
+    return interpretation.some(
+                     (interp) =>
+                       (interp.code == 'NEG' || interp.code == 'DET' || interp.code == 'H') &&
+                       interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
+                   );
+  }
+  isInterpretationNegativeCombo3(interpretation: Coding[]): boolean {
+    return interpretation.some(
+                     (interp) =>
+                       (interp.code == 'L' || interp.code == 'NEG' || interp.code == 'ND') &&
+                       interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
+                   );
+  }
+  isGeneticVariantPositive(cancGenVar: CancerGeneticVariant, genVarCode: string): boolean {
     return (
       cancGenVar.component.geneStudied.some((geneStudied) =>
         geneStudied.valueCodeableConcept.coding.some(
-          (valCodeCon) => this.normalizeCodeSystem(valCodeCon.system) == 'HGNC' && valCodeCon.code == brcaCode
+          (valCodeCon) => this.normalizeCodeSystem(valCodeCon.system) == 'HGNC' && valCodeCon.code == genVarCode
         )
       ) &&
       (cancGenVar.valueCodeableConcept.some(
@@ -959,54 +1094,57 @@ export class ExtractedMCODE {
         ))
     );
   }
-  isHER2Positive(tumorMarker: TumorMarker): boolean {
+  isGeneticVariantNegative(cancGenVar: CancerGeneticVariant, genVarCode: string): boolean {
     return (
-      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-HER2')) &&
-      (tumorMarker.valueCodeableConcept.some(
+      cancGenVar.component.geneStudied.some((geneStudied) =>
+        geneStudied.valueCodeableConcept.coding.some(
+          (valCodeCon) => this.normalizeCodeSystem(valCodeCon.system) == 'HGNC' && valCodeCon.code == genVarCode
+        )
+      ) &&
+      (cancGenVar.valueCodeableConcept.some(
         (valCodeCon) =>
-          (this.normalizeCodeSystem(valCodeCon.system) == 'SNOMED' && valCodeCon.code == '10828004') ||
-          (this.normalizeCodeSystem(valCodeCon.system) == 'HL7' && valCodeCon.code == 'POS')
+          (this.normalizeCodeSystem(valCodeCon.system) == 'SNOMED' && valCodeCon.code == '260385009') ||
+          (this.normalizeCodeSystem(valCodeCon.system) == 'LOINC' && valCodeCon.code == 'LA9634-2') ||
+          (this.normalizeCodeSystem(valCodeCon.system) == 'HL7' && valCodeCon.code == 'NEG')
       ) ||
-        tumorMarker.interpretation.some(
-          (interp) =>
-            (interp.code == 'POS' || interp.code == 'DET' || interp.code == 'H') &&
-            interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
+        cancGenVar.interpretation.some(
+          (interp) => interp.code == 'N' || interp.code == 'NEG'
         ) ||
-        tumorMarker.valueQuantity.some((valQuant) =>
-          this.quantityMatch(valQuant.value, valQuant.code, ['3', '3+'], '=')
+        cancGenVar.component.geneStudied.some((geneStud) =>
+          geneStud.interpretation.coding.some(
+            (interp) => interp.code == 'N' || interp.code == 'NEG'
+          )
         ))
     );
   }
-  isHER2Negative(tumorMarker: TumorMarker, quantities: string[]): boolean {
+  isERPositive(tumorMarker: TumorMarker, metric: number): boolean {
     return (
-      (tumorMarker.valueCodeableConcept.some(
-        (valCodeCon) =>
-          (this.normalizeCodeSystem(valCodeCon.system) == 'SNOMED' && valCodeCon.code == '260385009') ||
-          (this.normalizeCodeSystem(valCodeCon.system) == 'HL7' && valCodeCon.code == 'NEG')
-      ) ||
-        tumorMarker.interpretation.some(
-          (interp) =>
-            (interp.code == 'L' || interp.code == 'N' || interp.code == 'NEG' || interp.code == 'ND') &&
-            interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
-        ) || // Information on Interpretation values can be found at: http://hl7.org/fhir/R4/valueset-observation-interpretation.html
+      (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
+        tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '>=')) ||
+        this.isInterpretationPositive(tumorMarker.interpretation) ||
         tumorMarker.valueQuantity.some((valQuant) =>
-          this.quantityMatch(valQuant.value, valQuant.code, quantities, '=')
+          this.quantityMatch(valQuant.value, valQuant.code, [metric], '>=', '%')
         )) &&
-      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-HER2'))
+      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-ER'))
+    );
+  }
+  isERNegative(tumorMarker: TumorMarker, metric: number): boolean {
+    return (
+      (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
+        tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '<')) ||
+        this.isInterpretationNegative(tumorMarker.interpretation) ||
+        tumorMarker.valueQuantity.some(
+          (valQuant) =>
+            this.quantityMatch(valQuant.value, valQuant.code, [metric], '<', '%') ||
+            this.quantityMatch(valQuant.value, valQuant.code, [0], '=')
+        )) &&
+      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-ER'))
     );
   }
   isPRPositive(tumorMarker: TumorMarker, metric: number): boolean {
     return (
-      (tumorMarker.valueCodeableConcept.some(
-        (valCodeCon) =>
-          (this.normalizeCodeSystem(valCodeCon.system) == 'SNOMED' && valCodeCon.code == '10828004') ||
-          (this.normalizeCodeSystem(valCodeCon.system) == 'HL7' && valCodeCon.code == 'POS')
-      ) ||
-        tumorMarker.interpretation.some(
-          (interp) =>
-            (interp.code == 'POS' || interp.code == 'DET' || interp.code == 'H') &&
-            interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
-        ) ||
+      (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
+        this.isInterpretationPositive(tumorMarker.interpretation) ||
         tumorMarker.valueQuantity.some((valQuant) =>
           this.quantityMatch(valQuant.value, valQuant.code, [metric], '>=', '%')
         ) ||
@@ -1016,16 +1154,8 @@ export class ExtractedMCODE {
   }
   isPRNegative(tumorMarker: TumorMarker, metric: number): boolean {
     return (
-      (tumorMarker.valueCodeableConcept.some(
-        (valCodeCon) =>
-          (this.normalizeCodeSystem(valCodeCon.system) == 'SNOMED' && valCodeCon.code == '260385009') ||
-          (this.normalizeCodeSystem(valCodeCon.system) == 'HL7' && valCodeCon.code == 'NEG')
-      ) ||
-        tumorMarker.interpretation.some(
-          (interp) =>
-            (interp.code == 'L' || interp.code == 'N' || interp.code == 'NEG' || interp.code == 'ND') &&
-            interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
-        ) ||
+      (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
+        this.isInterpretationNegative(tumorMarker.interpretation) ||
         tumorMarker.valueQuantity.some(
           (valQuant) =>
             this.quantityMatch(valQuant.value, valQuant.code, [metric], '<', '%') ||
@@ -1035,61 +1165,18 @@ export class ExtractedMCODE {
       tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-PR'))
     );
   }
-  isERPositive(tumorMarker: TumorMarker, metric: number): boolean {
+  isBioMarkerPositiveCombo2(tumorMarker: TumorMarker, sheetName: string): boolean {
     return (
-      (tumorMarker.valueCodeableConcept.some(
-        (valCodeCon) =>
-          (this.normalizeCodeSystem(valCodeCon.system) == 'SNOMED' && valCodeCon.code == '10828004') ||
-          (this.normalizeCodeSystem(valCodeCon.system) == 'HL7' && valCodeCon.code == 'POS')
-      ) ||
-        tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '>=')) ||
-        tumorMarker.interpretation.some(
-          (interp) =>
-            (interp.code == 'POS' || interp.code == 'DET' || interp.code == 'H') &&
-            interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
-        ) ||
-        tumorMarker.valueQuantity.some((valQuant) =>
-          this.quantityMatch(valQuant.value, valQuant.code, [metric], '>=', '%')
-        )) &&
-      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-ER'))
+      (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
+        this.isInterpretationPositiveCombo2(tumorMarker.interpretation))
+      && tumorMarker.code.some((code) => this.codeIsInSheet(code, sheetName))
     );
   }
-  isERNegative(tumorMarker: TumorMarker, metric: number): boolean {
+  isBioMarkerNegativeCombo2(tumorMarker: TumorMarker, sheetName: string): boolean {
     return (
-      (tumorMarker.valueCodeableConcept.some(
-        (valCodeCon) =>
-          (this.normalizeCodeSystem(valCodeCon.system) == 'SNOMED' && valCodeCon.code == '260385009') ||
-          (this.normalizeCodeSystem(valCodeCon.system) == 'HL7' && valCodeCon.code == 'NEG')
-      ) ||
-        tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '<')) ||
-        tumorMarker.interpretation.some(
-          (interp) =>
-            (interp.code == 'L' || interp.code == 'N' || interp.code == 'NEG' || interp.code == 'ND') &&
-            interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
-        ) ||
-        tumorMarker.valueQuantity.some(
-          (valQuant) =>
-            this.quantityMatch(valQuant.value, valQuant.code, [metric], '<', '%') ||
-            this.quantityMatch(valQuant.value, valQuant.code, [0], '=')
-        )) &&
-      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-ER'))
-    );
-  }
-  isFGFRAmplification(tumorMarker: TumorMarker, metric: number): boolean {
-    return (
-      (tumorMarker.valueCodeableConcept.some(
-        (valCodeCon) => this.normalizeCodeSystem(valCodeCon.system) == 'SNOMED' && valCodeCon.code == '10828004'
-      ) ||
-        tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '>=')) ||
-        tumorMarker.interpretation.some(
-          (interp) =>
-            (interp.code == 'POS' || interp.code == 'DET' || interp.code == 'H') &&
-            interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
-        ) ||
-        tumorMarker.valueQuantity.some((valQuant) =>
-          this.quantityMatch(valQuant.value, valQuant.code, [metric], '>=', '%')
-        )) &&
-      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-FGFR'))
+      (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
+        this.isInterpretationNegativeCombo2(tumorMarker.interpretation))
+      && tumorMarker.code.some((code) => this.codeIsInSheet(code, sheetName))
     );
   }
   isRBPositive(tumorMarker: TumorMarker, metric: number): boolean {
@@ -1097,21 +1184,98 @@ export class ExtractedMCODE {
       (tumorMarker.valueQuantity.some((valQuant) =>
         this.quantityMatch(valQuant.value, valQuant.code, [metric], '>', '%')
       ) ||
-        tumorMarker.valueCodeableConcept.some(
-          (valCodeCon) =>
-            (this.normalizeCodeSystem(valCodeCon.system) == 'SNOMED' && valCodeCon.code == '10828004') ||
-            (this.normalizeCodeSystem(valCodeCon.system) == 'HL7' && valCodeCon.code == 'POS')
-        ) ||
+        this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '>')) ||
-        tumorMarker.interpretation.some(
-          (interp) =>
-            (interp.code == 'POS' || interp.code == 'DET' || interp.code == 'H') &&
-            interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
+        this.isInterpretationPositive(tumorMarker.interpretation)) &&
+      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-RB'))
+    );
+  }
+  isRBNegative(tumorMarker: TumorMarker, metric: number): boolean {
+    return (
+      (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
+        tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '<')) ||
+        this.isInterpretationNegativeCombo3(tumorMarker.interpretation) ||
+        tumorMarker.valueQuantity.some(
+          (valQuant) =>
+            this.quantityMatch(valQuant.value, valQuant.code, [metric], '<', '%') ||
+            this.quantityMatch(valQuant.value, valQuant.code, [0], '=')
         )) &&
       tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-RB'))
     );
   }
-  quantityMatch(
+  isHER2Positive(tumorMarker: TumorMarker): boolean {
+    return (
+      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-HER2')) &&
+      (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
+        this.isInterpretationPositive(tumorMarker.interpretation) ||
+        tumorMarker.valueQuantity.some((valQuant) =>
+          this.quantityMatch(valQuant.value, valQuant.code, ['3', '3+'], '=')
+        ))
+    );
+  }
+  isHER2Negative(tumorMarker: TumorMarker, quantities: string[]): boolean {
+    return (
+      (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
+        this.isInterpretationNegative(tumorMarker.interpretation) || // Information on Interpretation values can be found at: http://hl7.org/fhir/R4/valueset-observation-interpretation.html
+        tumorMarker.valueQuantity.some((valQuant) =>
+          this.quantityMatch(valQuant.value, valQuant.code, quantities, '=')
+        )) &&
+      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-HER2'))
+    );
+  }
+  isFGFRPositive(tumorMarker: TumorMarker, metric: number): boolean {
+    return (
+      (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
+        tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '>=')) ||
+        this.isInterpretationPositive(tumorMarker.interpretation) ||
+        tumorMarker.valueQuantity.some((valQuant) =>
+          this.quantityMatch(valQuant.value, valQuant.code, [metric], '>=', '%')
+        )) &&
+      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-FGFR'))
+    );
+  }
+  isFGFRNegative(tumorMarker: TumorMarker, metric: number): boolean {
+    return (
+      (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
+        tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '<')) ||
+        this.isInterpretationNegativeCombo3(tumorMarker.interpretation) ||
+        tumorMarker.valueQuantity.some(
+          (valQuant) =>
+            this.quantityMatch(valQuant.value, valQuant.code, [metric], '<', '%') ||
+            this.quantityMatch(valQuant.value, valQuant.code, [0], '=')
+        )) &&
+      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-FGFR'))
+    );
+  }
+  isPIK3CAPositive(tumorMarker: TumorMarker): boolean {
+    return (
+      (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
+        this.isInterpretationPositive(tumorMarker.interpretation))
+      && tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-PIK3CA'))
+    );
+  }
+  isPIK3CANegative(tumorMarker: TumorMarker): boolean {
+    return (
+      (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
+        this.isInterpretationNegative(tumorMarker.interpretation))
+      && tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-PIK3CA'))
+    );
+  }
+  isPDL1Positive(tumorMarker: TumorMarker): boolean {
+    return (
+      (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
+        this.isInterpretationPositive(tumorMarker.interpretation))
+      && tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-PDL1'))
+    );
+  }
+  isPDL1Negative(tumorMarker: TumorMarker): boolean {
+    return (
+      (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
+        this.isInterpretationNegative(tumorMarker.interpretation))
+      && tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-PDL1'))
+    );
+  }
+quantityMatch(
     quantValue: string | number,
     quantUnit: string,
     metricValues: string[] | number[],

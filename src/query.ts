@@ -213,7 +213,7 @@ export class APIQuery {
   medications: string[];
   radiationProcedures: string[];
   surgicalProcedures: string[];
-  metastisis: string;
+  metastasis: string;
   age: number;
   /**
    * Create a new query object.
@@ -259,7 +259,7 @@ export class APIQuery {
     this.medications = extractedMCODE.getMedicationStatementValues();
     this.radiationProcedures = extractedMCODE.getRadiationProcedureValue();
     this.surgicalProcedures = extractedMCODE.getSurgicalProcedureValue();
-    this.metastisis = extractedMCODE.getSecondaryCancerValue();
+    this.metastasis = extractedMCODE.getSecondaryCancerValue();
     this.age = extractedMCODE.getAgeValue();
   }
 
@@ -293,7 +293,7 @@ export class APIQuery {
       medications: this.medications,
       radiationProcedures: this.radiationProcedures,
       surgicalProcedures: this.surgicalProcedures,
-      metastisis: this.metastisis,
+      metastasis: this.metastasis,
       age: this.age
       //conditions: this.conditions,
     });

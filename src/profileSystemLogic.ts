@@ -11,7 +11,6 @@ export interface ProfileSystemCodes {
   'Treatment-anti-PD1,PDL1, PDL2'?: CodeProfile;
   'Treatment-Trastuzumab'?: CodeProfile;
   'Cancer-Invasive_Breast'?: CodeProfile;
-  'Biomarker-PR'?: CodeProfile;
   'Treatment-Pembrolizumab'?: CodeProfile;
   'Treatment-Neratinib'?: CodeProfile;
   'Treatment-anti-CTLA-4'?: CodeProfile;
@@ -22,7 +21,6 @@ export interface ProfileSystemCodes {
   'Stage-4'?: CodeProfile;
   'Stage-1'?: CodeProfile;
   'Stage-2'?: CodeProfile;
-  'Biomarker-HER2'?: CodeProfile;
   'Treatment-Mifepristone'?: CodeProfile;
   'Biomarker-PR & ER'?: CodeProfile;
   'Treatment-Nab-Paclitaxel'?: CodeProfile;
@@ -39,10 +37,24 @@ export interface ProfileSystemCodes {
   'Cancer-Cervical'?: CodeProfile;
   'Morphology-Invasive'?: CodeProfile;
   'Treatment-anti-FGF'?: CodeProfile;
-  'Biomarker-RB'?: CodeProfile;
   'Cancer-Invasive Carcinoma'?: CodeProfile;
   'Treatment-Resection-Brain'?: CodeProfile;
   'Biomarker-ER'?: CodeProfile;
+  'Biomarker-PR'?: CodeProfile;
+  'Biomarker-ATM'?: CodeProfile;
+  'Biomarker-CDH1'?: CodeProfile;
+  'Biomarker-CHK2'?: CodeProfile;
+  'Biomarker-NBN'?: CodeProfile;
+  'Biomarker-NF1'?: CodeProfile;
+  'Biomarker-PALB2'?: CodeProfile;
+  'Biomarker-PTEN'?: CodeProfile;
+  'Biomarker-STK11'?: CodeProfile;
+  'Biomarker-P53'?: CodeProfile;
+  'Biomarker-RB'?: CodeProfile;
+  'Biomarker-HER2'?: CodeProfile;
+  'Biomarker-FGFR'?: CodeProfile;
+  'Biomarker-PIK3CA'?: CodeProfile;
+  'Biomarker-PDL1'?: CodeProfile;
 }
 export interface CodeProfile {
   [key: string] : { code: string }[];
