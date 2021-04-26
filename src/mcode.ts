@@ -626,50 +626,6 @@ export class ExtractedMCODE {
     return null;
   }
 
-  /* Not Used (yet):
-  Anastrozole, exemestane, letrozole, tamoxifen, toremifene, fulvestrant, raloxifene_hcl
-  trastuzumab, trastuzumab_hyaluronidase_conjugate, trastuzumab_deruxtecan_conjugate
-  Pertuzumab, lapatinib, tucatinib, neratinib,
-  doxorubicin, epirubicin, cyclophosphamide, cisplatin, carboplatin, paclitaxel, docetaxel
-  gemcitabine, capecitabine, vinblastine_sulfate, sacituzumab_govitecan_hziy, methotrexate
-  fluorouracil, vinorelbine, eribuline, ixabepilone, etoposide, pemetrexed, irinotecan, topotecan
-  ifosfamide, nivolumab, avelumab, thiotepa, Olaparib, talazoparib, atezolizumab,
-  zoledronic_acid, pamidronate, denosumab, bevacizumab, everolimus, progestin
-  fluoxymesterone, high_dose_estrogen, Palbociclib, ribociclib, abemaciclib, alpelisib
-  */
-
-  /* Used:
-  pertuzumab_trastuzumab_hyaluronidase, tdm1, pembrolizumab
-  */
-
-  getMedicationStatementValues(): string[] {
-    const medicationValues:string[] = [];
-
-    // NOTES: Medications do not have quite so nice of a one-to-one mappping like biomarkers does. There are still seemingly combo medications (I think? The combos will be line 'pertuzumab_trastuzumab_hyaluronidase', each of which are types of treatments already tracked. Unless that literally is it's own medicine. Also not sure if mTor inhibitor, cdk4, her2, etc. just have different names in the trialjectory version?)
-    // i.e., Treatment-anti-HER2 seems like a treatement, not an actual medication? (other examples: Treatment-P13K_Inhibitor, Treatment-anti-PD1,PDL1,PDL2, Treatment-anti-PARP, ANTI-TOPOISOMERASE-1, Treatment-anti-CTLA4, Treatment-anti-CD40)
-    // Seems like the current sheet is broken up into treatment options, and of those treatments, a subset of medications work for that treatment. For trialjectory, we'll need the specific medications, not the general treatments/inhibitors/etc.
-
-    if (
-      this.cancerRelatedMedicationStatement.some((coding) => this.codeIsInSheet(coding, 'Treatment-Trastuzumab')) &&
-      this.cancerRelatedMedicationStatement.some((coding) => this.codeIsInSheet(coding, 'Treatment-Pertuzumab')) // && hyaluronidase needed
-    ) {
-      medicationValues.push('pertuzumab_trastuzumab_hyaluronidase');
-    } if (this.cancerRelatedMedicationStatement.some((coding) => this.codeIsInSheet(coding, 'Treatment-T-DM1'))) {
-      medicationValues.push('tdm1');
-    } if (
-      this.cancerRelatedMedicationStatement.some((coding) => this.codeIsInSheet(coding, 'Treatment-Pembrolizumab'))
-    ) {
-      medicationValues.push('pembrolizumab');
-    } if (
-      this.cancerRelatedMedicationStatement.some((coding) => this.codeIsInSheet(coding, 'Treatment-Trastuz_and_Pertuz'))
-    ) {
-      // Only leaving this because I'm not sure if it's some abbreviation for Trastuzumab and Pertuzumab.
-      medicationValues.push('TRASTUZ_AND_PERTUZ');
-    }
-
-    return medicationValues;
-  }
-
   // TODO - This will almost certainly be changed with new details from Trialjectory.
   // Radiation Procedure
   getRadiationProcedureValue(): string[] {
@@ -1319,6 +1275,31 @@ quantityMatch(
       console.log('err unknown operator');
       return false;
     }
+  }
+  getMedicationStatementValues(): string[] {
+    const medicationValues:string[] = [];
+
+    const medicationsToCheck:string[] = new Array('anastrozole','exemestane','letrozole',
+        'tamoxifen','toremifene','fulvestrant','raloxifene_hcl','trastuzumab',
+        'trastuzumab_hyaluronidase_conjugate','trastuzumab_deruxtecan_conjugate',
+        'pertuzumab','lapatinib','aluronidase','tucatinib','neratinib','tdm1','doxorubicin',
+        'epirubicin','cyclophosphamide','cisplatin','carboplatin','paclitaxel','docetaxel',
+        'gemcitabine','capecitabine','vinblastine_sulfate','sacituzumab_govitecan_hziy',
+        'methotrexate','fluorouracil','vinorelbine','eribuline','ixabepilone','etoposide',
+        'pemetrexed','irinotecan','topotecan','ifosfamide','nivolumab','avelumab','thiotepa',
+        'olaparib','talazoparib','atezolizumab','pembrolizumab','zoledronic_acid','pamidronate',
+        'denosumab','bevacizumab','everolimus','progestin','fluoxymesterone','high_dose_estrogen',
+        'palbociclib','abemaciclib','alpelisib');
+
+    // Each sheet to check in has the same name as the medication value to add; cycle through each
+    // and add to medication values if it is in the sheet.
+    for (const medication of medicationsToCheck) {
+      if (this.cancerRelatedMedicationStatement.some((coding) => this.codeIsInSheet(coding, medication))) {
+        medicationValues.push(medication);
+      }
+    }
+
+    return medicationValues;
   }
 
   // Return whether any of the codes in a given coding exist in the given profiles (sheets).
