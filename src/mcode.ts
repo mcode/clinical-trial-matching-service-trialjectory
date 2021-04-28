@@ -1276,6 +1276,13 @@ quantityMatch(
       return false;
     }
   }
+
+//   o	trastuzumab_deruxtecan_conjugate
+// 	Does not have any of the mCODE Compliant Term Types. Only has PIN and IN.
+// •	From Caroline: Because technically all the RxNorm codes whose Term Type is SCD (semantic clinical drug), SBD (semantic brand drug), GPCK (generic pack), BPCK (brand pack), SCDG (semantic clinical drug group), SBDG (semantic brand drug group), SCDF (semantic clinical drug form), or SBDF (semantic brand drug form) could be used.
+// 	https://mor.nlm.nih.gov/RxNav/search?searchBy=String&searchTerm=trastuzumab%20deruxtecan
+
+
   getMedicationStatementValues(): string[] {
     const medicationValues:string[] = [];
 
@@ -1289,7 +1296,8 @@ quantityMatch(
         'pemetrexed','irinotecan','topotecan','ifosfamide','nivolumab','avelumab','thiotepa',
         'olaparib','talazoparib','atezolizumab','pembrolizumab','zoledronic_acid','pamidronate',
         'denosumab','bevacizumab','everolimus','progestin','fluoxymesterone','high_dose_estrogen',
-        'palbociclib','abemaciclib','alpelisib');
+        'palbociclib','abemaciclib','alpelisib','ribociclib',
+        'pertuzumab_trastuzumab_hyaluronidase');
 
     // Each sheet to check in has the same name as the medication value to add; cycle through each
     // and add to medication values if it is in the sheet.

@@ -5991,7 +5991,7 @@
         }
     ]
 },
-"pertuzumab_trastuzumab_hy": {
+"pertuzumab_trastuzumab_hyaluronidase": {
     "RxNorm": [
         {
             "code": "2382604"
@@ -9236,7 +9236,11 @@
         },
         {
             "code": "1151133"
-        },
+        }
+    ]
+},
+"ribociclib": {
+    "RxNorm": [
         {
             "code": "1923054"
         },
