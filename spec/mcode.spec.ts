@@ -1,6 +1,22 @@
 import * as mcode from '../src/mcode';
 import { Coding } from '../src/mcode';
 
+describe('checkMedicationStatementFilterLogic-NoMedications', () => {
+    // Initialize
+    let extractedMCODE = new mcode.ExtractedMCODE(null);
+    let ms: Coding[] = [] as Coding[];
+    // anastrozole medication filter
+    ms.push({ system: 'RxNorm', code: '341545345', display: 'N/A' } as Coding);
+    ms.push({ system: 'RxNorm', code: '563563', display: 'N/A' } as Coding);
+    ms.push({ system: 'RxNorm', code: '35635463', display: 'N/A' } as Coding);
+    ms.push({ system: 'RxNorm', code: '5365712', display: 'N/A' } as Coding);
+    ms.push({ system: 'RxNorm', code: '2452456', display: 'N/A' } as Coding);
+    extractedMCODE.cancerRelatedMedicationStatement = ms;
+    let medications: string[] = extractedMCODE.getMedicationStatementValues();
+    it('Test anastrozole medication filter.', () => {
+      expect(medications.length).toBe(0);
+    });
+  });
 describe('checkMedicationStatementFilterLogic-anastrozole', () => {
     // Initialize
     let extractedMCODE = new mcode.ExtractedMCODE(null);
@@ -156,8 +172,9 @@ describe('checkMedicationStatementFilterLogic-anastrozole', () => {
     extractedMCODE.cancerRelatedMedicationStatement = ms;
     let medications: string[] = extractedMCODE.getMedicationStatementValues();
     it('Test pertuzumab_trastuzumab_hyaluronidase medication filter.', () => {
-        expect(medications[0]).toBe('trastuzumab_hyaluronidase_conjugate');
-        expect(medications[1]).toBe('pertuzumab_trastuzumab_hyaluronidase');
+        expect(medications.length).toBe(2);
+        expect(medications.indexOf('pertuzumab_trastuzumab_hyaluronidase') > -1).toBe(true);
+        expect(medications.indexOf('trastuzumab_hyaluronidase_conjugate') > -1).toBe(true);
     });
   });
   describe('checkMedicationStatementFilterLogic-tucatinib', () => {
@@ -679,32 +696,34 @@ describe('checkMedicationStatementFilterLogic-anastrozole', () => {
         expect(medications[0]).toBe('alpelisib');
     });
   });
-
-//       expect(medications[0]).toBe('fluorouracil');
-//       expect(medications[0]).toBe('vinorelbine');
-//       expect(medications[0]).toBe('eribuline');
-//       expect(medications[0]).toBe('ixabepilone');
-//       expect(medications[0]).toBe('etoposide');
-//       expect(medications[0]).toBe('pemetrexed');
-//       expect(medications[0]).toBe('irinotecan');
-//       expect(medications[0]).toBe('topotecan');
-//       expect(medications[0]).toBe('ifosfamide');
-//       expect(medications[0]).toBe('nivolumab');
-//       expect(medications[0]).toBe('avelumab');
-//       expect(medications[0]).toBe('thiotepa');
-//       expect(medications[0]).toBe('olaparib');
-//       expect(medications[0]).toBe('talazoparib');
-//       expect(medications[0]).toBe('atezolizumab');
-//       expect(medications[0]).toBe('pembrolizumab');
-//       expect(medications[0]).toBe('zoledronic_acid');
-//       expect(medications[0]).toBe('pamidronate');
-//       expect(medications[0]).toBe('denosumab');
-//       expect(medications[0]).toBe('bevacizumab');
-//       expect(medications[0]).toBe('everolimus');
-//       expect(medications[0]).toBe('progestin');
-//       expect(medications[0]).toBe('fluoxymesterone');
-//       expect(medications[0]).toBe('high_dose_estrogen');
-//       expect(medications[0]).toBe('palbociclib');
-//       expect(medications[0]).toBe('ribociclib');
-//       expect(medications[0]).toBe('abemaciclib');
-//       expect(medications[0]).toBe('alpelisib');
+  describe('checkMedicationStatementFilterLogic-seven_medications', () => {
+    // Initialize
+    let extractedMCODE = new mcode.ExtractedMCODE(null);
+    let ms: Coding[] = [] as Coding[];
+    // letrozole medication filter
+    ms.push({ system: 'RxNorm', code: '372571', display: 'N/A' } as Coding);
+    // lapatinib medication filter
+    ms.push({ system: 'RxNorm', code: '672151', display: 'N/A' } as Coding);
+    // tucatinib medication filter
+    ms.push({ system: 'RxNorm', code: '2361286', display: 'N/A' } as Coding);
+    // topotecan medication filter
+    ms.push({ system: 'RxNorm', code: '1172714', display: 'N/A' } as Coding);
+    // palbociclib medication filter
+    ms.push({ system: 'RxNorm', code: '1601385', display: 'N/A' } as Coding);
+    // abemaciclib medication filter
+    ms.push({ system: 'RxNorm', code: '1946825', display: 'N/A' } as Coding);
+    // alpelisib medication filter
+    ms.push({ system: 'RxNorm', code: '2169317', display: 'N/A' } as Coding);
+    extractedMCODE.cancerRelatedMedicationStatement = ms;
+    let medications: string[] = extractedMCODE.getMedicationStatementValues();
+    it('Test alpelisib medication filter.', () => {
+        expect(medications.length).toBe(7);
+        expect(medications.indexOf('letrozole') > -1).toBe(true);
+        expect(medications.indexOf('lapatinib') > -1).toBe(true);
+        expect(medications.indexOf('tucatinib') > -1).toBe(true);
+        expect(medications.indexOf('topotecan') > -1).toBe(true);
+        expect(medications.indexOf('palbociclib') > -1).toBe(true);
+        expect(medications.indexOf('abemaciclib') > -1).toBe(true);
+        expect(medications.indexOf('alpelisib') > -1).toBe(true);
+    });
+  });
