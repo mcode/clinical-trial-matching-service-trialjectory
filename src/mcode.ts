@@ -713,22 +713,6 @@ export class ExtractedMCODE {
     ) {
       return null;
     }
-    // This value probably won't mean anything to TrialJectory
-    // Invasive Breast Cancer and Locally Advanced
-    /*
-    for (const primaryCancerCondition of this.primaryCancerCondition) {
-      if (
-        ((primaryCancerCondition.histologyMorphologyBehavior.some((histMorphBehav) =>
-          this.codeIsInSheet(histMorphBehav, 'Morphology-Invasive')
-        ) &&
-          primaryCancerCondition.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Breast'))) ||
-          primaryCancerCondition.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Invasive-Breast'))) &&
-        (this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-3', 'Stage-4')) ||
-          this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-3', 'Stage-4')))
-      ) {
-        return 'INVASIVE_BREAST_CANCER_AND_LOCALLY_ADVANCED';
-      }
-    } */
     // Stage 0
     if (
       this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-0')) ||
