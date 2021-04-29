@@ -706,51 +706,41 @@ export class ExtractedMCODE {
 
   // This will likely need to be updated. TrialJectory may be looking for more fine grained values for stage.
   getStageValues(): string {
-    if (
-      this.primaryCancerCondition.length == 0 &&
-      this.TNMClinicalStageGroup.length == 0 &&
-      this.TNMPathologicalStageGroup.length == 0
-    ) {
-      return null;
-    }
-    // Stage 0
-    if (
-      this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-0')) ||
-      this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-0'))
-    ) {
-      // This also meets requirements for NON_INVASIVE.
-      return 'ZERO';
-    }
-    // Stage 1
-    if (
-      this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-1')) ||
-      this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-1'))
-    ) {
-      return 'ONE';
-    }
-    // Stage 2
-    if (
-      this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-2')) ||
-      this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-2'))
-    ) {
-      return 'TWO';
-    }
-    // Stage 3
-    if (
-      this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-3')) ||
-      this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-3'))
-    ) {
-      return 'THREE';
-    }
-    // Stage 4
-    if (
-      this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-4')) ||
-      this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-4'))
-    ) {
-      return 'FOUR';
+    // Set the sheet name -> Trialjectory codes mapping.
+    let stage_value_map = new Map()
+    stage_value_map.set('Stage-0', '0');
+    stage_value_map.set('Stage-0A', '0A');
+    stage_value_map.set('Stage-1', '1');
+    stage_value_map.set('Stage-1A', '1A');
+    stage_value_map.set('Stage-1B', '1B');
+    stage_value_map.set('Stage-1C', '1C');
+    stage_value_map.set('Stage-2', '2');
+    stage_value_map.set('Stage-2A', '2A');
+    stage_value_map.set('Stage-2B', '2B');
+    stage_value_map.set('Stage-2C', '2C');
+    stage_value_map.set('Stage-3', '3');
+    stage_value_map.set('Stage-3A', '3A');
+    stage_value_map.set('Stage-3B', '3B');
+    stage_value_map.set('Stage-3C', '3C');
+    stage_value_map.set('Stage-4', '3');
+    stage_value_map.set('Stage-4A', '4A');
+    stage_value_map.set('Stage-4B', '4B');
+    stage_value_map.set('Stage-4C', '4C');
+    stage_value_map.set('Stage-4D', '4D');
+
+    // Iterate through the mappings and return when a code is satisfied.
+    for(const stage_name in stage_value_map.keys()){
+      if (this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, stage_name)) ||
+      this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, stage_name))) {
+        return stage_value_map.get(stage_name);
+      }
     }
 
     return null;
+  }
+  isStageValue(stage: string): boolean {
+    return this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, stage)) ||
+        this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, stage))
   }
 
   // Get Tumor Marker Values.
