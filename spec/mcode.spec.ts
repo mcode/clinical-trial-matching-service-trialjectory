@@ -731,3 +731,209 @@ describe("checkMedicationStatementFilterLogic-seven_medications", () => {
     expect(medications.indexOf("alpelisib") > -1).toBe(true);
   });
 });
+describe('checkStageFilterLogic-Stage0', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 0 Filter Attributes
+  tnmPathological.push({ system: 'snomed', code: '261645004', display: 'N/A' } as Coding); // Any code in 'Stage-0'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 0 Filter', () => {
+    expect(stage).toBe('0');
+  });
+});
+describe('checkStageFilterLogic-Stage1', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 1 Filter Attributes
+  tnmPathological.push({ system: 'AJCC', code: '1', display: 'N/A' } as Coding); // Any code in 'Stage-1'
+  extractedMCODE.TNMClinicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 1 Filter', () => {
+    expect(stage).toBe('1');
+  });
+});
+/*
+describe('checkStageFilterLogic-Stage1A', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 1A Filter Attributes
+  tnmPathological.push({ system: 'snomed', code: '261634002', display: 'N/A' } as Coding); // Any code in 'Stage-1A'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 1A Filter', () => {
+    expect(stage).toBe('1A');
+  });
+});
+describe('checkStageFilterLogic-Stage1B', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 1B Filter Attributes
+  tnmPathological.push({ system: 'snomed', code: '261635001', display: 'N/A' } as Coding); // Any code in 'Stage-1B'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 1B Filter', () => {
+    expect(stage).toBe('1B');
+  });
+});
+describe('checkStageFilterLogic-Stage1C', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 1C Filter Attributes
+  tnmPathological.push({ system: 'snomed', code: '261636000', display: 'N/A' } as Coding); // Any code in 'Stage-1C'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 1C Filter', () => {
+    expect(stage).toBe('1C');
+  });
+});
+describe('checkStageFilterLogic-Stage2', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 2 Filter Attributes
+  tnmPathological.push({ system: 'AJCC', code: 'II', display: 'N/A' } as Coding); // Any code in 'Stage-2'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 2 Filter', () => {
+    expect(stage).toBe('2');
+  });
+});
+describe('checkStageFilterLogic-Stage2A', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 2A Filter Attributes
+  tnmPathological.push({ system: 'snomed', code: '261614003', display: 'N/A' } as Coding); // Any code in 'Stage-2A'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 2A Filter', () => {
+    expect(stage).toBe('2A');
+  });
+});
+describe('checkStageFilterLogic-Stage2B', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 2B Filter Attributes
+  tnmPathological.push({ system: 'snomed', code: '261615002', display: 'N/A' } as Coding); // Any code in 'Stage-2B'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 2B Filter', () => {
+    expect(stage).toBe('2B');
+  });
+});
+describe('checkStageFilterLogic-Stage2C', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 2C Filter Attributes
+  tnmPathological.push({ system: 'snomed', code: '261637009', display: 'N/A' } as Coding); // Any code in 'Stage-2C'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 2C Filter', () => {
+    expect(stage).toBe('2C');
+  });
+});
+describe('checkStageFilterLogic-Stage3', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 3 Filter Attributes
+  tnmPathological.push({ system: 'AJCC', code: '3', display: 'N/A' } as Coding); // Any code in 'Stage-3'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 3 Filter', () => {
+    expect(stage).toBe('3');
+  });
+});
+describe('checkStageFilterLogic-Stage3A', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 3A Filter Attributes
+  tnmPathological.push({ system: 'AJCC', code: 'IIIA', display: 'N/A' } as Coding); // Any code in 'Stage-3A'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 3A Filter', () => {
+    expect(stage).toBe('3A');
+  });
+});
+describe('checkStageFilterLogic-Stage3B', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 3B Filter Attributes
+  tnmPathological.push({ system: 'snomed', code: '261639007', display: 'N/A' } as Coding); // Any code in 'Stage-3B'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 3B Filter', () => {
+    expect(stage).toBe('3B');
+  });
+});
+describe('checkStageFilterLogic-Stage3C', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 3C Filter Attributes
+  tnmPathological.push({ system: 'AJCC', code: '3c', display: 'N/A' } as Coding); // Any code in 'Stage-3C'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 3C Filter', () => {
+    expect(stage).toBe('3C');
+  });
+});
+describe('checkStageFilterLogic-Stage4', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 4 Filter Attributes
+  tnmPathological.push({ system: 'SNOMED', code: '258228008', display: 'N/A' } as Coding); // Any code in 'Stage-4'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 4 Filter', () => {
+    expect(stage).toBe('4');
+  });
+});
+describe('checkStageFilterLogic-Stage4A', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 4A Filter Attributes
+  tnmPathological.push({ system: 'ajcc', code: '4a', display: 'N/A' } as Coding); // Any code in 'Stage-4A'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 4A Filter', () => {
+    expect(stage).toBe('4A');
+  });
+});
+describe('checkStageFilterLogic-Stage4B', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 4B Filter Attributes
+  tnmPathological.push({ system: 'snomed', code: '261643006', display: 'N/A' } as Coding); // Any code in 'Stage-4B'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 4B Filter', () => {
+    expect(stage).toBe('4B');
+  });
+});
+describe('checkStageFilterLogic-Stage4C', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 4C Filter Attributes
+  tnmPathological.push({ system: 'ajcc', code: '4c', display: 'N/A' } as Coding); // Any code in 'Stage-4C'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 4C Filter', () => {
+    expect(stage).toBe('4C');
+  });
+});
+*/

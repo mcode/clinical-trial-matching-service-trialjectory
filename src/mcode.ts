@@ -704,12 +704,11 @@ export class ExtractedMCODE {
     return Math.floor(millisecondsAge / milliseconds1Years);
   }
 
-  // This will likely need to be updated. TrialJectory may be looking for more fine grained values for stage.
   getStageValues(): string {
-    // Set the sheet name -> Trialjectory codes mapping.
+    // Set the sheet name -> Trialjectory result mapping.
     let stage_value_map = new Map()
     stage_value_map.set('Stage-0', '0');
-    stage_value_map.set('Stage-0A', '0A');
+    stage_value_map.set('Stage-0A', '0'); // 0A is not a stage in Trialjectory, return 0.
     stage_value_map.set('Stage-1', '1');
     stage_value_map.set('Stage-1A', '1A');
     stage_value_map.set('Stage-1B', '1B');
@@ -726,10 +725,11 @@ export class ExtractedMCODE {
     stage_value_map.set('Stage-4A', '4A');
     stage_value_map.set('Stage-4B', '4B');
     stage_value_map.set('Stage-4C', '4C');
-    stage_value_map.set('Stage-4D', '4D');
+    stage_value_map.set('Stage-4D', '4C');  // 4D is not a stage in Trialjectory, return 4C.
 
     // Iterate through the mappings and return when a code is satisfied.
-    for(const stage_name in stage_value_map.keys()){
+    for(const stage_name of stage_value_map.keys()){
+      console.log(stage_name);
       if (this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, stage_name)) ||
       this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, stage_name))) {
         return stage_value_map.get(stage_name);
@@ -737,10 +737,6 @@ export class ExtractedMCODE {
     }
 
     return null;
-  }
-  isStageValue(stage: string): boolean {
-    return this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, stage)) ||
-        this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, stage))
   }
 
   // Get Tumor Marker Values.
