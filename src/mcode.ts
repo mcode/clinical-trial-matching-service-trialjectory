@@ -4,6 +4,7 @@ import * as fhirpath from 'fhirpath';
 import profile_system_codes_json from '../data/profile-system-codes-json.json';
 import { fhir } from 'clinical-trial-matching-service';
 import { CodeProfile, ProfileSystemCodes } from './profileSystemLogic';
+import { stringify } from 'node:querystring';
 
 const profile_system_codes = profile_system_codes_json as ProfileSystemCodes;
 
@@ -706,7 +707,7 @@ export class ExtractedMCODE {
 
   getStageValues(): string {
     // Set the sheet name -> Trialjectory result mapping.
-    let stage_value_map = new Map()
+    const stage_value_map = new Map<string, string>()
     stage_value_map.set('Stage-0', '0');
     stage_value_map.set('Stage-0A', '0'); // 0A is not a stage in Trialjectory, return 0.
     stage_value_map.set('Stage-1', '1');
@@ -750,7 +751,7 @@ export class ExtractedMCODE {
     }
 
     // Array that Tumor Marker values will be added to as they apply.
-    let tumorMarkerArray: string[] = [];
+    const tumorMarkerArray: string[] = [];
 
     if (this.tumorMarker.some((tm) => this.isERPositive(tm, 1))) {
       // NOTE: ER+ check always uses 1 as the matric parameter by default.
