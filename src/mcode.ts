@@ -721,7 +721,7 @@ export class ExtractedMCODE {
     stage_value_map.set('Stage-3A', '3A');
     stage_value_map.set('Stage-3B', '3B');
     stage_value_map.set('Stage-3C', '3C');
-    stage_value_map.set('Stage-4', '3');
+    stage_value_map.set('Stage-4', '4');
     stage_value_map.set('Stage-4A', '4A');
     stage_value_map.set('Stage-4B', '4B');
     stage_value_map.set('Stage-4C', '4C');
@@ -729,7 +729,6 @@ export class ExtractedMCODE {
 
     // Iterate through the mappings and return when a code is satisfied.
     for(const stage_name of stage_value_map.keys()){
-      console.log(stage_name);
       if (this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, stage_name)) ||
       this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, stage_name))) {
         return stage_value_map.get(stage_name);

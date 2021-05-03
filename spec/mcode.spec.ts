@@ -755,7 +755,6 @@ describe('checkStageFilterLogic-Stage1', () => {
     expect(stage).toBe('1');
   });
 });
-/*
 describe('checkStageFilterLogic-Stage1A', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
@@ -936,4 +935,3 @@ describe('checkStageFilterLogic-Stage4C', () => {
     expect(stage).toBe('4C');
   });
 });
-*/
