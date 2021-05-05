@@ -1331,6 +1331,7 @@ quantityMatch(
     } else if (lowerCaseCodeSystem.includes('hl7')) {
       return 'HL7';
     } else {
+      console.log("Profile codes do not support code system: " + codeSystem);
       return '';
     }
   }
