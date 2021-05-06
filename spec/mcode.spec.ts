@@ -980,19 +980,20 @@ describe('checkTumorMarkerFilterLogic-ER-', () => {
 describe('checkTumorMarkerFilterLogic-PR+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tumorMarker : mcode.TumorMarker = {
-    code: [] as Coding[],
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
-    valueQuantity: [] as Coding[],
-    valueRatio: [] as mcode.Ratio[]
-  };
+  const tm: mcode.TumorMarker = {};
+  tm.code = [] as Coding[];
+  tm.interpretation = [] as Coding[];
+  tm.valueCodeableConcept = [] as Coding[];
+  tm.valueQuantity = [] as mcode.Quantity[];
+  tm.valueRatio = [] as mcode.Ratio[];
 
-  tumorMarker.code.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
-  tumorMarker.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'POS', display: 'POS' });
-
+  tm.code.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
+  tm.interpretation.push({
+    system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html',
+    code: 'H',
+    display: 'N/A'
+  } as Coding);  extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-
   it('Test PR+ Filter', () => {
     expect(tumorMarkerValues[0]).toBe('PR+');
   });
@@ -1000,16 +1001,19 @@ describe('checkTumorMarkerFilterLogic-PR+', () => {
 describe('checkTumorMarkerFilterLogic-PR-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tm : mcode.TumorMarker = {
-    code: [] as Coding[],
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
-    valueQuantity: [] as Coding[],
-    valueRatio: [] as mcode.Ratio[]
-  };
+  const tm: mcode.TumorMarker = {};
+  tm.code = [] as Coding[];
+  tm.interpretation = [] as Coding[];
+  tm.valueCodeableConcept = [] as Coding[];
+  tm.valueQuantity = [] as mcode.Quantity[];
+  tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '85331-7', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
-  tm.valueCodeableConcept.push({ system: 'http://snomed.info/sct', code: '260385009', display: 'Negative (qualifier value))' } as Coding);
+  tm.code.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
+  tm.valueCodeableConcept.push({
+    system: 'snomed',
+    code: '260385009',
+    display: 'N/A'
+  } as Coding);  extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
   it('Test PR- Filter', () => {
     expect(tumorMarkerValues[0]).toBe('PR-');
@@ -2048,4 +2052,4 @@ describe('checkTumorMarkerFilterLogic-NTRK_FUSION-', () => {
     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
     expect(tumorMarkerValues[0]).toBe('NTRK_FUSION-');
   });
-});
+})

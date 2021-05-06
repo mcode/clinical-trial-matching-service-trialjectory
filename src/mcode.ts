@@ -4,7 +4,6 @@ import * as fhirpath from 'fhirpath';
 import profile_system_codes_json from '../data/profile-system-codes-json.json';
 import { fhir } from 'clinical-trial-matching-service';
 import { CodeProfile, ProfileSystemCodes } from './profileSystemLogic';
-import { stringify } from 'node:querystring';
 
 const profile_system_codes = profile_system_codes_json as ProfileSystemCodes;
 
@@ -762,7 +761,7 @@ export class ExtractedMCODE {
       // NOTE: ER- check always uses 1 as the matric parameter by default.
       tumorMarkerArray.push('ER-');
     }
-
+    console.log("-----" + this.tumorMarker);
     if (this.tumorMarker.some((tm) => this.isPRPositive(tm, 1))){
       // NOTE: PR+ check always uses 1 as the matric parameter by default.
       tumorMarkerArray.push('PR+');
@@ -963,6 +962,7 @@ export class ExtractedMCODE {
                  );
   }
   isInterpretationPositive(interpretation: Coding[]): boolean {
+    console.log(interpretation)
     return interpretation.some(
                      (interp) =>
                        (interp.code == 'POS' || interp.code == 'DET' || interp.code == 'H') &&
@@ -1068,6 +1068,8 @@ export class ExtractedMCODE {
     );
   }
   isPRPositive(tumorMarker: TumorMarker, metric: number): boolean {
+    console.log("hello");
+    console.log(tumorMarker);
     return (
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationPositive(tumorMarker.interpretation) ||
