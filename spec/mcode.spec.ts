@@ -2053,3 +2053,37 @@ describe('checkTumorMarkerFilterLogic-NTRK_FUSION-', () => {
     expect(tumorMarkerValues[0]).toBe('NTRK_FUSION-');
   });
 })
+describe('checkTumorMarkerFilterLogic-No_Match', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const cgv: mcode.CancerGeneticVariant = {
+    valueCodeableConcept: [] as Coding[],
+    interpretation: [] as Coding[],
+    component: {} as mcode.CancerGeneticVariantComponent
+  };
+  const cgvComponent: mcode.CancerGeneticVariantComponent = {
+    geneStudied: [] as mcode.CancerGeneticVariantComponentType[],
+    genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
+  };
+  const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
+    valueCodeableConcept: { coding: [] as Coding[] },
+    interpretation: { coding: [] as Coding[] }
+  };
+  const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
+    valueCodeableConcept: { coding: [] as Coding[] },
+    interpretation: { coding: [] as Coding[] }
+  };
+
+  cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: 'XXX', display: 'XXX' });
+  cgv.valueCodeableConcept.push({ system: 'snomed', code: 'XXX', display: 'n/a' });
+
+  cgvComponent.geneStudied.push(cgvGeneStudied);
+  cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
+  cgv.component = cgvComponent;
+  extractedMCODE.cancerGeneticVariant.push(cgv);
+
+  it('Test No_Match- Filter', () => {
+    const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
+    expect(tumorMarkerValues.length).toBe(0);
+  });
+})

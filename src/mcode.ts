@@ -761,7 +761,7 @@ export class ExtractedMCODE {
       // NOTE: ER- check always uses 1 as the matric parameter by default.
       tumorMarkerArray.push('ER-');
     }
-    console.log("-----" + this.tumorMarker);
+
     if (this.tumorMarker.some((tm) => this.isPRPositive(tm, 1))){
       // NOTE: PR+ check always uses 1 as the matric parameter by default.
       tumorMarkerArray.push('PR+');
@@ -962,7 +962,6 @@ export class ExtractedMCODE {
                  );
   }
   isInterpretationPositive(interpretation: Coding[]): boolean {
-    console.log(interpretation)
     return interpretation.some(
                      (interp) =>
                        (interp.code == 'POS' || interp.code == 'DET' || interp.code == 'H') &&
@@ -1068,8 +1067,6 @@ export class ExtractedMCODE {
     );
   }
   isPRPositive(tumorMarker: TumorMarker, metric: number): boolean {
-    console.log("hello");
-    console.log(tumorMarker);
     return (
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationPositive(tumorMarker.interpretation) ||
@@ -1248,13 +1245,6 @@ quantityMatch(
       return false;
     }
   }
-
-//   o	trastuzumab_deruxtecan_conjugate
-// 	Does not have any of the mCODE Compliant Term Types. Only has PIN and IN.
-// •	From Caroline: Because technically all the RxNorm codes whose Term Type is SCD (semantic clinical drug), SBD (semantic brand drug), GPCK (generic pack), BPCK (brand pack), SCDG (semantic clinical drug group), SBDG (semantic brand drug group), SCDF (semantic clinical drug form), or SBDF (semantic brand drug form) could be used.
-// 	https://mor.nlm.nih.gov/RxNav/search?searchBy=String&searchTerm=trastuzumab%20deruxtecan
-
-
   getMedicationStatementValues(): string[] {
     const medicationValues:string[] = [];
 
