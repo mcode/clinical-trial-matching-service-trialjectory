@@ -704,12 +704,11 @@ export class ExtractedMCODE {
     return Math.floor(millisecondsAge / milliseconds1Years);
   }
 
-  // This will likely need to be updated. TrialJectory may be looking for more fine grained values for stage.
   getStageValues(): string {
-    // Set the sheet name -> Trialjectory codes mapping.
-    let stage_value_map = new Map()
+    // Set the sheet name -> Trialjectory result mapping.
+    const stage_value_map = new Map<string, string>()
     stage_value_map.set('Stage-0', '0');
-    stage_value_map.set('Stage-0A', '0A');
+    stage_value_map.set('Stage-0A', '0'); // 0A is not a stage in Trialjectory, return 0.
     stage_value_map.set('Stage-1', '1');
     stage_value_map.set('Stage-1A', '1A');
     stage_value_map.set('Stage-1B', '1B');
@@ -722,14 +721,14 @@ export class ExtractedMCODE {
     stage_value_map.set('Stage-3A', '3A');
     stage_value_map.set('Stage-3B', '3B');
     stage_value_map.set('Stage-3C', '3C');
-    stage_value_map.set('Stage-4', '3');
+    stage_value_map.set('Stage-4', '4');
     stage_value_map.set('Stage-4A', '4A');
     stage_value_map.set('Stage-4B', '4B');
     stage_value_map.set('Stage-4C', '4C');
-    stage_value_map.set('Stage-4D', '4D');
+    stage_value_map.set('Stage-4D', '4C');  // 4D is not a stage in Trialjectory, return 4C.
 
     // Iterate through the mappings and return when a code is satisfied.
-    for(const stage_name in stage_value_map.keys()){
+    for(const stage_name of stage_value_map.keys()){
       if (this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, stage_name)) ||
       this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, stage_name))) {
         return stage_value_map.get(stage_name);
@@ -737,10 +736,6 @@ export class ExtractedMCODE {
     }
 
     return null;
-  }
-  isStageValue(stage: string): boolean {
-    return this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, stage)) ||
-        this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, stage))
   }
 
   // Get Tumor Marker Values.
@@ -755,7 +750,7 @@ export class ExtractedMCODE {
     }
 
     // Array that Tumor Marker values will be added to as they apply.
-    let tumorMarkerArray: string[] = [];
+    const tumorMarkerArray: string[] = [];
 
     if (this.tumorMarker.some((tm) => this.isERPositive(tm, 1))) {
       // NOTE: ER+ check always uses 1 as the matric parameter by default.
@@ -1250,13 +1245,6 @@ quantityMatch(
       return false;
     }
   }
-
-//   o	trastuzumab_deruxtecan_conjugate
-// 	Does not have any of the mCODE Compliant Term Types. Only has PIN and IN.
-// •	From Caroline: Because technically all the RxNorm codes whose Term Type is SCD (semantic clinical drug), SBD (semantic brand drug), GPCK (generic pack), BPCK (brand pack), SCDG (semantic clinical drug group), SBDG (semantic brand drug group), SCDF (semantic clinical drug form), or SBDF (semantic brand drug form) could be used.
-// 	https://mor.nlm.nih.gov/RxNav/search?searchBy=String&searchTerm=trastuzumab%20deruxtecan
-
-
   getMedicationStatementValues(): string[] {
     const medicationValues:string[] = [];
 
@@ -1335,6 +1323,7 @@ quantityMatch(
     } else if (lowerCaseCodeSystem.includes('hl7')) {
       return 'HL7';
     } else {
+      console.log("Profile codes do not support code system: " + codeSystem);
       return '';
     }
   }
