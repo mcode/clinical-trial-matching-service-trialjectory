@@ -44,7 +44,7 @@ export function createClinicalTrialLookup(
     patientBundle: fhir.Bundle
   ): Promise<SearchSet> {
     // Create the query based on the patient bundle:
-    const query = new APIQuery(patientBundle); // JSON.stringify(patientBundle, null, 2);
+    const query = new APIQuery(patientBundle);
     // And send the query to the server - For now, the full patient bundle is the query
     return sendQuery(endpoint, query, bearerToken, ctgService);
   };
@@ -176,10 +176,6 @@ export class APIError extends Error {
 /**
  * This class represents a query, built based on values from within the patient
  * bundle.
- * TO-DO
- * Finish making an object for storing the various parameters necessary for the api query
- * based on a patient bundle.
- * Reference https://github.com/mcode/clinical-trial-matching-engine/wiki to see patientBundle Structures
  */
 export class APIQuery {
   // The following example fields are defined by default within the matching UI
@@ -199,11 +195,7 @@ export class APIQuery {
    * A FHIR ResearchStudy status
    */
   recruitmentStatus: string;
-  /**
-   * A set of conditions.
-   */
-  //conditions: { code: string; system: string }[] = [];
-  // TO-DO Add any additional fields which need to be extracted from the bundle to construct query
+  // Additional fields which need to be extracted from the bundle to construct query
   biomarkers: string[];
   stage: string;
   cancerType: string;
@@ -240,12 +232,6 @@ export class APIQuery {
           }
         }
       }
-      // Gather all conditions the patient has
-      //if (resource.resourceType === "Condition") {
-      //  this.addCondition(resource);
-      //}
-      // TO-DO Extract any additional resources that you defined
-
     }
 
     const extractedMCODE = new mcode.ExtractedMCODE(patientBundle);
@@ -262,17 +248,6 @@ export class APIQuery {
     this.metastasis = extractedMCODE.getSecondaryCancerValue();
     this.age = extractedMCODE.getAgeValue();
   }
-
-  /**
-   * Handle condition data. The default implementation does nothing, your
-   * implementation may pull out specific data.
-   * @param condition the condition to add
-   */
-  //addCondition(condition: fhir.Condition): void {
-  //  for (const coding of condition.code.coding) {
-  //    this.conditions.push(coding);
-  //  }
-  //}
 
   /**
    * Create the information sent to the server.
@@ -295,7 +270,6 @@ export class APIQuery {
       surgicalProcedures: this.surgicalProcedures,
       metastasis: this.metastasis,
       age: this.age
-      //conditions: this.conditions,
     });
   }
 
@@ -354,7 +328,7 @@ export function convertResponseToSearchSet(
  */
 function sendQuery(
   endpoint: string,
-  query: APIQuery, //string,
+  query: APIQuery,
   bearerToken: string,
   ctgService?: ClinicalTrialsGovService
 ): Promise<SearchSet> {
@@ -371,11 +345,6 @@ function sendQuery(
           "Content-Type": "application/json; charset=UTF-8",
           "Content-Length": body.byteLength.toString(),
           "User-Agent": "Clinical-Trial-Matching-Wrapper",
-          //"Cache-Control": "no-cache",
-          //"Connection": "keep-alive",
-          //"Accept": "*/*",
-          //"Accept-Encoding": "gzip, deflate, br"
-          //Authorization: "Bearer " + bearerToken,
         },
       },
       (result) => {

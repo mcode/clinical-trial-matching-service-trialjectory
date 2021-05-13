@@ -741,11 +741,7 @@ export class ExtractedMCODE {
   // Get Tumor Marker Values.
   getTumorMarkerValue(): string[] {
 
-    // TODO: Trialjectory Biomarkers not used: [atm, cdh1, chek2, nbn, nf1, palb2, pten, stk11, p53, esr1, pik3ca, pdl1, ntrk_fusion]
-    // Tialjectory Biomarkers used: [her2 (+ and -), pr (+ and -), er (+ and -), rb (+ only, should there be a -?), fgfr, brca1, brca2]
-
     if (this.tumorMarker.length == 0 && this.cancerGeneticVariant.length == 0) {
-      // Should return an empty array as opposed to 'NOT_SURE'? Or this is maybe not even necessary since it would just return an empty array at the end of the function anyway.
       return [];
     }
 
@@ -753,22 +749,22 @@ export class ExtractedMCODE {
     const tumorMarkerArray: string[] = [];
 
     if (this.tumorMarker.some((tm) => this.isERPositive(tm, 1))) {
-      // NOTE: ER+ check always uses 1 as the matric parameter by default.
+      // NOTE: ER+ check always uses 1 as the metric parameter by default.
       tumorMarkerArray.push('ER+');
     }
 
     if (this.tumorMarker.some((tm) => this.isERNegative(tm, 1))) {
-      // NOTE: ER- check always uses 1 as the matric parameter by default.
+      // NOTE: ER- check always uses 1 as the metric parameter by default.
       tumorMarkerArray.push('ER-');
     }
 
     if (this.tumorMarker.some((tm) => this.isPRPositive(tm, 1))){
-      // NOTE: PR+ check always uses 1 as the matric parameter by default.
+      // NOTE: PR+ check always uses 1 as the metric parameter by default.
       tumorMarkerArray.push('PR+');
     }
 
     if (this.tumorMarker.some((tm) => this.isPRNegative(tm, 1))){
-      // NOTE: PR- check always uses 1 as the matric parameter by default.
+      // NOTE: PR- check always uses 1 as the metric parameter by default.
       tumorMarkerArray.push('PR-');
     }
 
@@ -894,7 +890,7 @@ export class ExtractedMCODE {
          }
 
     if (this.tumorMarker.some((tm) => this.isHER2Negative(tm, ['0', '1', '2', '1+', '2+']))) {
-      // NOTE: HER2- check always uses ['0', '1', '2', '1+', '2+'] as the quanitites by default.
+      // NOTE: HER2- check always uses ['0', '1', '2', '1+', '2+'] as the quantities by default.
       tumorMarkerArray.push('HER2-');
     }
 
