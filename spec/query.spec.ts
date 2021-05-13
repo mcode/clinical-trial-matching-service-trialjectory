@@ -247,7 +247,7 @@ describe("APIQuery", () => {
         ],
       }).toString()
     ).toEqual(
-      '{"zip":"01730","distance":25,"phase":"phase-1","status":"approved","conditions":[]}'
+      '{"zip":"01730","distance":25,"phase":"phase-1","status":"approved","biomarkers":[],"stage":null,"cancerType":null,"cancerSubType":null,"ecog":null,"karnofsky":null,"medications":[],"radiationProcedures":[],"surgicalProcedures":[],"metastasis":null,"age":null}'
     );
   });
 
