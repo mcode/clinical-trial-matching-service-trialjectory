@@ -1,11 +1,11 @@
 {
-  "name": "clinical-trial-matching-service-template",
+  "name": "clinical-trial-matching-service-trialjectory",
   "version": "0.1.0",
   "description": "",
   "main": "dist/server.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mcode/clinical-trial-matching-service-template.git"
+    "url": "https://github.com/mcode/clinical-trial-matching-service-trialjectory.git"
   },
   "scripts": {
     "build": "npm run-script build:ts",
@@ -23,7 +23,9 @@
   "license": "Apache-2.0",
   "dependencies": {
     "clinical-trial-matching-service": "github:mcode/clinical-trial-matching-service",
-    "dotenv-flow": "^3.2.0"
+    "dotenv-flow": "^3.2.0",
+    "fhirclient": "^2.3.1",
+    "fhirpath": "^2.3.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
