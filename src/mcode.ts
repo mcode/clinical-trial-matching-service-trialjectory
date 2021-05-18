@@ -626,21 +626,24 @@ export class ExtractedMCODE {
     return null;
   }
 
-  // TODO - This will almost certainly be changed with new details from Trialjectory.
-  // Radiation Procedure
+  // --Procedures--
+  // lumpectomy
+  // mastectomy
+  // alnd
+  // reconstruction
+  // wbrt
+  // radiation
+  // metastasis_resection
+  // ablation
+  // rfa
+  // ebrt
+
+  // Radiation Procedures
   getRadiationProcedureValue(): string[] {
+    // Trialjectory does not differentiate between radiation/surgical procedures. How will that translate to the mCODE filters of radiation/surgical procedures?
+
     const radiationValues:string[] = [];
-    if (this.cancerRelatedRadiationProcedure.length == 0) {
-      return radiationValues;
-    }
-    for (const cancerRelatedRadiationProcedure of this.cancerRelatedRadiationProcedure) {
-      if (
-        cancerRelatedRadiationProcedure.coding &&
-        cancerRelatedRadiationProcedure.coding.some((coding) => this.codeIsInSheet(coding, 'Treatment-SRS-Brain'))
-      ) {
-        radiationValues.push('SRS');
-      }
-    }
+
     for (const cancerRelatedRadiationProcedure of this.cancerRelatedRadiationProcedure) {
       if (
         cancerRelatedRadiationProcedure.coding &&
@@ -657,36 +660,24 @@ export class ExtractedMCODE {
         radiationValues.push('WBRT');
       }
     }
+
+    // No logic for this?
     if (radiationValues.length == 0) {
       radiationValues.push('RADIATION_THERAPY');
     }
+
     return radiationValues;
   }
 
-  // TODO - This will almost certainly be changed with new details from Trialjectory.
-  // Surgical Procedure
+  // Surgical Procedures
   getSurgicalProcedureValue(): string[] {
     const surgicalValues:string[] = [];
-    if (this.cancerRelatedSurgicalProcedure.length == 0) {
-      return surgicalValues;
-    }
+
     if (this.cancerRelatedSurgicalProcedure.some((coding) => this.codeIsInSheet(coding, 'Treatment-Resection-Brain'))) {
+      // Is this metastasis_resection? It just seems to be specific to Brain.
       surgicalValues.push('RESECTION');
-    } else if (
-      this.cancerRelatedSurgicalProcedure.some((coding) => this.codeIsInSheet(coding, 'Treatment-Splenectomy'))
-    ) {
-      surgicalValues.push('SPLENECTOMY');
-    } else if (
-      this.cancerRelatedSurgicalProcedure.some(
-        (coding) => this.normalizeCodeSystem(coding.system) == 'SNOMED' && coding.code == '58390007'
-      )
-    ) {
-      surgicalValues.push('BONE_MARROW_TRANSPLANT');
-    } else if (
-      this.cancerRelatedSurgicalProcedure.some((coding) => this.codeIsInSheet(coding, 'Treatment-Organ_Transplant'))
-    ) {
-      surgicalValues.push('ORGAN_TRANSPLANT');
     }
+
     return surgicalValues;
   }
 
