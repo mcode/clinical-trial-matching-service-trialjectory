@@ -707,25 +707,25 @@ export class ExtractedMCODE {
   getStageValues(): string {
     // Set the sheet name -> Trialjectory result mapping.
     const stage_value_map = new Map<string, string>()
-    stage_value_map.set('Stage-0', '0');
-    stage_value_map.set('Stage-0A', '0'); // 0A is not a stage in Trialjectory, return 0.
-    stage_value_map.set('Stage-1', '1');
-    stage_value_map.set('Stage-1A', '1A');
-    stage_value_map.set('Stage-1B', '1B');
-    stage_value_map.set('Stage-1C', '1C');
-    stage_value_map.set('Stage-2', '2');
-    stage_value_map.set('Stage-2A', '2A');
-    stage_value_map.set('Stage-2B', '2B');
-    stage_value_map.set('Stage-2C', '2C');
-    stage_value_map.set('Stage-3', '3');
-    stage_value_map.set('Stage-3A', '3A');
-    stage_value_map.set('Stage-3B', '3B');
-    stage_value_map.set('Stage-3C', '3C');
-    stage_value_map.set('Stage-4', '4');
-    stage_value_map.set('Stage-4A', '4A');
-    stage_value_map.set('Stage-4B', '4B');
-    stage_value_map.set('Stage-4C', '4C');
     stage_value_map.set('Stage-4D', '4C');  // 4D is not a stage in Trialjectory, return 4C.
+    stage_value_map.set('Stage-4C', '4C');
+    stage_value_map.set('Stage-4B', '4B');
+    stage_value_map.set('Stage-4A', '4A');
+    stage_value_map.set('Stage-4', '4');
+    stage_value_map.set('Stage-3C', '3C');
+    stage_value_map.set('Stage-3B', '3B');
+    stage_value_map.set('Stage-3A', '3A');
+    stage_value_map.set('Stage-3', '3');
+    stage_value_map.set('Stage-2C', '2C');
+    stage_value_map.set('Stage-2B', '2B');
+    stage_value_map.set('Stage-2A', '2A');
+    stage_value_map.set('Stage-2', '2');
+    stage_value_map.set('Stage-1C', '1C');
+    stage_value_map.set('Stage-1B', '1B');
+    stage_value_map.set('Stage-1A', '1A');
+    stage_value_map.set('Stage-1', '1');
+    stage_value_map.set('Stage-0A', '0'); // 0A is not a stage in Trialjectory, return 0.
+    stage_value_map.set('Stage-0', '0');
 
     // Iterate through the mappings and return when a code is satisfied.
     for(const stage_name of stage_value_map.keys()){
