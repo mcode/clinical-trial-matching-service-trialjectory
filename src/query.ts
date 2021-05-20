@@ -291,8 +291,7 @@ export class APIQuery {
       ecog: this.ecog,
       karnofsky: this.karnofsky,
       medications: this.medications,
-      radiationProcedures: this.radiationProcedures,
-      surgicalProcedures: this.surgicalProcedures,
+      procedures: this.radiationProcedures.concat(this.surgicalProcedures),
       metastasis: this.metastasis,
       age: this.age
       //conditions: this.conditions,
@@ -300,6 +299,7 @@ export class APIQuery {
   }
 
   toString(): string {
+    console.log(this.toQuery());
     // Note that if toQuery is no longer a string, this will no longer work
     return this.toQuery();
   }
