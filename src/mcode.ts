@@ -368,6 +368,22 @@ export class ExtractedMCODE {
     return false;
   }
 
+    // Get ECOG Score
+    getECOGScore(): number {
+      if(this.ecogPerformaceStatus == -1) {
+        return null;
+      }
+      return this.ecogPerformaceStatus;
+    }
+  
+    // Get Karnofsky Score
+    getKarnofskyScore(): number {
+      if(this.karnofskyPerformanceStatus == -1) {
+        return null;
+      }
+      return this.karnofskyPerformanceStatus;
+    }
+
   // TODO - This will almost certainly be changed after more details from Trialjectory.
   // Primary Cancer Value
   getPrimaryCancerValue(): string {

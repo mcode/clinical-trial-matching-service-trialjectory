@@ -254,8 +254,8 @@ export class APIQuery {
     this.stage = extractedMCODE.getStageValues();
     this.cancerType = extractedMCODE.getPrimaryCancerValue();
     this.cancerSubType = extractedMCODE.getHistologyMorphologyValue();
-    this.ecog = extractedMCODE.ecogPerformaceStatus;
-    this.karnofsky = extractedMCODE.karnofskyPerformanceStatus;
+    this.ecog = extractedMCODE.getECOGScore();
+    this.karnofsky = extractedMCODE.getKarnofskyScore();
     this.medications = extractedMCODE.getMedicationStatementValues();
     this.radiationProcedures = extractedMCODE.getRadiationProcedureValue();
     this.surgicalProcedures = extractedMCODE.getSurgicalProcedureValue();
