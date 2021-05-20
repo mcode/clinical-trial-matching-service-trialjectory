@@ -696,11 +696,8 @@ export class ExtractedMCODE {
   // Get Tumor Marker Values.
   getTumorMarkerValue(): string[] {
 
-    // TODO: Trialjectory Biomarkers not used: [atm, cdh1, chek2, nbn, nf1, palb2, pten, stk11, p53, esr1, pik3ca, pdl1, ntrk_fusion]
-    // Tialjectory Biomarkers used: [her2 (+ and -), pr (+ and -), er (+ and -), rb (+ only, should there be a -?), fgfr, brca1, brca2]
-
     if (this.tumorMarker.length == 0 && this.cancerGeneticVariant.length == 0) {
-      // Should return an empty array as opposed to 'NOT_SURE'? Or this is maybe not even necessary since it would just return an empty array at the end of the function anyway.
+      // Prevents unnecessary checks if the tumor marker values are empty.
       return [];
     }
 
