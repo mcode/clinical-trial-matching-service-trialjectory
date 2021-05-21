@@ -1,5 +1,5 @@
 import * as mcode from "../src/mcode";
-import { Coding } from "../src/mcode";
+import { Coding, PrimaryCancerCondition } from "../src/mcode";
 
 describe("checkMedicationStatementFilterLogic-NoMedications", () => {
   // Initialize
@@ -2335,5 +2335,88 @@ describe('checkAgeFilterLogic', () => {
     const milliseconds1Years = 1000 * 60 * 60 * 24 * 365;
     extractedMCODE.birthDate = birthdate;
     expect(extractedMCODE.getAgeValue()).toBe(Math.floor(millisecondsAge/milliseconds1Years));
+  });
+});
+describe('checkHistologyMorphologyFilterLogic-ibc', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Invasive Breast Cancer Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
+  pcc.histologyMorphologyBehavior.push({
+    system: 'http://snomed.info/sct',
+    code: '446688004',
+    display: 'N/A'
+  } as Coding); // Any code in 'Morphology-Invasive'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Invasive Breast Cancer Filter', () => {
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('ibc');
+  });
+});
+describe('checkHistologyMorphologyFilterLogic-idc', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Invasive Ductal Carcinoma Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
+  pcc.histologyMorphologyBehavior.push({
+    system: 'http://snomed.info/sct',
+    code: '444134008',
+    display: 'N/A'
+  } as Coding); // Any code in 'Morphology-Invas_Duct_Carc'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Invasive Invasive Ductal Carcinoma Filter', () => {
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('idc');
+  });
+});
+describe('checkHistologyMorphologyFilterLogic-ilc', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Invasive Lobular Carcinoma Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '1080261000119100', display: 'N/A' } as Coding); // Any Code in 'Cancer-Invas Lob Carc'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Invasive Lobular Carcinoma Filter', () => {
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('ilc');
+  });
+});
+describe('checkHistologyMorphologyFilterLogic-dcis', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Ductal Carcinoma In Situ Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
+  pcc.histologyMorphologyBehavior.push({
+    system: 'http://snomed.info/sct',
+    code: '18680006',
+    display: 'N/A'
+  } as Coding); // Any code in 'Morphology-Duct_Car_In_Situ'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Ductal Carcinoma In Situ Filter', () => {
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('dcis');
   });
 });
