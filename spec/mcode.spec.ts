@@ -2420,3 +2420,21 @@ describe('checkHistologyMorphologyFilterLogic-dcis', () => {
     expect(extractedMCODE.getHistologyMorphologyValue()).toBe('dcis');
   });
 });
+describe('checkECOGFilterLogic', () => {
+  //Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  extractedMCODE.ecogPerformaceStatus = 3;
+  // ECOG Test
+  it('Test ECOG Filter', () => {
+    expect(extractedMCODE.getECOGScore()).toBe(3);
+  });
+});
+describe('checkKarnofskyFilterLogic', () => {
+  //Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  extractedMCODE.karnofskyPerformanceStatus = 90;
+  // Karnofsky Test
+  it('Test Karnofsky Filter', () => {
+    expect(extractedMCODE.getKarnofskyScore()).toBe(90);
+  });
+});
