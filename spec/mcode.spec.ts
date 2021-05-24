@@ -935,6 +935,32 @@ describe('checkStageFilterLogic-Stage4C', () => {
     expect(stage).toBe('4C');
   });
 });
+describe('checkStageFilterLogic-Stage4C_With_Stage1_InOrder', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 4C Filter Attributes
+  tnmPathological.push({ system: 'AJCC', code: '1', display: 'N/A' } as Coding); // Any code in 'Stage-1'
+  tnmPathological.push({ system: 'ajcc', code: '4c', display: 'N/A' } as Coding); // Any code in 'Stage-4C'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 4C Filter With 1', () => {
+    expect(stage).toBe('4C');
+  });
+});
+describe('checkStageFilterLogic-Stage3C_With_Stage3B_NotOrdered', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tnmPathological: Coding[] = [] as Coding[];
+  // Stage 4C Filter Attributes
+  tnmPathological.push({ system: 'AJCC', code: '3c', display: 'N/A' } as Coding); // Any code in 'Stage-3C'
+  tnmPathological.push({ system: 'snomed', code: '261639007', display: 'N/A' } as Coding); // Any code in 'Stage-3B'
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+  const stage: string = extractedMCODE.getStageValues();
+  it('Test Stage 3C Filter With 3B', () => {
+    expect(stage).toBe('3C');
+  });
+});
 describe('checkTumorMarkerFilterLogic-ER+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);

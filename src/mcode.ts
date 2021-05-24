@@ -662,25 +662,25 @@ export class ExtractedMCODE {
   getStageValues(): string {
     // Set the sheet name -> Trialjectory result mapping.
     const stage_value_map = new Map<string, string>()
-    stage_value_map.set('Stage-0', '0');
-    stage_value_map.set('Stage-0A', '0'); // 0A is not a stage in Trialjectory, return 0.
-    stage_value_map.set('Stage-1', '1');
-    stage_value_map.set('Stage-1A', '1A');
-    stage_value_map.set('Stage-1B', '1B');
-    stage_value_map.set('Stage-1C', '1C');
-    stage_value_map.set('Stage-2', '2');
-    stage_value_map.set('Stage-2A', '2A');
-    stage_value_map.set('Stage-2B', '2B');
-    stage_value_map.set('Stage-2C', '2C');
-    stage_value_map.set('Stage-3', '3');
-    stage_value_map.set('Stage-3A', '3A');
-    stage_value_map.set('Stage-3B', '3B');
-    stage_value_map.set('Stage-3C', '3C');
-    stage_value_map.set('Stage-4', '4');
-    stage_value_map.set('Stage-4A', '4A');
-    stage_value_map.set('Stage-4B', '4B');
-    stage_value_map.set('Stage-4C', '4C');
     stage_value_map.set('Stage-4D', '4C');  // 4D is not a stage in Trialjectory, return 4C.
+    stage_value_map.set('Stage-4C', '4C');
+    stage_value_map.set('Stage-4B', '4B');
+    stage_value_map.set('Stage-4A', '4A');
+    stage_value_map.set('Stage-4', '4');
+    stage_value_map.set('Stage-3C', '3C');
+    stage_value_map.set('Stage-3B', '3B');
+    stage_value_map.set('Stage-3A', '3A');
+    stage_value_map.set('Stage-3', '3');
+    stage_value_map.set('Stage-2C', '2C');
+    stage_value_map.set('Stage-2B', '2B');
+    stage_value_map.set('Stage-2A', '2A');
+    stage_value_map.set('Stage-2', '2');
+    stage_value_map.set('Stage-1C', '1C');
+    stage_value_map.set('Stage-1B', '1B');
+    stage_value_map.set('Stage-1A', '1A');
+    stage_value_map.set('Stage-1', '1');
+    stage_value_map.set('Stage-0A', '0'); // 0A is not a stage in Trialjectory, return 0.
+    stage_value_map.set('Stage-0', '0');
 
     // Iterate through the mappings and return when a code is satisfied.
     for(const stage_name of stage_value_map.keys()){
@@ -705,22 +705,22 @@ export class ExtractedMCODE {
     const tumorMarkerArray: string[] = [];
 
     if (this.tumorMarker.some((tm) => this.isERPositive(tm, 1))) {
-      // NOTE: ER+ check always uses 1 as the matric parameter by default.
+      // NOTE: ER+ check always uses 1 as the metric parameter by default.
       tumorMarkerArray.push('ER+');
     }
 
     if (this.tumorMarker.some((tm) => this.isERNegative(tm, 1))) {
-      // NOTE: ER- check always uses 1 as the matric parameter by default.
+      // NOTE: ER- check always uses 1 as the metric parameter by default.
       tumorMarkerArray.push('ER-');
     }
 
     if (this.tumorMarker.some((tm) => this.isPRPositive(tm, 1))){
-      // NOTE: PR+ check always uses 1 as the matric parameter by default.
+      // NOTE: PR+ check always uses 1 as the metric parameter by default.
       tumorMarkerArray.push('PR+');
     }
 
     if (this.tumorMarker.some((tm) => this.isPRNegative(tm, 1))){
-      // NOTE: PR- check always uses 1 as the matric parameter by default.
+      // NOTE: PR- check always uses 1 as the metric parameter by default.
       tumorMarkerArray.push('PR-');
     }
 
@@ -846,7 +846,7 @@ export class ExtractedMCODE {
          }
 
     if (this.tumorMarker.some((tm) => this.isHER2Negative(tm, ['0', '1', '2', '1+', '2+']))) {
-      // NOTE: HER2- check always uses ['0', '1', '2', '1+', '2+'] as the quanitites by default.
+      // NOTE: HER2- check always uses ['0', '1', '2', '1+', '2+'] as the quantities by default.
       tumorMarkerArray.push('HER2-');
     }
 
