@@ -531,9 +531,6 @@ export class ExtractedMCODE {
     ) {
       return null;
     }
-
-    // Each Trialjectory cancerSubType value is represented except: lcis
-
     // Invasive Ductal Carcinoma
     for (const primaryCancerCondition of this.primaryCancerCondition) {
       if (
@@ -543,7 +540,7 @@ export class ExtractedMCODE {
           )) ||
         primaryCancerCondition.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Invas_Duct_Carc'))
       ) {
-        // return 'INVASIVE_DUCTAL_CARCINOMA';
+        // idc (Invasice Ductal Carcinoma)
         return 'idc';
       }
     }
@@ -557,7 +554,7 @@ export class ExtractedMCODE {
           )) ||
         primaryCancerCondition.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Invas_Lob_Carc'))
       ) {
-        // return 'INVASIVE_LOBULAR_CARCINOMA';
+        // ilc '(Invasive Lobular Carcinoma)
         return 'ilc';
       }
     }
@@ -569,7 +566,7 @@ export class ExtractedMCODE {
           this.codeIsInSheet(histMorphBehav, 'Morphology-Duct_Car_In_Situ')
         )
       ) {
-        // return 'DUCTAL_CARCINOMA_IN_SITU';
+        // dcis (Ductal Carcinoma In Situ)
         return 'dcis';
       }
     }
@@ -582,7 +579,7 @@ export class ExtractedMCODE {
           )) ||
         primaryCancerCondition.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Invasive-Breast'))
       ) {
-        // return 'INVASIVE_BREAST_CANCER';
+        // ibc (Invasive Breast Cancer)
         return 'ibc';
       }
     }
@@ -590,21 +587,8 @@ export class ExtractedMCODE {
     return null;
   }
 
-  // --Procedures--
-  // lumpectomy
-  // mastectomy
-  // alnd
-  // reconstruction
-  // wbrt
-  // radiation
-  // metastasis_resection
-  // ablation
-  // rfa
-  // ebrt
-
   // Radiation Procedures
   getRadiationProcedureValue(): string[] {
-    // Trialjectory does not differentiate between radiation/surgical procedures. How will that translate to the mCODE filters of radiation/surgical procedures?
 
     const radiationValues:string[] = [];
 
@@ -621,13 +605,13 @@ export class ExtractedMCODE {
             (coding.code == '12738006' || coding.code == '119235005')
         )
       ) {
-        radiationValues.push('WBRT');
+        radiationValues.push('wbrt');
       }
     }
 
-    // No logic for this?
-    if (radiationValues.length == 0) {
-      radiationValues.push('RADIATION_THERAPY');
+    if (this.cancerRelatedRadiationProcedure.length > 0) {
+      // If there is any code in the cancerRelatedRadiationProcedure, it counts as radiation.
+      radiationValues.push('radiation');
     }
 
     return radiationValues;
@@ -636,12 +620,7 @@ export class ExtractedMCODE {
   // Surgical Procedures
   getSurgicalProcedureValue(): string[] {
     const surgicalValues:string[] = [];
-
-    if (this.cancerRelatedSurgicalProcedure.some((coding) => this.codeIsInSheet(coding, 'Treatment-Resection-Brain'))) {
-      // Is this metastasis_resection? It just seems to be specific to Brain.
-      surgicalValues.push('RESECTION');
-    }
-
+    // TODO - fill in with Surgical Procedures.
     return surgicalValues;
   }
 
