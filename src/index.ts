@@ -2,7 +2,7 @@ const { default: server } = require("./server");
 const AWS = require('aws-sdk');
 import ClinicalTrialMatchingService from 'clinical-trial-matching-service';
 
-exports.handler =  async function (event, context) {
+exports.handler =  async function (event: { body: string; }, context: any) {
     // event: contains infomration from the invoker, passed as a JSON-formatted string.
     console.log("EVENT: \n" + JSON.stringify(event, null, 2))
     let service: ClinicalTrialMatchingService = await server();
