@@ -240,8 +240,8 @@ export class APIQuery {
     this.stage = extractedMCODE.getStageValues();
     this.cancerType = extractedMCODE.getPrimaryCancerValue();
     this.cancerSubType = extractedMCODE.getHistologyMorphologyValue();
-    this.ecog = extractedMCODE.ecogPerformaceStatus;
-    this.karnofsky = extractedMCODE.karnofskyPerformanceStatus;
+    this.ecog = extractedMCODE.getECOGScore();
+    this.karnofsky = extractedMCODE.getKarnofskyScore();
     this.medications = extractedMCODE.getMedicationStatementValues();
     this.radiationProcedures = extractedMCODE.getRadiationProcedureValue();
     this.surgicalProcedures = extractedMCODE.getSurgicalProcedureValue();
@@ -266,14 +266,14 @@ export class APIQuery {
       ecog: this.ecog,
       karnofsky: this.karnofsky,
       medications: this.medications,
-      radiationProcedures: this.radiationProcedures,
-      surgicalProcedures: this.surgicalProcedures,
+      procedures: this.radiationProcedures.concat(this.surgicalProcedures),
       metastasis: this.metastasis,
       age: this.age
     });
   }
 
   toString(): string {
+    console.log(this.toQuery());
     // Note that if toQuery is no longer a string, this will no longer work
     return this.toQuery();
   }
