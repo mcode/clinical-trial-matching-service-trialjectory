@@ -106,10 +106,10 @@ export function isQueryTrial(o: unknown): o is QueryTrial {
       typeof trial.first_submitted === "string" &&
       (!trial.location || typeof trial.locations === "string") &&
       typeof trial.url === "string" &&
-      typeof trial.phases === "string" &&
+      (typeof trial.phases === "string" || trial.phases === null )&&
       typeof trial.enrollment === "number" &&
       typeof trial.study_type === "string" &&
-      typeof trial.control_type === "string" &&
+      (typeof trial.control_type === "string" || trial.control_type === null) &&
       (!trial.contact_name ||  typeof trial.contact_name === "string") &&
       (!trial.conatct_phone || typeof trial.conatct_phone === "string") &&
       (!trial.contact_email || typeof trial.contact_email === "string") &&

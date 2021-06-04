@@ -35,6 +35,7 @@ function convertArrayToObjective(trialStringArray: string[]): fhir.Objective[] {
 }
 
 export function convertToResearchStudy(trial: QueryTrial, id: number): ResearchStudy {
+  //console.log(JSON.stringify(trial));
   const result = new ResearchStudy(id);
   result.status = 'active'; // default
 
@@ -88,13 +89,15 @@ export function convertToResearchStudy(trial: QueryTrial, id: number): ResearchS
 
   if (trial.closest_facility) {
     const site : TJFacility = trial.closest_facility;
-    const location = result.addSite(site.facility_name);
-    if (site.lat && site.lng) {
-      location.position = { latitude: parseFloat(site.lat), longitude: parseFloat(site.lng) };
-    }
-    if (site.facility_zip) {
-      // Populate just enough of the address in the location
-      location.address = { use: 'work', postalCode: site.facility_zip };
+    if (site.facility_name) {
+      const location = result.addSite(site.facility_name);
+      if (site.lat && site.lng) {
+        location.position = { latitude: parseFloat(site.lat), longitude: parseFloat(site.lng) };
+      }
+      if (site.facility_zip) {
+        // Populate just enough of the address in the location
+        location.address = { use: 'work', postalCode: site.facility_zip };
+      }
     }
   }
 
