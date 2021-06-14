@@ -16,3 +16,18 @@
 # System Files
 .DS_Store
 Thumbs.db
+
+# Javascript files for AWS
+index.js
+index.js.map
+mcode.js
+mcode.js.map
+profileSystemLogic.js
+profileSystemLogic.js.map
+query.js
+query.js.map
+researchstudy-mapping.js
+researchstudy-mapping.js.map
+server.js
+server.js.map
+trialjectory-lambda.zip
