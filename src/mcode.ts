@@ -1245,7 +1245,7 @@ quantityMatch(
     for(const medication of medication_values_map.keys()){
       console.log(medication)
       if (this.cancerRelatedMedicationStatement.some((coding) => this.codeIsInSheet(coding, medication))) {
-        medication_values.push.apply(medication_values, medication_values_map.get(medication));
+        medication_values.push(...medication_values_map.get(medication));
       }
     }
 
@@ -1256,19 +1256,18 @@ quantityMatch(
   codeIsInSheet(coding: Coding, ...sheetNames: string[]): boolean {
     const system = this.normalizeCodeSystem(coding.system);
     for (const sheetName of sheetNames) {
-      const codeProfile: CodeProfile = profile_system_codes[sheetName] as CodeProfile; // Pull the codes for the profile
-      if (codeProfile == undefined || codeProfile == null) {
+      const codeProfile: CodeProfile = profile_system_codes[sheetName]; // Pull the codes for the profile
+      if (codeProfile == undefined) {
         console.error('Code Profile ' + sheetName + ' is undefined.');
-      } else {
-        let codeSet: { code: string }[] = codeProfile[system] as { code: string }[]; // Pull the system codes from the codes
-        if (!codeSet) {
-          codeSet = [];
-        }
-        // Check that the current code matches the given code.
-        for (const currentCode of codeSet) {
-          if (coding.code == currentCode.code || coding.display == currentCode.code) {
-            return true;
-          }
+      }
+      let codeSet: { code: string }[] = codeProfile[system] as { code: string }[]; // Pull the system codes from the codes
+      if (!codeSet) {
+        codeSet = [];
+      }
+      // Check that the current code matches the given code.
+      for (const currentCode of codeSet) {
+        if (coding.code == currentCode.code || coding.display == currentCode.code) {
+          return true;
         }
       }
     }
