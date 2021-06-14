@@ -111,6 +111,7 @@ describe('checkMedicationStatementFilterLogic-trastuzumab', () => {
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test trastuzumab medication filter.', () => {
     expect(medications.some(medication => medication == 'trastuzumab')).toBe(true);
+  });
 });
 describe("checkMedicationStatementFilterLogic-trastuzumab_hyaluronidase_conjugate", () => {
   // Initialize
@@ -121,7 +122,8 @@ describe("checkMedicationStatementFilterLogic-trastuzumab_hyaluronidase_conjugat
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test trastuzumab_hyaluronidase_conjugate medication filter.", () => {
-    expect(medications[0]).toBe("trastuzumab_hyaluronidase_conjugate");
+    expect(medications.some(medication => medication == 'trastuzumab_hyaluronidase_conjugate')).toBe(true);
+    expect(medications.some(medication => medication == 'trastuzumab')).toBe(true);
   });
 });
 describe("checkMedicationStatementFilterLogic-trastuzumab_deruxtecan_conjugate", () => {
@@ -134,7 +136,8 @@ describe("checkMedicationStatementFilterLogic-trastuzumab_deruxtecan_conjugate",
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test trastuzumab_deruxtecan_conjugate medication filter.", () => {
-    expect(medications[0]).toBe("trastuzumab_deruxtecan_conjugate");
+    expect(medications.some(medication => medication == 'trastuzumab_deruxtecan_conjugate')).toBe(true);
+    expect(medications.some(medication => medication == 'trastuzumab')).toBe(true);
   });
 });
 describe("checkMedicationStatementFilterLogic-pertuzumab", () => {
@@ -170,13 +173,9 @@ describe("checkMedicationStatementFilterLogic-pertuzumab_trastuzumab_hyaluronida
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test pertuzumab_trastuzumab_hyaluronidase medication filter.", () => {
-    expect(medications.length).toBe(2);
-    expect(
-      medications.indexOf("pertuzumab_trastuzumab_hyaluronidase") > -1
-    ).toBe(true);
-    expect(
-      medications.indexOf("trastuzumab_hyaluronidase_conjugate") > -1
-    ).toBe(true);
+    expect(medications.some(medication => medication == 'pertuzumab_trastuzumab_hyaluronidase')).toBe(true);
+    expect(medications.some(medication => medication == 'trastuzumab_hyaluronidase_conjugate')).toBe(true);
+    expect(medications.some(medication => medication == 'trastuzumab')).toBe(true);
   });
 });
 describe("checkMedicationStatementFilterLogic-tucatinib", () => {
@@ -212,7 +211,7 @@ describe("checkMedicationStatementFilterLogic-tdm1", () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test tdm1 medication filter.", () => {
-    expect(medications[0]).toBe("tdm1");
+    expect(medications.some(medication => medication == 'tdm1')).toBe(true);
   });
 });
 describe("checkMedicationStatementFilterLogic-doxorubicin", () => {
@@ -383,7 +382,7 @@ describe("checkMedicationStatementFilterLogic-vinorelbine", () => {
     expect(medications[0]).toBe("vinorelbine");
   });
 });
-describe('checkMedicationStatementFilterLogic-eribuline-erubilin', () => {
+describe('checkMedicationStatementFilterLogic-eribuline-eribulin', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const ms: Coding[] = [] as Coding[];
@@ -391,9 +390,9 @@ describe('checkMedicationStatementFilterLogic-eribuline-erubilin', () => {
   ms.push({ system: 'RxNorm', code: '1736562', display: 'N/A' } as Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
-  it('Test eribuline-erubilin medication filter.', () => {
+  it('Test eribuline-eribulin medication filter.', () => {
     // Both keywords should be present.
-    expect(medications.some(medication => medication == 'erubilin')).toBe(true);
+    expect(medications.some(medication => medication == 'eribulin')).toBe(true);
     expect(medications.some(medication => medication == 'eribuline')).toBe(true);
   });
 });
@@ -658,7 +657,7 @@ describe('checkMedicationStatementFilterLogic-high_dose_estrogen', () => {
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const ms: Coding[] = [] as Coding[];
   // high_dose_estrogen medication filter
-  ms.push({ system: 'RxNorm', code: 'XXXXX', display: 'N/A' } as Coding);
+  ms.push({ system: 'RxNorm', code: '4100', display: 'N/A' } as Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test high_dose_estrogen medication filter.', () => {
