@@ -70,7 +70,7 @@ export function convertToResearchStudy(trial: QueryTrial, id: number): ResearchS
   }
 
   if (trial.brief_summary) {
-    result.description = trial.brief_summary;
+    result.description = trial.brief_summary.split("    ").join('\n');
   }
 
   if (trial.main_objectives) {
