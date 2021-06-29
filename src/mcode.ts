@@ -1177,37 +1177,86 @@ quantityMatch(
     }
   }
   getMedicationStatementValues(): string[] {
-    const medicationValues:string[] = [];
 
-    const medicationsToCheck:string[] = new Array('anastrozole','exemestane','letrozole',
-        'tamoxifen','toremifene','fulvestrant','raloxifene_hcl','trastuzumab',
-        'trastuzumab_hyaluronidase_conjugate','trastuzumab_deruxtecan_conjugate',
-        'pertuzumab','lapatinib','aluronidase','tucatinib','neratinib','tdm1','doxorubicin',
-        'epirubicin','cyclophosphamide','cisplatin','carboplatin','paclitaxel','docetaxel',
-        'gemcitabine','capecitabine','vinblastine_sulfate','sacituzumab_govitecan_hziy',
-        'methotrexate','fluorouracil','vinorelbine','eribuline','ixabepilone','etoposide',
-        'pemetrexed','irinotecan','topotecan','ifosfamide','nivolumab','avelumab','thiotepa',
-        'olaparib','talazoparib','atezolizumab','pembrolizumab','zoledronic_acid','pamidronate',
-        'denosumab','bevacizumab','everolimus','progestin','fluoxymesterone','high_dose_estrogen',
-        'palbociclib','abemaciclib','alpelisib','ribociclib',
-        'pertuzumab_trastuzumab_hyaluronidase');
+    // Set the sheet name -> Trialjectory result mapping.
+    const medication_values_map = new Map<string, string[]>()
+    medication_values_map.set('anastrozole', ['anastrozole']);
+    medication_values_map.set('exemestane', ['exemestane']);
+    medication_values_map.set('letrozole', ['letrozole']);
+    medication_values_map.set('tamoxifen', ['tamoxifen']);
+    medication_values_map.set('toremifene', ['toremifene']);
+    medication_values_map.set('fulvestrant', ['fulvestrant']);
+    medication_values_map.set('raloxifene_hcl', ['raloxifene_hcl']);
+    medication_values_map.set('trastuzumab', ['trastuzumab']);
+    medication_values_map.set('trastuzumab_hyaluronidase_conjugate', ['trastuzumab_hyaluronidase_conjugate']);
+    medication_values_map.set('trastuzumab_deruxtecan_conjugate', ['trastuzumab_deruxtecan_conjugate']);
+    medication_values_map.set('pertuzumab', ['pertuzumab']);
+    medication_values_map.set('lapatinib', ['lapatinib']);
+    medication_values_map.set('pamidronate', ['pamidronate']);
+    medication_values_map.set('paclitaxel', ['paclitaxel']);
+    medication_values_map.set('hyaluronidase', ['hyaluronidase']);  // Originally spelled aluronidase, updated to hyaluronidase.
+    medication_values_map.set('tucatinib', ['tucatinib']);
+    medication_values_map.set('paclitaxel', ['paclitaxel']);
+    medication_values_map.set('ixabepilone', ['ixabepilone']);
+    medication_values_map.set('neratinib', ['neratinib']);
+    medication_values_map.set('tdm1', ['tdm1']);
+    medication_values_map.set('doxorubicin', ['doxorubicin']);
+    medication_values_map.set('epirubicin', ['epirubicin']);
+    medication_values_map.set('cyclophosphamide', ['cyclophosphamide']);
+    medication_values_map.set('docetaxel', ['docetaxel']);
+    medication_values_map.set('cisplatin', ['cisplatin']);
+    medication_values_map.set('carboplatin', ['carboplatin']);
+    medication_values_map.set('gemcitabine', ['gemcitabine']);
+    medication_values_map.set('capecitabine', ['capecitabine']);
+    medication_values_map.set('vinblastine_sulfate', ['vinblastine_sulfate']);
+    medication_values_map.set('sacituzumab_govitecan_hziy', ['sacituzumab_govitecan_hziy']);
+    medication_values_map.set('methotrexate', ['methotrexate']);
+    medication_values_map.set('fluorouracil', ['fluorouracil']);
+    medication_values_map.set('vinorelbine', ['vinorelbine']);
+    medication_values_map.set('eribulin', ['eribulin']);  // Originally spelled  eribuline, updated to eribulin.
+    medication_values_map.set('etoposide', ['etoposide']);
+    medication_values_map.set('pemetrexed', ['pemetrexed']);
+    medication_values_map.set('irinotecan', ['irinotecan']);
+    medication_values_map.set('topotecan', ['topotecan']);
+    medication_values_map.set('ifosfamide', ['ifosfamide']);
+    medication_values_map.set('nivolumab', ['nivolumab']);
+    medication_values_map.set('avelumab', ['avelumab']);
+    medication_values_map.set('thiotepa', ['thiotepa']);
+    medication_values_map.set('olaparib', ['olaparib']);
+    medication_values_map.set('talazoparib', ['talazoparib']);
+    medication_values_map.set('atezolizumab', ['atezolizumab']);
+    medication_values_map.set('pembrolizumab', ['pembrolizumab']);
+    medication_values_map.set('zoledronic_acid', ['zoledronic_acid']);
+    medication_values_map.set('denosumab', ['denosumab']);
+    medication_values_map.set('bevacizumab', ['bevacizumab']);
+    medication_values_map.set('everolimus', ['everolimus']);
+    medication_values_map.set('progesterone', ['progesterone']); // Originally spelled progestin, updated to progesterone.
+    medication_values_map.set('fluoxymesterone', ['fluoxymesterone']);
+    medication_values_map.set('estrogen', ['high_dose_estrogen']);  // Standard estrogen is the medication used for high_dose_estrogen, but Trialjectory expects high_dose_estrogen.
+    medication_values_map.set('palbociclib', ['palbociclib']);
+    medication_values_map.set('abemaciclib', ['abemaciclib']);
+    medication_values_map.set('alpelisib', ['alpelisib']);
+    medication_values_map.set('ribociclib', ['ribociclib']);
+    medication_values_map.set('pertuzumab_trastuzumab_hyaluronidase', ['pertuzumab_trastuzumab_hyaluronidase']);
 
-    // Each sheet to check in has the same name as the medication value to add; cycle through each
-    // and add to medication values if it is in the sheet.
-    for (const medication of medicationsToCheck) {
+    const medication_values: string[] = [];
+
+    // Iterate through the mappings and return when a code is satisfied.
+    for(const medication of medication_values_map.keys()){
+      console.log(medication)
       if (this.cancerRelatedMedicationStatement.some((coding) => this.codeIsInSheet(coding, medication))) {
-        medicationValues.push(medication);
+        medication_values.push(...medication_values_map.get(medication));
       }
     }
 
-    return medicationValues;
+    return medication_values;
   }
 
   // Return whether any of the codes in a given coding exist in the given profiles (sheets).
   codeIsInSheet(coding: Coding, ...sheetNames: string[]): boolean {
     const system = this.normalizeCodeSystem(coding.system);
     for (const sheetName of sheetNames) {
-      const codeProfile: CodeProfile = profile_system_codes[sheetName] as CodeProfile; // Pull the codes for the profile
+      const codeProfile: CodeProfile = profile_system_codes[sheetName]; // Pull the codes for the profile
       if (codeProfile == undefined) {
         console.error('Code Profile ' + sheetName + ' is undefined.');
       }
