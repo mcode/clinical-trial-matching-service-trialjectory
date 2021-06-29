@@ -1194,7 +1194,7 @@ quantityMatch(
     medication_values_map.set('lapatinib', ['lapatinib']);
     medication_values_map.set('pamidronate', ['pamidronate']);
     medication_values_map.set('paclitaxel', ['paclitaxel']);
-    medication_values_map.set('hyaluronidase', ['aluronidase', 'hyaluronidase']);  // aluronidase correctly spelled is hyaluronidase - sending both keywords to Trialjectory to be safe.
+    medication_values_map.set('hyaluronidase', ['hyaluronidase']);  // Originally spelled aluronidase, updated to hyaluronidase.
     medication_values_map.set('tucatinib', ['tucatinib']);
     medication_values_map.set('paclitaxel', ['paclitaxel']);
     medication_values_map.set('ixabepilone', ['ixabepilone']);
@@ -1213,7 +1213,7 @@ quantityMatch(
     medication_values_map.set('methotrexate', ['methotrexate']);
     medication_values_map.set('fluorouracil', ['fluorouracil']);
     medication_values_map.set('vinorelbine', ['vinorelbine']);
-    medication_values_map.set('eribulin', ['eribuline', 'eribulin']);  // eribuline correctly spelled is eribulin - sending both keywords to Trialjectory to be safe.
+    medication_values_map.set('eribulin', ['eribulin']);  // Originally spelled  eribuline, updated to eribulin.
     medication_values_map.set('etoposide', ['etoposide']);
     medication_values_map.set('pemetrexed', ['pemetrexed']);
     medication_values_map.set('irinotecan', ['irinotecan']);
@@ -1230,9 +1230,9 @@ quantityMatch(
     medication_values_map.set('denosumab', ['denosumab']);
     medication_values_map.set('bevacizumab', ['bevacizumab']);
     medication_values_map.set('everolimus', ['everolimus']);
-    medication_values_map.set('progesterone', ['progestin', 'progesterone']); // progestin correctly spelled is progesterone - sending both keywords to Trialjectory to be safe.
+    medication_values_map.set('progesterone', ['progesterone']); // Originally spelled progestin, updated to progesterone.
     medication_values_map.set('fluoxymesterone', ['fluoxymesterone']);
-    medication_values_map.set('estrogen', ['high_dose_estrogen', 'estrogen']);  // estrogen is the medication used for high_dose_estrogen - sending both keywords to Trialjectory to be safe.
+    medication_values_map.set('estrogen', ['high_dose_estrogen']);  // Standard estrogen is the medication used for high_dose_estrogen, but Trialjectory expects high_dose_estrogen.
     medication_values_map.set('palbociclib', ['palbociclib']);
     medication_values_map.set('abemaciclib', ['abemaciclib']);
     medication_values_map.set('alpelisib', ['alpelisib']);
