@@ -382,7 +382,7 @@ describe("checkMedicationStatementFilterLogic-vinorelbine", () => {
     expect(medications[0]).toBe("vinorelbine");
   });
 });
-describe('checkMedicationStatementFilterLogic-eribuline-eribulin', () => {
+describe('checkMedicationStatementFilterLogic-eribulin', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const ms: Coding[] = [] as Coding[];
@@ -390,10 +390,8 @@ describe('checkMedicationStatementFilterLogic-eribuline-eribulin', () => {
   ms.push({ system: 'RxNorm', code: '1736562', display: 'N/A' } as Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
-  it('Test eribuline-eribulin medication filter.', () => {
-    // Both keywords should be present.
+  it('Test eribulin medication filter.', () => {
     expect(medications.some(medication => medication == 'eribulin')).toBe(true);
-    expect(medications.some(medication => medication == 'eribuline')).toBe(true);
   });
 });
 describe("checkMedicationStatementFilterLogic-ixabepilone", () => {
@@ -612,7 +610,7 @@ describe("checkMedicationStatementFilterLogic-everolimus", () => {
     expect(medications[0]).toBe("everolimus");
   });
 });
-describe('checkMedicationStatementFilterLogic-progestin-progesterone', () => {
+describe('checkMedicationStatementFilterLogic-progesterone', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const ms: Coding[] = [] as Coding[];
@@ -620,13 +618,11 @@ describe('checkMedicationStatementFilterLogic-progestin-progesterone', () => {
   ms.push({ system: 'RxNorm', code: '2537633', display: 'N/A' } as Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
-  it('Test progestin-progesterone medication filter.', () => {
-      // Both keywords should be present.
-      expect(medications.some(medication => medication == 'progestin')).toBe(true);
+  it('Test progesterone medication filter.', () => {
       expect(medications.some(medication => medication == 'progesterone')).toBe(true);
   });
 });
-describe('checkMedicationStatementFilterLogic-Aluronidase-Hyaluronidase', () => {
+describe('checkMedicationStatementFilterLogic-Hyaluronidase', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const ms: Coding[] = [] as Coding[];
@@ -634,9 +630,7 @@ describe('checkMedicationStatementFilterLogic-Aluronidase-Hyaluronidase', () => 
   ms.push({ system: 'RxNorm', code: '630936', display: 'N/A' } as Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
-  it('Test Aluronidase-Hyaluronidase medication filter.', () => {
-      // Both keywords should be present.
-      expect(medications.some(medication => medication == 'aluronidase')).toBe(true);
+  it('Test Hyaluronidase medication filter.', () => {
       expect(medications.some(medication => medication == 'hyaluronidase')).toBe(true);
   });
 });
@@ -661,9 +655,8 @@ describe('checkMedicationStatementFilterLogic-high_dose_estrogen', () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test high_dose_estrogen medication filter.', () => {
-    // Both keywords should be present.
     expect(medications.some(medication => medication == 'high_dose_estrogen')).toBe(true);
-    expect(medications.some(medication => medication == 'estrogen')).toBe(true);  });
+  });
 });
 describe("checkMedicationStatementFilterLogic-palbociclib", () => {
   // Initialize
