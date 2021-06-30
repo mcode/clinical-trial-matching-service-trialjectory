@@ -550,6 +550,21 @@ describe("checkMedicationStatementFilterLogic-pembrolizumab", () => {
     expect(medications[0]).toBe("pembrolizumab");
   });
 });
+describe('checkMedicationStatementFilterLogic-Treatment-Trastuz-And-Pertuz', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const ms: Coding[] = [] as Coding[];
+
+  // Treatment-Trastuz-And-Pertuz Filter Attributes
+  ms.push({ system: 'http://rxnorm.info/sct', code: '2382609', display: 'N/A' } as Coding); // Any code in 'Treatment-Trastuz_and_Pertuz'
+  extractedMCODE.cancerRelatedMedicationStatement = ms;
+
+  const medications: string[] = extractedMCODE.getMedicationStatementValues();
+
+  it('Test Treatment-Trastuz-And-Pertuz Filter', () => {
+    expect(medications.some(medication => medication == 'TRASTUZ_AND_PERTUZ')).toBe(true);
+  });
+});
 describe("checkMedicationStatementFilterLogic-zoledronic_acid", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
@@ -2679,5 +2694,112 @@ describe('checkPrimaryCancerFilterLogic-OtherMalignancyExceptSkinOrCervical ', (
 
   it('Test Other malignancy - except skin or cervical  Filter', () => {
     expect(extractedMCODE.getPrimaryCancerValue()).toBe('OTHER_MALIGNANCY_EXCEPT_SKIN_OR_CERVICAL');
+  });
+});
+
+/* Radiation Procedure Logic Tests */
+
+describe('checkRadiationProcedureFilterLogic-SRS', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crrp: mcode.CancerRelatedRadiationProcedure = {};
+  crrp.bodySite = [] as Coding[];
+  crrp.coding = [] as Coding[];
+
+  // SRS Filter Attributes
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '473237008', display: 'N/A' } as Coding); // Any code in 'Treatment-SRS-Brain'
+
+  extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
+  const radiation_procedures = extractedMCODE.getRadiationProcedureValue();
+  it('Test SRS Filter', () => {
+    expect(radiation_procedures.some(medication => medication == 'SRS')).toBe(true);
+  });
+});
+describe('checkRadiationProcedureFilterLogic-WBRT', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crrp: mcode.CancerRelatedRadiationProcedure = {};
+  crrp.bodySite = [] as Coding[];
+  crrp.coding = [] as Coding[];
+
+  // WBRT Filter Attributes
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '108290001', display: 'N/A' } as Coding);
+  crrp.bodySite.push({ system: 'http://snomed.info/sct', code: '12738006', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
+  const radiation_procedures = extractedMCODE.getRadiationProcedureValue();
+  it('Test WBRT Filter', () => {
+    expect(radiation_procedures.some(medication => medication == 'WBRT')).toBe(true);
+  });
+});
+describe('checkRadiationProcedureFilterLogic-Radiation Therapy', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crrp: mcode.CancerRelatedRadiationProcedure = {};
+  crrp.bodySite = [] as Coding[];
+  crrp.coding = [] as Coding[];
+
+  // Radiation Therapy Filter Attributes
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '108290001', display: 'N/A' } as Coding); // Any code
+
+  extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
+
+  it('Test Radiation Therapy Filter', () => {
+    expect(extractedMCODE.getRadiationProcedureValue()).toEqual(['RADIATION_THERAPY']);
+  });
+});
+
+/* Surgical Procedure Logic Tests */
+
+describe('checkSurgicalProcedureFilterLogic-Resection', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const sp: Coding[] = [] as Coding[];
+
+  // Resection Filter Attributes
+  sp.push({ system: 'http://snomed.info/sct', code: '446103006', display: 'N/A' } as Coding); // Any code in 'Treatment-Resection-Brain'
+  extractedMCODE.cancerRelatedSurgicalProcedure = sp;
+
+  it('Test Resection Filter', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue()[0]).toBe('RESECTION');
+  });
+});
+describe('checkSurgicalProcedureFilterLogic-Splenectomy', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const sp: Coding[] = [] as Coding[];
+
+  // Splenectomy Filter Attributes
+  sp.push({ system: 'http://snomed.info/sct', code: '67097003', display: 'N/A' } as Coding); // Any code in 'Treatment-Splenectomy'
+  extractedMCODE.cancerRelatedSurgicalProcedure = sp;
+
+  it('Test Splenectomy Filter', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue()[0]).toBe('SPLENECTOMY');
+  });
+});
+describe('checkSurgicalProcedureFilterLogic-BoneMarrowTransplant', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const sp: Coding[] = [] as Coding[];
+
+  // Bone Marrow Transplant Filter Attributes
+  sp.push({ system: 'http://snomed.info/sct', code: '58390007', display: 'N/A' } as Coding); // One specific Code for Bone Marrow Transplant
+  extractedMCODE.cancerRelatedSurgicalProcedure = sp;
+
+  it('Test Bone Marrow Transplant Filter', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue()[0]).toBe('BONE_MARROW_TRANSPLANT');
+  });
+});
+describe('checkSurgicalProcedureFilterLogic-ORGAN_TRANSPLANT', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const sp: Coding[] = [] as Coding[];
+
+  // Splenectomy Filter Attributes
+  sp.push({ system: 'http://snomed.info/sct', code: '782655004', display: 'N/A' } as Coding); // Any code in 'Treatment-Organ_Transplant'
+  extractedMCODE.cancerRelatedSurgicalProcedure = sp;
+
+  it('Test Splenectomy Filter', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue()[0]).toBe('ORGAN_TRANSPLANT');
   });
 });
