@@ -2452,6 +2452,113 @@ describe('checkHistologyMorphologyFilterLogic-DUCTAL_CARCINOMA_IN_SITU', () => {
     expect(extractedMCODE.getHistologyMorphologyValue()).toBe('DUCTAL_CARCINOMA_IN_SITU');
   });
 });
+describe('checkHistologyMorphologyFilterLogic-Inflammatory_and_Non', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  describe('checkHistologyMorphologyFilterLogic-NonInflammatoryInvasive', () => {
+    // Initialize
+    const extractedMCODE = new mcode.ExtractedMCODE(null);
+    const pcc: PrimaryCancerCondition = {};
+    pcc.clinicalStatus = [] as Coding[];
+    pcc.coding = [] as Coding[];
+    pcc.histologyMorphologyBehavior = [] as Coding[];
+
+    // Non-Inflammatory Invasive Filter Attributes
+    pcc.coding.push({ system: 'http://snomed.info/sct', code: '254840009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Invasive-Breast' AND 'Cancer-Inflammatory'
+    pcc.histologyMorphologyBehavior.push({
+      system: 'http://snomed.info/sct',
+      code: '734075007',
+      display: 'N/A'
+    } as Coding); // Any code in 'Morphology-Invasive'
+
+    extractedMCODE.primaryCancerCondition.push(pcc);
+
+    it('Test Non-Inflammatory Invasive Filter', () => {
+      expect(extractedMCODE.getHistologyMorphologyValue()).toBe('NON-INFLAMMATORY_INVASIVE');
+    });
+  });
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Inflammatory Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
+  pcc.histologyMorphologyBehavior.push({
+    system: 'http://snomed.info/sct',
+    code: '32968003',
+    display: 'N/A'
+  } as Coding); // Code: SNOMED 32968003'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Inflammatory Filter', () => {
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('INFLAMMATORY');
+  });
+});
+describe('checkHistologyMorphologyFilterLogic-InvasiveMammoryCarcinoma-One', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Invasive Mammory Carcinoma Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
+  pcc.histologyMorphologyBehavior.push({
+    system: 'http://snomed.info/sct',
+    code: '128701002',
+    display: 'N/A'
+  } as Coding); // Any code in 'Morphology-Invas_Carc_Mix'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Invasive Mammory Carcinoma Filter', () => {
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('INVASIVE_MAMMORY_CARCINOMA');
+  });
+});
+describe('checkHistologyMorphologyFilterLogic-InvasiveMammoryCarcinoma-Two', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+  extractedMCODE.TNMClinicalStageGroup = [] as Coding[];
+
+  // Invasive Mammory Carcinoma Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '444604002', display: 'N/A' } as Coding); // SNOMED#444604002
+  const tnmC = { system: 'http://snomed.info/sct', code: '444604002', display: 'N/A' }; // Any Code not in 'Stage-0'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+  extractedMCODE.TNMClinicalStageGroup.push(tnmC);
+
+  it('Test Invasive Mammory Carcinoma Filter', () => {
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('INVASIVE_MAMMORY_CARCINOMA');
+  });
+});
+describe('checkHistologyMorphologyFilterLogic-InvasiveCarcinoma', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Invasive Carcinoma Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
+  pcc.histologyMorphologyBehavior.push({
+    system: 'http://snomed.info/sct',
+    code: '734075007',
+    display: 'N/A'
+  } as Coding); // Any code in 'Morphology-Invasive_Carcinoma'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Invasive Carcinoma Filter', () => {
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('INVASIVE_CARCINOMA');
+  });
+});
 describe('checkECOGFilterLogic', () => {
   //Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
