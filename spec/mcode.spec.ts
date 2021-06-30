@@ -2369,7 +2369,7 @@ describe('checkAgeFilterLogic', () => {
     expect(extractedMCODE.getAgeValue()).toBe(Math.floor(millisecondsAge/milliseconds1Years));
   });
 });
-describe('checkHistologyMorphologyFilterLogic-ibc', () => {
+describe('checkHistologyMorphologyFilterLogic-INVASIVE_BREAST_CANCER', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const pcc: PrimaryCancerCondition = {};
@@ -2388,10 +2388,10 @@ describe('checkHistologyMorphologyFilterLogic-ibc', () => {
   extractedMCODE.primaryCancerCondition.push(pcc);
 
   it('Test Invasive Breast Cancer Filter', () => {
-    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('ibc');
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('INVASIVE_BREAST_CANCER');
   });
 });
-describe('checkHistologyMorphologyFilterLogic-idc', () => {
+describe('checkHistologyMorphologyFilterLogic-INVASIVE_DUCTAL_CARCINOMA', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const pcc: PrimaryCancerCondition = {};
@@ -2410,10 +2410,10 @@ describe('checkHistologyMorphologyFilterLogic-idc', () => {
   extractedMCODE.primaryCancerCondition.push(pcc);
 
   it('Test Invasive Invasive Ductal Carcinoma Filter', () => {
-    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('idc');
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('INVASIVE_DUCTAL_CARCINOMA');
   });
 });
-describe('checkHistologyMorphologyFilterLogic-ilc', () => {
+describe('checkHistologyMorphologyFilterLogic-INVASIVE_LOBULAR_CARCINOMA', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const pcc: PrimaryCancerCondition = {};
@@ -2427,10 +2427,10 @@ describe('checkHistologyMorphologyFilterLogic-ilc', () => {
   extractedMCODE.primaryCancerCondition.push(pcc);
 
   it('Test Invasive Lobular Carcinoma Filter', () => {
-    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('ilc');
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('INVASIVE_LOBULAR_CARCINOMA');
   });
 });
-describe('checkHistologyMorphologyFilterLogic-dcis', () => {
+describe('checkHistologyMorphologyFilterLogic-DUCTAL_CARCINOMA_IN_SITU', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const pcc: PrimaryCancerCondition = {};
@@ -2449,7 +2449,7 @@ describe('checkHistologyMorphologyFilterLogic-dcis', () => {
   extractedMCODE.primaryCancerCondition.push(pcc);
 
   it('Test Ductal Carcinoma In Situ Filter', () => {
-    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('dcis');
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('DUCTAL_CARCINOMA_IN_SITU');
   });
 });
 describe('checkECOGFilterLogic', () => {
@@ -2468,5 +2468,109 @@ describe('checkKarnofskyFilterLogic', () => {
   // Karnofsky Test
   it('Test Karnofsky Filter', () => {
     expect(extractedMCODE.getKarnofskyScore()).toBe(90);
+  });
+});
+
+/* Test Primary Cancer Condition logic */
+describe('checkPrimaryCancerFilterLogic-LocallyRecurrent', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Locally Recurrent Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding);
+  pcc.clinicalStatus.push({ system: 'N/A', code: 'recurrence', display: 'N/A' } as Coding);
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Locally Recurrent Filter', () => {
+    expect(extractedMCODE.getPrimaryCancerValue()).toBe('LOCALLY_RECURRENT');
+  });
+});
+describe('checkPrimaryCancerFilterLogic-InvasiveBreastCancerandRecurrent', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Invasive Breast Cancer and Recurrent Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
+  pcc.histologyMorphologyBehavior.push({
+    system: 'http://snomed.info/sct',
+    code: '734075007',
+    display: 'N/A'
+  } as Coding); // Any code in 'Morphology-Invasive'
+  pcc.clinicalStatus.push({ system: 'N/A', code: 'recurrence', display: 'N/A' } as Coding);
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Invasive Breast Cancer and Recurrent Filter', () => {
+    expect(extractedMCODE.getPrimaryCancerValue()).toBe('INVASIVE_BREAST_CANCER_AND_RECURRENT');
+  });
+});
+describe('checkPrimaryCancerFilterLogic-BreastCancer', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Breast Cancer Filter Attributes
+  pcc.clinicalStatus.push({ system: 'N/A', code: 'N/A', display: 'N/A' } as Coding);
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding);
+  pcc.histologyMorphologyBehavior.push({ system: 'N/A', code: 'N/A', display: 'N/A' } as Coding);
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Breast Cancer Filter', () => {
+    expect(extractedMCODE.getPrimaryCancerValue()).toBe('BREAST_CANCER');
+  });
+});
+describe('checkPrimaryCancerFilterLogic-ConcomitantInvasiveMalignancies', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+  const tnmClinical: Coding[] = [] as Coding[];
+  const tnmPathological: Coding[] = [] as Coding[];
+
+  // Concomitant invasive malignancies Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '67097003', display: 'N/A' } as Coding); // Any code not in 'Cancer-Breast'
+  pcc.histologyMorphologyBehavior.push({ system: 'N/A', code: 'N/A', display: 'N/A' } as Coding);
+  pcc.clinicalStatus.push({ system: 'N/A', code: 'active', display: 'N/A' } as Coding);
+  tnmClinical.push({ system: 'AJCC', code: 'II', display: 'N/A' } as Coding); // Any code in 'Stage-2'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+  extractedMCODE.TNMClinicalStageGroup = tnmClinical;
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+
+  it('Test Concomitant invasive malignancies Filter', () => {
+    expect(extractedMCODE.getPrimaryCancerValue()).toBe('CONCOMITANT_INVASIVE_MALIGNANCIES');
+  });
+});
+describe('checkPrimaryCancerFilterLogic-OtherMalignancyExceptSkinOrCervical ', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Other malignancy - except skin or cervical  Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '67097003', display: 'N/A' } as Coding); // Any code not in 'Cancer-Breast'
+  pcc.clinicalStatus.push({ system: 'N/A', code: 'active', display: 'N/A' } as Coding);
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Other malignancy - except skin or cervical  Filter', () => {
+    expect(extractedMCODE.getPrimaryCancerValue()).toBe('OTHER_MALIGNANCY_EXCEPT_SKIN_OR_CERVICAL');
   });
 });
