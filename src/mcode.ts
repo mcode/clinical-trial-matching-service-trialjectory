@@ -1365,6 +1365,7 @@ quantityMatch(
     medication_values_map.set('alpelisib', ['alpelisib']);
     medication_values_map.set('ribociclib', ['ribociclib']);
     medication_values_map.set('pertuzumab_trastuzumab_hyaluronidase', ['pertuzumab_trastuzumab_hyaluronidase']);
+    medication_values_map.set('Treatment-Trastuz_and_Pertuz', ['TRASTUZ_AND_PERTUZ']);
 
     const medication_values: string[] = [];
 
