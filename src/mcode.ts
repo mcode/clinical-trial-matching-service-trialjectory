@@ -701,6 +701,14 @@ export class ExtractedMCODE {
     for (const cancerRelatedRadiationProcedure of this.cancerRelatedRadiationProcedure) {
       if (
         cancerRelatedRadiationProcedure.coding &&
+        cancerRelatedRadiationProcedure.coding.some((coding) => this.codeIsInSheet(coding, 'Treatment-SRS-Brain'))
+      ) {
+        radiationValues.push('SRS');
+      }
+    }
+    for (const cancerRelatedRadiationProcedure of this.cancerRelatedRadiationProcedure) {
+      if (
+        cancerRelatedRadiationProcedure.coding &&
         cancerRelatedRadiationProcedure.bodySite &&
         cancerRelatedRadiationProcedure.coding.some(
           (coding) => this.normalizeCodeSystem(coding.system) == 'SNOMED' && coding.code == '108290001'
@@ -711,13 +719,13 @@ export class ExtractedMCODE {
             (coding.code == '12738006' || coding.code == '119235005')
         )
       ) {
-        radiationValues.push('wbrt');
+        radiationValues.push('WBRT');
       }
     }
 
     if (this.cancerRelatedRadiationProcedure.length > 0) {
       // If there is any code in the cancerRelatedRadiationProcedure, it counts as radiation.
-      radiationValues.push('radiation');
+      radiationValues.push('RADIATION_THERAPY');
     }
 
     return radiationValues;
@@ -726,7 +734,20 @@ export class ExtractedMCODE {
   // Surgical Procedures
   getSurgicalProcedureValue(): string[] {
     const surgicalValues:string[] = [];
-    // TODO - fill in with Surgical Procedures.
+
+    if (this.cancerRelatedSurgicalProcedure.some((coding) => this.codeIsInSheet(coding, 'Treatment-Resection-Brain'))) {
+      surgicalValues.push('RESECTION');
+    }
+    if (this.cancerRelatedSurgicalProcedure.some((coding) => this.codeIsInSheet(coding, 'Treatment-Splenectomy'))) {
+      surgicalValues.push('SPLENECTOMY');
+    }
+    if (this.cancerRelatedSurgicalProcedure.some((coding) => this.normalizeCodeSystem(coding.system) == 'SNOMED' && coding.code == '58390007')) {
+      surgicalValues.push('BONE_MARROW_TRANSPLANT');
+    }
+    if (this.cancerRelatedSurgicalProcedure.some((coding) => this.codeIsInSheet(coding, 'Treatment-Organ_Transplant'))) {
+      surgicalValues.push('ORGAN_TRANSPLANT');
+    }
+
     return surgicalValues;
   }
 
