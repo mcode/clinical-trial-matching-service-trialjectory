@@ -550,6 +550,21 @@ describe("checkMedicationStatementFilterLogic-pembrolizumab", () => {
     expect(medications[0]).toBe("pembrolizumab");
   });
 });
+describe('checkMedicationStatementFilterLogic-Treatment-Trastuz-And-Pertuz', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const ms: Coding[] = [] as Coding[];
+
+  // Treatment-Trastuz-And-Pertuz Filter Attributes
+  ms.push({ system: 'http://rxnorm.info/sct', code: '2382609', display: 'N/A' } as Coding); // Any code in 'Treatment-Trastuz_and_Pertuz'
+  extractedMCODE.cancerRelatedMedicationStatement = ms;
+
+  const medications: string[] = extractedMCODE.getMedicationStatementValues();
+
+  it('Test Treatment-Trastuz-And-Pertuz Filter', () => {
+    expect(medications.some(medication => medication == 'TRASTUZ_AND_PERTUZ')).toBe(true);
+  });
+});
 describe("checkMedicationStatementFilterLogic-zoledronic_acid", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
@@ -2369,7 +2384,7 @@ describe('checkAgeFilterLogic', () => {
     expect(extractedMCODE.getAgeValue()).toBe(Math.floor(millisecondsAge/milliseconds1Years));
   });
 });
-describe('checkHistologyMorphologyFilterLogic-ibc', () => {
+describe('checkHistologyMorphologyFilterLogic-INVASIVE_BREAST_CANCER', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const pcc: PrimaryCancerCondition = {};
@@ -2388,10 +2403,10 @@ describe('checkHistologyMorphologyFilterLogic-ibc', () => {
   extractedMCODE.primaryCancerCondition.push(pcc);
 
   it('Test Invasive Breast Cancer Filter', () => {
-    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('ibc');
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('INVASIVE_BREAST_CANCER');
   });
 });
-describe('checkHistologyMorphologyFilterLogic-idc', () => {
+describe('checkHistologyMorphologyFilterLogic-INVASIVE_DUCTAL_CARCINOMA', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const pcc: PrimaryCancerCondition = {};
@@ -2410,10 +2425,10 @@ describe('checkHistologyMorphologyFilterLogic-idc', () => {
   extractedMCODE.primaryCancerCondition.push(pcc);
 
   it('Test Invasive Invasive Ductal Carcinoma Filter', () => {
-    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('idc');
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('INVASIVE_DUCTAL_CARCINOMA');
   });
 });
-describe('checkHistologyMorphologyFilterLogic-ilc', () => {
+describe('checkHistologyMorphologyFilterLogic-INVASIVE_LOBULAR_CARCINOMA', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const pcc: PrimaryCancerCondition = {};
@@ -2427,10 +2442,10 @@ describe('checkHistologyMorphologyFilterLogic-ilc', () => {
   extractedMCODE.primaryCancerCondition.push(pcc);
 
   it('Test Invasive Lobular Carcinoma Filter', () => {
-    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('ilc');
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('INVASIVE_LOBULAR_CARCINOMA');
   });
 });
-describe('checkHistologyMorphologyFilterLogic-dcis', () => {
+describe('checkHistologyMorphologyFilterLogic-DUCTAL_CARCINOMA_IN_SITU', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const pcc: PrimaryCancerCondition = {};
@@ -2449,7 +2464,114 @@ describe('checkHistologyMorphologyFilterLogic-dcis', () => {
   extractedMCODE.primaryCancerCondition.push(pcc);
 
   it('Test Ductal Carcinoma In Situ Filter', () => {
-    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('dcis');
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('DUCTAL_CARCINOMA_IN_SITU');
+  });
+});
+describe('checkHistologyMorphologyFilterLogic-Inflammatory_and_Non', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  describe('checkHistologyMorphologyFilterLogic-NonInflammatoryInvasive', () => {
+    // Initialize
+    const extractedMCODE = new mcode.ExtractedMCODE(null);
+    const pcc: PrimaryCancerCondition = {};
+    pcc.clinicalStatus = [] as Coding[];
+    pcc.coding = [] as Coding[];
+    pcc.histologyMorphologyBehavior = [] as Coding[];
+
+    // Non-Inflammatory Invasive Filter Attributes
+    pcc.coding.push({ system: 'http://snomed.info/sct', code: '254840009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Invasive-Breast' AND 'Cancer-Inflammatory'
+    pcc.histologyMorphologyBehavior.push({
+      system: 'http://snomed.info/sct',
+      code: '734075007',
+      display: 'N/A'
+    } as Coding); // Any code in 'Morphology-Invasive'
+
+    extractedMCODE.primaryCancerCondition.push(pcc);
+
+    it('Test Non-Inflammatory Invasive Filter', () => {
+      expect(extractedMCODE.getHistologyMorphologyValue()).toBe('NON-INFLAMMATORY_INVASIVE');
+    });
+  });
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Inflammatory Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
+  pcc.histologyMorphologyBehavior.push({
+    system: 'http://snomed.info/sct',
+    code: '32968003',
+    display: 'N/A'
+  } as Coding); // Code: SNOMED 32968003'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Inflammatory Filter', () => {
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('INFLAMMATORY');
+  });
+});
+describe('checkHistologyMorphologyFilterLogic-InvasiveMammoryCarcinoma-One', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Invasive Mammory Carcinoma Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
+  pcc.histologyMorphologyBehavior.push({
+    system: 'http://snomed.info/sct',
+    code: '128701002',
+    display: 'N/A'
+  } as Coding); // Any code in 'Morphology-Invas_Carc_Mix'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Invasive Mammory Carcinoma Filter', () => {
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('INVASIVE_MAMMORY_CARCINOMA');
+  });
+});
+describe('checkHistologyMorphologyFilterLogic-InvasiveMammoryCarcinoma-Two', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+  extractedMCODE.TNMClinicalStageGroup = [] as Coding[];
+
+  // Invasive Mammory Carcinoma Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '444604002', display: 'N/A' } as Coding); // SNOMED#444604002
+  const tnmC = { system: 'http://snomed.info/sct', code: '444604002', display: 'N/A' }; // Any Code not in 'Stage-0'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+  extractedMCODE.TNMClinicalStageGroup.push(tnmC);
+
+  it('Test Invasive Mammory Carcinoma Filter', () => {
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('INVASIVE_MAMMORY_CARCINOMA');
+  });
+});
+describe('checkHistologyMorphologyFilterLogic-InvasiveCarcinoma', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Invasive Carcinoma Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
+  pcc.histologyMorphologyBehavior.push({
+    system: 'http://snomed.info/sct',
+    code: '734075007',
+    display: 'N/A'
+  } as Coding); // Any code in 'Morphology-Invasive_Carcinoma'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Invasive Carcinoma Filter', () => {
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('INVASIVE_CARCINOMA');
   });
 });
 describe('checkECOGFilterLogic', () => {
@@ -2468,5 +2590,216 @@ describe('checkKarnofskyFilterLogic', () => {
   // Karnofsky Test
   it('Test Karnofsky Filter', () => {
     expect(extractedMCODE.getKarnofskyScore()).toBe(90);
+  });
+});
+
+/* Test Primary Cancer Condition logic */
+describe('checkPrimaryCancerFilterLogic-LocallyRecurrent', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Locally Recurrent Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding);
+  pcc.clinicalStatus.push({ system: 'N/A', code: 'recurrence', display: 'N/A' } as Coding);
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Locally Recurrent Filter', () => {
+    expect(extractedMCODE.getPrimaryCancerValue()).toBe('LOCALLY_RECURRENT');
+  });
+});
+describe('checkPrimaryCancerFilterLogic-InvasiveBreastCancerandRecurrent', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Invasive Breast Cancer and Recurrent Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
+  pcc.histologyMorphologyBehavior.push({
+    system: 'http://snomed.info/sct',
+    code: '734075007',
+    display: 'N/A'
+  } as Coding); // Any code in 'Morphology-Invasive'
+  pcc.clinicalStatus.push({ system: 'N/A', code: 'recurrence', display: 'N/A' } as Coding);
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Invasive Breast Cancer and Recurrent Filter', () => {
+    expect(extractedMCODE.getPrimaryCancerValue()).toBe('INVASIVE_BREAST_CANCER_AND_RECURRENT');
+  });
+});
+describe('checkPrimaryCancerFilterLogic-BreastCancer', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Breast Cancer Filter Attributes
+  pcc.clinicalStatus.push({ system: 'N/A', code: 'N/A', display: 'N/A' } as Coding);
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding);
+  pcc.histologyMorphologyBehavior.push({ system: 'N/A', code: 'N/A', display: 'N/A' } as Coding);
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Breast Cancer Filter', () => {
+    expect(extractedMCODE.getPrimaryCancerValue()).toBe('BREAST_CANCER');
+  });
+});
+describe('checkPrimaryCancerFilterLogic-ConcomitantInvasiveMalignancies', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+  const tnmClinical: Coding[] = [] as Coding[];
+  const tnmPathological: Coding[] = [] as Coding[];
+
+  // Concomitant invasive malignancies Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '67097003', display: 'N/A' } as Coding); // Any code not in 'Cancer-Breast'
+  pcc.histologyMorphologyBehavior.push({ system: 'N/A', code: 'N/A', display: 'N/A' } as Coding);
+  pcc.clinicalStatus.push({ system: 'N/A', code: 'active', display: 'N/A' } as Coding);
+  tnmClinical.push({ system: 'AJCC', code: 'II', display: 'N/A' } as Coding); // Any code in 'Stage-2'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+  extractedMCODE.TNMClinicalStageGroup = tnmClinical;
+  extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
+
+  it('Test Concomitant invasive malignancies Filter', () => {
+    expect(extractedMCODE.getPrimaryCancerValue()).toBe('CONCOMITANT_INVASIVE_MALIGNANCIES');
+  });
+});
+describe('checkPrimaryCancerFilterLogic-OtherMalignancyExceptSkinOrCervical ', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Other malignancy - except skin or cervical  Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '67097003', display: 'N/A' } as Coding); // Any code not in 'Cancer-Breast'
+  pcc.clinicalStatus.push({ system: 'N/A', code: 'active', display: 'N/A' } as Coding);
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Other malignancy - except skin or cervical  Filter', () => {
+    expect(extractedMCODE.getPrimaryCancerValue()).toBe('OTHER_MALIGNANCY_EXCEPT_SKIN_OR_CERVICAL');
+  });
+});
+
+/* Radiation Procedure Logic Tests */
+
+describe('checkRadiationProcedureFilterLogic-SRS', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crrp: mcode.CancerRelatedRadiationProcedure = {};
+  crrp.bodySite = [] as Coding[];
+  crrp.coding = [] as Coding[];
+
+  // SRS Filter Attributes
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '473237008', display: 'N/A' } as Coding); // Any code in 'Treatment-SRS-Brain'
+
+  extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
+  const radiation_procedures = extractedMCODE.getRadiationProcedureValue();
+  it('Test SRS Filter', () => {
+    expect(radiation_procedures.some(medication => medication == 'SRS')).toBe(true);
+  });
+});
+describe('checkRadiationProcedureFilterLogic-WBRT', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crrp: mcode.CancerRelatedRadiationProcedure = {};
+  crrp.bodySite = [] as Coding[];
+  crrp.coding = [] as Coding[];
+
+  // WBRT Filter Attributes
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '108290001', display: 'N/A' } as Coding);
+  crrp.bodySite.push({ system: 'http://snomed.info/sct', code: '12738006', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
+  const radiation_procedures = extractedMCODE.getRadiationProcedureValue();
+  it('Test WBRT Filter', () => {
+    expect(radiation_procedures.some(medication => medication == 'WBRT')).toBe(true);
+  });
+});
+describe('checkRadiationProcedureFilterLogic-Radiation Therapy', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crrp: mcode.CancerRelatedRadiationProcedure = {};
+  crrp.bodySite = [] as Coding[];
+  crrp.coding = [] as Coding[];
+
+  // Radiation Therapy Filter Attributes
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '108290001', display: 'N/A' } as Coding); // Any code
+
+  extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
+
+  it('Test Radiation Therapy Filter', () => {
+    expect(extractedMCODE.getRadiationProcedureValue()).toEqual(['RADIATION_THERAPY']);
+  });
+});
+
+/* Surgical Procedure Logic Tests */
+
+describe('checkSurgicalProcedureFilterLogic-Resection', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const sp: Coding[] = [] as Coding[];
+
+  // Resection Filter Attributes
+  sp.push({ system: 'http://snomed.info/sct', code: '446103006', display: 'N/A' } as Coding); // Any code in 'Treatment-Resection-Brain'
+  extractedMCODE.cancerRelatedSurgicalProcedure = sp;
+
+  it('Test Resection Filter', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue()[0]).toBe('RESECTION');
+  });
+});
+describe('checkSurgicalProcedureFilterLogic-Splenectomy', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const sp: Coding[] = [] as Coding[];
+
+  // Splenectomy Filter Attributes
+  sp.push({ system: 'http://snomed.info/sct', code: '67097003', display: 'N/A' } as Coding); // Any code in 'Treatment-Splenectomy'
+  extractedMCODE.cancerRelatedSurgicalProcedure = sp;
+
+  it('Test Splenectomy Filter', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue()[0]).toBe('SPLENECTOMY');
+  });
+});
+describe('checkSurgicalProcedureFilterLogic-BoneMarrowTransplant', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const sp: Coding[] = [] as Coding[];
+
+  // Bone Marrow Transplant Filter Attributes
+  sp.push({ system: 'http://snomed.info/sct', code: '58390007', display: 'N/A' } as Coding); // One specific Code for Bone Marrow Transplant
+  extractedMCODE.cancerRelatedSurgicalProcedure = sp;
+
+  it('Test Bone Marrow Transplant Filter', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue()[0]).toBe('BONE_MARROW_TRANSPLANT');
+  });
+});
+describe('checkSurgicalProcedureFilterLogic-ORGAN_TRANSPLANT', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const sp: Coding[] = [] as Coding[];
+
+  // Splenectomy Filter Attributes
+  sp.push({ system: 'http://snomed.info/sct', code: '782655004', display: 'N/A' } as Coding); // Any code in 'Treatment-Organ_Transplant'
+  extractedMCODE.cancerRelatedSurgicalProcedure = sp;
+
+  it('Test Splenectomy Filter', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue()[0]).toBe('ORGAN_TRANSPLANT');
   });
 });
