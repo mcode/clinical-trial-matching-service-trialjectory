@@ -113,6 +113,18 @@ describe('checkMedicationStatementFilterLogic-trastuzumab', () => {
     expect(medications.some(medication => medication == 'trastuzumab')).toBe(true);
   });
 });
+describe('checkMedicationStatementFilterLogicTreatment-Trastuzumab', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const ms: Coding[] = [] as Coding[];
+  // Treatment Trastuzumab medication filter
+  ms.push({ system: 'RxNorm', code: '1162762', display: 'N/A' } as Coding);
+  extractedMCODE.cancerRelatedMedicationStatement = ms;
+  const medications: string[] = extractedMCODE.getMedicationStatementValues();
+  it('Test trastuzumab medication filter.', () => {
+    expect(medications.some(medication => medication == 'trastuzumab')).toBe(true);
+  });
+});
 describe("checkMedicationStatementFilterLogic-trastuzumab_hyaluronidase_conjugate", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
