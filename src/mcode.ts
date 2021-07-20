@@ -583,6 +583,21 @@ export class ExtractedMCODE {
         return 'ibc';
       }
     }
+
+    // TODO - This logic and mapping does not exist in Trialjectory. It's been added to allow for UTSW record mapping.
+    // Invasive Carcinoma
+    for (const primaryCancerCondition of this.primaryCancerCondition) {
+      if (
+        (primaryCancerCondition.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Breast')) &&
+          primaryCancerCondition.histologyMorphologyBehavior.some((histMorphBehav) =>
+            this.codeIsInSheet(histMorphBehav, 'Morphology-Invasive-Carcinoma')
+          )) ||
+        primaryCancerCondition.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Invasive-Carcinoma'))
+      ) {
+        return 'INVASIVE_CARCINOMA';
+      }
+    }
+
     // None of the conditions are satisfied.
     return null;
   }
