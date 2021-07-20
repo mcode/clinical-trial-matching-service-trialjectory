@@ -550,7 +550,7 @@ export class ExtractedMCODE {
         (primaryCancerCondition.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Breast')) &&
           primaryCancerCondition.histologyMorphologyBehavior.some(
             (histMorphBehav) =>
-              this.normalizeCodeSystem(histMorphBehav.system) == 'SNOMED' && histMorphBehav.code == '443757001'
+            this.codeIsInSheet(histMorphBehav, 'Morphology-Invas_Lob_Carc')
           )) ||
         primaryCancerCondition.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Invas_Lob_Carc'))
       ) {
