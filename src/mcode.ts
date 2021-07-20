@@ -1253,6 +1253,8 @@ quantityMatch(
     medication_mappings.set(['alpelisib'], ['alpelisib']);
     medication_mappings.set(['ribociclib'], ['ribociclib']);
     medication_mappings.set(['pertuzumab_trastuzumab_hyaluronidase'], ['pertuzumab_trastuzumab_hyaluronidase']);
+    medication_mappings.set(['goserelin '], ['goserelin']); // THIS MEDICATION IS NOT CURRENTLY SUPPORTED BY TRIALJECTORY. WE WILL NEED TO DISCUSS THIS WITH THEM.
+    medication_mappings.set(['leuprolide '], ['leuprolide']); // THIS MEDICATION IS NOT CURRENTLY SUPPORTED BY TRIALJECTORY. WE WILL NEED TO DISCUSS THIS WITH THEM.
 
     const medication_values: string[] = [];
 
