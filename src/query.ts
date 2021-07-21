@@ -13,8 +13,6 @@ import {
 } from "clinical-trial-matching-service";
 import convertToResearchStudy from "./researchstudy-mapping";
 import * as mcode from './mcode';
-import utsw_patient_bundle_json from '../data/utsw_records/output/mcode-extraction-patient-20.json';
-const utsw_patient_bundle = utsw_patient_bundle_json as fhir.Bundle;
 
 export interface QueryConfiguration extends ServiceConfiguration {
   endpoint?: string;
@@ -214,11 +212,6 @@ export class APIQuery {
    * @param patientBundle the patient bundle to use for field values
    */
   constructor(patientBundle: fhir.Bundle) { // this goes through the patient bundle twice - should be revised
-
-    // *****
-    // HERE IS WHERE WE OVERRIDE THE PATIENT BUNDLE!!!
-    patientBundle = utsw_patient_bundle
-    // *****
 
     for (const entry of patientBundle.entry) {
       if (!("resource" in entry)) {
