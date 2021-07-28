@@ -28,15 +28,17 @@ export interface Ratio {
   denominator?: Quantity;
 }
 
-export interface PrimaryCancerCondition {
+export interface CancerConditionParent {
   clinicalStatus?: Coding[];
   coding?: Coding[];
+  meta_profile?: string;
+}
+
+export interface PrimaryCancerCondition extends CancerConditionParent {
   histologyMorphologyBehavior?: Coding[];
 }
 
-export interface SecondaryCancerCondition {
-  clinicalStatus?: Coding[];
-  coding?: Coding[];
+export interface SecondaryCancerCondition extends CancerConditionParent {
   bodySite?: Coding[];
 }
 
@@ -48,6 +50,7 @@ export interface CancerRelatedRadiationProcedure {
 export interface CancerRelatedSurgicalProcedure {
   coding?: Coding[];
   bodySite?: Coding[];
+  reasonReference?: CancerConditionParent;
 }
 
 export interface TumorMarker {
@@ -107,6 +110,7 @@ export class ExtractedMCODE {
           const tempPrimaryCancerCondition: PrimaryCancerCondition = {};
           tempPrimaryCancerCondition.coding = this.lookup(resource, 'code.coding') as Coding[];
           tempPrimaryCancerCondition.clinicalStatus = this.lookup(resource, 'clinicalStatus.coding') as Coding[];
+          tempPrimaryCancerCondition.meta_profile = 'mcode-primary-cancer-condition'
           if (this.lookup(resource, 'extension').length !== 0) {
             let count = 0;
             for (const extension of this.lookup(resource, 'extension')) {
@@ -162,6 +166,7 @@ export class ExtractedMCODE {
           tempSecondaryCancerCondition.coding = this.lookup(resource, 'code.coding') as Coding[];
           tempSecondaryCancerCondition.clinicalStatus = this.lookup(resource, 'clinicalStatus.coding') as Coding[];
           tempSecondaryCancerCondition.bodySite = this.lookup(resource, 'bodySite.coding') as Coding[];
+          tempSecondaryCancerCondition.meta_profile = 'mcode-primary-cancer-condition'
           if (this.secondaryCancerCondition) {
             this.secondaryCancerCondition.push(tempSecondaryCancerCondition); // needs specific de-dup helper function
           } else {
@@ -254,6 +259,7 @@ export class ExtractedMCODE {
           const tempCancerRelatedSurgicalProcedure: CancerRelatedSurgicalProcedure = {};
           tempCancerRelatedSurgicalProcedure.coding = this.lookup(resource, 'code.coding') as Coding[];
           tempCancerRelatedSurgicalProcedure.bodySite = this.lookup(resource, 'bodySite.coding') as Coding[];
+          tempCancerRelatedSurgicalProcedure.reasonReference = this.lookup(resource, 'reasonReference') as CancerConditionParent;
           if (this.cancerRelatedSurgicalProcedure) {
             if (
               !this.listContainsRadiationProcedure(
@@ -667,7 +673,7 @@ export class ExtractedMCODE {
       }
     }
 
-    // Additional ALND check.
+    // Additional ALND check (if alnd has not already been added).
     if(!surgicalValues.includes('alnd')){
       if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.coding.some((code) => code == '122459003') 
           && surgicalProcedure.bodySite.some((code) => this.codeIsInSheet(code, 'alnd-bodysite')))) {
@@ -676,7 +682,7 @@ export class ExtractedMCODE {
     }
 
     // Metastasis Resection check.
-    // this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.reasonReference == this.secondaryCancerCondition);
+    this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.reasonReference.meta_profile == 'mcode-secondary-cancer-condition');
 
     // TODO:
     // ablation - isn’t really a surgery or radiation procedure, confused for where to put it, asking around
