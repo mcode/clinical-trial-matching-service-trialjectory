@@ -45,6 +45,11 @@ export interface CancerRelatedRadiationProcedure {
   bodySite?: Coding[];
 }
 
+export interface CancerRelatedSurgicalProcedure {
+  coding?: Coding[];
+  bodySite?: Coding[];
+}
+
 export interface TumorMarker {
   code?: Coding[];
   valueQuantity?: Quantity[];
@@ -81,7 +86,7 @@ export class ExtractedMCODE {
   tumorMarker: TumorMarker[];
   cancerGeneticVariant: CancerGeneticVariant[];
   cancerRelatedRadiationProcedure: CancerRelatedRadiationProcedure[];
-  cancerRelatedSurgicalProcedure: Coding[];
+  cancerRelatedSurgicalProcedure: CancerRelatedSurgicalProcedure[];
   cancerRelatedMedicationStatement: Coding[];
   ecogPerformaceStatus: number;
   karnofskyPerformanceStatus: number;
@@ -220,6 +225,7 @@ export class ExtractedMCODE {
             this.cancerGeneticVariant = [tempCGV];
           }
         }
+
         if (
           resource.resourceType === 'Procedure' &&
           this.resourceProfile(this.lookup(resource, 'meta.profile'), 'mcode-cancer-related-radiation-procedure')
@@ -245,10 +251,21 @@ export class ExtractedMCODE {
           resource.resourceType === 'Procedure' &&
           this.resourceProfile(this.lookup(resource, 'meta.profile'), 'mcode-cancer-related-surgical-procedure')
         ) {
-          this.cancerRelatedSurgicalProcedure = this.addCoding(
-            this.cancerRelatedSurgicalProcedure,
-            this.lookup(resource, 'code.coding') as Coding[]
-          );
+          const tempCancerRelatedSurgicalProcedure: CancerRelatedSurgicalProcedure = {};
+          tempCancerRelatedSurgicalProcedure.coding = this.lookup(resource, 'code.coding') as Coding[];
+          tempCancerRelatedSurgicalProcedure.bodySite = this.lookup(resource, 'bodySite.coding') as Coding[];
+          if (this.cancerRelatedSurgicalProcedure) {
+            if (
+              !this.listContainsRadiationProcedure(
+                this.cancerRelatedSurgicalProcedure,
+                tempCancerRelatedSurgicalProcedure
+              )
+            ) {
+              this.cancerRelatedSurgicalProcedure.push(tempCancerRelatedSurgicalProcedure);
+            }
+          } else {
+            this.cancerRelatedSurgicalProcedure = [tempCancerRelatedSurgicalProcedure];
+          }
         }
 
         if (
@@ -300,7 +317,7 @@ export class ExtractedMCODE {
       this.cancerRelatedRadiationProcedure = [] as CancerRelatedRadiationProcedure[];
     }
     if (!this.cancerRelatedSurgicalProcedure) {
-      this.cancerRelatedSurgicalProcedure = [] as Coding[];
+      this.cancerRelatedSurgicalProcedure = [] as CancerRelatedSurgicalProcedure[];
     }
     if (!this.cancerRelatedMedicationStatement) {
       this.cancerRelatedMedicationStatement = [] as Coding[];
@@ -635,7 +652,37 @@ export class ExtractedMCODE {
   // Surgical Procedures
   getSurgicalProcedureValue(): string[] {
     const surgicalValues:string[] = [];
-    // TODO - fill in with Surgical Procedures.
+    
+    // Set the Mapping Name -> Trialjectory Result.
+    const procedure_codes_map = new Map<string, string>()
+    procedure_codes_map.set('mastectomy', 'Mastectomy');
+    procedure_codes_map.set('lumpectomy', 'Lumpectomy');
+    procedure_codes_map.set('alnd-procedure', 'alnd');  // ALND also has a second condition which will be checked later.
+    procedure_codes_map.set('reconstruction', 'Reconstruction');
+
+    // Iterate through the mappings and append when a code is satisfied.
+    for(const procedure_name of procedure_codes_map.keys()){
+      if (this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.coding.some((code) => this.codeIsInSheet(code, procedure_name)))) {
+        surgicalValues.push(procedure_codes_map.get(procedure_name));
+      }
+    }
+
+    // Additional ALND check.
+    if(!surgicalValues.includes('alnd')){
+      if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.coding.some((code) => code == '122459003') 
+          && surgicalProcedure.bodySite.some((code) => this.codeIsInSheet(code, 'alnd-bodysite')))) {
+            surgicalValues.push('alnd');
+      }
+    }
+
+    // Metastasis Resection check.
+    // this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.reasonReference == this.secondaryCancerCondition);
+
+    // TODO:
+    // ablation - isn’t really a surgery or radiation procedure, confused for where to put it, asking around
+    // rfa - is a type of ablation, same answer as above
+    // ebrt - no SNOMED code for this, asking around
+
     return surgicalValues;
   }
 
