@@ -607,6 +607,16 @@ export class ExtractedMCODE {
       }
     }
 
+    // Lobular Carcinoma in Situ (lcis)
+    for (const primaryCancerCondition of this.primaryCancerCondition) {
+      if (
+        (primaryCancerCondition.histologyMorphologyBehavior.some((histMorphBehav) => this.codeIsInSheet(histMorphBehav, 'lcis-histology')))
+          || primaryCancerCondition.coding.some((code) => this.codeIsInSheet(code, 'lcis-condition'))
+      ) {
+        return 'lcis';
+      }
+    }
+
     // TODO - This logic and mapping does not exist in Trialjectory. It's been added to allow for UTSW record mapping.
     // Invasive Carcinoma
     for (const primaryCancerCondition of this.primaryCancerCondition) {
