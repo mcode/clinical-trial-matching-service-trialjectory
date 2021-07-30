@@ -42,14 +42,14 @@ export interface SecondaryCancerCondition extends CancerConditionParent {
   bodySite?: Coding[];
 }
 
-export interface CancerRelatedRadiationProcedure {
+export interface CancerRelatedProcedureParent {
   coding?: Coding[];
   bodySite?: Coding[];
 }
 
-export interface CancerRelatedSurgicalProcedure {
-  coding?: Coding[];
-  bodySite?: Coding[];
+export interface CancerRelatedRadiationProcedure extends CancerRelatedProcedureParent { }
+
+export interface CancerRelatedSurgicalProcedure extends CancerRelatedProcedureParent {
   reasonReference?: CancerConditionParent;
 }
 
@@ -166,7 +166,7 @@ export class ExtractedMCODE {
           tempSecondaryCancerCondition.coding = this.lookup(resource, 'code.coding') as Coding[];
           tempSecondaryCancerCondition.clinicalStatus = this.lookup(resource, 'clinicalStatus.coding') as Coding[];
           tempSecondaryCancerCondition.bodySite = this.lookup(resource, 'bodySite.coding') as Coding[];
-          tempSecondaryCancerCondition.meta_profile = 'mcode-primary-cancer-condition'
+          tempSecondaryCancerCondition.meta_profile = 'mcode-secondary-cancer-condition'
           if (this.secondaryCancerCondition) {
             this.secondaryCancerCondition.push(tempSecondaryCancerCondition); // needs specific de-dup helper function
           } else {
