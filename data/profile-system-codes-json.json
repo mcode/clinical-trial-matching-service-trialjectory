@@ -13430,7 +13430,7 @@
       }
     ]
   },
-  "reconstruction": {
+  "general-reconstruction": {
     "SNOMED": [
       {
         "code": "122465003"

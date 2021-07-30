@@ -671,10 +671,10 @@ export class ExtractedMCODE {
     
     // Set the Mapping Name -> Trialjectory Result.
     const procedure_codes_map = new Map<string, string>()
-    procedure_codes_map.set('mastectomy', 'Mastectomy');
-    procedure_codes_map.set('lumpectomy', 'Lumpectomy');
+    procedure_codes_map.set('mastectomy', 'mastectomy');
+    procedure_codes_map.set('lumpectomy', 'lumpectomy');
     procedure_codes_map.set('alnd-procedure', 'alnd');  // ALND also has a second condition which will be checked later.
-    procedure_codes_map.set('reconstruction', 'Reconstruction');
+    procedure_codes_map.set('breast_cancer-reconstruction', 'reconstruction');  // Although 'reconstruction' is vague, it refers specifically to breast reconstruction.
 
     // Iterate through the mappings and append when a code is satisfied.
     for(const procedure_name of procedure_codes_map.keys()){
@@ -692,7 +692,9 @@ export class ExtractedMCODE {
     }
 
     // Metastasis Resection check.
-    this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.reasonReference.meta_profile == 'mcode-secondary-cancer-condition');
+    if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.reasonReference.meta_profile == 'mcode-secondary-cancer-condition')){
+      surgicalValues.push('metastasis_resection');
+    }
 
     // TODO:
     // ablation - isn’t really a surgery or radiation procedure, confused for where to put it, asking around
