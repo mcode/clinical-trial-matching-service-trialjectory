@@ -49,7 +49,9 @@ export interface CancerRelatedProcedureParent extends BaseFhirResource {
   bodySite?: Coding[];
 }
 
-export interface CancerRelatedRadiationProcedure extends CancerRelatedProcedureParent { }
+export interface CancerRelatedRadiationProcedure extends CancerRelatedProcedureParent {
+  mcodeTreatmentIntent?: Coding[];
+}
 
 export interface CancerRelatedSurgicalProcedure extends CancerRelatedProcedureParent {
   reasonReference?: CancerConditionParent;
@@ -638,14 +640,14 @@ export class ExtractedMCODE {
   // Radiation Procedures
   getRadiationProcedureValue(): string[] {
 
-    const radiationValues:string[] = [];
+    let radiationValues:string[] = [];
 
     const procedure_codes_map = new Map<string, string>()
     procedure_codes_map.set('ablation-procedure', 'ablation');
     procedure_codes_map.set('rfa-procedure', 'rfa');
     procedure_codes_map.set('ebrt-procedure', 'ebrt');
     // Perform the basic mappings of the radiation procedures.
-    radiationValues.push.apply(radiationValues, this.performBasicMappings(procedure_codes_map, this.cancerRelatedSurgicalProcedure));
+    radiationValues = radiationValues.concat(this.performBasicMappings(procedure_codes_map, this.cancerRelatedSurgicalProcedure));
 
     // WBRT Logic.
     for (const cancerRelatedRadiationProcedure of this.cancerRelatedRadiationProcedure) {
@@ -676,7 +678,7 @@ export class ExtractedMCODE {
 
   // Surgical Procedures
   getSurgicalProcedureValue(): string[] {
-    const surgicalValues:string[] = [];
+    let surgicalValues:string[] = [];
     
     // Set the Mapping Name -> Trialjectory Result.
     const procedure_codes_map = new Map<string, string>()
@@ -685,7 +687,7 @@ export class ExtractedMCODE {
     procedure_codes_map.set('alnd-procedure', 'alnd');  // ALND also has a second possible mapping which will be checked later.
     procedure_codes_map.set('breast-reconstruction', 'reconstruction');  // Although 'reconstruction' is vague, it refers specifically to breast reconstruction.
     // Perform the basic mappings of the surgical procedures.
-    surgicalValues.push.apply(surgicalValues, this.performBasicMappings(procedure_codes_map, this.cancerRelatedSurgicalProcedure));
+    surgicalValues = surgicalValues.concat(this.performBasicMappings(procedure_codes_map, this.cancerRelatedSurgicalProcedure));
 
     // Additional ALND mapping check (if alnd has not already been added).
     if(!surgicalValues.includes('alnd')){
