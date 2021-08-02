@@ -2,10 +2,13 @@ import { fhirclient } from 'fhirclient/lib/types';
 import * as fhirpath from 'fhirpath';
 
 import profile_system_codes_json from '../data/profile-system-codes-json.json';
+import system_metastasis_codes_json from '../data/system-metastasis-codes-json.json';
 import { fhir } from 'clinical-trial-matching-service';
 import { CodeProfile, ProfileSystemCodes } from './profileSystemLogic';
 
 const profile_system_codes = profile_system_codes_json as ProfileSystemCodes;
+const metastasis_codes = system_metastasis_codes_json as {[key:string]: {[key:string]: string}};
+
 
 export type FHIRPath = string;
 
@@ -458,68 +461,41 @@ export class ExtractedMCODE {
     return null;
   }
 
-  // TODO - This will almost certainly be changed with new details from Trialjectory.
+  
   // Secondary Cancer Value
-  getSecondaryCancerValue(): string {
+  getSecondaryCancerValue(): string[] {
     if (this.secondaryCancerCondition.length == 0) {
       return null;
     }
-    // Cycle through each of the secondary cancer objects and check that they satisfy different requirements.
-    for (const secondaryCancerCondition of this.secondaryCancerCondition) {
-      // 2. Invasive Breast Cancer and Metastatics
-      if (
-        ((this.primaryCancerCondition.some((primCanCond) =>
-          primCanCond.histologyMorphologyBehavior.some((histMorphBehav) =>
-            this.codeIsInSheet(histMorphBehav, 'Morphology-Invasive')
-          )
-        ) &&
-          this.primaryCancerCondition.some((primCanCond) =>
-            primCanCond.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Breast'))
-          )) ||
-          this.primaryCancerCondition.some((primCanCond) =>
-            primCanCond.coding.some((code) => this.codeIsInSheet(code, 'Cancer-Invasive-Breast'))
-          )) &&
-        (secondaryCancerCondition.coding.length != 0 ||
-          this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-4')) ||
-          this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-4')))
-      ) {
-        return 'INVASIVE_BREAST_CANCER_AND_METASTATIC';
+
+    const cancerConditions:string[] = [];
+    for (const condition of this.secondaryCancerCondition) {
+      if (condition.coding) {
+        for (const code of condition.coding) {
+          if (code.system && code.code && code.system.includes("snomed")) {
+            // Look to see if the code is in the mapping
+            const organ = metastasis_codes.SNOMED[code.code];
+            
+            if (organ) {
+              cancerConditions.push(organ);
+              // If we were successful, let's move on to the next one
+              continue;
+            }
+
+          }
+
+          // If we weren't able to apply a mapping, let's see if we can get it from the display string
+          if (code.display) {
+            const re = new RegExp(/Secondary malignant neoplasm of (?<organ>[a-zA-Z ]+) \(disorder\)/, 'i');
+            const matches = re.exec(code.display.toLowerCase()).groups;
+            if (matches.organ) cancerConditions.push(matches.organ);
+          }
+
+        }
       }
     }
-    // Cycle through each of the secondary cancer objects and check that they satisfy different requirements.
-    for (const secondaryCancerCondition of this.secondaryCancerCondition) {
-      // 1. Brain Metastasis
-      if (
-        secondaryCancerCondition.coding.some((coding) => this.codeIsInSheet(coding, 'Metastasis-Brain')) &&
-        secondaryCancerCondition.clinicalStatus.some((clinStat) => clinStat.code == 'active')
-      ) {
-        return 'BRAIN_METASTASIS';
-      }
-    }
-    // Cycle through each of the secondary cancer objects and check that they satisfy different requirements.
-    for (const secondaryCancerCondition of this.secondaryCancerCondition) {
-      // Leptomeningeal metastatic disease
-      if (
-        secondaryCancerCondition.bodySite.some(
-          (bdySte) => this.normalizeCodeSystem(bdySte.system) == 'SNOMED' && bdySte.code == '8935007'
-        )
-      ) {
-        return 'LEPTOMENINGEAL_METASTATIC_DISEASE';
-      }
-    }
-    // Cycle through each of the secondary cancer objects and check that they satisfy different requirements.
-    for (const secondaryCancerCondition of this.secondaryCancerCondition) {
-      // Metastatic
-      if (
-        secondaryCancerCondition.coding.length != 0 ||
-        this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-4')) ||
-        this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, 'Stage-4'))
-      ) {
-        return 'METASTATIC';
-      }
-    }
-    // None of the conditions are satisfied.
-    return null;
+
+    return cancerConditions.length == 0 ? null : cancerConditions;
   }
 
   // Histology Morphology Value (cancerSubType)

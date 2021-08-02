@@ -205,7 +205,7 @@ export class APIQuery {
   medications: string[];
   radiationProcedures: string[];
   surgicalProcedures: string[];
-  metastasis: string;
+  metastasis: string[];
   age: number;
   /**
    * Create a new query object.
