@@ -703,9 +703,8 @@ export class ExtractedMCODE {
     return surgicalValues;
   }
 
-  // 
   /**
-   * Returns the basic code mappings described by the given map of procedure code mappings on the given Fhir Resource
+   * Returns the basic code mappings described by the given map of procedure code mappings on the given Fhir Resource.
    * @param code_mapping The map tha describes the mapping of each code to a value.
    * @param fhir_resource The resource to perform the mapping on.
    * @returns The string array of mapped result values.
@@ -719,7 +718,6 @@ export class ExtractedMCODE {
         mapped_values.push(code_mapping.get(procedure_name));
       }
     }
-
     return mapped_values;
   }
 
@@ -761,7 +759,7 @@ export class ExtractedMCODE {
     stage_value_map.set('Stage-0', '0');
 
     // Iterate through the mappings and return when a code is satisfied.
-    for(const stage_name of stage_value_map.keys()){
+    for (const stage_name of stage_value_map.keys()) {
       if (this.TNMClinicalStageGroup.some((code) => this.codeIsInSheet(code, stage_name)) ||
       this.TNMPathologicalStageGroup.some((code) => this.codeIsInSheet(code, stage_name))) {
         return stage_value_map.get(stage_name);
@@ -1278,75 +1276,74 @@ quantityMatch(
   getMedicationStatementValues(): string[] {
 
     // Set the madication code mappings -> Trialjectory result mapping.
-    const medication_mappings = new Map<string[], string[]>()
-    medication_mappings.set(['anastrozole'], ['anastrozole']);
-    medication_mappings.set(['exemestane'], ['exemestane']);
-    medication_mappings.set(['letrozole'], ['letrozole']);
-    medication_mappings.set(['tamoxifen'], ['tamoxifen']);
-    medication_mappings.set(['toremifene'], ['toremifene']);
-    medication_mappings.set(['fulvestrant'], ['fulvestrant']);
-    medication_mappings.set(['raloxifene_hcl'], ['raloxifene_hcl']);
-    medication_mappings.set(['trastuzumab', 'Treatment-Trastuzumab'], ['trastuzumab']);
-    medication_mappings.set(['trastuzumab_hyaluronidase_conjugate'], ['trastuzumab_hyaluronidase_conjugate']);
-    medication_mappings.set(['trastuzumab_deruxtecan_conjugate'], ['trastuzumab_deruxtecan_conjugate']);
-    medication_mappings.set(['pertuzumab'], ['pertuzumab']);
-    medication_mappings.set(['lapatinib'], ['lapatinib']);
-    medication_mappings.set(['pamidronate'], ['pamidronate']);
-    medication_mappings.set(['paclitaxel'], ['paclitaxel']);
-    medication_mappings.set(['hyaluronidase'], ['hyaluronidase']);  // Originally spelled aluronidase, updated to hyaluronidase.
-    medication_mappings.set(['tucatinib'], ['tucatinib']);
-    medication_mappings.set(['paclitaxel'], ['paclitaxel']);
-    medication_mappings.set(['ixabepilone'], ['ixabepilone']);
-    medication_mappings.set(['neratinib'], ['neratinib']);
-    medication_mappings.set(['tdm1'], ['tdm1']);
-    medication_mappings.set(['doxorubicin'], ['doxorubicin']);
-    medication_mappings.set(['epirubicin'], ['epirubicin']);
-    medication_mappings.set(['cyclophosphamide'], ['cyclophosphamide']);
-    medication_mappings.set(['docetaxel'], ['docetaxel']);
-    medication_mappings.set(['cisplatin'], ['cisplatin']);
-    medication_mappings.set(['carboplatin'], ['carboplatin']);
-    medication_mappings.set(['gemcitabine'], ['gemcitabine']);
-    medication_mappings.set(['capecitabine'], ['capecitabine']);
-    medication_mappings.set(['vinblastine_sulfate'], ['vinblastine_sulfate']);
-    medication_mappings.set(['sacituzumab_govitecan_hziy'], ['sacituzumab_govitecan_hziy']);
-    medication_mappings.set(['methotrexate'], ['methotrexate']);
-    medication_mappings.set(['fluorouracil'], ['fluorouracil']);
-    medication_mappings.set(['vinorelbine'], ['vinorelbine']);
-    medication_mappings.set(['eribulin'], ['eribulin']);  // Originally spelled  eribuline, updated to eribulin.
-    medication_mappings.set(['etoposide'], ['etoposide']);
-    medication_mappings.set(['pemetrexed'], ['pemetrexed']);
-    medication_mappings.set(['irinotecan'], ['irinotecan']);
-    medication_mappings.set(['topotecan'], ['topotecan']);
-    medication_mappings.set(['ifosfamide'], ['ifosfamide']);
-    medication_mappings.set(['nivolumab'], ['nivolumab']);
-    medication_mappings.set(['avelumab'], ['avelumab']);
-    medication_mappings.set(['thiotepa'], ['thiotepa']);
-    medication_mappings.set(['olaparib'], ['olaparib']);
-    medication_mappings.set(['talazoparib'], ['talazoparib']);
-    medication_mappings.set(['atezolizumab'], ['atezolizumab']);
-    medication_mappings.set(['pembrolizumab'], ['pembrolizumab']);
-    medication_mappings.set(['zoledronic_acid'], ['zoledronic_acid']);
-    medication_mappings.set(['denosumab'], ['denosumab']);
-    medication_mappings.set(['bevacizumab'], ['bevacizumab']);
-    medication_mappings.set(['everolimus'], ['everolimus']);
-    medication_mappings.set(['progesterone'], ['progesterone']); // Originally spelled progestin, updated to progesterone.
-    medication_mappings.set(['fluoxymesterone'], ['fluoxymesterone']);
-    medication_mappings.set(['estrogen'], ['high_dose_estrogen']);  // Standard estrogen is the medication used for high_dose_estrogen, but Trialjectory expects high_dose_estrogen.
-    medication_mappings.set(['palbociclib'], ['palbociclib']);
-    medication_mappings.set(['abemaciclib'], ['abemaciclib']);
-    medication_mappings.set(['alpelisib'], ['alpelisib']);
-    medication_mappings.set(['ribociclib'], ['ribociclib']);
-    medication_mappings.set(['pertuzumab_trastuzumab_hyaluronidase'], ['pertuzumab_trastuzumab_hyaluronidase']);
-    medication_mappings.set(['goserelin'], ['goserelin']); // THIS MEDICATION IS NOT CURRENTLY SUPPORTED BY TRIALJECTORY. WE WILL NEED TO DISCUSS THIS WITH THEM.
-    medication_mappings.set(['leuprolide'], ['leuprolide']); // THIS MEDICATION IS NOT CURRENTLY SUPPORTED BY TRIALJECTORY. WE WILL NEED TO DISCUSS THIS WITH THEM.
+    const medication_mappings = new Map<string, string>()
+    medication_mappings.set('anastrozole', 'anastrozole');
+    medication_mappings.set('exemestane', 'exemestane');
+    medication_mappings.set('letrozole', 'letrozole');
+    medication_mappings.set('tamoxifen', 'tamoxifen');
+    medication_mappings.set('toremifene', 'toremifene');
+    medication_mappings.set('fulvestrant', 'fulvestrant');
+    medication_mappings.set('raloxifene_hcl', 'raloxifene_hcl');
+    medication_mappings.set('trastuzumab', 'Treatment-Trastuzumab', 'trastuzumab');
+    medication_mappings.set('trastuzumab_hyaluronidase_conjugate', 'trastuzumab_hyaluronidase_conjugate');
+    medication_mappings.set('trastuzumab_deruxtecan_conjugate', 'trastuzumab_deruxtecan_conjugate');
+    medication_mappings.set('pertuzumab', 'pertuzumab');
+    medication_mappings.set('lapatinib', 'lapatinib');
+    medication_mappings.set('pamidronate', 'pamidronate');
+    medication_mappings.set('paclitaxel', 'paclitaxel');
+    medication_mappings.set('hyaluronidase', 'hyaluronidase');  // Originally spelled aluronidase, updated to hyaluronidase.
+    medication_mappings.set('tucatinib', 'tucatinib');
+    medication_mappings.set('paclitaxel', 'paclitaxel');
+    medication_mappings.set('ixabepilone', 'ixabepilone');
+    medication_mappings.set('neratinib', 'neratinib');
+    medication_mappings.set('tdm1', 'tdm1');
+    medication_mappings.set('doxorubicin', 'doxorubicin');
+    medication_mappings.set('epirubicin', 'epirubicin');
+    medication_mappings.set('cyclophosphamide', 'cyclophosphamide');
+    medication_mappings.set('docetaxel', 'docetaxel');
+    medication_mappings.set('cisplatin', 'cisplatin');
+    medication_mappings.set('carboplatin', 'carboplatin');
+    medication_mappings.set('gemcitabine', 'gemcitabine');
+    medication_mappings.set('capecitabine', 'capecitabine');
+    medication_mappings.set('vinblastine_sulfate', 'vinblastine_sulfate');
+    medication_mappings.set('sacituzumab_govitecan_hziy', 'sacituzumab_govitecan_hziy');
+    medication_mappings.set('methotrexate', 'methotrexate');
+    medication_mappings.set('fluorouracil', 'fluorouracil');
+    medication_mappings.set('vinorelbine', 'vinorelbine');
+    medication_mappings.set('eribulin', 'eribulin');  // Originally spelled  eribuline, updated to eribulin.
+    medication_mappings.set('etoposide', 'etoposide');
+    medication_mappings.set('pemetrexed', 'pemetrexed');
+    medication_mappings.set('irinotecan', 'irinotecan');
+    medication_mappings.set('topotecan', 'topotecan');
+    medication_mappings.set('ifosfamide', 'ifosfamide');
+    medication_mappings.set('nivolumab', 'nivolumab');
+    medication_mappings.set('avelumab', 'avelumab');
+    medication_mappings.set('thiotepa', 'thiotepa');
+    medication_mappings.set('olaparib', 'olaparib');
+    medication_mappings.set('talazoparib', 'talazoparib');
+    medication_mappings.set('atezolizumab', 'atezolizumab');
+    medication_mappings.set('pembrolizumab', 'pembrolizumab');
+    medication_mappings.set('zoledronic_acid', 'zoledronic_acid');
+    medication_mappings.set('denosumab', 'denosumab');
+    medication_mappings.set('bevacizumab', 'bevacizumab');
+    medication_mappings.set('everolimus', 'everolimus');
+    medication_mappings.set('progesterone', 'progesterone'); // Originally spelled progestin, updated to progesterone.
+    medication_mappings.set('fluoxymesterone', 'fluoxymesterone');
+    medication_mappings.set('estrogen', 'high_dose_estrogen');  // Standard estrogen is the medication used for high_dose_estrogen, but Trialjectory expects high_dose_estrogen.
+    medication_mappings.set('palbociclib', 'palbociclib');
+    medication_mappings.set('abemaciclib', 'abemaciclib');
+    medication_mappings.set('alpelisib', 'alpelisib');
+    medication_mappings.set('ribociclib', 'ribociclib');
+    medication_mappings.set('pertuzumab_trastuzumab_hyaluronidase', 'pertuzumab_trastuzumab_hyaluronidase');
+    medication_mappings.set('goserelin', 'goserelin'); // THIS MEDICATION IS NOT CURRENTLY SUPPORTED BY TRIALJECTORY. WE WILL NEED TO DISCUSS THIS WITH THEM.
+    medication_mappings.set('leuprolide', 'leuprolide'); // THIS MEDICATION IS NOT CURRENTLY SUPPORTED BY TRIALJECTORY. WE WILL NEED TO DISCUSS THIS WITH THEM.
+    // WE HAVE SINCE DISCUSSED THESE MEDICATIONS WITH THEM, WAITING FOR THEM TO PROCEED.
 
     const medication_values: string[] = [];
-
-    // Iterate through the mappings.
-    for (const medication_sheets of medication_mappings.keys()) {
-      // If one of the medication statements maps to one of the medication mappings in the elements of the medication_mappings key, accept the value of the key.
-      if (this.cancerRelatedMedicationStatement.some((coding) => medication_sheets.some((medication) => this.codeIsInSheet(coding, medication)))) {
-        medication_values.push(...medication_mappings.get(medication_sheets));
+    // Iterate through the mappings and append when a code is satisfied.
+    for (const medication_name of medication_mappings.keys()) {
+      if (this.cancerRelatedMedicationStatement.some((code) => this.codeIsInSheet(code, medication_name))) {
+        medication_values.push(medication_name);
       }
     }
 
