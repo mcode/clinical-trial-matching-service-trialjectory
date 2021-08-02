@@ -28,9 +28,12 @@ export interface Ratio {
   denominator?: Quantity;
 }
 
-export interface CancerConditionParent {
-  clinicalStatus?: Coding[];
+export interface BaseFhirResource {
   coding?: Coding[];
+}
+
+export interface CancerConditionParent extends BaseFhirResource {
+  clinicalStatus?: Coding[];
   meta_profile?: string;
 }
 
@@ -42,8 +45,7 @@ export interface SecondaryCancerCondition extends CancerConditionParent {
   bodySite?: Coding[];
 }
 
-export interface CancerRelatedProcedureParent {
-  coding?: Coding[];
+export interface CancerRelatedProcedureParent extends BaseFhirResource {
   bodySite?: Coding[];
 }
 
@@ -53,16 +55,14 @@ export interface CancerRelatedSurgicalProcedure extends CancerRelatedProcedurePa
   reasonReference?: CancerConditionParent;
 }
 
-export interface TumorMarker {
-  code?: Coding[];
+export interface TumorMarker extends BaseFhirResource {
   valueQuantity?: Quantity[];
   valueRatio?: Ratio[];
   valueCodeableConcept?: Coding[];
   interpretation?: Coding[];
 }
 
-export interface CancerGeneticVariant {
-  code?: Coding[];
+export interface CancerGeneticVariant extends BaseFhirResource {
   component?: CancerGeneticVariantComponent;
   valueCodeableConcept?: Coding[];
   interpretation?: Coding[];
@@ -190,7 +190,7 @@ export class ExtractedMCODE {
           this.resourceProfile(this.lookup(resource, 'meta.profile'), 'mcode-tumor-marker')
         ) {
           const tempTumorMarker: TumorMarker = {};
-          tempTumorMarker.code = this.lookup(resource, 'code.coding') as Coding[];
+          tempTumorMarker.coding = this.lookup(resource, 'code.coding') as Coding[];
           tempTumorMarker.valueQuantity = this.lookup(resource, 'valueQuantity') as Quantity[];
           tempTumorMarker.valueRatio = this.lookup(resource, 'valueRatio') as Ratio[];
           tempTumorMarker.valueCodeableConcept = this.lookup(resource, 'valueCodeableConcept.coding') as Coding[];
@@ -207,7 +207,7 @@ export class ExtractedMCODE {
           this.resourceProfile(this.lookup(resource, 'meta.profile'), 'mcode-cancer-genetic-variant')
         ) {
           const tempCGV: CancerGeneticVariant = {};
-          tempCGV.code = this.lookup(resource, 'code.coding') as Coding[]; // not used in logic
+          tempCGV.coding = this.lookup(resource, 'code.coding') as Coding[]; // not used in logic
           tempCGV.component = {
             geneStudied: [] as CancerGeneticVariantComponentType[],
             genomicsSourceClass: [] as CancerGeneticVariantComponentType[]
@@ -640,6 +640,14 @@ export class ExtractedMCODE {
 
     const radiationValues:string[] = [];
 
+    const procedure_codes_map = new Map<string, string>()
+    procedure_codes_map.set('ablation-procedure', 'ablation');
+    procedure_codes_map.set('rfa-procedure', 'rfa');
+    procedure_codes_map.set('ebrt-procedure', 'ebrt');
+    // Perform the basic mappings of the radiation procedures.
+    radiationValues.push.apply(radiationValues, this.performBasicMappings(procedure_codes_map, this.cancerRelatedSurgicalProcedure));
+
+    // WBRT Logic.
     for (const cancerRelatedRadiationProcedure of this.cancerRelatedRadiationProcedure) {
       if (
         cancerRelatedRadiationProcedure.coding &&
@@ -657,6 +665,7 @@ export class ExtractedMCODE {
       }
     }
 
+    // Radiation Logic.
     if (this.cancerRelatedRadiationProcedure.length > 0) {
       // If there is any code in the cancerRelatedRadiationProcedure, it counts as radiation.
       radiationValues.push('radiation');
@@ -673,17 +682,12 @@ export class ExtractedMCODE {
     const procedure_codes_map = new Map<string, string>()
     procedure_codes_map.set('mastectomy', 'mastectomy');
     procedure_codes_map.set('lumpectomy', 'lumpectomy');
-    procedure_codes_map.set('alnd-procedure', 'alnd');  // ALND also has a second condition which will be checked later.
-    procedure_codes_map.set('breast_cancer-reconstruction', 'reconstruction');  // Although 'reconstruction' is vague, it refers specifically to breast reconstruction.
+    procedure_codes_map.set('alnd-procedure', 'alnd');  // ALND also has a second possible mapping which will be checked later.
+    procedure_codes_map.set('breast-reconstruction', 'reconstruction');  // Although 'reconstruction' is vague, it refers specifically to breast reconstruction.
+    // Perform the basic mappings of the surgical procedures.
+    surgicalValues.push.apply(surgicalValues, this.performBasicMappings(procedure_codes_map, this.cancerRelatedSurgicalProcedure));
 
-    // Iterate through the mappings and append when a code is satisfied.
-    for(const procedure_name of procedure_codes_map.keys()){
-      if (this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.coding.some((code) => this.codeIsInSheet(code, procedure_name)))) {
-        surgicalValues.push(procedure_codes_map.get(procedure_name));
-      }
-    }
-
-    // Additional ALND check (if alnd has not already been added).
+    // Additional ALND mapping check (if alnd has not already been added).
     if(!surgicalValues.includes('alnd')){
       if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.coding.some((code) => code == '122459003') 
           && surgicalProcedure.bodySite.some((code) => this.codeIsInSheet(code, 'alnd-bodysite')))) {
@@ -696,12 +700,27 @@ export class ExtractedMCODE {
       surgicalValues.push('metastasis_resection');
     }
 
-    // TODO:
-    // ablation - isn’t really a surgery or radiation procedure, confused for where to put it, asking around
-    // rfa - is a type of ablation, same answer as above
-    // ebrt - no SNOMED code for this, asking around
-
     return surgicalValues;
+  }
+
+  // 
+  /**
+   * Returns the basic code mappings described by the given map of procedure code mappings on the given Fhir Resource
+   * @param code_mapping The map tha describes the mapping of each code to a value.
+   * @param fhir_resource The resource to perform the mapping on.
+   * @returns The string array of mapped result values.
+   */
+  performBasicMappings(code_mapping: Map<string, string>, fhir_resource: BaseFhirResource[]): string[] {
+    const mapped_values:string[] = [];
+
+    // Iterate through the mappings and append when a code is satisfied.
+    for (const procedure_name of code_mapping.keys()) {
+      if (fhir_resource.some((fhir_resource) => fhir_resource.coding.some((code) => this.codeIsInSheet(code, procedure_name)))) {
+        mapped_values.push(code_mapping.get(procedure_name));
+      }
+    }
+
+    return mapped_values;
   }
 
   // Age
@@ -1061,7 +1080,7 @@ export class ExtractedMCODE {
         tumorMarker.valueQuantity.some((valQuant) =>
           this.quantityMatch(valQuant.value, valQuant.code, [metric], '>=', '%')
         )) &&
-      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-ER'))
+      tumorMarker.coding.some((code) => this.codeIsInSheet(code, 'Biomarker-ER'))
     );
   }
   isERNegative(tumorMarker: TumorMarker, metric: number): boolean {
@@ -1074,7 +1093,7 @@ export class ExtractedMCODE {
             this.quantityMatch(valQuant.value, valQuant.code, [metric], '<', '%') ||
             this.quantityMatch(valQuant.value, valQuant.code, [0], '=')
         )) &&
-      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-ER'))
+      tumorMarker.coding.some((code) => this.codeIsInSheet(code, 'Biomarker-ER'))
     );
   }
   isPRPositive(tumorMarker: TumorMarker, metric: number): boolean {
@@ -1085,7 +1104,7 @@ export class ExtractedMCODE {
           this.quantityMatch(valQuant.value, valQuant.code, [metric], '>=', '%')
         ) ||
         tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '>='))) &&
-      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-PR'))
+      tumorMarker.coding.some((code) => this.codeIsInSheet(code, 'Biomarker-PR'))
     );
   }
   isPRNegative(tumorMarker: TumorMarker, metric: number): boolean {
@@ -1098,21 +1117,21 @@ export class ExtractedMCODE {
             this.quantityMatch(valQuant.value, valQuant.code, [0], '=')
         ) ||
         tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '<'))) &&
-      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-PR'))
+      tumorMarker.coding.some((code) => this.codeIsInSheet(code, 'Biomarker-PR'))
     );
   }
   isBioMarkerPositiveCombo2(tumorMarker: TumorMarker, sheetName: string): boolean {
     return (
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationPositiveCombo2(tumorMarker.interpretation))
-      && tumorMarker.code.some((code) => this.codeIsInSheet(code, sheetName))
+      && tumorMarker.coding.some((code) => this.codeIsInSheet(code, sheetName))
     );
   }
   isBioMarkerNegativeCombo2(tumorMarker: TumorMarker, sheetName: string): boolean {
     return (
       (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationNegativeCombo2(tumorMarker.interpretation))
-      && tumorMarker.code.some((code) => this.codeIsInSheet(code, sheetName))
+      && tumorMarker.coding.some((code) => this.codeIsInSheet(code, sheetName))
     );
   }
   isRBPositive(tumorMarker: TumorMarker, metric: number): boolean {
@@ -1123,7 +1142,7 @@ export class ExtractedMCODE {
         this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '>')) ||
         this.isInterpretationPositive(tumorMarker.interpretation)) &&
-      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-RB'))
+      tumorMarker.coding.some((code) => this.codeIsInSheet(code, 'Biomarker-RB'))
     );
   }
   isRBNegative(tumorMarker: TumorMarker, metric: number): boolean {
@@ -1136,12 +1155,12 @@ export class ExtractedMCODE {
             this.quantityMatch(valQuant.value, valQuant.code, [metric], '<', '%') ||
             this.quantityMatch(valQuant.value, valQuant.code, [0], '=')
         )) &&
-      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-RB'))
+      tumorMarker.coding.some((code) => this.codeIsInSheet(code, 'Biomarker-RB'))
     );
   }
   isHER2Positive(tumorMarker: TumorMarker): boolean {
     return (
-      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-HER2')) &&
+      tumorMarker.coding.some((code) => this.codeIsInSheet(code, 'Biomarker-HER2')) &&
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationPositive(tumorMarker.interpretation) ||
         tumorMarker.valueQuantity.some((valQuant) =>
@@ -1156,7 +1175,7 @@ export class ExtractedMCODE {
         tumorMarker.valueQuantity.some((valQuant) =>
           this.quantityMatch(valQuant.value, valQuant.code, quantities, '=')
         )) &&
-      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-HER2'))
+      tumorMarker.coding.some((code) => this.codeIsInSheet(code, 'Biomarker-HER2'))
     );
   }
   isFGFRPositive(tumorMarker: TumorMarker, metric: number): boolean {
@@ -1167,7 +1186,7 @@ export class ExtractedMCODE {
         tumorMarker.valueQuantity.some((valQuant) =>
           this.quantityMatch(valQuant.value, valQuant.code, [metric], '>=', '%')
         )) &&
-      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-FGFR'))
+      tumorMarker.coding.some((code) => this.codeIsInSheet(code, 'Biomarker-FGFR'))
     );
   }
   isFGFRNegative(tumorMarker: TumorMarker, metric: number): boolean {
@@ -1180,35 +1199,35 @@ export class ExtractedMCODE {
             this.quantityMatch(valQuant.value, valQuant.code, [metric], '<', '%') ||
             this.quantityMatch(valQuant.value, valQuant.code, [0], '=')
         )) &&
-      tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-FGFR'))
+      tumorMarker.coding.some((code) => this.codeIsInSheet(code, 'Biomarker-FGFR'))
     );
   }
   isPIK3CAPositive(tumorMarker: TumorMarker): boolean {
     return (
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationPositive(tumorMarker.interpretation))
-      && tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-PIK3CA'))
+      && tumorMarker.coding.some((code) => this.codeIsInSheet(code, 'Biomarker-PIK3CA'))
     );
   }
   isPIK3CANegative(tumorMarker: TumorMarker): boolean {
     return (
       (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationNegative(tumorMarker.interpretation))
-      && tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-PIK3CA'))
+      && tumorMarker.coding.some((code) => this.codeIsInSheet(code, 'Biomarker-PIK3CA'))
     );
   }
   isPDL1Positive(tumorMarker: TumorMarker): boolean {
     return (
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationPositive(tumorMarker.interpretation))
-      && tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-PDL1'))
+      && tumorMarker.coding.some((code) => this.codeIsInSheet(code, 'Biomarker-PDL1'))
     );
   }
   isPDL1Negative(tumorMarker: TumorMarker): boolean {
     return (
       (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationNegative(tumorMarker.interpretation))
-      && tumorMarker.code.some((code) => this.codeIsInSheet(code, 'Biomarker-PDL1'))
+      && tumorMarker.coding.some((code) => this.codeIsInSheet(code, 'Biomarker-PDL1'))
     );
   }
 quantityMatch(
