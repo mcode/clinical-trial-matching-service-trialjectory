@@ -78,8 +78,8 @@ describe('ExtractedMCODE Import', () => {
           marker.valueCodeableConcept[0].code == '10828004' &&
           marker.valueQuantity[0].value == 3 &&
           marker.valueRatio.length == 0 &&
-          marker.code[0].code == '48676-1' &&
-          marker.code[1].code == '85319-2' &&
+          marker.coding[0].code == '48676-1' &&
+          marker.coding[1].code == '85319-2' &&
           marker.interpretation[0].code == 'POS'
       )
     ).toBeTrue();
@@ -91,8 +91,8 @@ describe('ExtractedMCODE Import', () => {
           marker.valueRatio[0].numerator.value == 1 &&
           marker.valueRatio[0].numerator.comparator == '>=' &&
           marker.valueRatio[0].denominator.value == 100 &&
-          marker.code[0].code == '48676-1' &&
-          marker.code[1].code == '85318-4' &&
+          marker.coding[0].code == '48676-1' &&
+          marker.coding[1].code == '85318-4' &&
           marker.interpretation.length == 0
       )
     ).toBeTrue();
@@ -105,8 +105,8 @@ describe('ExtractedMCODE Import', () => {
           marker.valueQuantity[0].comparator == '>=' &&
           marker.valueQuantity[0].unit == '%' &&
           marker.valueRatio.length == 0 &&
-          marker.code[0].code == '16112-5' &&
-          marker.code[1].code == '85337-4' &&
+          marker.coding[0].code == '16112-5' &&
+          marker.coding[1].code == '85337-4' &&
           marker.interpretation.length == 0
       )
     ).toBeTrue();
@@ -138,8 +138,8 @@ describe('ExtractedMCODE Import', () => {
 
   it('checkExtractedCancerGeneticVariant', function () {
     const extractedData = new mcode.ExtractedMCODE(sampleData);
-    expect(extractedData.cancerGeneticVariant[0].code[0].system).toBe('http://loinc.org');
-    expect(extractedData.cancerGeneticVariant[0].code[0].code).toBe('69548-6');
+    expect(extractedData.cancerGeneticVariant[0].coding[0].system).toBe('http://loinc.org');
+    expect(extractedData.cancerGeneticVariant[0].coding[0].code).toBe('69548-6');
     expect(extractedData.cancerGeneticVariant[0].valueCodeableConcept[0].system).toBe('http://loinc.org');
     expect(extractedData.cancerGeneticVariant[0].valueCodeableConcept[0].code).toBe('LA9633-4');
     expect(extractedData.cancerGeneticVariant[0].interpretation[0].system).toBe(
@@ -1169,13 +1169,13 @@ describe('checkTumorMarkerFilterLogic-ER+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '16112-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '16112-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
   tm.interpretation.push({
     system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html',
     code: 'H',
@@ -1190,13 +1190,13 @@ describe('checkTumorMarkerFilterLogic-ER+_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '16112-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '16112-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
   tm.valueRatio.push({numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
@@ -1208,13 +1208,13 @@ describe('checkTumorMarkerFilterLogic-ER-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '85310-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '85310-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
   tm.interpretation.push({
     system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html',
     code: 'NEG',
@@ -1230,13 +1230,13 @@ describe('checkTumorMarkerFilterLogic-ER-_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '85310-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '85310-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
   tm.valueRatio.push({numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
@@ -1248,13 +1248,13 @@ describe('checkTumorMarkerFilterLogic-PR+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
   tm.interpretation.push({
     system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html',
     code: 'H',
@@ -1269,13 +1269,13 @@ describe('checkTumorMarkerFilterLogic-PR+_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
   tm.valueRatio.push({numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
@@ -1287,13 +1287,13 @@ describe('checkTumorMarkerFilterLogic-PR-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
   tm.valueCodeableConcept.push({
     system: 'snomed',
     code: '260385009',
@@ -1308,13 +1308,13 @@ describe('checkTumorMarkerFilterLogic-PR-_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
   tm.valueRatio.push({numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
@@ -1615,14 +1615,14 @@ describe('checkTumorMarkerFilterLogic-CDH1+', () => {
   const extractedMCODE = new mcode.ExtractedMCODE(null);
 
   const tumorMarker : mcode.TumorMarker = {
-    code: [] as Coding[],
+    coding: [] as Coding[],
     valueCodeableConcept: [] as Coding[],
     interpretation: [] as Coding[],
     valueQuantity: [] as Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
-  tumorMarker.code.push({ system: 'loinc', code: '21652-3', display: 'n/a' });
+  tumorMarker.coding.push({ system: 'loinc', code: '21652-3', display: 'n/a' });
   tumorMarker.valueCodeableConcept.push({ system: 'SNOMED', code: '10828004', display: 'Present' });
   extractedMCODE.tumorMarker.push(tumorMarker);
 
@@ -1671,14 +1671,14 @@ describe('checkTumorMarkerFilterLogic-CHEK2+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tumorMarker : mcode.TumorMarker = {
-    code: [] as Coding[],
+    coding: [] as Coding[],
     valueCodeableConcept: [] as Coding[],
     interpretation: [] as Coding[],
     valueQuantity: [] as Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
-  tumorMarker.code.push({ system: 'loinc', code: '72518-4', display: 'n/a' });
+  tumorMarker.coding.push({ system: 'loinc', code: '72518-4', display: 'n/a' });
   tumorMarker.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'POS', display: 'POS'});
 
   extractedMCODE.tumorMarker.push(tumorMarker);
@@ -1726,14 +1726,14 @@ describe('checkTumorMarkerFilterLogic-NBN+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tumorMarker : mcode.TumorMarker = {
-    code: [] as Coding[],
+    coding: [] as Coding[],
     valueCodeableConcept: [] as Coding[],
     interpretation: [] as Coding[],
     valueQuantity: [] as Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
-  tumorMarker.code.push({ system: 'loinc', code: '82515-8', display: 'n/a' });
+  tumorMarker.coding.push({ system: 'loinc', code: '82515-8', display: 'n/a' });
   tumorMarker.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'ND', display: 'ND'});
 
   extractedMCODE.tumorMarker.push(tumorMarker);
@@ -1747,14 +1747,14 @@ describe('checkTumorMarkerFilterLogic-NBN-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tumorMarker : mcode.TumorMarker = {
-    code: [] as Coding[],
+    coding: [] as Coding[],
     valueCodeableConcept: [] as Coding[],
     interpretation: [] as Coding[],
     valueQuantity: [] as Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
-  tumorMarker.code.push({ system: 'loinc', code: '82515-8', display: 'n/a' });
+  tumorMarker.coding.push({ system: 'loinc', code: '82515-8', display: 'n/a' });
   tumorMarker.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'DET', display: 'DET'});
 
   extractedMCODE.tumorMarker.push(tumorMarker);
@@ -1768,14 +1768,14 @@ describe('checkTumorMarkerFilterLogic-NF1+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tumorMarker : mcode.TumorMarker = {
-    code: [] as Coding[],
+    coding: [] as Coding[],
     valueCodeableConcept: [] as Coding[],
     interpretation: [] as Coding[],
     valueQuantity: [] as Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
-  tumorMarker.code.push({ system: 'loinc', code: '21717-4', display: 'n/a' });
+  tumorMarker.coding.push({ system: 'loinc', code: '21717-4', display: 'n/a' });
   tumorMarker.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'L', display: 'n/a'});
 
   extractedMCODE.tumorMarker.push(tumorMarker);
@@ -1789,14 +1789,14 @@ describe('checkTumorMarkerFilterLogic-NF1-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tumorMarker : mcode.TumorMarker = {
-    code: [] as Coding[],
+    coding: [] as Coding[],
     valueCodeableConcept: [] as Coding[],
     interpretation: [] as Coding[],
     valueQuantity: [] as Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
-  tumorMarker.code.push({ system: 'loinc', code: '21718-2', display: 'n/a' });
+  tumorMarker.coding.push({ system: 'loinc', code: '21718-2', display: 'n/a' });
   tumorMarker.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'H', display: 'n/a'});
 
   extractedMCODE.tumorMarker.push(tumorMarker);
@@ -2082,13 +2082,13 @@ describe('checkTumorMarkerFilterLogic-RB+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
   tm.valueQuantity.push({ value: '51', comparator: '>', unit: '%', code: '%' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2101,13 +2101,13 @@ describe('checkTumorMarkerFilterLogic-RB+_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
   tm.valueRatio.push({numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2120,13 +2120,13 @@ describe('checkTumorMarkerFilterLogic-RB-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
   tm.valueQuantity.push({ value: '49', comparator: '<=', unit: '%', code: '%' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2139,13 +2139,13 @@ describe('checkTumorMarkerFilterLogic-RB-_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
   tm.valueRatio.push({numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2158,13 +2158,13 @@ describe('checkTumorMarkerFilterLogic-HER2+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '32996-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-HER2'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '32996-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-HER2'
   tm.valueQuantity.push({ value: '3+', comparator: '=' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2177,13 +2177,13 @@ describe('checkTumorMarkerFilterLogic-HER2-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '32996-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-HER2'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '32996-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-HER2'
   tm.valueQuantity.push({ value: '2+', comparator: '=' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2196,13 +2196,13 @@ describe('checkTumorMarkerFilterLogic-FGFR+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
   tm.valueQuantity.push({ value: '1', comparator: '>=', unit: '%', code: '%' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2215,13 +2215,13 @@ describe('checkTumorMarkerFilterLogic-FGFR+_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
   tm.valueRatio.push({numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2234,13 +2234,13 @@ describe('checkTumorMarkerFilterLogic-FGFR-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
   tm.valueQuantity.push({ value: '0.5', comparator: '<', unit: '%', code: '%' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2253,13 +2253,13 @@ describe('checkTumorMarkerFilterLogic-FGFR-_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
   tm.valueRatio.push({numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2408,13 +2408,13 @@ describe('checkTumorMarkerFilterLogic-PDL1+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '96268-8', display: 'N/A' } as Coding);
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '96268-8', display: 'N/A' } as Coding);
   tm.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'POS', display: 'POS' } as Coding);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2427,13 +2427,13 @@ describe('checkTumorMarkerFilterLogic-PDL1-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '83052-1', display: 'N/A' } as Coding);
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '83052-1', display: 'N/A' } as Coding);
   tm.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'ND', display: 'ND' } as Coding);
   extractedMCODE.tumorMarker.push(tm);
 
