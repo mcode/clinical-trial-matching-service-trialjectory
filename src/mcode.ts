@@ -486,9 +486,10 @@ export class ExtractedMCODE {
 
           // If we weren't able to apply a mapping, let's see if we can get it from the display string
           if (code.display) {
-            const re = new RegExp(/Secondary malignant neoplasm of (?<organ>[a-zA-Z ]+) \(disorder\)/, 'i');
-            const matches = re.exec(code.display.toLowerCase()).groups;
-            if (matches.organ) cancerConditions.push(matches.organ);
+            const re = new RegExp(/secondary malignant neoplasm of (?<organ>[a-zA-Z ]+) \(disorder\)/, 'i');
+            const matches = re.exec(code.display.toLowerCase());
+            const groups = matches == null ? null : matches.groups;
+            if (groups && groups.organ) cancerConditions.push(groups.organ);
           }
 
         }

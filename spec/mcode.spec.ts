@@ -2452,6 +2452,59 @@ describe('checkHistologyMorphologyFilterLogic-dcis', () => {
     expect(extractedMCODE.getHistologyMorphologyValue()).toBe('dcis');
   });
 });
+describe('checkSecondaryCancerConditionLogic', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const scc: mcode.SecondaryCancerCondition = {};
+  scc.clinicalStatus = [] as Coding[];
+  scc.coding = [] as Coding[];
+
+
+  scc.coding.push({ system: 'http://snomed.info/sct', code: '94222008' } as Coding);
+  scc.coding.push({ system: 'http://snomed.info/sct', code: '00000000', display: 'Secondary malignant neoplasm of liver (disorder)' } as Coding);
+  scc.coding.push({ display: 'Secondary malignant neoplasm of chest wall (disorder)' } as Coding);
+  scc.coding.push({ display: 'Cannot be read' } as Coding);
+
+  extractedMCODE.secondaryCancerCondition.push(scc);
+
+  it('is populated', () => {
+    expect(extractedMCODE.getSecondaryCancerValue()).not.toBeNull();
+    expect(extractedMCODE.getSecondaryCancerValue()).toHaveSize(3);
+  });
+  it('uses snomed codes', () => {
+    expect(extractedMCODE.getSecondaryCancerValue()).toContain("bone");
+  });
+  it('uses display text if code is not present', () => {
+    expect(extractedMCODE.getSecondaryCancerValue()).toContain("liver");
+  });
+  it('uses display text if system and code is not present', () => {
+    expect(extractedMCODE.getSecondaryCancerValue()).toContain("chest wall");
+  });
+  it('is null if no Secondary Cancer Conditions', () => {
+    const emptyExtractedMCODE = new mcode.ExtractedMCODE(null);
+    expect(emptyExtractedMCODE.getSecondaryCancerValue()).toBeNull();
+  });
+  it('is null if no matches', () => {
+    const emptyExtractedMCODE = new mcode.ExtractedMCODE(null);
+    const scc: mcode.SecondaryCancerCondition = {};
+    scc.clinicalStatus = [] as Coding[];
+    scc.coding = [] as Coding[];
+    scc.coding.push({} as Coding);
+
+    emptyExtractedMCODE.secondaryCancerCondition.push(scc);
+
+    expect(emptyExtractedMCODE.getSecondaryCancerValue()).toBeNull();
+  });
+  it('is null if no coding', () => {
+    const emptyExtractedMCODE = new mcode.ExtractedMCODE(null);
+    const scc: mcode.SecondaryCancerCondition = {};
+
+    emptyExtractedMCODE.secondaryCancerCondition.push(scc);
+
+    expect(emptyExtractedMCODE.getSecondaryCancerValue()).toBeNull();
+  });
+
+});
 describe('checkECOGFilterLogic', () => {
   //Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
