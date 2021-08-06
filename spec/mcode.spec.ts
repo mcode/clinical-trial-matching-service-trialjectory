@@ -133,7 +133,7 @@ describe('ExtractedMCODE Import', () => {
     const extractedData = new mcode.ExtractedMCODE(sampleData);
     expect(extractedData.cancerRelatedSurgicalProcedure.some((procedure) => procedure.coding[0].code == '396487001')).toBeTrue();
     expect(extractedData.cancerRelatedSurgicalProcedure.some((procedure) => procedure.coding[0].code == '443497002')).toBeTrue();
-    expect(extractedData.cancerRelatedSurgicalProcedure.some((procedure) => procedure.reasonReference.meta_profile == 'mcode-primary-cancer-condition')).toBeTrue();  
+    expect(extractedData.cancerRelatedSurgicalProcedure.some((procedure) => procedure.reasonReference.reference_meta_profile == 'mcode-primary-cancer-condition')).toBeTrue();  
   });
 
   it('checkExtractedCancerGeneticVariant', function () {
@@ -296,7 +296,7 @@ describe('checkMedicationStatementFilterLogic-trastuzumab', () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test trastuzumab medication filter.', () => {
-    expect(medications.some(medication => medication == 'trastuzumab')).toBe(true);
+    expect(medications.some(medication => medication == 'trastuzumab')).toBeTrue();
   });
 });
 describe('checkMedicationStatementFilterLogicTreatment-Trastuzumab', () => {
@@ -308,7 +308,7 @@ describe('checkMedicationStatementFilterLogicTreatment-Trastuzumab', () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test trastuzumab medication filter.', () => {
-    expect(medications.some(medication => medication == 'trastuzumab')).toBe(true);
+    expect(medications.some(medication => medication == 'trastuzumab')).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-trastuzumab_hyaluronidase_conjugate", () => {
@@ -320,8 +320,8 @@ describe("checkMedicationStatementFilterLogic-trastuzumab_hyaluronidase_conjugat
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test trastuzumab_hyaluronidase_conjugate medication filter.", () => {
-    expect(medications.some(medication => medication == 'trastuzumab_hyaluronidase_conjugate')).toBe(true);
-    expect(medications.some(medication => medication == 'trastuzumab')).toBe(true);
+    expect(medications.some(medication => medication == 'trastuzumab_hyaluronidase_conjugate')).toBeTrue();
+    expect(medications.some(medication => medication == 'trastuzumab')).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-trastuzumab_deruxtecan_conjugate", () => {
@@ -334,8 +334,8 @@ describe("checkMedicationStatementFilterLogic-trastuzumab_deruxtecan_conjugate",
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test trastuzumab_deruxtecan_conjugate medication filter.", () => {
-    expect(medications.some(medication => medication == 'trastuzumab_deruxtecan_conjugate')).toBe(true);
-    expect(medications.some(medication => medication == 'trastuzumab')).toBe(true);
+    expect(medications.some(medication => medication == 'trastuzumab_deruxtecan_conjugate')).toBeTrue();
+    expect(medications.some(medication => medication == 'trastuzumab')).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-pertuzumab", () => {
@@ -371,9 +371,9 @@ describe("checkMedicationStatementFilterLogic-pertuzumab_trastuzumab_hyaluronida
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test pertuzumab_trastuzumab_hyaluronidase medication filter.", () => {
-    expect(medications.some(medication => medication == 'pertuzumab_trastuzumab_hyaluronidase')).toBe(true);
-    expect(medications.some(medication => medication == 'trastuzumab_hyaluronidase_conjugate')).toBe(true);
-    expect(medications.some(medication => medication == 'trastuzumab')).toBe(true);
+    expect(medications.some(medication => medication == 'pertuzumab_trastuzumab_hyaluronidase')).toBeTrue();
+    expect(medications.some(medication => medication == 'trastuzumab_hyaluronidase_conjugate')).toBeTrue();
+    expect(medications.some(medication => medication == 'trastuzumab')).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-tucatinib", () => {
@@ -409,7 +409,7 @@ describe("checkMedicationStatementFilterLogic-tdm1", () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test tdm1 medication filter.", () => {
-    expect(medications.some(medication => medication == 'tdm1')).toBe(true);
+    expect(medications.some(medication => medication == 'tdm1')).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-doxorubicin", () => {
@@ -589,7 +589,7 @@ describe('checkMedicationStatementFilterLogic-eribulin', () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test eribulin medication filter.', () => {
-    expect(medications.some(medication => medication == 'eribulin')).toBe(true);
+    expect(medications.some(medication => medication == 'eribulin')).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-ixabepilone", () => {
@@ -817,7 +817,7 @@ describe('checkMedicationStatementFilterLogic-progesterone', () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test progesterone medication filter.', () => {
-      expect(medications.some(medication => medication == 'progesterone')).toBe(true);
+      expect(medications.some(medication => medication == 'progesterone')).toBeTrue();
   });
 });
 describe('checkMedicationStatementFilterLogic-Hyaluronidase', () => {
@@ -829,7 +829,7 @@ describe('checkMedicationStatementFilterLogic-Hyaluronidase', () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test Hyaluronidase medication filter.', () => {
-      expect(medications.some(medication => medication == 'hyaluronidase')).toBe(true);
+      expect(medications.some(medication => medication == 'hyaluronidase')).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-fluoxymesterone", () => {
@@ -853,7 +853,7 @@ describe('checkMedicationStatementFilterLogic-high_dose_estrogen', () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test high_dose_estrogen medication filter.', () => {
-    expect(medications.includes('high_dose_estrogen')).toBe(true);
+    expect(medications.includes('high_dose_estrogen')).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-palbociclib", () => {
@@ -926,13 +926,13 @@ describe("checkMedicationStatementFilterLogic-seven_medications", () => {
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test alpelisib medication filter.", () => {
     expect(medications.length).toBe(7);
-    expect(medications.indexOf("letrozole") > -1).toBe(true);
-    expect(medications.indexOf("lapatinib") > -1).toBe(true);
-    expect(medications.indexOf("tucatinib") > -1).toBe(true);
-    expect(medications.indexOf("topotecan") > -1).toBe(true);
-    expect(medications.indexOf("palbociclib") > -1).toBe(true);
-    expect(medications.indexOf("abemaciclib") > -1).toBe(true);
-    expect(medications.indexOf("alpelisib") > -1).toBe(true);
+    expect(medications.indexOf("letrozole") > -1).toBeTrue();
+    expect(medications.indexOf("lapatinib") > -1).toBeTrue();
+    expect(medications.indexOf("tucatinib") > -1).toBeTrue();
+    expect(medications.indexOf("topotecan") > -1).toBeTrue();
+    expect(medications.indexOf("palbociclib") > -1).toBeTrue();
+    expect(medications.indexOf("abemaciclib") > -1).toBeTrue();
+    expect(medications.indexOf("alpelisib") > -1).toBeTrue();
   });
 });
 describe('checkStageFilterLogic-Stage0', () => {
@@ -2722,7 +2722,7 @@ describe('checkRadiationProcedureFilterLogic-WBRT', () => {
   extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
 
   it('Test WBRT Filter', () => {
-    expect(extractedMCODE.getRadiationProcedureValue().includes('wbrt')).toBe(true);
+    expect(extractedMCODE.getRadiationProcedureValue().includes('wbrt')).toBeTrue();
   });
 });
 describe('checkRadiationProcedureFilterLogic-EBRT', () => {
@@ -2738,7 +2738,7 @@ describe('checkRadiationProcedureFilterLogic-EBRT', () => {
   extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
 
   it('Test EBRT Filter', () => {
-    expect(extractedMCODE.getRadiationProcedureValue().includes('ebrt')).toBe(true);
+    expect(extractedMCODE.getRadiationProcedureValue().includes('ebrt')).toBeTrue();
   });
 });
 describe('checkRadiationProcedureFilterLogic-Ablation', () => {
@@ -2754,7 +2754,7 @@ describe('checkRadiationProcedureFilterLogic-Ablation', () => {
   extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
 
   it('Test Ablation Filter', () => {
-    expect(extractedMCODE.getRadiationProcedureValue().includes('ablation')).toBe(true);
+    expect(extractedMCODE.getRadiationProcedureValue().includes('ablation')).toBeTrue();
   });
 });
 describe('checkRadiationProcedureFilterLogic-rfa', () => {
@@ -2770,7 +2770,7 @@ describe('checkRadiationProcedureFilterLogic-rfa', () => {
   extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
 
   it('Test rfa Filter', () => {
-    expect(extractedMCODE.getRadiationProcedureValue().includes('rfa')).toBe(true);
+    expect(extractedMCODE.getRadiationProcedureValue().includes('rfa')).toBeTrue();
   });
 });
 describe('checkSurgicalProcedureFilterLogic-Lumpectomy', () => {
@@ -2785,7 +2785,7 @@ describe('checkSurgicalProcedureFilterLogic-Lumpectomy', () => {
   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
   it('Test Lumpectomy Filter', () => {
-    expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'lumpectomy')).toBe(true);
+    expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'lumpectomy')).toBeTrue();
   });
 });
 
@@ -2801,7 +2801,7 @@ describe('checkSurgicalProcedureFilterLogic-Mastectomy', () => {
   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
   it('Test Mastectomy Filter', () => {
-    expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'mastectomy')).toBe(true);
+    expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'mastectomy')).toBeTrue();
   });
 });
 
@@ -2817,7 +2817,7 @@ describe('checkSurgicalProcedureFilterLogic-Alnd_1', () => {
   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
   it('Test Alnd Filter_1', () => {
-    expect(extractedMCODE.getSurgicalProcedureValue().includes('alnd')).toBe(true);
+    expect(extractedMCODE.getSurgicalProcedureValue().includes('alnd')).toBeTrue();
   });
 });
 
@@ -2835,7 +2835,7 @@ describe('checkSurgicalProcedureFilterLogic-Alnd_2', () => {
   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
   it('Test Alnd Filter_2', () => {
-    expect(extractedMCODE.getSurgicalProcedureValue().includes('alnd')).toBe(true);
+    expect(extractedMCODE.getSurgicalProcedureValue().includes('alnd')).toBeTrue();
   });
 });
 
@@ -2851,7 +2851,7 @@ describe('checkSurgicalProcedureFilterLogic-Reconstruction', () => {
   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
   it('Test Reconstruction Filter', () => {
-    expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'reconstruction')).toBe(true);
+    expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'reconstruction')).toBeTrue();
   });
 });
 
@@ -2859,14 +2859,14 @@ describe('checkSurgicalProcedureFilterLogic-Metastasis Resection', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const crsp: mcode.CancerRelatedSurgicalProcedure = {};
-  crsp.reasonReference = [] as mcode.CancerConditionParent;
+  crsp.reasonReference = [] as mcode.ReasonReference;
 
   // Metastasis Resection Filter Attributes (surgical procedure reason reference = SecondaryCancerCondition)
-  crsp.reasonReference = ({ meta_profile: 'mcode-secondary-cancer-condition' } as mcode.SecondaryCancerCondition);
+  crsp.reasonReference = ({ reference_meta_profile: 'mcode-secondary-cancer-condition' } as mcode.ReasonReference);
 
   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
   it('Test Metastasis Resection Filter', () => {
-    expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'metastasis_resection')).toBe(true);
+    expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'metastasis_resection')).toBeTrue();
   });
 });

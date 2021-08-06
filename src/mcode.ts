@@ -15,6 +15,12 @@ export interface Coding {
   display?: string;
 }
 
+export interface ReasonReference {
+  reference?: string;
+  display?: string;
+  reference_meta_profile?: string;
+}
+
 export interface Quantity {
   value?: number | string;
   comparator?: string;
@@ -35,6 +41,7 @@ export interface BaseFhirResource {
 export interface CancerConditionParent extends BaseFhirResource {
   clinicalStatus?: Coding[];
   meta_profile?: string;
+  full_url?: string;
 }
 
 export interface PrimaryCancerCondition extends CancerConditionParent {
@@ -54,7 +61,7 @@ export interface CancerRelatedRadiationProcedure extends CancerRelatedProcedureP
 }
 
 export interface CancerRelatedSurgicalProcedure extends CancerRelatedProcedureParent {
-  reasonReference?: CancerConditionParent;
+  reasonReference?: ReasonReference;
 }
 
 export interface TumorMarker extends BaseFhirResource {
@@ -261,7 +268,18 @@ export class ExtractedMCODE {
           const tempCancerRelatedSurgicalProcedure: CancerRelatedSurgicalProcedure = {};
           tempCancerRelatedSurgicalProcedure.coding = this.lookup(resource, 'code.coding') as Coding[];
           tempCancerRelatedSurgicalProcedure.bodySite = this.lookup(resource, 'bodySite.coding') as Coding[];
-          tempCancerRelatedSurgicalProcedure.reasonReference = this.lookup(resource, 'reasonReference') as CancerConditionParent;
+          const reason_reference = this.lookup(resource, 'reasonReference') as ReasonReference;
+          for(const condition of this.primaryCancerCondition){
+            if(condition.full_url == reason_reference.reference){
+              reason_reference.reference_meta_profile = condition.meta_profile
+            }
+          }
+          for(const condition of this.secondaryCancerCondition){
+            if(condition.full_url == reason_reference.reference){
+              reason_reference.reference_meta_profile = condition.meta_profile
+            }
+          }
+          tempCancerRelatedSurgicalProcedure.reasonReference = reason_reference;
           if (this.cancerRelatedSurgicalProcedure) {
             if (
               !this.listContainsRadiationProcedure(
@@ -703,7 +721,7 @@ export class ExtractedMCODE {
     }
 
     // Metastasis Resection check.
-    if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.reasonReference != null && surgicalProcedure.reasonReference.meta_profile == 'mcode-secondary-cancer-condition')){
+    if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.reasonReference != null && surgicalProcedure.reasonReference.reference_meta_profile == 'mcode-secondary-cancer-condition')){
       surgicalValues.push('metastasis_resection');
     }
 
