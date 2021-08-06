@@ -2668,3 +2668,121 @@ describe('checkKarnofskyFilterLogic', () => {
     expect(extractedMCODE.getKarnofskyScore()).toBe(90);
   });
 });
+
+/** Procedure Tests */
+
+describe('checkRadiationProcedureFilterLogic-WBRT', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crrp: mcode.CancerRelatedRadiationProcedure = {};
+  crrp.bodySite = [] as Coding[];
+  crrp.coding = [] as Coding[];
+
+  // WBRT Filter Attributes
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '108290001', display: 'N/A' } as Coding);
+  crrp.bodySite.push({ system: 'http://snomed.info/sct', code: '12738006', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
+
+  it('Test WBRT Filter', () => {
+    expect(extractedMCODE.getRadiationProcedureValue().some(rp => rp == 'wbrt')).toBe(true);
+  });
+});
+
+describe('checkSurgicalProcedureFilterLogic-Lumpectomy', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
+  crsp.coding = [] as Coding[];
+
+  // Lumpectomy Filter Attributes
+  crsp.coding.push({ system: 'http://snomed.info/sct', code: '392022002', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
+
+  it('Test Lumpectomy Filter', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'lumpectomy')).toBe(true);
+  });
+});
+
+describe('checkSurgicalProcedureFilterLogic-Mastectomy', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
+  crsp.coding = [] as Coding[];
+
+  // Mastectomy Filter Attributes
+  crsp.coding.push({ system: 'http://snomed.info/sct', code: '429400009', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
+
+  it('Test Mastectomy Filter', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'mastectomy')).toBe(true);
+  });
+});
+
+describe('checkSurgicalProcedureFilterLogic-Alnd_1', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
+  crsp.coding = [] as Coding[];
+
+  // Alnd Filter Attributes
+  crsp.coding.push({ system: 'http://snomed.info/sct', code: '234262008', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
+
+  it('Test Alnd Filter_1', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue().includes('alnd')).toBe(true);
+  });
+});
+
+describe('checkSurgicalProcedureFilterLogic-Alnd_2', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
+  crsp.coding = [] as Coding[];
+  crsp.bodySite = [] as Coding[];
+
+  // Alnd Filter Attributes
+  crsp.coding.push({ system: 'http://snomed.info/sct', code: '122459003', display: 'N/A' } as Coding);
+  crsp.bodySite.push({ system: 'http://snomed.info/sct', code: '746224000', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
+
+  it('Test Alnd Filter_2', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue().includes('alnd')).toBe(true);
+  });
+});
+
+describe('checkSurgicalProcedureFilterLogic-Reconstruction', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
+  crsp.coding = [] as Coding[];
+
+  // Reconstruction Filter Attributes
+  crsp.coding.push({ system: 'http://snomed.info/sct', code: '302342002', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
+
+  it('Test Reconstruction Filter', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'reconstruction')).toBe(true);
+  });
+});
+
+describe('checkSurgicalProcedureFilterLogic-Metastasis Resection', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
+  crsp.reasonReference = [] as mcode.CancerConditionParent;
+
+  // Metastasis Resection Filter Attributes (surgical procedure reason reference = SecondaryCancerCondition)
+  crsp.reasonReference = ({ meta_profile: 'mcode-secondary-cancer-condition' } as mcode.SecondaryCancerCondition);
+
+  extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
+
+  it('Test Metastasis Resection Filter', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'metastasis_resection')).toBe(true);
+  });
+});

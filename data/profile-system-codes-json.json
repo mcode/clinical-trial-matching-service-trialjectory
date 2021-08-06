@@ -13195,14 +13195,14 @@
       }
     ]
   },
-  "Lumpectomy": {
+  "lumpectomy": {
     "SNOMED": [
       {
         "code": "392022002"
       }
     ]
   },
-  "Mastectomy": {
+  "mastectomy": {
     "SNOMED": [
       {
         "code": "69031006"

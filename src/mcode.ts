@@ -678,6 +678,11 @@ export class ExtractedMCODE {
 
   // Surgical Procedures
   getSurgicalProcedureValue(): string[] {
+
+    if(this.cancerRelatedSurgicalProcedure == null){
+      return [];
+    }
+
     let surgicalValues:string[] = [];
     
     // Set the Mapping Name -> Trialjectory Result.
@@ -691,14 +696,14 @@ export class ExtractedMCODE {
 
     // Additional ALND mapping check (if alnd has not already been added).
     if(!surgicalValues.includes('alnd')){
-      if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.coding.some((code) => code == '122459003') 
+      if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.coding.some((code) => code.code == '122459003') 
           && surgicalProcedure.bodySite.some((code) => this.codeIsInSheet(code, 'alnd-bodysite')))) {
             surgicalValues.push('alnd');
       }
     }
 
     // Metastasis Resection check.
-    if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.reasonReference.meta_profile == 'mcode-secondary-cancer-condition')){
+    if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.reasonReference != null && surgicalProcedure.reasonReference.meta_profile == 'mcode-secondary-cancer-condition')){
       surgicalValues.push('metastasis_resection');
     }
 
@@ -723,7 +728,10 @@ export class ExtractedMCODE {
     return mapped_values;
   }
 
-  // Age
+  /**
+   * Gets the Age value of the patient resource.
+   * @returns Returns the age of the patient in this resource.
+   */
   getAgeValue(): number {
     if (this.birthDate == 'NA' || this.birthDate == null || this.birthDate == undefined) {
       return null;
@@ -737,6 +745,10 @@ export class ExtractedMCODE {
     return Math.floor(millisecondsAge / milliseconds1Years);
   }
 
+  /**
+   * Gets the most advanced staging that this person's resource codes map to.
+   * @returns The most advanced staging that this person's resource codes map to.
+   */
   getStageValues(): string {
     // Set the sheet name -> Trialjectory result mapping.
     const stage_value_map = new Map<string, string>()
@@ -771,7 +783,10 @@ export class ExtractedMCODE {
     return null;
   }
 
-  // Get Tumor Marker Values.
+  /**
+   * 
+   * @returns Gets the tumor marker mappings from the codes in this resource.
+   */
   getTumorMarkerValue(): string[] {
 
     if (this.tumorMarker.length == 0 && this.cancerGeneticVariant.length == 0) {
@@ -1275,6 +1290,10 @@ quantityMatch(
       return false;
     }
   }
+  /**
+   * 
+   * @returns the medications that this resource's codes map to.
+   */
   getMedicationStatementValues(): string[] {
 
     // Set the madication code mappings -> Trialjectory result mapping.
