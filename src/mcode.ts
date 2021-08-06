@@ -657,7 +657,7 @@ export class ExtractedMCODE {
   getStageValues(): string {
     // Set the sheet name -> Trialjectory result mapping.
     const stage_value_map = new Map<string, string>()
-    // stage_value_map.set('Stage-4D', '4C');  // 4D is not a stage in Trialjectory, return 4C.
+    stage_value_map.set('Stage-4D', '4C');  // 4D is not a stage in Trialjectory, return 4C.
     stage_value_map.set('Stage-4C', '4C');
     stage_value_map.set('Stage-4B', '4B');
     stage_value_map.set('Stage-4A', '4A');

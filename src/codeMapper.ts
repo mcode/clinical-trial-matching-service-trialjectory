@@ -1,17 +1,25 @@
 import { Coding } from "./mcode";
 
+/**
+ * A class that acts a Code Mapper.
+ */
 export class CodeMapper {
   // Map<Profile -> Map<System -> List<Codes>>>
   code_map: Map<string, Map<string, string[]>>;
 
   /**
-   * Constructor
-   * @param code_mapping_file
+   * Constructor for a Code Mapper.
+   * @param code_mapping_file The file that dictates the code mapping.
    */
   constructor(code_mapping_file: any) {
     this.code_map = CodeMapper.convertJsonToMap(code_mapping_file);
   }
 
+  /**
+   * Converts the JSON object to the Map<Profile -> Map<System -> List<Codes>>> format.
+   * @param obj The JSON object.
+   * @returns Map<String. Map<String -> List<String>>>
+   */
   static convertJsonToMap(obj: {
     [key: string]: ProfileSystemCodes;
   }): Map<string, Map<string, string[]>> {
@@ -25,7 +33,7 @@ export class CodeMapper {
         });
         code_map.set(system_key, code_strings);
       }
-      //inserting new key value pair inside map
+      // For the current profile, inserts the current system->code mapping.
       profile_map.set(profile_key, code_map);
     }
     return profile_map;
@@ -37,11 +45,15 @@ export class CodeMapper {
   codeIsInMapping(coding: Coding, ...profiles: string[]): boolean {
     const system = CodeMapper.normalizeCodeSystem(coding.system);
     for (const profile of profiles) {
-      const code_profiles: Map<string, string[]> = this.code_map.get(profile); // Pull the codes for the profile
-      const codes_to_check: string[] = code_profiles.get(system);
-      if(codes_to_check == undefined){
+      if(!this.code_map.has(profile)){
         throw "Profile '" + profile + "' does not exist in the given profile mappings."
       }
+      const code_profiles: Map<string, string[]> = this.code_map.get(profile); // Pull the codes for the profile
+      if(!code_profiles.has(system)){
+        // If the system is not in this code profile, then the code does not map to this one.
+        continue;
+      }
+      const codes_to_check: string[] = code_profiles.get(system);
       if (
         codes_to_check.includes(coding.code) ||
         codes_to_check.includes(coding.display)
@@ -64,9 +76,9 @@ export class CodeMapper {
   }
 
   /**
-   * Normalize the code system.
-   * @param codeSystem
-   * @returns
+   * Normalize the code system to a consistent format.
+   * @param codeSystem  The code system to normalize.
+   * @returns The normalized code system.
    */
   static normalizeCodeSystem(codeSystem: string): string {
     const lowerCaseCodeSystem: string = codeSystem.toLowerCase();
@@ -98,6 +110,9 @@ export class CodeMapper {
   }
 }
 
+/**
+ * Describes the format that the JSON object should be made up of.
+ */
 interface ProfileSystemCodes {
   [system: string]: { code: string }[];
 }
