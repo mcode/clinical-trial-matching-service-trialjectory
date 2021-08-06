@@ -1365,7 +1365,7 @@ quantityMatch(
     // Iterate through the mappings and append when a code is satisfied.
     for (const medication_name of medication_mappings.keys()) {
       if (this.cancerRelatedMedicationStatement.some((code) => this.codeIsInSheet(code, medication_name))) {
-        medication_values.push(medication_name);
+        medication_values.push(medication_mappings.get(medication_name));
       }
     }
 

@@ -853,7 +853,7 @@ describe('checkMedicationStatementFilterLogic-high_dose_estrogen', () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test high_dose_estrogen medication filter.', () => {
-    expect(medications.some(medication => medication == 'high_dose_estrogen')).toBe(true);
+    expect(medications.includes('high_dose_estrogen')).toBe(true);
   });
 });
 describe("checkMedicationStatementFilterLogic-palbociclib", () => {
