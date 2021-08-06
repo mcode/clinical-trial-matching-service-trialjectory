@@ -2650,6 +2650,43 @@ describe('checkHistologyMorphologyFilterLogic-dcis', () => {
     expect(extractedMCODE.getHistologyMorphologyValue()).toBe('dcis');
   });
 });
+describe('checkHistologyMorphologyFilterLogic-lcis_1', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Lobular Carcinoma In Situ Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '109888004', display: 'N/A' } as Coding); // Any Code in 'lcis-condition'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Lobular Carcinoma In Situ Filter_1', () => {
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('lcis');
+  });
+});
+describe('checkHistologyMorphologyFilterLogic-lcis_2', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Lobular Carcinoma In Situ Filter Attributes
+  pcc.histologyMorphologyBehavior.push({
+    system: 'http://snomed.info/sct',
+    code: '77284006',
+    display: 'N/A'
+  } as Coding); // Any Code in 'lcis-histology'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Lobular Carcinoma In Situ Filter_2', () => {
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('lcis');
+  });
+});
 describe('checkECOGFilterLogic', () => {
   //Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
@@ -2685,10 +2722,57 @@ describe('checkRadiationProcedureFilterLogic-WBRT', () => {
   extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
 
   it('Test WBRT Filter', () => {
-    expect(extractedMCODE.getRadiationProcedureValue().some(rp => rp == 'wbrt')).toBe(true);
+    expect(extractedMCODE.getRadiationProcedureValue().includes('wbrt')).toBe(true);
   });
 });
+describe('checkRadiationProcedureFilterLogic-EBRT', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crrp: mcode.CancerRelatedRadiationProcedure = {};
+  crrp.bodySite = [] as Coding[];
+  crrp.coding = [] as Coding[];
 
+  // EBRT Filter Attributes
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '33356009', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
+
+  it('Test EBRT Filter', () => {
+    expect(extractedMCODE.getRadiationProcedureValue().includes('ebrt')).toBe(true);
+  });
+});
+describe('checkRadiationProcedureFilterLogic-Ablation', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crrp: mcode.CancerRelatedRadiationProcedure = {};
+  crrp.bodySite = [] as Coding[];
+  crrp.coding = [] as Coding[];
+
+  // Ablation Filter Attributes
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '228692005', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
+
+  it('Test Ablation Filter', () => {
+    expect(extractedMCODE.getRadiationProcedureValue().includes('ablation')).toBe(true);
+  });
+});
+describe('checkRadiationProcedureFilterLogic-rfa', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crrp: mcode.CancerRelatedRadiationProcedure = {};
+  crrp.bodySite = [] as Coding[];
+  crrp.coding = [] as Coding[];
+
+  // rfa Filter Attributes
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '879916008', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
+
+  it('Test rfa Filter', () => {
+    expect(extractedMCODE.getRadiationProcedureValue().includes('rfa')).toBe(true);
+  });
+});
 describe('checkSurgicalProcedureFilterLogic-Lumpectomy', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);

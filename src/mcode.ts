@@ -647,7 +647,7 @@ export class ExtractedMCODE {
     procedure_codes_map.set('rfa-procedure', 'rfa');
     procedure_codes_map.set('ebrt-procedure', 'ebrt');
     // Perform the basic mappings of the radiation procedures.
-    radiationValues = radiationValues.concat(this.performBasicMappings(procedure_codes_map, this.cancerRelatedSurgicalProcedure));
+    radiationValues = radiationValues.concat(this.performBasicMappings(procedure_codes_map, this.cancerRelatedRadiationProcedure));
 
     // WBRT Logic.
     for (const cancerRelatedRadiationProcedure of this.cancerRelatedRadiationProcedure) {
@@ -696,7 +696,7 @@ export class ExtractedMCODE {
 
     // Additional ALND mapping check (if alnd has not already been added).
     if(!surgicalValues.includes('alnd')){
-      if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.coding.some((code) => code.code == '122459003') 
+      if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.coding != null && surgicalProcedure.coding.some((code) => code.code == '122459003') 
           && surgicalProcedure.bodySite.some((code) => this.codeIsInSheet(code, 'alnd-bodysite')))) {
             surgicalValues.push('alnd');
       }
@@ -721,7 +721,7 @@ export class ExtractedMCODE {
 
     // Iterate through the mappings and append when a code is satisfied.
     for (const procedure_name of code_mapping.keys()) {
-      if (fhir_resource.some((fhir_resource) => fhir_resource.coding.some((code) => this.codeIsInSheet(code, procedure_name)))) {
+      if (fhir_resource.some((fhir_resource) => fhir_resource.coding != null && fhir_resource.coding.some((code) => this.codeIsInSheet(code, procedure_name)))) {
         mapped_values.push(code_mapping.get(procedure_name));
       }
     }
