@@ -274,9 +274,11 @@ export class ExtractedMCODE {
               reason_reference.reference_meta_profile = condition.meta_profile
             }
           }
-          for(const condition of this.secondaryCancerCondition){
-            if(condition.full_url == reason_reference.reference){
-              reason_reference.reference_meta_profile = condition.meta_profile
+          if(this.secondaryCancerCondition){
+            for(const condition of this.secondaryCancerCondition){
+              if(condition.full_url == reason_reference.reference){
+                reason_reference.reference_meta_profile = condition.meta_profile
+              }
             }
           }
           tempCancerRelatedSurgicalProcedure.reasonReference = reason_reference;
