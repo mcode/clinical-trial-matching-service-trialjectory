@@ -3,6 +3,7 @@ import { fhir } from 'clinical-trial-matching-service';
 import fs from 'fs';
 import path from 'path';
 import { Coding, PrimaryCancerCondition } from "../src/mcode";
+import { CodeMapper } from "../src/codeMapper";
 
 describe('ExtractedMCODE Import', () => {
   let sampleData: fhir.Bundle;
@@ -151,7 +152,7 @@ describe('ExtractedMCODE Import', () => {
     );
     expect(extractedData.cancerGeneticVariant[0].component.geneStudied[0].code.coding[0].code).toBe('48018-6');
     expect(
-      extractedData.normalizeCodeSystem(
+      CodeMapper.normalizeCodeSystem(
         extractedData.cancerGeneticVariant[0].component.geneStudied[0].valueCodeableConcept.coding[0].system
       )
     ).toBe('HGNC');

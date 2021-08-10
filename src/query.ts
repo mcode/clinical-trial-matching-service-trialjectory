@@ -273,7 +273,7 @@ export class APIQuery {
     });
   }
 
-  toString(): string {
+  tostring(): string {
     console.log(this.toQuery());
     // Note that if toQuery is no longer a string, this will no longer work
     return this.toQuery();
