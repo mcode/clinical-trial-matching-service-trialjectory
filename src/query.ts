@@ -212,6 +212,7 @@ export class APIQuery {
    * @param patientBundle the patient bundle to use for field values
    */
   constructor(patientBundle: fhir.Bundle) { // this goes through the patient bundle twice - should be revised
+
     for (const entry of patientBundle.entry) {
       if (!("resource" in entry)) {
         // Skip bad entries
@@ -272,7 +273,7 @@ export class APIQuery {
     });
   }
 
-  toString(): string {
+  tostring(): string {
     console.log(this.toQuery());
     // Note that if toQuery is no longer a string, this will no longer work
     return this.toQuery();

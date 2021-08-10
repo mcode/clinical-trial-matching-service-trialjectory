@@ -18,18 +18,18 @@ export const phaseCodeMap = new Map<string, string>([
   ["Phase 4", "phase-4"],
 ]);
 
-function convertArrayToCodeableConcept(trialStringArray: string[]): fhir.CodeableConcept[] {
-  const fhirStringArray: fhir.CodeableConcept[] = [];
-  for (const trialString of trialStringArray) {
-    fhirStringArray.push({ text: trialString });
+function convertArrayToCodeableConcept(trialstringArray: string[]): fhir.CodeableConcept[] {
+  const fhirstringArray: fhir.CodeableConcept[] = [];
+  for (const trialstring of trialstringArray) {
+    fhirstringArray.push({ text: trialstring });
   }
-  return fhirStringArray;
+  return fhirstringArray;
 }
 
-function convertArrayToObjective(trialStringArray: string[]): fhir.Objective[] {
+function convertArrayToObjective(trialstringArray: string[]): fhir.Objective[] {
   const fhirObjectiveArray: fhir.Objective[] = [];
-  for (const trialString of trialStringArray) {
-    fhirObjectiveArray.push({ name: trialString });
+  for (const trialstring of trialstringArray) {
+    fhirObjectiveArray.push({ name: trialstring });
   }
   return fhirObjectiveArray;
 }
@@ -70,7 +70,7 @@ export function convertToResearchStudy(trial: QueryTrial, id: number): ResearchS
   }
 
   if (trial.brief_summary) {
-    result.description = trial.brief_summary;
+    result.description = trial.brief_summary.split("    ").join('\n');
   }
 
   if (trial.main_objectives) {
