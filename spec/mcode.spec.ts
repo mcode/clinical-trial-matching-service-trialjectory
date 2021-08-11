@@ -2687,6 +2687,7 @@ describe('checkHistologyMorphologyFilterLogic-lcis_2', () => {
   it('Test Lobular Carcinoma In Situ Filter_2', () => {
     expect(extractedMCODE.getHistologyMorphologyValue()).toBe('lcis');
   });
+});
 describe('checkSecondaryCancerConditionLogic', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
