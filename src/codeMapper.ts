@@ -2,6 +2,8 @@ import { Coding } from "./mcode";
 
 /**
  * Enumeration of the possible code systems.
+ * Source: https://masteringjs.io/tutorials/fundamentals/enum
+ * This source also details a more sophisticated approach using classes, may be worth implementing.
  */
 export enum CodeSystemEnum {
   ICD10,
@@ -18,9 +20,8 @@ export enum CodeSystemEnum {
  * A class that acts a Code Mapper.
  */
 export class CodeMapper {
-  // Map<Profile -> Map<System -> List<Codes>>>
+  // Map<Profile -> MedicalCode[]>
   code_map: Map<string, MedicalCode[]>;
-  // Map<Profile -> Code<System, Code>
   
   /**
    * Constructor for a Code Mapper.
@@ -45,7 +46,7 @@ export class CodeMapper {
         const codes = obj[profile][system];
         codes.forEach((code) => code_list.push(new MedicalCode(code.code, system)))
       }
-      // For the current profile, insert the current system->code mapping.
+      // For the current profile, insert the list of associated medical codes.
       profile_map.set(profile, code_list);
     }
     return profile_map;
@@ -69,10 +70,19 @@ export class CodeMapper {
   }
 
   /**
+   * Checks whether one of the given codes is within one of the given profile mappings.
+   */
+    aCodeIsInMapping(coding: Coding[], ...profiles: string[]): boolean {
+      return coding.some(code => {
+        return this.codeIsInMapping(code, ...profiles);
+      });
+    }
+
+  /**
    * Returns whether the given code is any code not in the given profile.
    */
   codeIsNotInMapping(coding: Coding, profile: string): boolean {
-    if (coding.code == undefined || coding.code == null) {
+    if (coding == undefined || coding == null) {
       return false;
     } else {
       return !this.codeIsInMapping(coding, profile);

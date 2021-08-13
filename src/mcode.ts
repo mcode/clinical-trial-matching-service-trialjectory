@@ -88,7 +88,9 @@ export interface CancerGeneticVariantComponentType {
   interpretation?: { coding: Coding[] };
 }
 
-// extracted MCODE info
+/**
+ * Class that describes and maps the extracted mCODE data from a patient record.
+ */
 export class ExtractedMCODE {
   primaryCancerCondition: PrimaryCancerCondition[];
   TNMClinicalStageGroup: Coding[];
@@ -103,8 +105,15 @@ export class ExtractedMCODE {
   ecogPerformaceStatus: number;
   karnofskyPerformanceStatus: number;
 
+  /**
+   * The code mapping object that maps profiles to codes.
+   */
   static code_mapper = new CodeMapper(profile_system_codes)
 
+  /**
+   * Constructor.
+   * @param patientBundle The patient bundle to build the mCODE mapping from.
+   */
   constructor(patientBundle: fhir.Bundle) {
 
     if (patientBundle != null) {
@@ -444,10 +453,9 @@ export class ExtractedMCODE {
       for (const currentCoding of primaryCancerCondition.coding) {
         // 3. Invasive Breast Cancer and Recurrent
         if (
-          (primaryCancerCondition.histologyMorphologyBehavior.some((coding) =>
-            ExtractedMCODE.code_mapper.codeIsInMapping(coding, 'Morphology-Invasive')
-          ) ||
-            ExtractedMCODE.code_mapper.codeIsInMapping(currentCoding, 'Cancer-Invasive-Breast')) &&
+            ExtractedMCODE.code_mapper.aCodeIsInMapping(primaryCancerCondition.histologyMorphologyBehavior, 'Morphology-Invasive')
+           ||
+            ExtractedMCODE.code_mapper.codeIsInMapping(currentCoding, 'Cancer-Invasive-Breast') &&
           ExtractedMCODE.code_mapper.codeIsInMapping(currentCoding, 'Cancer-Breast') &&
           primaryCancerCondition.clinicalStatus.some((clinStat) => clinStat.code == 'recurrence')
         ) {
@@ -459,7 +467,7 @@ export class ExtractedMCODE {
     for (const primaryCancerCondition of this.primaryCancerCondition) {
       // 4. Locally Recurrent
       if (
-        primaryCancerCondition.coding.some((code) => ExtractedMCODE.code_mapper.codeIsInMapping(code, 'Cancer-Breast')) &&
+        ExtractedMCODE.code_mapper.aCodeIsInMapping(primaryCancerCondition.coding, 'Cancer-Breast') &&
         primaryCancerCondition.clinicalStatus.some((clinStat) => clinStat.code == 'recurrence')
       ) {
         return 'LOCALLY_RECURRENT';
@@ -468,7 +476,7 @@ export class ExtractedMCODE {
     // Cycle through each of the primary cancer objects and check that they satisfy this priority requirement.
     for (const primaryCancerCondition of this.primaryCancerCondition) {
       // 1. Breast Cancer
-      if (primaryCancerCondition.coding.some((code) => ExtractedMCODE.code_mapper.codeIsInMapping(code, 'Cancer-Breast'))) {
+      if (ExtractedMCODE.code_mapper.aCodeIsInMapping(primaryCancerCondition.coding, 'Cancer-Breast')) {
         return 'BREAST_CANCER';
       }
     }
@@ -478,12 +486,11 @@ export class ExtractedMCODE {
       if (
         primaryCancerCondition.coding.some((code) => ExtractedMCODE.code_mapper.codeIsNotInMapping(code, 'Cancer-Breast')) &&
         primaryCancerCondition.clinicalStatus.some((clinStat) => clinStat.code == 'active') &&
-        (this.TNMClinicalStageGroup.some((code) =>
-          ExtractedMCODE.code_mapper.codeIsInMapping(code, 'Stage-1', 'Stage-2', 'Stage-3', 'Stage-4')
-        ) ||
-          this.TNMPathologicalStageGroup.some((code) =>
-            ExtractedMCODE.code_mapper.codeIsInMapping(code, 'Stage-1', 'Stage-2', 'Stage-3', 'Stage-4')
-          ))
+        (
+          ExtractedMCODE.code_mapper.aCodeIsInMapping(this.TNMClinicalStageGroup, 'Stage-1', 'Stage-2', 'Stage-3', 'Stage-4')
+         ||
+            ExtractedMCODE.code_mapper.aCodeIsInMapping(this.TNMPathologicalStageGroup, 'Stage-1', 'Stage-2', 'Stage-3', 'Stage-4')
+          )
       ) {
         return 'CONCOMITANT_INVASIVE_MALIGNANCIES';
       }
@@ -556,63 +563,95 @@ export class ExtractedMCODE {
     // Invasive Ductal Carcinoma
     for (const primaryCancerCondition of this.primaryCancerCondition) {
       if (
-        (primaryCancerCondition.coding.some((code) => ExtractedMCODE.code_mapper.codeIsInMapping(code, 'Cancer-Breast')) &&
-          primaryCancerCondition.histologyMorphologyBehavior.some((histMorphBehav) =>
-            ExtractedMCODE.code_mapper.codeIsInMapping(histMorphBehav, 'Morphology-Invas_Duct_Carc')
+        (ExtractedMCODE.code_mapper.aCodeIsInMapping(
+          primaryCancerCondition.coding,
+          "Cancer-Breast"
+        ) &&
+          ExtractedMCODE.code_mapper.aCodeIsInMapping(
+            primaryCancerCondition.histologyMorphologyBehavior,
+            "Morphology-Invas_Duct_Carc"
           )) ||
-        primaryCancerCondition.coding.some((code) => ExtractedMCODE.code_mapper.codeIsInMapping(code, 'Cancer-Invas_Duct_Carc'))
+        ExtractedMCODE.code_mapper.aCodeIsInMapping(
+          primaryCancerCondition.coding,
+          "Cancer-Invas_Duct_Carc"
+        )
       ) {
         // idc (Invasice Ductal Carcinoma)
-        return 'idc';
+        return "idc";
       }
     }
     // Invasive Lobular Carcinoma
     for (const primaryCancerCondition of this.primaryCancerCondition) {
       if (
-        (primaryCancerCondition.coding.some((code) => ExtractedMCODE.code_mapper.codeIsInMapping(code, 'Cancer-Breast')) &&
-          primaryCancerCondition.histologyMorphologyBehavior.some(
-            (histMorphBehav) =>
-            ExtractedMCODE.code_mapper.codeIsInMapping(histMorphBehav, 'Morphology-Invas_Lob_Carc')
+        (ExtractedMCODE.code_mapper.aCodeIsInMapping(
+          primaryCancerCondition.coding,
+          "Cancer-Breast"
+        ) &&
+          ExtractedMCODE.code_mapper.aCodeIsInMapping(
+            primaryCancerCondition.histologyMorphologyBehavior,
+            "Morphology-Invas_Lob_Carc"
           )) ||
-        primaryCancerCondition.coding.some((code) => ExtractedMCODE.code_mapper.codeIsInMapping(code, 'Cancer-Invas_Lob_Carc'))
+        ExtractedMCODE.code_mapper.aCodeIsInMapping(
+          primaryCancerCondition.coding,
+          "Cancer-Invas_Lob_Carc"
+        )
       ) {
         // ilc '(Invasive Lobular Carcinoma)
-        return 'ilc';
+        return "ilc";
       }
     }
     // Ductual Carcinoma in Situ
     for (const primaryCancerCondition of this.primaryCancerCondition) {
       if (
-        primaryCancerCondition.coding.some((code) => ExtractedMCODE.code_mapper.codeIsInMapping(code, 'Cancer-Breast')) &&
-        primaryCancerCondition.histologyMorphologyBehavior.some((histMorphBehav) =>
-          ExtractedMCODE.code_mapper.codeIsInMapping(histMorphBehav, 'Morphology-Duct_Car_In_Situ')
+        ExtractedMCODE.code_mapper.aCodeIsInMapping(
+          primaryCancerCondition.coding,
+          "Cancer-Breast"
+        ) &&
+        ExtractedMCODE.code_mapper.aCodeIsInMapping(
+          primaryCancerCondition.histologyMorphologyBehavior,
+          "Morphology-Duct_Car_In_Situ"
         )
       ) {
         // dcis (Ductal Carcinoma In Situ)
-        return 'dcis';
+        return "dcis";
       }
     }
     // Invasive Breast Cancer
     for (const primaryCancerCondition of this.primaryCancerCondition) {
       if (
-        (primaryCancerCondition.coding.some((code) => ExtractedMCODE.code_mapper.codeIsInMapping(code, 'Cancer-Breast')) &&
-          primaryCancerCondition.histologyMorphologyBehavior.some((histMorphBehav) =>
-            ExtractedMCODE.code_mapper.codeIsInMapping(histMorphBehav, 'Morphology-Invasive')
+        (ExtractedMCODE.code_mapper.aCodeIsInMapping(
+          primaryCancerCondition.coding,
+          "Cancer-Breast"
+        ) &&
+          ExtractedMCODE.code_mapper.aCodeIsInMapping(
+            primaryCancerCondition.histologyMorphologyBehavior,
+            "Morphology-Invasive"
           )) ||
-        primaryCancerCondition.coding.some((code) => ExtractedMCODE.code_mapper.codeIsInMapping(code, 'Cancer-Invasive-Breast'))
+        ExtractedMCODE.code_mapper.aCodeIsInMapping(
+          primaryCancerCondition.coding,
+          "Cancer-Invasive-Breast"
+        )
       ) {
         // ibc (Invasive Breast Cancer)
-        return 'ibc';
+        return "ibc";
       }
     }
 
     // Lobular Carcinoma in Situ (lcis)
     for (const primaryCancerCondition of this.primaryCancerCondition) {
       if (
-        (primaryCancerCondition.histologyMorphologyBehavior.some((histMorphBehav) => ExtractedMCODE.code_mapper.codeIsInMapping(histMorphBehav, 'lcis-histology')))
-          || primaryCancerCondition.coding.some((code) => ExtractedMCODE.code_mapper.codeIsInMapping(code, 'lcis-condition'))
+        primaryCancerCondition.histologyMorphologyBehavior.some(
+          (histMorphBehav) =>
+            ExtractedMCODE.code_mapper.codeIsInMapping(
+              histMorphBehav,
+              "lcis-histology"
+            )
+        ) ||
+        primaryCancerCondition.coding.some((code) =>
+          ExtractedMCODE.code_mapper.codeIsInMapping(code, "lcis-condition")
+        )
       ) {
-        return 'lcis';
+        return "lcis";
       }
     }
 
@@ -620,13 +659,24 @@ export class ExtractedMCODE {
     // Invasive Carcinoma
     for (const primaryCancerCondition of this.primaryCancerCondition) {
       if (
-        (primaryCancerCondition.coding.some((code) => ExtractedMCODE.code_mapper.codeIsInMapping(code, 'Cancer-Breast')) &&
-          primaryCancerCondition.histologyMorphologyBehavior.some((histMorphBehav) =>
-            ExtractedMCODE.code_mapper.codeIsInMapping(histMorphBehav, 'Morphology-Invasive-Carcinoma')
+        (primaryCancerCondition.coding.some((code) =>
+          ExtractedMCODE.code_mapper.codeIsInMapping(code, "Cancer-Breast")
+        ) &&
+          primaryCancerCondition.histologyMorphologyBehavior.some(
+            (histMorphBehav) =>
+              ExtractedMCODE.code_mapper.codeIsInMapping(
+                histMorphBehav,
+                "Morphology-Invasive-Carcinoma"
+              )
           )) ||
-        primaryCancerCondition.coding.some((code) => ExtractedMCODE.code_mapper.codeIsInMapping(code, 'Cancer-Invasive-Carcinoma'))
+        primaryCancerCondition.coding.some((code) =>
+          ExtractedMCODE.code_mapper.codeIsInMapping(
+            code,
+            "Cancer-Invasive-Carcinoma"
+          )
+        )
       ) {
-        return 'INVASIVE_CARCINOMA';
+        return "INVASIVE_CARCINOMA";
       }
     }
 
@@ -694,7 +744,7 @@ export class ExtractedMCODE {
     // Additional ALND mapping check (if alnd has not already been added).
     if(!surgicalValues.includes('alnd')){
       if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.coding != null && surgicalProcedure.coding.some((code) => code.code == '122459003') 
-          && surgicalProcedure.bodySite.some((code) => ExtractedMCODE.code_mapper.codeIsInMapping(code, 'alnd-bodysite')))) {
+          && ExtractedMCODE.code_mapper.aCodeIsInMapping(surgicalProcedure.bodySite, 'alnd-bodysite'))) {
             surgicalValues.push('alnd');
       }
     }
@@ -718,7 +768,7 @@ export class ExtractedMCODE {
 
     // Iterate through the mappings and append when a code is satisfied.
     for (const procedure_name of code_mapping.keys()) {
-      if (fhir_resource.some((fhir_resource) => fhir_resource.coding != null && fhir_resource.coding.some((code) => ExtractedMCODE.code_mapper.codeIsInMapping(code, procedure_name)))) {
+      if (fhir_resource.some((fhir_resource) => fhir_resource.coding != null && ExtractedMCODE.code_mapper.aCodeIsInMapping(fhir_resource.coding, procedure_name))) {
         mapped_values.push(code_mapping.get(procedure_name));
       }
     }
@@ -771,8 +821,8 @@ export class ExtractedMCODE {
 
     // Iterate through the mappings and return when a code is satisfied.
     for(const stage_name of stage_value_map.keys()){
-      if (this.TNMClinicalStageGroup.some((code) => ExtractedMCODE.code_mapper.codeIsInMapping(code, stage_name)) ||
-      this.TNMPathologicalStageGroup.some((code) => ExtractedMCODE.code_mapper.codeIsInMapping(code, stage_name))) {
+      if (ExtractedMCODE.code_mapper.aCodeIsInMapping(this.TNMClinicalStageGroup, stage_name) ||
+      ExtractedMCODE.code_mapper.aCodeIsInMapping(this.TNMPathologicalStageGroup, stage_name)) {
         return stage_value_map.get(stage_name);
       }
     }
