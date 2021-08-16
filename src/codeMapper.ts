@@ -78,6 +78,16 @@ export class CodeMapper {
       });
     }
 
+    /**
+     * Returns whether the given coding equals the given code attributes.
+     * @param input_coding
+     * @param system 
+     * @param code 
+     */
+    static codesEqual(input_coding: Coding, system: CodeSystemEnum, code: string) {
+      return new MedicalCode(null, null, null, input_coding).equalsMedicalCode(new MedicalCode(code, null, system));
+    }
+
   /**
    * Returns whether the given code is any code not in the given profile.
    */
@@ -132,10 +142,29 @@ class MedicalCode {
   code: string;
   system: CodeSystemEnum;
 
-  constructor(code: string, system: string) {
-    this.code = code;
-    this.system = CodeMapper.normalizeCodeSystem(system);
+  /**
+   * 
+   * @param coding 
+   * @param code_string 
+   * @param system_string 
+   * @param system_enum 
+   */
+  constructor(code_string?: string, system_string?: string, system_enum?: CodeSystemEnum, coding?: Coding) {
+    if(coding) {
+      code_string = coding.code
+      system_string = coding.system
+    }
+    if(code_string) {
+      this.code = code_string;
+    }
+    if(system_string){
+      this.system = CodeMapper.normalizeCodeSystem(system_string);
+    }
+    else if(system_enum) {
+      this.system = system_enum;
+    }
   }
+
 
   toString() {
     return 'Medical Code: {code: ' + this.code + ', system: ' + this.system + '}';

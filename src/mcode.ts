@@ -513,8 +513,10 @@ export class ExtractedMCODE {
     return null;
   }
 
-  
-  // Secondary Cancer Value
+  /**
+   * Secondary Cancer Value mapping.
+   * @returns
+   */
   getSecondaryCancerValue(): string[] {
     if (this.secondaryCancerCondition.length == 0) {
       return null;
@@ -702,12 +704,10 @@ export class ExtractedMCODE {
         cancerRelatedRadiationProcedure.coding &&
         cancerRelatedRadiationProcedure.bodySite &&
         cancerRelatedRadiationProcedure.coding.some(
-          (coding) => CodeMapper.normalizeCodeSystem(coding.system) == CodeSystemEnum.SNOMED && coding.code == '108290001'
+          (coding) => (CodeMapper.codesEqual(coding, CodeSystemEnum.SNOMED, '108290001'))
         ) &&
         cancerRelatedRadiationProcedure.bodySite.some(
-          (coding) =>
-          CodeMapper.normalizeCodeSystem(coding.system) == CodeSystemEnum.SNOMED &&
-            (coding.code == '12738006' || coding.code == '119235005')
+          (coding) => (CodeMapper.codesEqual(coding, CodeSystemEnum.SNOMED, '119235005')) || (CodeMapper.codesEqual(coding, CodeSystemEnum.SNOMED, '12738006'))
         )
       ) {
         radiationValues.push('wbrt');
@@ -1041,16 +1041,16 @@ export class ExtractedMCODE {
   }
   isValueCodeableConceptPositive(valueCodeableConcept: Coding[]): boolean {
     return valueCodeableConcept.some(
-                   (valCodeCon) =>
-                     (CodeMapper.normalizeCodeSystem(valCodeCon.system) == CodeSystemEnum.SNOMED && valCodeCon.code == '10828004') ||
-                     (CodeMapper.normalizeCodeSystem(valCodeCon.system) == CodeSystemEnum.HL7 && valCodeCon.code == 'POS')
+                   (coding) =>
+                    (CodeMapper.codesEqual(coding, CodeSystemEnum.SNOMED, '10828004')) ||
+                    (CodeMapper.codesEqual(coding, CodeSystemEnum.HL7, 'POS'))
                  );
   }
   isValueCodeableConceptNegative(valueCodeableConcept: Coding[]): boolean {
     return valueCodeableConcept.some(
-                   (valCodeCon) =>
-                     (CodeMapper.normalizeCodeSystem(valCodeCon.system) == CodeSystemEnum.SNOMED && valCodeCon.code == '260385009') ||
-                     (CodeMapper.normalizeCodeSystem(valCodeCon.system) == CodeSystemEnum.HL7 && valCodeCon.code == 'NEG')
+                   (coding) =>
+                    (CodeMapper.codesEqual(coding, CodeSystemEnum.SNOMED, '260385009')) ||
+                    (CodeMapper.codesEqual(coding, CodeSystemEnum.HL7, 'NEG'))
                  );
   }
   isInterpretationPositive(interpretation: Coding[]): boolean {
@@ -1092,14 +1092,14 @@ export class ExtractedMCODE {
     return (
       cancGenVar.component.geneStudied.some((geneStudied) =>
         geneStudied.valueCodeableConcept.coding.some(
-          (valCodeCon) => CodeMapper.normalizeCodeSystem(valCodeCon.system) == CodeSystemEnum.HGNC && valCodeCon.code == genVarCode
+          (coding) => (CodeMapper.codesEqual(coding, CodeSystemEnum.HGNC, genVarCode))
         )
       ) &&
       (cancGenVar.valueCodeableConcept.some(
-        (valCodeCon) =>
-          (CodeMapper.normalizeCodeSystem(valCodeCon.system) == CodeSystemEnum.SNOMED && valCodeCon.code == '10828004') ||
-          (CodeMapper.normalizeCodeSystem(valCodeCon.system) == CodeSystemEnum.LOINC && valCodeCon.code == 'LA9633-4') ||
-          (CodeMapper.normalizeCodeSystem(valCodeCon.system) == CodeSystemEnum.HL7 && valCodeCon.code == 'POS')
+        (coding) =>
+          (CodeMapper.codesEqual(coding, CodeSystemEnum.SNOMED, '10828004')) ||
+          (CodeMapper.codesEqual(coding, CodeSystemEnum.LOINC, 'LA9633-4')) ||
+          (CodeMapper.codesEqual(coding, CodeSystemEnum.HL7, 'POS'))
       ) ||
         cancGenVar.interpretation.some(
           (interp) => interp.code == 'CAR' || interp.code == 'A' || interp.code == 'POS'
@@ -1115,14 +1115,14 @@ export class ExtractedMCODE {
     return (
       cancGenVar.component.geneStudied.some((geneStudied) =>
         geneStudied.valueCodeableConcept.coding.some(
-          (valCodeCon) => CodeMapper.normalizeCodeSystem(valCodeCon.system) == CodeSystemEnum.HGNC && valCodeCon.code == genVarCode
+          (coding) => (CodeMapper.codesEqual(coding, CodeSystemEnum.HGNC, genVarCode))
         )
       ) &&
       (cancGenVar.valueCodeableConcept.some(
-        (valCodeCon) =>
-          (CodeMapper.normalizeCodeSystem(valCodeCon.system) == CodeSystemEnum.SNOMED && valCodeCon.code == '260385009') ||
-          (CodeMapper.normalizeCodeSystem(valCodeCon.system) == CodeSystemEnum.LOINC && valCodeCon.code == 'LA9634-2') ||
-          (CodeMapper.normalizeCodeSystem(valCodeCon.system) == CodeSystemEnum.HL7 && valCodeCon.code == 'NEG')
+        (coding) =>
+          (CodeMapper.codesEqual(coding, CodeSystemEnum.SNOMED, '260385009')) ||
+          (CodeMapper.codesEqual(coding, CodeSystemEnum.LOINC, 'LA9634-2')) ||
+          (CodeMapper.codesEqual(coding, CodeSystemEnum.HL7, 'NEG'))
       ) ||
         cancGenVar.interpretation.some(
           (interp) => interp.code == 'N' || interp.code == 'NEG'
@@ -1337,6 +1337,7 @@ quantityMatch(
       return false;
     }
   }
+
   /**
    * 
    * @returns the medications that this resource's codes map to.
@@ -1409,11 +1410,6 @@ quantityMatch(
     // WE HAVE SINCE DISCUSSED THESE MEDICATIONS WITH THEM, WAITING FOR THEM TO PROCEED.
 
     const medication_values: string[] = [];
-
-    // Iterate through the cancer related medication statements and check for mappings.
-    // for (const medication_statement in this.cancerRelatedMedicationStatement) {
-
-    // }
 
     // Iterate through the mappings and append when a code is satisfied.
     for (const medication_name of medication_mappings.keys()) {
