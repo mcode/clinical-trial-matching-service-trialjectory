@@ -5,15 +5,36 @@ import { Coding } from "./mcode";
  * Source: https://masteringjs.io/tutorials/fundamentals/enum
  * This source also details a more sophisticated approach using classes, may be worth implementing.
  */
-export enum CodeSystemEnum {
-  ICD10,
-  SNOMED,
-  RXNORM,
-  AJCC,
-  LOINC,
-  NIH,
-  HGNC,
-  HL7
+export class CodeSystemEnum {
+
+  /**
+   * Enums.
+   */
+  static ICD10 = new CodeSystemEnum("ICD10");
+  static SNOMED = new CodeSystemEnum("SNOMED");
+  static RXNORM = new CodeSystemEnum("RXNORM");
+  static AJCC = new CodeSystemEnum("AJCC");
+  static LOINC = new CodeSystemEnum("LOINC");
+  static NIH = new CodeSystemEnum("NIH");
+  static HGNC = new CodeSystemEnum("HGNC");
+  static HL7 = new CodeSystemEnum("HL7");
+
+  /**
+   * Field.
+   */
+  system: string;
+
+  /**
+   * Constructor
+   * @param system 
+   */
+  constructor(system: string){
+    this.system = system;
+  }
+
+  toString(){
+    return this.system;
+  }
 }
 
 /**
@@ -22,7 +43,9 @@ export enum CodeSystemEnum {
 export class CodeMapper {
   // Map<Profile -> MedicalCode[]>
   code_map: Map<string, MedicalCode[]>;
-  
+  // Map<MedicalCode -> Profile>
+  // code_map: Map<MedicalCode, string[]>;
+
   /**
    * Constructor for a Code Mapper.
    * @param code_mapping_file The file that dictates the code mapping.
@@ -44,11 +67,30 @@ export class CodeMapper {
       const code_list: MedicalCode[] = [];
       for (const system of Object.keys(obj[profile])) {
         const codes = obj[profile][system];
-        codes.forEach((code) => code_list.push(new MedicalCode(code.code, system)))
+        codes.forEach((code) => code_list.push(new MedicalCode(code, system)))
       }
       // For the current profile, insert the list of associated medical codes.
       profile_map.set(profile, code_list);
     }
+
+    // throw profile_map
+    // const medicalCodes = [];
+    // for(var medicalcodelist of profile_map.values()){
+
+    //       // Filter any duplicate values.
+    //       medicalcodelist = medicalcodelist.filter((a, b) => medicalcodelist.indexOf(a) === b)
+
+    //   for(const medicalcode of medicalcodelist){
+    //     medicalCodes.push(medicalcode.system + "|" + medicalcode.code);
+    //   }
+    // }
+
+    // // throw medicalCodes;
+
+    // let findDuplicates = (arr: any[]) => arr.filter((item: any, index: any) => arr.indexOf(item) != index);
+
+    // throw "duplicates" + findDuplicates(medicalCodes);
+
     return profile_map;
   }
 
@@ -177,11 +219,12 @@ class MedicalCode {
   equalsMedicalCode(that: MedicalCode) {
     return this.valueOf() === that.valueOf()
   }
+
 }
 
 /**
  * Describes the format that the JSON object should be made up of.
  */
 interface ProfileSystemCodes {
-  [system: string]: { code: string }[];
+  [system: string]: string[];
 }

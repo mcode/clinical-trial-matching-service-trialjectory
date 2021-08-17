@@ -1354,7 +1354,7 @@ quantityMatch(
     medication_mappings.set('fulvestrant', 'fulvestrant');
     medication_mappings.set('raloxifene_hcl', 'raloxifene_hcl');
     medication_mappings.set('trastuzumab', 'trastuzumab');  // There are 2 mappings for trastuzumab because both are applicable.
-    medication_mappings.set('Treatment-Trastuzumab', 'trastuzumab');
+    medication_mappings.set('trastuzumab', 'trastuzumab');
     medication_mappings.set('trastuzumab_hyaluronidase_conjugate', 'trastuzumab_hyaluronidase_conjugate');
     medication_mappings.set('trastuzumab_deruxtecan_conjugate', 'trastuzumab_deruxtecan_conjugate');
     medication_mappings.set('pertuzumab', 'pertuzumab');
