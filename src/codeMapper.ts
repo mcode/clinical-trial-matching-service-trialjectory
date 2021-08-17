@@ -68,32 +68,22 @@ export class CodeMapper {
       profile_map.set(profile, code_list);
     }
 
-    // throw profile_map
-    const medicalCodes = [];
-    for(var medicalcodelist of profile_map.values()){
+    // const medicalCodes = [];
+    // for(var medicalcodelist of profile_map.values()){
 
-          // Filter any duplicate values.
-          medicalcodelist = medicalcodelist.filter((a, b) => medicalcodelist.indexOf(a) === b)
+    //       // Filter any duplicate values.
+    //       medicalcodelist = medicalcodelist.filter((a, b) => medicalcodelist.indexOf(a) === b)
 
-      for(const medicalcode of medicalcodelist){
-        medicalCodes.push(medicalcode.system + "|" + medicalcode.code);
-      }
-    }
+    //   for(const medicalcode of medicalcodelist){
+    //     medicalCodes.push(medicalcode.system + "|" + medicalcode.code);
+    //   }
+    // }
 
-    // throw medicalCodes;
+    // // throw medicalCodes;
 
-    let findDuplicates = (arr: any[]) => arr.filter((item: any, index: any) => arr.indexOf(item) != index);
+    // let findDuplicates = (arr: any[]) => arr.filter((item: any, index: any) => arr.indexOf(item) != index);
 
-    throw "duplicates" + findDuplicates(medicalCodes);
-
-// var newlist: string[] = []
-//     var tras_list = profile_map.get('trastuzumab')
-//           for(const medicalcode of tras_list){
-//             newlist.push(medicalcode.code);
-//       }
-//       newlist = newlist.filter((a, b) => newlist.indexOf(a) === b)
-//     console.log(JSON.stringify(newlist));
-//     throw "CC"
+    // throw "duplicates" + findDuplicates(medicalCodes);
 
     return profile_map;
   }
