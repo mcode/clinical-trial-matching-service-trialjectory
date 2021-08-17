@@ -3,10 +3,8 @@ import { Coding } from "./mcode";
 /**
  * Enumeration of the possible code systems.
  * Source: https://masteringjs.io/tutorials/fundamentals/enum
- * This source also details a more sophisticated approach using classes, may be worth implementing.
  */
 export class CodeSystemEnum {
-
   /**
    * Enums.
    */
@@ -19,9 +17,6 @@ export class CodeSystemEnum {
   static HGNC = new CodeSystemEnum("HGNC");
   static HL7 = new CodeSystemEnum("HL7");
 
-  /**
-   * Field.
-   */
   system: string;
 
   /**
@@ -74,22 +69,31 @@ export class CodeMapper {
     }
 
     // throw profile_map
-    // const medicalCodes = [];
-    // for(var medicalcodelist of profile_map.values()){
+    const medicalCodes = [];
+    for(var medicalcodelist of profile_map.values()){
 
-    //       // Filter any duplicate values.
-    //       medicalcodelist = medicalcodelist.filter((a, b) => medicalcodelist.indexOf(a) === b)
+          // Filter any duplicate values.
+          medicalcodelist = medicalcodelist.filter((a, b) => medicalcodelist.indexOf(a) === b)
 
-    //   for(const medicalcode of medicalcodelist){
-    //     medicalCodes.push(medicalcode.system + "|" + medicalcode.code);
-    //   }
-    // }
+      for(const medicalcode of medicalcodelist){
+        medicalCodes.push(medicalcode.system + "|" + medicalcode.code);
+      }
+    }
 
-    // // throw medicalCodes;
+    // throw medicalCodes;
 
-    // let findDuplicates = (arr: any[]) => arr.filter((item: any, index: any) => arr.indexOf(item) != index);
+    let findDuplicates = (arr: any[]) => arr.filter((item: any, index: any) => arr.indexOf(item) != index);
 
-    // throw "duplicates" + findDuplicates(medicalCodes);
+    throw "duplicates" + findDuplicates(medicalCodes);
+
+// var newlist: string[] = []
+//     var tras_list = profile_map.get('trastuzumab')
+//           for(const medicalcode of tras_list){
+//             newlist.push(medicalcode.code);
+//       }
+//       newlist = newlist.filter((a, b) => newlist.indexOf(a) === b)
+//     console.log(JSON.stringify(newlist));
+//     throw "CC"
 
     return profile_map;
   }
@@ -226,5 +230,6 @@ class MedicalCode {
  * Describes the format that the JSON object should be made up of.
  */
 interface ProfileSystemCodes {
+  // System -> Code[]
   [system: string]: string[];
 }
