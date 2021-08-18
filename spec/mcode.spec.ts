@@ -1,5 +1,192 @@
 import * as mcode from "../src/mcode";
+import { fhir } from 'clinical-trial-matching-service';
+import fs from 'fs';
+import path from 'path';
 import { Coding, PrimaryCancerCondition } from "../src/mcode";
+import { CodeMapper } from "../src/codeMapper";
+
+describe('ExtractedMCODE Import', () => {
+  let sampleData: fhir.Bundle;
+  beforeAll(() => {
+    return new Promise((resolve, reject) => {
+      const patientDataPath = path.join(__dirname, '../../spec/data/patient_data.json');
+      fs.readFile(patientDataPath, { encoding: 'utf8' }, (error, data) => {
+        if (error) {
+          console.error('Could not read spec file');
+          reject(error);
+          return;
+        }
+        try {
+          sampleData = JSON.parse(data) as fhir.Bundle;
+          // The object we resolve to doesn't really matter
+          resolve(sampleData);
+        } catch (ex) {
+          reject(error);
+        }
+      });
+    });
+  });
+
+  it('checksCountOfExtractedProfiles', function () {
+    const extractedData = new mcode.ExtractedMCODE(sampleData);
+    expect(extractedData.primaryCancerCondition.length).toBe(1);
+    expect(extractedData.TNMClinicalStageGroup.length).toBe(2);
+    expect(extractedData.TNMPathologicalStageGroup.length).toBe(2);
+    expect(extractedData.secondaryCancerCondition.length).toBe(1);
+    expect(extractedData.birthDate).toBe('1966-08-03');
+    expect(extractedData.tumorMarker.length).toBe(3);
+    expect(extractedData.cancerRelatedRadiationProcedure.length).toBe(2);
+    expect(extractedData.cancerRelatedSurgicalProcedure.length).toBe(2);
+    expect(extractedData.cancerRelatedMedicationStatement.length).toBe(1);
+    expect(extractedData.cancerGeneticVariant.length).toBe(2);
+    expect(extractedData.ecogPerformaceStatus).toBe(3);
+    expect(extractedData.karnofskyPerformanceStatus).toBe(90);
+  });
+
+  it('checkExtractedPrimaryCancerCondition', function () {
+    const extractedData = new mcode.ExtractedMCODE(sampleData);
+    expect(extractedData.primaryCancerCondition[0].clinicalStatus[0].code).toBe('active');
+    expect(extractedData.primaryCancerCondition[0].coding[0].code).toBe('254837009');
+    expect(extractedData.primaryCancerCondition[0].histologyMorphologyBehavior[0].code).toBe('367651003');
+    expect(extractedData.primaryCancerCondition[0].meta_profile).toBe('mcode-primary-cancer-condition');
+  });
+
+  it('checkExtractedTNMClinicalStageGroup', function () {
+    const extractedData = new mcode.ExtractedMCODE(sampleData);
+    expect(extractedData.TNMClinicalStageGroup[0].code).toBe('261638004');
+    expect(extractedData.TNMClinicalStageGroup[1].code).toBe('c3A');
+  });
+
+  it('checkExtractedTNMPathologicalStageGroup', function () {
+    const extractedData = new mcode.ExtractedMCODE(sampleData);
+    expect(extractedData.TNMPathologicalStageGroup[0].code).toBe('261638004');
+    expect(extractedData.TNMPathologicalStageGroup[1].code).toBe('c3A');
+  });
+
+  it('checkExtractedSecondaryCancerCondition', function () {
+    const extractedData = new mcode.ExtractedMCODE(sampleData);
+    expect(extractedData.secondaryCancerCondition[0].clinicalStatus[0].code).toBe('active');
+    expect(extractedData.secondaryCancerCondition[0].coding[0].code).toBe('128462008');
+    expect(extractedData.secondaryCancerCondition[0].bodySite[0].code).toBe('8935007');
+    expect(extractedData.secondaryCancerCondition[0].meta_profile).toBe('mcode-secondary-cancer-condition');
+  });
+
+  it('checkExtractedTumorMarker', function () {
+    const extractedData = new mcode.ExtractedMCODE(sampleData);
+    expect(
+      extractedData.tumorMarker.some(
+        (marker) =>
+          marker.valueCodeableConcept[0].code == '10828004' &&
+          marker.valueQuantity[0].value == 3 &&
+          marker.valueRatio.length == 0 &&
+          marker.coding[0].code == '48676-1' &&
+          marker.coding[1].code == '85319-2' &&
+          marker.interpretation[0].code == 'POS'
+      )
+    ).toBeTrue();
+    expect(
+      extractedData.tumorMarker.some(
+        (marker) =>
+          marker.valueCodeableConcept[0].code == '10828004' &&
+          marker.valueQuantity.length == 0 &&
+          marker.valueRatio[0].numerator.value == 1 &&
+          marker.valueRatio[0].numerator.comparator == '>=' &&
+          marker.valueRatio[0].denominator.value == 100 &&
+          marker.coding[0].code == '48676-1' &&
+          marker.coding[1].code == '85318-4' &&
+          marker.interpretation.length == 0
+      )
+    ).toBeTrue();
+    expect(
+      extractedData.tumorMarker.some(
+        (marker) =>
+          marker.valueCodeableConcept[0].code == '10828004' &&
+          marker.valueQuantity.length > 0 &&
+          marker.valueQuantity[0].value == 10 &&
+          marker.valueQuantity[0].comparator == '>=' &&
+          marker.valueQuantity[0].unit == '%' &&
+          marker.valueRatio.length == 0 &&
+          marker.coding[0].code == '16112-5' &&
+          marker.coding[1].code == '85337-4' &&
+          marker.interpretation.length == 0
+      )
+    ).toBeTrue();
+  });
+
+  it('checkExtractedCancerRelatedRadiationProcedure', function () {
+    const extractedData = new mcode.ExtractedMCODE(sampleData);
+    expect(
+      extractedData.cancerRelatedRadiationProcedure.some(
+        (procedure) => procedure.coding[0].code == '448385000' && procedure.bodySite.length == 0
+      )
+    ).toBeTrue();
+    expect(
+      extractedData.cancerRelatedRadiationProcedure.some(
+        (procedure) =>
+          procedure.coding[0].code == '448385000' &&
+          procedure.bodySite.length != 0 &&
+          procedure.bodySite[0].code == '12738006'
+      )
+    ).toBeTrue();
+  });
+
+  it('checkExtractedCancerRelatedSurgicalProcedure', function () {
+    const extractedData = new mcode.ExtractedMCODE(sampleData);
+    expect(extractedData.cancerRelatedSurgicalProcedure.some((procedure) => procedure.coding[0].code == '396487001')).toBeTrue();
+    expect(extractedData.cancerRelatedSurgicalProcedure.some((procedure) => procedure.coding[0].code == '443497002')).toBeTrue();
+    expect(extractedData.cancerRelatedSurgicalProcedure.some((procedure) => procedure.reasonReference.reference_meta_profile == 'mcode-primary-cancer-condition')).toBeTrue();  
+  });
+
+  it('checkExtractedCancerGeneticVariant', function () {
+    const extractedData = new mcode.ExtractedMCODE(sampleData);
+    expect(extractedData.cancerGeneticVariant[0].coding[0].system).toBe('http://loinc.org');
+    expect(extractedData.cancerGeneticVariant[0].coding[0].code).toBe('69548-6');
+    expect(extractedData.cancerGeneticVariant[0].valueCodeableConcept[0].system).toBe('http://loinc.org');
+    expect(extractedData.cancerGeneticVariant[0].valueCodeableConcept[0].code).toBe('LA9633-4');
+    expect(extractedData.cancerGeneticVariant[0].interpretation[0].system).toBe(
+      'http://hl7.org/fhir/ValueSet/observation-interpretation'
+    );
+    expect(extractedData.cancerGeneticVariant[0].interpretation[0].code).toBe('POS');
+    expect(extractedData.cancerGeneticVariant[0].component.geneStudied[0].code.coding[0].system).toBe(
+      'http://loinc.org'
+    );
+    expect(extractedData.cancerGeneticVariant[0].component.geneStudied[0].code.coding[0].code).toBe('48018-6');
+    expect(
+      CodeMapper.normalizeCodeSystem(
+        extractedData.cancerGeneticVariant[0].component.geneStudied[0].valueCodeableConcept.coding[0].system
+      )
+    ).toBe('HGNC');
+    expect(extractedData.cancerGeneticVariant[0].component.geneStudied[0].valueCodeableConcept.coding[0].code).toBe(
+      'HGNC:11389'
+    );
+    expect(extractedData.cancerGeneticVariant[0].component.geneStudied[0].interpretation.coding[0].system).toBe(
+      'http://hl7.org/fhir/ValueSet/observation-interpretation'
+    );
+    expect(extractedData.cancerGeneticVariant[0].component.geneStudied[0].interpretation.coding[0].code).toBe('CAR');
+    expect(extractedData.cancerGeneticVariant[0].component.genomicsSourceClass[0].code.coding[0].system).toBe(
+      'http://loinc.org'
+    );
+    expect(extractedData.cancerGeneticVariant[0].component.genomicsSourceClass[0].code.coding[0].code).toBe('48002-0');
+    expect(
+      extractedData.cancerGeneticVariant[0].component.genomicsSourceClass[0].valueCodeableConcept.coding[0].system
+    ).toBe('http://loinc.org');
+    expect(
+      extractedData.cancerGeneticVariant[0].component.genomicsSourceClass[0].valueCodeableConcept.coding[0].code
+    ).toBe('LA6684-0');
+    expect(extractedData.cancerGeneticVariant[0].component.genomicsSourceClass[0].interpretation.coding[0].system).toBe(
+      'http://hl7.org/fhir/ValueSet/observation-interpretation'
+    );
+    expect(extractedData.cancerGeneticVariant[0].component.genomicsSourceClass[0].interpretation.coding[0].code).toBe(
+      'A'
+    );
+  });
+
+  it('checkExtractedCancerRelatedMedicationStatement', function () {
+    const extractedData = new mcode.ExtractedMCODE(sampleData);
+    expect(extractedData.cancerRelatedMedicationStatement[0].code).toBe('583214');
+  });
+});
+
 
 describe("checkMedicationStatementFilterLogic-NoMedications", () => {
   // Initialize
@@ -110,7 +297,7 @@ describe('checkMedicationStatementFilterLogic-trastuzumab', () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test trastuzumab medication filter.', () => {
-    expect(medications.some(medication => medication == 'trastuzumab')).toBe(true);
+    expect(medications.some(medication => medication == 'trastuzumab')).toBeTrue();
   });
 });
 describe('checkMedicationStatementFilterLogicTreatment-Trastuzumab', () => {
@@ -122,7 +309,7 @@ describe('checkMedicationStatementFilterLogicTreatment-Trastuzumab', () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test trastuzumab medication filter.', () => {
-    expect(medications.some(medication => medication == 'trastuzumab')).toBe(true);
+    expect(medications.some(medication => medication == 'trastuzumab')).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-trastuzumab_hyaluronidase_conjugate", () => {
@@ -134,8 +321,8 @@ describe("checkMedicationStatementFilterLogic-trastuzumab_hyaluronidase_conjugat
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test trastuzumab_hyaluronidase_conjugate medication filter.", () => {
-    expect(medications.some(medication => medication == 'trastuzumab_hyaluronidase_conjugate')).toBe(true);
-    expect(medications.some(medication => medication == 'trastuzumab')).toBe(true);
+    expect(medications.some(medication => medication == 'trastuzumab_hyaluronidase_conjugate')).toBeTrue();
+    expect(medications.some(medication => medication == 'trastuzumab')).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-trastuzumab_deruxtecan_conjugate", () => {
@@ -148,8 +335,8 @@ describe("checkMedicationStatementFilterLogic-trastuzumab_deruxtecan_conjugate",
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test trastuzumab_deruxtecan_conjugate medication filter.", () => {
-    expect(medications.some(medication => medication == 'trastuzumab_deruxtecan_conjugate')).toBe(true);
-    expect(medications.some(medication => medication == 'trastuzumab')).toBe(true);
+    expect(medications.some(medication => medication == 'trastuzumab_deruxtecan_conjugate')).toBeTrue();
+    expect(medications.some(medication => medication == 'trastuzumab')).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-pertuzumab", () => {
@@ -185,9 +372,9 @@ describe("checkMedicationStatementFilterLogic-pertuzumab_trastuzumab_hyaluronida
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test pertuzumab_trastuzumab_hyaluronidase medication filter.", () => {
-    expect(medications.some(medication => medication == 'pertuzumab_trastuzumab_hyaluronidase')).toBe(true);
-    expect(medications.some(medication => medication == 'trastuzumab_hyaluronidase_conjugate')).toBe(true);
-    expect(medications.some(medication => medication == 'trastuzumab')).toBe(true);
+    expect(medications.some(medication => medication == 'pertuzumab_trastuzumab_hyaluronidase')).toBeTrue();
+    expect(medications.some(medication => medication == 'trastuzumab_hyaluronidase_conjugate')).toBeTrue();
+    expect(medications.some(medication => medication == 'trastuzumab')).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-tucatinib", () => {
@@ -223,7 +410,7 @@ describe("checkMedicationStatementFilterLogic-tdm1", () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test tdm1 medication filter.", () => {
-    expect(medications.some(medication => medication == 'tdm1')).toBe(true);
+    expect(medications.some(medication => medication == 'tdm1')).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-doxorubicin", () => {
@@ -403,7 +590,7 @@ describe('checkMedicationStatementFilterLogic-eribulin', () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test eribulin medication filter.', () => {
-    expect(medications.some(medication => medication == 'eribulin')).toBe(true);
+    expect(medications.some(medication => medication == 'eribulin')).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-ixabepilone", () => {
@@ -631,7 +818,7 @@ describe('checkMedicationStatementFilterLogic-progesterone', () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test progesterone medication filter.', () => {
-      expect(medications.some(medication => medication == 'progesterone')).toBe(true);
+      expect(medications.some(medication => medication == 'progesterone')).toBeTrue();
   });
 });
 describe('checkMedicationStatementFilterLogic-Hyaluronidase', () => {
@@ -643,7 +830,7 @@ describe('checkMedicationStatementFilterLogic-Hyaluronidase', () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test Hyaluronidase medication filter.', () => {
-      expect(medications.some(medication => medication == 'hyaluronidase')).toBe(true);
+      expect(medications.some(medication => medication == 'hyaluronidase')).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-fluoxymesterone", () => {
@@ -667,7 +854,7 @@ describe('checkMedicationStatementFilterLogic-high_dose_estrogen', () => {
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test high_dose_estrogen medication filter.', () => {
-    expect(medications.some(medication => medication == 'high_dose_estrogen')).toBe(true);
+    expect(medications.includes('high_dose_estrogen')).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-palbociclib", () => {
@@ -740,13 +927,13 @@ describe("checkMedicationStatementFilterLogic-seven_medications", () => {
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test alpelisib medication filter.", () => {
     expect(medications.length).toBe(7);
-    expect(medications.indexOf("letrozole") > -1).toBe(true);
-    expect(medications.indexOf("lapatinib") > -1).toBe(true);
-    expect(medications.indexOf("tucatinib") > -1).toBe(true);
-    expect(medications.indexOf("topotecan") > -1).toBe(true);
-    expect(medications.indexOf("palbociclib") > -1).toBe(true);
-    expect(medications.indexOf("abemaciclib") > -1).toBe(true);
-    expect(medications.indexOf("alpelisib") > -1).toBe(true);
+    expect(medications.indexOf("letrozole") > -1).toBeTrue();
+    expect(medications.indexOf("lapatinib") > -1).toBeTrue();
+    expect(medications.indexOf("tucatinib") > -1).toBeTrue();
+    expect(medications.indexOf("topotecan") > -1).toBeTrue();
+    expect(medications.indexOf("palbociclib") > -1).toBeTrue();
+    expect(medications.indexOf("abemaciclib") > -1).toBeTrue();
+    expect(medications.indexOf("alpelisib") > -1).toBeTrue();
   });
 });
 describe('checkStageFilterLogic-Stage0', () => {
@@ -983,13 +1170,13 @@ describe('checkTumorMarkerFilterLogic-ER+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '16112-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '16112-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
   tm.interpretation.push({
     system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html',
     code: 'H',
@@ -1004,13 +1191,13 @@ describe('checkTumorMarkerFilterLogic-ER+_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '16112-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '16112-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
   tm.valueRatio.push({numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
@@ -1022,13 +1209,13 @@ describe('checkTumorMarkerFilterLogic-ER-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '85310-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '85310-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
   tm.interpretation.push({
     system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html',
     code: 'NEG',
@@ -1044,13 +1231,13 @@ describe('checkTumorMarkerFilterLogic-ER-_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '85310-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '85310-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
   tm.valueRatio.push({numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
@@ -1062,13 +1249,13 @@ describe('checkTumorMarkerFilterLogic-PR+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
   tm.interpretation.push({
     system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html',
     code: 'H',
@@ -1083,13 +1270,13 @@ describe('checkTumorMarkerFilterLogic-PR+_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
   tm.valueRatio.push({numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
@@ -1101,13 +1288,13 @@ describe('checkTumorMarkerFilterLogic-PR-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
   tm.valueCodeableConcept.push({
     system: 'snomed',
     code: '260385009',
@@ -1122,13 +1309,13 @@ describe('checkTumorMarkerFilterLogic-PR-_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
   tm.valueRatio.push({numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
@@ -1429,14 +1616,14 @@ describe('checkTumorMarkerFilterLogic-CDH1+', () => {
   const extractedMCODE = new mcode.ExtractedMCODE(null);
 
   const tumorMarker : mcode.TumorMarker = {
-    code: [] as Coding[],
+    coding: [] as Coding[],
     valueCodeableConcept: [] as Coding[],
     interpretation: [] as Coding[],
     valueQuantity: [] as Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
-  tumorMarker.code.push({ system: 'loinc', code: '21652-3', display: 'n/a' });
+  tumorMarker.coding.push({ system: 'loinc', code: '21652-3', display: 'n/a' });
   tumorMarker.valueCodeableConcept.push({ system: 'SNOMED', code: '10828004', display: 'Present' });
   extractedMCODE.tumorMarker.push(tumorMarker);
 
@@ -1485,14 +1672,14 @@ describe('checkTumorMarkerFilterLogic-CHEK2+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tumorMarker : mcode.TumorMarker = {
-    code: [] as Coding[],
+    coding: [] as Coding[],
     valueCodeableConcept: [] as Coding[],
     interpretation: [] as Coding[],
     valueQuantity: [] as Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
-  tumorMarker.code.push({ system: 'loinc', code: '72518-4', display: 'n/a' });
+  tumorMarker.coding.push({ system: 'loinc', code: '72518-4', display: 'n/a' });
   tumorMarker.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'POS', display: 'POS'});
 
   extractedMCODE.tumorMarker.push(tumorMarker);
@@ -1540,14 +1727,14 @@ describe('checkTumorMarkerFilterLogic-NBN+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tumorMarker : mcode.TumorMarker = {
-    code: [] as Coding[],
+    coding: [] as Coding[],
     valueCodeableConcept: [] as Coding[],
     interpretation: [] as Coding[],
     valueQuantity: [] as Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
-  tumorMarker.code.push({ system: 'loinc', code: '82515-8', display: 'n/a' });
+  tumorMarker.coding.push({ system: 'loinc', code: '82515-8', display: 'n/a' });
   tumorMarker.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'ND', display: 'ND'});
 
   extractedMCODE.tumorMarker.push(tumorMarker);
@@ -1561,14 +1748,14 @@ describe('checkTumorMarkerFilterLogic-NBN-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tumorMarker : mcode.TumorMarker = {
-    code: [] as Coding[],
+    coding: [] as Coding[],
     valueCodeableConcept: [] as Coding[],
     interpretation: [] as Coding[],
     valueQuantity: [] as Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
-  tumorMarker.code.push({ system: 'loinc', code: '82515-8', display: 'n/a' });
+  tumorMarker.coding.push({ system: 'loinc', code: '82515-8', display: 'n/a' });
   tumorMarker.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'DET', display: 'DET'});
 
   extractedMCODE.tumorMarker.push(tumorMarker);
@@ -1582,14 +1769,14 @@ describe('checkTumorMarkerFilterLogic-NF1+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tumorMarker : mcode.TumorMarker = {
-    code: [] as Coding[],
+    coding: [] as Coding[],
     valueCodeableConcept: [] as Coding[],
     interpretation: [] as Coding[],
     valueQuantity: [] as Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
-  tumorMarker.code.push({ system: 'loinc', code: '21717-4', display: 'n/a' });
+  tumorMarker.coding.push({ system: 'loinc', code: '21717-4', display: 'n/a' });
   tumorMarker.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'L', display: 'n/a'});
 
   extractedMCODE.tumorMarker.push(tumorMarker);
@@ -1603,14 +1790,14 @@ describe('checkTumorMarkerFilterLogic-NF1-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tumorMarker : mcode.TumorMarker = {
-    code: [] as Coding[],
+    coding: [] as Coding[],
     valueCodeableConcept: [] as Coding[],
     interpretation: [] as Coding[],
     valueQuantity: [] as Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
-  tumorMarker.code.push({ system: 'loinc', code: '21718-2', display: 'n/a' });
+  tumorMarker.coding.push({ system: 'loinc', code: '21718-2', display: 'n/a' });
   tumorMarker.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'H', display: 'n/a'});
 
   extractedMCODE.tumorMarker.push(tumorMarker);
@@ -1896,13 +2083,13 @@ describe('checkTumorMarkerFilterLogic-RB+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
   tm.valueQuantity.push({ value: '51', comparator: '>', unit: '%', code: '%' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -1915,13 +2102,13 @@ describe('checkTumorMarkerFilterLogic-RB+_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
   tm.valueRatio.push({numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -1934,13 +2121,13 @@ describe('checkTumorMarkerFilterLogic-RB-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
   tm.valueQuantity.push({ value: '49', comparator: '<=', unit: '%', code: '%' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -1953,13 +2140,13 @@ describe('checkTumorMarkerFilterLogic-RB-_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
   tm.valueRatio.push({numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -1972,13 +2159,13 @@ describe('checkTumorMarkerFilterLogic-HER2+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '32996-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-HER2'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '32996-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-HER2'
   tm.valueQuantity.push({ value: '3+', comparator: '=' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -1991,13 +2178,13 @@ describe('checkTumorMarkerFilterLogic-HER2-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '32996-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-HER2'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '32996-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-HER2'
   tm.valueQuantity.push({ value: '2+', comparator: '=' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2010,13 +2197,13 @@ describe('checkTumorMarkerFilterLogic-FGFR+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
   tm.valueQuantity.push({ value: '1', comparator: '>=', unit: '%', code: '%' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2029,13 +2216,13 @@ describe('checkTumorMarkerFilterLogic-FGFR+_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
   tm.valueRatio.push({numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2048,13 +2235,13 @@ describe('checkTumorMarkerFilterLogic-FGFR-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
   tm.valueQuantity.push({ value: '0.5', comparator: '<', unit: '%', code: '%' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2067,13 +2254,13 @@ describe('checkTumorMarkerFilterLogic-FGFR-_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
   tm.valueRatio.push({numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2222,13 +2409,13 @@ describe('checkTumorMarkerFilterLogic-PDL1+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '96268-8', display: 'N/A' } as Coding);
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '96268-8', display: 'N/A' } as Coding);
   tm.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'POS', display: 'POS' } as Coding);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2241,13 +2428,13 @@ describe('checkTumorMarkerFilterLogic-PDL1-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.code = [] as Coding[];
+  tm.coding = [] as Coding[];
   tm.interpretation = [] as Coding[];
   tm.valueCodeableConcept = [] as Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.code.push({ system: 'http://loinc.info/sct', code: '83052-1', display: 'N/A' } as Coding);
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '83052-1', display: 'N/A' } as Coding);
   tm.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'ND', display: 'ND' } as Coding);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2464,6 +2651,43 @@ describe('checkHistologyMorphologyFilterLogic-dcis', () => {
     expect(extractedMCODE.getHistologyMorphologyValue()).toBe('dcis');
   });
 });
+describe('checkHistologyMorphologyFilterLogic-lcis_1', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Lobular Carcinoma In Situ Filter Attributes
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '109888004', display: 'N/A' } as Coding); // Any Code in 'lcis-condition'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Lobular Carcinoma In Situ Filter_1', () => {
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('lcis');
+  });
+});
+describe('checkHistologyMorphologyFilterLogic-lcis_2', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const pcc: PrimaryCancerCondition = {};
+  pcc.clinicalStatus = [] as Coding[];
+  pcc.coding = [] as Coding[];
+  pcc.histologyMorphologyBehavior = [] as Coding[];
+
+  // Lobular Carcinoma In Situ Filter Attributes
+  pcc.histologyMorphologyBehavior.push({
+    system: 'http://snomed.info/sct',
+    code: '77284006',
+    display: 'N/A'
+  } as Coding); // Any Code in 'lcis-histology'
+
+  extractedMCODE.primaryCancerCondition.push(pcc);
+
+  it('Test Lobular Carcinoma In Situ Filter_2', () => {
+    expect(extractedMCODE.getHistologyMorphologyValue()).toBe('lcis');
+  });
+});
 describe('checkSecondaryCancerConditionLogic', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
@@ -2515,7 +2739,6 @@ describe('checkSecondaryCancerConditionLogic', () => {
 
     expect(emptyExtractedMCODE.getSecondaryCancerValue()).toBeNull();
   });
-
 });
 describe('checkECOGFilterLogic', () => {
   //Initialize
@@ -2533,5 +2756,170 @@ describe('checkKarnofskyFilterLogic', () => {
   // Karnofsky Test
   it('Test Karnofsky Filter', () => {
     expect(extractedMCODE.getKarnofskyScore()).toBe(90);
+  });
+});
+
+/** Procedure Tests */
+
+describe('checkRadiationProcedureFilterLogic-WBRT', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crrp: mcode.CancerRelatedRadiationProcedure = {};
+  crrp.bodySite = [] as Coding[];
+  crrp.coding = [] as Coding[];
+
+  // WBRT Filter Attributes
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '108290001', display: 'N/A' } as Coding);
+  crrp.bodySite.push({ system: 'http://snomed.info/sct', code: '12738006', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
+
+  it('Test WBRT Filter', () => {
+    expect(extractedMCODE.getRadiationProcedureValue().includes('wbrt')).toBeTrue();
+  });
+});
+describe('checkRadiationProcedureFilterLogic-EBRT', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crrp: mcode.CancerRelatedRadiationProcedure = {};
+  crrp.bodySite = [] as Coding[];
+  crrp.coding = [] as Coding[];
+
+  // EBRT Filter Attributes
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '33356009', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
+
+  it('Test EBRT Filter', () => {
+    expect(extractedMCODE.getRadiationProcedureValue().includes('ebrt')).toBeTrue();
+  });
+});
+describe('checkRadiationProcedureFilterLogic-Ablation', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crrp: mcode.CancerRelatedRadiationProcedure = {};
+  crrp.bodySite = [] as Coding[];
+  crrp.coding = [] as Coding[];
+
+  // Ablation Filter Attributes
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '228692005', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
+
+  it('Test Ablation Filter', () => {
+    expect(extractedMCODE.getRadiationProcedureValue().includes('ablation')).toBeTrue();
+  });
+});
+describe('checkRadiationProcedureFilterLogic-rfa', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crrp: mcode.CancerRelatedRadiationProcedure = {};
+  crrp.bodySite = [] as Coding[];
+  crrp.coding = [] as Coding[];
+
+  // rfa Filter Attributes
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '879916008', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
+
+  it('Test rfa Filter', () => {
+    expect(extractedMCODE.getRadiationProcedureValue().includes('rfa')).toBeTrue();
+  });
+});
+describe('checkSurgicalProcedureFilterLogic-Lumpectomy', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
+  crsp.coding = [] as Coding[];
+
+  // Lumpectomy Filter Attributes
+  crsp.coding.push({ system: 'http://snomed.info/sct', code: '392022002', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
+
+  it('Test Lumpectomy Filter', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'lumpectomy')).toBeTrue();
+  });
+});
+
+describe('checkSurgicalProcedureFilterLogic-Mastectomy', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
+  crsp.coding = [] as Coding[];
+
+  // Mastectomy Filter Attributes
+  crsp.coding.push({ system: 'http://snomed.info/sct', code: '429400009', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
+
+  it('Test Mastectomy Filter', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'mastectomy')).toBeTrue();
+  });
+});
+
+describe('checkSurgicalProcedureFilterLogic-Alnd_1', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
+  crsp.coding = [] as Coding[];
+
+  // Alnd Filter Attributes
+  crsp.coding.push({ system: 'http://snomed.info/sct', code: '234262008', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
+
+  it('Test Alnd Filter_1', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue().includes('alnd')).toBeTrue();
+  });
+});
+
+describe('checkSurgicalProcedureFilterLogic-Alnd_2', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
+  crsp.coding = [] as Coding[];
+  crsp.bodySite = [] as Coding[];
+
+  // Alnd Filter Attributes
+  crsp.coding.push({ system: 'http://snomed.info/sct', code: '122459003', display: 'N/A' } as Coding);
+  crsp.bodySite.push({ system: 'http://snomed.info/sct', code: '746224000', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
+
+  it('Test Alnd Filter_2', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue().includes('alnd')).toBeTrue();
+  });
+});
+
+describe('checkSurgicalProcedureFilterLogic-Reconstruction', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
+  crsp.coding = [] as Coding[];
+
+  // Reconstruction Filter Attributes
+  crsp.coding.push({ system: 'http://snomed.info/sct', code: '302342002', display: 'N/A' } as Coding);
+
+  extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
+
+  it('Test Reconstruction Filter', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'reconstruction')).toBeTrue();
+  });
+});
+
+describe('checkSurgicalProcedureFilterLogic-Metastasis Resection', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
+  crsp.reasonReference = [] as mcode.ReasonReference;
+
+  // Metastasis Resection Filter Attributes (surgical procedure reason reference = SecondaryCancerCondition)
+  crsp.reasonReference = ({ reference_meta_profile: 'mcode-secondary-cancer-condition' } as mcode.ReasonReference);
+
+  extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
+
+  it('Test Metastasis Resection Filter', () => {
+    expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'metastasis_resection')).toBeTrue();
   });
 });
