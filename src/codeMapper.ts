@@ -68,22 +68,47 @@ export class CodeMapper {
       profile_map.set(profile, code_list);
     }
 
-    // const medicalCodes = [];
-    // for(var medicalcodelist of profile_map.values()){
+    const medicalCodes = [];
+    for(var medicalcodelist of profile_map.values()){
 
-    //       // Filter any duplicate values.
-    //       medicalcodelist = medicalcodelist.filter((a, b) => medicalcodelist.indexOf(a) === b)
+          // Filter any duplicate values.
+          medicalcodelist = medicalcodelist.filter((a, b) => medicalcodelist.indexOf(a) === b)
 
-    //   for(const medicalcode of medicalcodelist){
-    //     medicalCodes.push(medicalcode.system + "|" + medicalcode.code);
-    //   }
-    // }
+      for(const medicalcode of medicalcodelist){
+        medicalCodes.push(medicalcode.system + " " + medicalcode.code);
+      }
+    }
 
-    // // throw medicalCodes;
+    // throw medicalCodes;
 
-    // let findDuplicates = (arr: any[]) => arr.filter((item: any, index: any) => arr.indexOf(item) != index);
+    let findDuplicates = (arr: any[]) => arr.filter((item: any, index: any) => arr.indexOf(item) != index);
+    let duplicates: string[] = findDuplicates(medicalCodes);
+    
+    duplicates = duplicates.filter((a, b) => duplicates.indexOf(a) === b)
+    const full_duplicates = [];
+    for(const duplicate of duplicates) {
+      let counter = 0;
+      let profiles_string = "";
+      let currentCode = new MedicalCode(duplicate.split(" ")[1], duplicate.split(" ")[0])
+      for(const cur_profile of profile_map.keys()){
+        if(profile_map.get(cur_profile).some(element => element.equalsMedicalCode(currentCode))){
+          counter++;
+          profiles_string = profiles_string + cur_profile + " "
+        }
+      }
+      if(counter < 2) {
+        console.log(duplicate);
+      }
+      full_duplicates.push(duplicate + " " + profiles_string);
+    }
 
-    // throw "duplicates" + findDuplicates(medicalCodes);
+    let finalstring = ""
+
+    for(const current of full_duplicates){
+      finalstring = finalstring + "\n" + current;
+    }
+
+    throw "duplicates\n" + finalstring
 
     return profile_map;
   }
