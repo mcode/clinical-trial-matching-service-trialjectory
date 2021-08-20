@@ -27,7 +27,7 @@ export class CodeSystemEnum {
     this.system = system;
   }
 
-  toString() {
+  toString(): string {
     return this.system;
   }
 }
@@ -45,7 +45,7 @@ export class CodeMapper {
    * Constructor for a Code Mapper.
    * @param code_mapping_file The file that dictates the code mapping.
    */
-  constructor(code_mapping_file: any) {
+  constructor(code_mapping_file: {[key: string]: ProfileSystemCodes;}) {
     this.code_map = CodeMapper.convertJsonToCodeMap(code_mapping_file);
     this.profile_map = CodeMapper.convertJsonToProfileMap(code_mapping_file);
   }
@@ -96,9 +96,8 @@ export class CodeMapper {
   }
 
   extractCodeMappings(coding: Coding): string[] {
-    return this.code_map.get(
-      new MedicalCode(coding.code, coding.system).toString()
-    );
+    const extracted_mappings = this.code_map.get(new MedicalCode(coding.code, coding.system).toString())
+    return extracted_mappings != null ? extracted_mappings : [];
   }
 
   /**
@@ -133,7 +132,7 @@ export class CodeMapper {
    * @param system
    * @param code
    */
-  static codesEqual(input_coding: Coding, system: CodeSystemEnum, code: string ) {
+  static codesEqual(input_coding: Coding, system: CodeSystemEnum, code: string ): boolean {
     return new MedicalCode(input_coding.code, input_coding.system).equalsMedicalCode(new MedicalCode(code, system.toString()));
   }
 
@@ -209,7 +208,7 @@ class MedicalCode {
 
   toString() {
     return (
-      "Medical Code {code: " + this.code + ", system: " + this.system + "}"
+      "Medical Code {code: " + this.code + ", system: " + this.system.toString() + "}"
     );
   }
 

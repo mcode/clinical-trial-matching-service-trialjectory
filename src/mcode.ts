@@ -800,7 +800,7 @@ export class ExtractedMCODE {
 
     // Perform the basic extraction mappings.
     let stage_values: string[] = this.performBasicMappingExtraction(this.TNMClinicalStageGroup);
-    stage_values.push.apply(stage_values, this.performBasicMappingExtraction(this.TNMPathologicalStageGroup));
+    stage_values.push(...this.performBasicMappingExtraction(this.TNMPathologicalStageGroup));
 
     if(stage_values.length < 1){
       return null;
@@ -1384,7 +1384,7 @@ quantityMatch(
     const return_values: string[] = []
     // Iterate over the record's medical codes, extract codes' mappings.
     for (const coding of coding_list) {
-      return_values.push.apply(return_values, ExtractedMCODE.code_mapper.extractCodeMappings(coding));
+      return_values.push(...ExtractedMCODE.code_mapper.extractCodeMappings(coding));
     }
     return return_values;
   }
