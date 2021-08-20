@@ -797,37 +797,48 @@ export class ExtractedMCODE {
    * @returns The most advanced staging that this person's resource codes map to.
    */
   getStageValues(): string {
-    // Set the sheet name -> Trialjectory result mapping.
-    const stage_value_map = new Map<string, string>()
-    stage_value_map.set('Stage-4D', '4C');  // 4D is not a stage in Trialjectory, return 4C.
-    stage_value_map.set('Stage-4C', '4C');
-    stage_value_map.set('Stage-4B', '4B');
-    stage_value_map.set('Stage-4A', '4A');
-    stage_value_map.set('Stage-4', '4');
-    stage_value_map.set('Stage-3C', '3C');
-    stage_value_map.set('Stage-3B', '3B');
-    stage_value_map.set('Stage-3A', '3A');
-    stage_value_map.set('Stage-3', '3');
-    stage_value_map.set('Stage-2C', '2C');
-    stage_value_map.set('Stage-2B', '2B');
-    stage_value_map.set('Stage-2A', '2A');
-    stage_value_map.set('Stage-2', '2');
-    stage_value_map.set('Stage-1C', '1C');
-    stage_value_map.set('Stage-1B', '1B');
-    stage_value_map.set('Stage-1A', '1A');
-    stage_value_map.set('Stage-1', '1');
-    stage_value_map.set('Stage-0A', '0'); // 0A is not a stage in Trialjectory, return 0.
-    stage_value_map.set('Stage-0', '0');
 
-    // Iterate through the mappings and return when a code is satisfied.
-    for(const stage_name of stage_value_map.keys()){
-      if (ExtractedMCODE.code_mapper.aCodeIsInMapping(this.TNMClinicalStageGroup, stage_name) ||
-      ExtractedMCODE.code_mapper.aCodeIsInMapping(this.TNMPathologicalStageGroup, stage_name)) {
-        return stage_value_map.get(stage_name);
-      }
+    // Perform the basic extraction mappings.
+    let stage_values: string[] = this.performBasicMappingExtraction(this.TNMClinicalStageGroup);
+    stage_values.push.apply(stage_values, this.performBasicMappingExtraction(this.TNMPathologicalStageGroup));
+
+    if(stage_values.length < 1){
+      return null;
     }
 
-    return null;
+    // Set the stage conversions.
+    const stage_conversion_map = new Map<string, string>()
+    stage_conversion_map.set('Stage-4D', '4C');  // 4D is not a stage in Trialjectory, return 4C.
+    stage_conversion_map.set('Stage-4C', '4C');
+    stage_conversion_map.set('Stage-4B', '4B');
+    stage_conversion_map.set('Stage-4A', '4A');
+    stage_conversion_map.set('Stage-4', '4');
+    stage_conversion_map.set('Stage-3C', '3C');
+    stage_conversion_map.set('Stage-3B', '3B');
+    stage_conversion_map.set('Stage-3A', '3A');
+    stage_conversion_map.set('Stage-3', '3');
+    stage_conversion_map.set('Stage-2C', '2C');
+    stage_conversion_map.set('Stage-2B', '2B');
+    stage_conversion_map.set('Stage-2A', '2A');
+    stage_conversion_map.set('Stage-2', '2');
+    stage_conversion_map.set('Stage-1C', '1C');
+    stage_conversion_map.set('Stage-1B', '1B');
+    stage_conversion_map.set('Stage-1A', '1A');
+    stage_conversion_map.set('Stage-1', '1');
+    stage_conversion_map.set('Stage-0A', '0'); // 0A is not a stage in Trialjectory, return 0.
+    stage_conversion_map.set('Stage-0', '0');
+    stage_conversion_map.set('Stage-4D', '4C');  // 4D is not a stage in Trialjectory, return 4C.
+    stage_conversion_map.set('Stage-0A', '0'); // 0A is not a stage in Trialjectory, return 0.
+    stage_values = stage_values.map(stage => {
+      if(stage_conversion_map.get(stage) != undefined) {
+        return stage_conversion_map.get(stage);
+      } else {
+        throw "Stage does not exist in mapping: " + stage + ".";
+      }
+    });
+
+    // Pull the highest stage value.
+    return stage_values.sort().reverse()[0]
   }
 
   /**
@@ -1339,20 +1350,16 @@ quantityMatch(
   }
 
   /**
-   * 
+   * Gets the medication statement value mappnigs from the patient resource.
    * @returns the medications that this resource's codes map to.
    */
   getMedicationStatementValues(): string[] {
 
     // medication_mappings.set('goserelin', 'goserelin'); // THIS MEDICATION IS NOT CURRENTLY SUPPORTED BY TRIALJECTORY. WE WILL NEED TO DISCUSS THIS WITH THEM.
     // medication_mappings.set('leuprolide', 'leuprolide'); // THIS MEDICATION IS NOT CURRENTLY SUPPORTED BY TRIALJECTORY. WE WILL NEED TO DISCUSS THIS WITH THEM.
-    // // WE HAVE SINCE DISCUSSED THESE MEDICATIONS WITH THEM, WAITING FOR THEM TO PROCEED.
+    // WE HAVE SINCE DISCUSSED THESE MEDICATIONS WITH THEM, WAITING FOR THEM TO PROCEED.
 
-    // Iterate over the record's medical codes, extract codes' mappings.
-    let medication_values: string[] = [];
-    for (const medication of this.cancerRelatedMedicationStatement) {
-      medication_values.push.apply(medication_values, ExtractedMCODE.code_mapper.extractCodeMappings(medication));
-    }
+    let medication_values: string[] = this.performBasicMappingExtraction(this.cancerRelatedMedicationStatement);
 
     // Convert 'estrogen' profile to the expected 'high_dose_estrogen'.
     medication_values = medication_values.map(medication => {
@@ -1367,5 +1374,18 @@ quantityMatch(
     medication_values.filter((a, b) => medication_values.indexOf(a) === b)
 
     return medication_values;
+  }
+
+  /**
+   * Performs the basic extraction mapping of the given coding list.
+   * @param coding_list 
+   */
+  performBasicMappingExtraction(coding_list: Coding[]): string[] {
+    const return_values: string[] = []
+    // Iterate over the record's medical codes, extract codes' mappings.
+    for (const coding of coding_list) {
+      return_values.push.apply(return_values, ExtractedMCODE.code_mapper.extractCodeMappings(coding));
+    }
+    return return_values;
   }
  }
