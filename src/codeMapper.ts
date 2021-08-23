@@ -95,9 +95,15 @@ export class CodeMapper {
     return profile_map;
   }
 
-  extractCodeMappings(coding: Coding): string[] {
-    const extracted_mappings = this.code_map.get(new MedicalCode(coding.code, coding.system).toString())
-    return extracted_mappings != null ? extracted_mappings : [];
+  extractCodeMappings(coding: Coding[]): string[] {
+    const extracted_mappings: string[] = [];
+    for (const code of coding) {
+      const medical_code_key = new MedicalCode(code.code, code.system).toString();
+      if (this.code_map.has(medical_code_key)) {
+        extracted_mappings.push(...this.code_map.get(medical_code_key));
+      }
+    }
+    return extracted_mappings;
   }
 
   /**
