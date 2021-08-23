@@ -646,17 +646,15 @@ export class ExtractedMCODE {
     return null;
   }
 
-  // Radiation Procedures
+  /**
+   * Returns the radiation procedure mappings for these radiation procedure resources.
+   * @returns 
+   */
   getRadiationProcedureValue(): string[] {
 
-    let radiationValues:string[] = [];
-
-    const procedure_codes_map = new Map<string, string>()
-    procedure_codes_map.set('ablation-procedure', 'ablation');
-    procedure_codes_map.set('rfa-procedure', 'rfa');
-    procedure_codes_map.set('ebrt-procedure', 'ebrt');
-    // Perform the basic mappings of the radiation procedures.
-    radiationValues = radiationValues.concat(this.performBasicMappings(procedure_codes_map, this.cancerRelatedRadiationProcedure));
+    const radiation_codes: Coding[] = this.extractCodings(this.cancerRelatedRadiationProcedure);
+    // Perform the basic mapping.
+    let radiationValues: string[] = ExtractedMCODE.code_mapper.extractCodeMappings(radiation_codes);
 
     // WBRT Logic.
     for (const cancerRelatedRadiationProcedure of this.cancerRelatedRadiationProcedure) {
@@ -674,17 +672,30 @@ export class ExtractedMCODE {
       }
     }
 
-    // Radiation Logic.
+    // Simple radiation logic.
     if (this.cancerRelatedRadiationProcedure.length > 0) {
       // If there is any code in the cancerRelatedRadiationProcedure, it counts as radiation.
       radiationValues.push('radiation');
     }
 
+    // Convert values to expected Trialjectory values.
+    const procedure_conversion_map = new Map<string, string>()
+    procedure_conversion_map.set('ablation-procedure', 'ablation');
+    procedure_conversion_map.set('rfa-procedure', 'rfa');
+    procedure_conversion_map.set('ebrt-procedure', 'ebrt');
+    radiationValues = radiationValues.map(procedure => {
+      if(procedure_conversion_map.has(procedure)) {
+        return procedure_conversion_map.get(procedure);
+      } else {
+        return procedure;
+      }
+    });
+
     return radiationValues;
   }
 
   /**
-   * Returns the surgical procedure mappings.
+   * Returns the surgical procedure mappings for these surgical procedure resources.
    * @returns 
    */
   getSurgicalProcedureValue(): string[] {
@@ -694,6 +705,7 @@ export class ExtractedMCODE {
     }
 
     const surgical_codes: Coding[] = this.extractCodings(this.cancerRelatedSurgicalProcedure);
+    // Perform the basic mapping.
     let surgical_procedure_values: string[] = ExtractedMCODE.code_mapper.extractCodeMappings(surgical_codes);
 
     // Convert incorrect profile names to the Trialjectory expected values.
@@ -712,7 +724,7 @@ export class ExtractedMCODE {
 
     // Additional ALND complex logic (if alnd has not already been added).
     if(!surgical_procedure_values.includes('alnd')){
-      let bodySiteCodingExtracor = (procedure: CancerRelatedSurgicalProcedure[]) => {
+      const bodySiteCodingExtracor = (procedure: CancerRelatedSurgicalProcedure[]) => {
         const coding_list: Coding[] = []
         for(const resource of procedure){
           if(resource.bodySite != null) {
@@ -752,24 +764,6 @@ export class ExtractedMCODE {
       }
     }
     return coding_list;
-  }
-
-  /**
-   * Returns the basic code mappings described by the given map of procedure code mappings on the given Fhir Resource.
-   * @param code_mapping The map tha describes the mapping of each code to a value.
-   * @param fhir_resource The resource to perform the mapping on.
-   * @returns The string array of mapped result values.
-   */
-  performBasicMappings(code_mapping: Map<string, string>, fhir_resource: BaseFhirResource[]): string[] {
-    const mapped_values:string[] = [];
-
-    // Iterate through the mappings and append when a code is satisfied.
-    for (const procedure_name of code_mapping.keys()) {
-      if (fhir_resource.some((fhir_resource) => fhir_resource.coding != null && ExtractedMCODE.code_mapper.aCodeIsInMapping(fhir_resource.coding, procedure_name))) {
-        mapped_values.push(code_mapping.get(procedure_name));
-      }
-    }
-    return mapped_values;
   }
 
   /**
@@ -827,7 +821,7 @@ export class ExtractedMCODE {
     stage_conversion_map.set('Stage-4D', '4C');  // 4D is not a stage in Trialjectory, return 4C.
     stage_conversion_map.set('Stage-0A', '0'); // 0A is not a stage in Trialjectory, return 0.
     stage_values = stage_values.map(stage => {
-      if(stage_conversion_map.get(stage) != undefined) {
+      if(stage_conversion_map.has(stage)) {
         return stage_conversion_map.get(stage);
       } else {
         throw "Stage does not exist in mapping: " + stage + ".";
@@ -835,6 +829,7 @@ export class ExtractedMCODE {
     });
 
     // Pull the highest stage value.
+    // This may be an issue with 2 vs. 2C etc.
     return stage_values.sort().reverse()[0]
   }
 
