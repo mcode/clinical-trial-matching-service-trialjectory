@@ -683,38 +683,75 @@ export class ExtractedMCODE {
     return radiationValues;
   }
 
-  // Surgical Procedures
+  /**
+   * Returns the surgical procedure mappings.
+   * @returns 
+   */
   getSurgicalProcedureValue(): string[] {
 
     if(this.cancerRelatedSurgicalProcedure == null){
       return [];
     }
 
-    let surgicalValues:string[] = [];
-    
-    // Set the Mapping Name -> Trialjectory Result.
-    const procedure_codes_map = new Map<string, string>()
-    procedure_codes_map.set('mastectomy', 'mastectomy');
-    procedure_codes_map.set('lumpectomy', 'lumpectomy');
-    procedure_codes_map.set('alnd-procedure', 'alnd');  // ALND also has a second possible mapping which will be checked later.
-    procedure_codes_map.set('breast-reconstruction', 'reconstruction');  // Although 'reconstruction' is vague, it refers specifically to breast reconstruction.
-    // Perform the basic mappings of the surgical procedures.
-    surgicalValues = surgicalValues.concat(this.performBasicMappings(procedure_codes_map, this.cancerRelatedSurgicalProcedure));
+    const surgical_codes: Coding[] = this.extractCodings(this.cancerRelatedSurgicalProcedure);
+    let surgical_procedure_values: string[] = ExtractedMCODE.code_mapper.extractCodeMappings(surgical_codes);
 
-    // Additional ALND mapping check (if alnd has not already been added).
-    if(!surgicalValues.includes('alnd')){
-      if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.coding != null && surgicalProcedure.coding.some((code) => code.code == '122459003') 
-          && ExtractedMCODE.code_mapper.aCodeIsInMapping(surgicalProcedure.bodySite, 'alnd-bodysite'))) {
-            surgicalValues.push('alnd');
+    // Convert incorrect profile names to the Trialjectory expected values.
+    surgical_procedure_values = surgical_procedure_values.map(procedure => {
+      if(procedure == "breast-reconstruction") {
+        // Although 'reconstruction' is vague, it refers specifically to breast reconstruction.
+        return "reconstruction";
+      } else if(procedure == "alnd-procedure") {
+        // ALND has a second possible logic mapping which will be checked later.
+        return "alnd";
+      }
+      else {
+        return procedure;
+      }
+    });
+
+    // Additional ALND complex logic (if alnd has not already been added).
+    if(!surgical_procedure_values.includes('alnd')){
+      let bodySiteCodingExtracor = (procedure: CancerRelatedSurgicalProcedure[]) => {
+        const coding_list: Coding[] = []
+        for(const resource of procedure){
+          if(resource.bodySite != null) {
+            coding_list.push(...resource.bodySite);
+          }
+        }
+        return coding_list;
+      }
+      const surgical_bodysite = ExtractedMCODE.code_mapper.extractCodeMappings(bodySiteCodingExtracor(this.cancerRelatedSurgicalProcedure));
+      if(surgical_codes.some(coding => CodeMapper.codesEqual(coding, CodeSystemEnum.SNOMED, '122459003')
+          && surgical_bodysite.includes('alnd-bodysite'))) {
+            surgical_procedure_values.push('alnd');
       }
     }
 
-    // Metastasis Resection check.
+    // Metastasis Resection complex logic.
     if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.reasonReference != null && surgicalProcedure.reasonReference.reference_meta_profile == 'mcode-secondary-cancer-condition')){
-      surgicalValues.push('metastasis_resection');
+      surgical_procedure_values.push('metastasis_resection');
     }
 
-    return surgicalValues;
+    // Filter any duplicate values.
+    surgical_procedure_values.filter((a, b) => surgical_procedure_values.indexOf(a) === b)
+
+    return surgical_procedure_values;
+  }
+
+  /**
+   * Reeturns the list of coding's associated with the given base fhir resource.
+   * @param resources The fhir resources to pull coding's from.
+   * @returns 
+   */
+  extractCodings(resources: BaseFhirResource[]): Coding[] {
+    const coding_list: Coding[] = []
+    for(const resource of resources){
+      if(resource.coding != null){
+        coding_list.push(...resource.coding);
+      }
+    }
+    return coding_list;
   }
 
   /**
