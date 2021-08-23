@@ -562,21 +562,16 @@ export class ExtractedMCODE {
     ) {
       return null;
     }
+
+
     // Invasive Ductal Carcinoma
     for (const primaryCancerCondition of this.primaryCancerCondition) {
+      const primary_cancer_conditions = ExtractedMCODE.code_mapper.extractCodeMappings(primaryCancerCondition.coding);
+      const histology_morphologies = ExtractedMCODE.code_mapper.extractCodeMappings(primaryCancerCondition.histologyMorphologyBehavior);
       if (
-        (ExtractedMCODE.code_mapper.aCodeIsInMapping(
-          primaryCancerCondition.coding,
-          "Cancer-Breast"
-        ) &&
-          ExtractedMCODE.code_mapper.aCodeIsInMapping(
-            primaryCancerCondition.histologyMorphologyBehavior,
-            "Morphology-Invas_Duct_Carc"
-          )) ||
-        ExtractedMCODE.code_mapper.aCodeIsInMapping(
-          primaryCancerCondition.coding,
-          "Cancer-Invas_Duct_Carc"
-        )
+        (primary_cancer_conditions.includes("Cancer-Breast")
+        && histology_morphologies.includes("Morphology-Invas_Duct_Carc"))
+        || primary_cancer_conditions.includes("Cancer-Invas_Duct_Carc")
       ) {
         // idc (Invasice Ductal Carcinoma)
         return "idc";
@@ -584,19 +579,12 @@ export class ExtractedMCODE {
     }
     // Invasive Lobular Carcinoma
     for (const primaryCancerCondition of this.primaryCancerCondition) {
+      const primary_cancer_conditions = ExtractedMCODE.code_mapper.extractCodeMappings(primaryCancerCondition.coding);
+      const histology_morphologies = ExtractedMCODE.code_mapper.extractCodeMappings(primaryCancerCondition.histologyMorphologyBehavior);
       if (
-        (ExtractedMCODE.code_mapper.aCodeIsInMapping(
-          primaryCancerCondition.coding,
-          "Cancer-Breast"
-        ) &&
-          ExtractedMCODE.code_mapper.aCodeIsInMapping(
-            primaryCancerCondition.histologyMorphologyBehavior,
-            "Morphology-Invas_Lob_Carc"
-          )) ||
-        ExtractedMCODE.code_mapper.aCodeIsInMapping(
-          primaryCancerCondition.coding,
-          "Cancer-Invas_Lob_Carc"
-        )
+        (primary_cancer_conditions.includes("Cancer-Breast")
+        && histology_morphologies.includes("Morphology-Invas_Lob_Carc"))
+        || primary_cancer_conditions.includes("Cancer-Invas_Lob_Carc")
       ) {
         // ilc '(Invasive Lobular Carcinoma)
         return "ilc";
@@ -604,55 +592,38 @@ export class ExtractedMCODE {
     }
     // Ductual Carcinoma in Situ
     for (const primaryCancerCondition of this.primaryCancerCondition) {
+      const primary_cancer_conditions = ExtractedMCODE.code_mapper.extractCodeMappings(primaryCancerCondition.coding);
+      const histology_morphologies = ExtractedMCODE.code_mapper.extractCodeMappings(primaryCancerCondition.histologyMorphologyBehavior);
       if (
-        ExtractedMCODE.code_mapper.aCodeIsInMapping(
-          primaryCancerCondition.coding,
-          "Cancer-Breast"
-        ) &&
-        ExtractedMCODE.code_mapper.aCodeIsInMapping(
-          primaryCancerCondition.histologyMorphologyBehavior,
-          "Morphology-Duct_Car_In_Situ"
-        )
-      ) {
+        primary_cancer_conditions.includes("Cancer-Breast")
+        && histology_morphologies.includes("Morphology-Duct_Car_In_Situ")
+        ) {
         // dcis (Ductal Carcinoma In Situ)
         return "dcis";
       }
     }
     // Invasive Breast Cancer
     for (const primaryCancerCondition of this.primaryCancerCondition) {
+      const primary_cancer_conditions = ExtractedMCODE.code_mapper.extractCodeMappings(primaryCancerCondition.coding);
+      const histology_morphologies = ExtractedMCODE.code_mapper.extractCodeMappings(primaryCancerCondition.histologyMorphologyBehavior);
       if (
-        (ExtractedMCODE.code_mapper.aCodeIsInMapping(
-          primaryCancerCondition.coding,
-          "Cancer-Breast"
-        ) &&
-          ExtractedMCODE.code_mapper.aCodeIsInMapping(
-            primaryCancerCondition.histologyMorphologyBehavior,
-            "Morphology-Invasive"
-          )) ||
-        ExtractedMCODE.code_mapper.aCodeIsInMapping(
-          primaryCancerCondition.coding,
-          "Cancer-Invasive-Breast"
-        )
+        (primary_cancer_conditions.includes("Cancer-Breast")
+        && histology_morphologies.includes("Morphology-Invasive"))
+        || primary_cancer_conditions.includes("Cancer-Invasive-Breast")
       ) {
         // ibc (Invasive Breast Cancer)
         return "ibc";
       }
     }
-
     // Lobular Carcinoma in Situ (lcis)
     for (const primaryCancerCondition of this.primaryCancerCondition) {
+      const primary_cancer_conditions = ExtractedMCODE.code_mapper.extractCodeMappings(primaryCancerCondition.coding);
+      const histology_morphologies = ExtractedMCODE.code_mapper.extractCodeMappings(primaryCancerCondition.histologyMorphologyBehavior);
       if (
-        primaryCancerCondition.histologyMorphologyBehavior.some(
-          (histMorphBehav) =>
-            ExtractedMCODE.code_mapper.codeIsInMapping(
-              histMorphBehav,
-              "lcis-histology"
-            )
-        ) ||
-        primaryCancerCondition.coding.some((code) =>
-          ExtractedMCODE.code_mapper.codeIsInMapping(code, "lcis-condition")
-        )
-      ) {
+        primary_cancer_conditions.includes("lcis-condition")
+        || histology_morphologies.includes("lcis-histology")
+        ) {
+        // lcis (Lobular Carcinoma In Situ)
         return "lcis";
       }
     }
@@ -660,23 +631,12 @@ export class ExtractedMCODE {
     // TODO - This logic and mapping does not exist in Trialjectory. It's been added to allow for UTSW record mapping.
     // Invasive Carcinoma
     for (const primaryCancerCondition of this.primaryCancerCondition) {
+      const primary_cancer_conditions = ExtractedMCODE.code_mapper.extractCodeMappings(primaryCancerCondition.coding);
+      const histology_morphologies = ExtractedMCODE.code_mapper.extractCodeMappings(primaryCancerCondition.histologyMorphologyBehavior);
       if (
-        (primaryCancerCondition.coding.some((code) =>
-          ExtractedMCODE.code_mapper.codeIsInMapping(code, "Cancer-Breast")
-        ) &&
-          primaryCancerCondition.histologyMorphologyBehavior.some(
-            (histMorphBehav) =>
-              ExtractedMCODE.code_mapper.codeIsInMapping(
-                histMorphBehav,
-                "Morphology-Invasive-Carcinoma"
-              )
-          )) ||
-        primaryCancerCondition.coding.some((code) =>
-          ExtractedMCODE.code_mapper.codeIsInMapping(
-            code,
-            "Cancer-Invasive-Carcinoma"
-          )
-        )
+        (primary_cancer_conditions.includes("Cancer-Breast")
+        && histology_morphologies.includes("Morphology-Invasive-Carcinoma"))
+        || primary_cancer_conditions.includes("Cancer-Invasive-Carcinoma")
       ) {
         return "INVASIVE_CARCINOMA";
       }
@@ -799,8 +759,8 @@ export class ExtractedMCODE {
   getStageValues(): string {
 
     // Perform the basic extraction mappings.
-    let stage_values: string[] = this.performBasicMappingExtraction(this.TNMClinicalStageGroup);
-    stage_values.push(...this.performBasicMappingExtraction(this.TNMPathologicalStageGroup));
+    let stage_values: string[] = ExtractedMCODE.code_mapper.extractCodeMappings(this.TNMClinicalStageGroup);
+    stage_values.push(...ExtractedMCODE.code_mapper.extractCodeMappings(this.TNMPathologicalStageGroup));
 
     if(stage_values.length < 1){
       return null;
@@ -1359,7 +1319,7 @@ quantityMatch(
     // medication_mappings.set('leuprolide', 'leuprolide'); // THIS MEDICATION IS NOT CURRENTLY SUPPORTED BY TRIALJECTORY. WE WILL NEED TO DISCUSS THIS WITH THEM.
     // WE HAVE SINCE DISCUSSED THESE MEDICATIONS WITH THEM, WAITING FOR THEM TO PROCEED.
 
-    let medication_values: string[] = this.performBasicMappingExtraction(this.cancerRelatedMedicationStatement);
+    let medication_values: string[] = ExtractedMCODE.code_mapper.extractCodeMappings(this.cancerRelatedMedicationStatement);
 
     // Convert 'estrogen' profile to the expected 'high_dose_estrogen'.
     medication_values = medication_values.map(medication => {
@@ -1376,16 +1336,4 @@ quantityMatch(
     return medication_values;
   }
 
-  /**
-   * Performs the basic extraction mapping of the given coding list.
-   * @param coding_list 
-   */
-  performBasicMappingExtraction(coding_list: Coding[]): string[] {
-    const return_values: string[] = []
-    // Iterate over the record's medical codes, extract codes' mappings.
-    for (const coding of coding_list) {
-      return_values.push(...ExtractedMCODE.code_mapper.extractCodeMappings(coding));
-    }
-    return return_values;
-  }
  }
