@@ -269,7 +269,7 @@ describe("checkMedicationStatementFilterLogic-toremifene", () => {
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const ms: Coding[] = [] as Coding[];
   // toremifene medication filter
-  ms.push({ system: "RxNorm", code: "727762", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "38409", display: "N/A" } as Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test toremifene medication filter.", () => {
@@ -850,7 +850,7 @@ describe('checkMedicationStatementFilterLogic-high_dose_estrogen', () => {
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const ms: Coding[] = [] as Coding[];
   // high_dose_estrogen medication filter
-  ms.push({ system: 'RxNorm', code: '4100', display: 'N/A' } as Coding);
+  ms.push({ system: 'RxNorm', code: '4099', display: 'N/A' } as Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test high_dose_estrogen medication filter.', () => {

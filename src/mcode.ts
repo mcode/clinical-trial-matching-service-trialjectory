@@ -522,9 +522,9 @@ export class ExtractedMCODE {
       return null;
     }
 
-    const secondaryCancerCodings: Coding[] = this.extractCodings(this.secondaryCancerCondition);
+    // const secondaryCancerCodings: Coding[] = this.extractCodings(this.secondaryCancerCondition);
     // Perform the basic mapping.
-    let secondaryCancerMappings: string[] = ExtractedMCODE.codeMapper.extractCodeMappings(secondaryCancerCodings);
+    // let secondaryCancerMappings: string[] = ExtractedMCODE.codeMapper.extractCodeMappings(secondaryCancerCodings);
 
     const cancerConditions:string[] = [];
     for (const condition of this.secondaryCancerCondition) {
@@ -1354,20 +1354,14 @@ quantityMatch(
    */
   getMedicationStatementValues(): string[] {
 
+    // eribuline -> eribulin
+    // progestin -> progesterone
+    // aluronidase -> hyaluronidase
     // ('goserelin', 'goserelin') // THIS MEDICATION IS NOT CURRENTLY SUPPORTED BY TRIALJECTORY. WE WILL NEED TO DISCUSS THIS WITH THEM.
     // ('leuprolide', 'leuprolide') // THIS MEDICATION IS NOT CURRENTLY SUPPORTED BY TRIALJECTORY. WE WILL NEED TO DISCUSS THIS WITH THEM.
     // WE HAVE SINCE DISCUSSED THESE MEDICATIONS WITH THEM, WAITING FOR THEM TO PROCEED.
 
     let medicationValues: string[] = ExtractedMCODE.codeMapper.extractCodeMappings(this.cancerRelatedMedicationStatement);
-
-    // Convert 'estrogen' profile to the expected 'high_dose_estrogen'.
-    medicationValues = medicationValues.map(medication => {
-      if(medication == "estrogen") {
-        return "high_dose_estrogen";
-      } else {
-        return medication;
-      }
-    });
 
     // Filter any duplicate values.
     medicationValues.filter((a, b) => medicationValues.indexOf(a) === b)
