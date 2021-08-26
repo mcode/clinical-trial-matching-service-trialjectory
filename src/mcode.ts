@@ -425,91 +425,34 @@ export class ExtractedMCODE {
     return false;
   }
 
-    // Get ECOG Score
-    getECOGScore(): number {
-      if(this.ecogPerformaceStatus == -1) {
-        return null;
-      }
-      return this.ecogPerformaceStatus;
-    }
-  
-    // Get Karnofsky Score
-    getKarnofskyScore(): number {
-      if(this.karnofskyPerformanceStatus == -1) {
-        return null;
-      }
-      return this.karnofskyPerformanceStatus;
-    }
-
-  // TODO - This will almost certainly be changed after more details from Trialjectory.
-  // Primary Cancer Value
-  getPrimaryCancerValue(): string {
-    if (this.primaryCancerCondition.length == 0) {
+  /**
+   * ECOG Score.
+   * @returns 
+   */
+  getECOGScore(): number {
+    if(this.ecogPerformaceStatus == -1) {
       return null;
     }
-    // Cycle through each of the primary cancer objects and check that they satisfy this priority requirement.
-    for (const primaryCancerCondition of this.primaryCancerCondition) {
-      // Cycle through each of the primary Cancer condition's codes independently due to code-dependent conditions
-      for (const currentCoding of primaryCancerCondition.coding) {
-        // 3. Invasive Breast Cancer and Recurrent
-        if (
-            ExtractedMCODE.codeMapper.aCodeIsInMapping(primaryCancerCondition.histologyMorphologyBehavior, 'Morphology-Invasive')
-           ||
-            ExtractedMCODE.codeMapper.codeIsInMapping(currentCoding, 'Cancer-Invasive-Breast') &&
-          ExtractedMCODE.codeMapper.codeIsInMapping(currentCoding, 'Cancer-Breast') &&
-          primaryCancerCondition.clinicalStatus.some((clinStat) => clinStat.code == 'recurrence')
-        ) {
-          return 'INVASIVE_BREAST_CANCER_AND_RECURRENT';
-        }
-      }
+    return this.ecogPerformaceStatus;
+  }
+
+  /**
+   * Karnofsky Score.
+   * @returns 
+   */
+  getKarnofskyScore(): number {
+    if(this.karnofskyPerformanceStatus == -1) {
+      return null;
     }
-    // Cycle through each of the primary cancer objects and check that they satisfy this priority requirement.
-    for (const primaryCancerCondition of this.primaryCancerCondition) {
-      // 4. Locally Recurrent
-      if (
-        ExtractedMCODE.codeMapper.aCodeIsInMapping(primaryCancerCondition.coding, 'Cancer-Breast') &&
-        primaryCancerCondition.clinicalStatus.some((clinStat) => clinStat.code == 'recurrence')
-      ) {
-        return 'LOCALLY_RECURRENT';
-      }
-    }
-    // Cycle through each of the primary cancer objects and check that they satisfy this priority requirement.
-    for (const primaryCancerCondition of this.primaryCancerCondition) {
-      // 1. Breast Cancer
-      if (ExtractedMCODE.codeMapper.aCodeIsInMapping(primaryCancerCondition.coding, 'Cancer-Breast')) {
-        return 'BREAST_CANCER';
-      }
-    }
-    // Cycle through each of the primary cancer objects and check that they satisfy this priority requirement.
-    for (const primaryCancerCondition of this.primaryCancerCondition) {
-      // 2. Concomitant invasive malignancies
-      if (
-        primaryCancerCondition.coding.some((code) => ExtractedMCODE.codeMapper.codeIsNotInMapping(code, 'Cancer-Breast')) &&
-        primaryCancerCondition.clinicalStatus.some((clinStat) => clinStat.code == 'active') &&
-        (
-          ExtractedMCODE.codeMapper.aCodeIsInMapping(this.TNMClinicalStageGroup, 'Stage-1', 'Stage-2', 'Stage-3', 'Stage-4')
-         ||
-            ExtractedMCODE.codeMapper.aCodeIsInMapping(this.TNMPathologicalStageGroup, 'Stage-1', 'Stage-2', 'Stage-3', 'Stage-4')
-          )
-      ) {
-        return 'CONCOMITANT_INVASIVE_MALIGNANCIES';
-      }
-    }
-    // Cycle through each of the primary cancer objects and check that they satisfy this priority requirement.
-    for (const primaryCancerCondition of this.primaryCancerCondition) {
-      // 5. Other malignancy - except skin or cervical
-      if (
-        (primaryCancerCondition.coding.some((code) => ExtractedMCODE.codeMapper.codeIsNotInMapping(code, 'Cancer-Breast')) &&
-          primaryCancerCondition.clinicalStatus.some((clinStat) => clinStat.code == 'active')) ||
-        (primaryCancerCondition.coding.some((code) => ExtractedMCODE.codeMapper.codeIsNotInMapping(code, 'Cancer-Cervical')) &&
-          primaryCancerCondition.clinicalStatus.some((clinStat) => clinStat.code == 'active') &&
-          (this.TNMClinicalStageGroup.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, 'Stage-0')) ||
-            this.TNMPathologicalStageGroup.some((coding) => ExtractedMCODE.codeMapper.codeIsInMapping(coding, 'Stage-0'))))
-      ) {
-        return 'OTHER_MALIGNANCY_EXCEPT_SKIN_OR_CERVICAL';
-      }
-    }
-    // None of the conditions are satisfied.
+    return this.karnofskyPerformanceStatus;
+  }
+
+  /**
+   * Primary Cancer Mapping.
+   * @returns 
+   */
+  getPrimaryCancerValue(): string {
+    // TODO - Awaiting primary cancer values from Trialjectory.
     return null;
   }
 
@@ -1145,6 +1088,8 @@ export class ExtractedMCODE {
     );
   }
   isERPositive(tumorMarker: TumorMarker, metric: number): boolean {
+    // Perform the basic mapping.
+    const basic_tumor_mapping = ExtractedMCODE.codeMapper.extractCodeMappings(tumorMarker.coding);
     return (
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '>=')) ||
@@ -1152,10 +1097,12 @@ export class ExtractedMCODE {
         tumorMarker.valueQuantity.some((valQuant) =>
           this.quantityMatch(valQuant.value, valQuant.code, [metric], '>=', '%')
         )) &&
-      tumorMarker.coding.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, 'Biomarker-ER'))
+        basic_tumor_mapping.includes('Biomarker-ER')
     );
   }
   isERNegative(tumorMarker: TumorMarker, metric: number): boolean {
+    // Perform the basic mapping.
+    const basic_tumor_mapping = ExtractedMCODE.codeMapper.extractCodeMappings(tumorMarker.coding);
     return (
       (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
         tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '<')) ||
@@ -1165,10 +1112,12 @@ export class ExtractedMCODE {
             this.quantityMatch(valQuant.value, valQuant.code, [metric], '<', '%') ||
             this.quantityMatch(valQuant.value, valQuant.code, [0], '=')
         )) &&
-      tumorMarker.coding.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, 'Biomarker-ER'))
+        basic_tumor_mapping.includes('Biomarker-ER')
     );
   }
   isPRPositive(tumorMarker: TumorMarker, metric: number): boolean {
+    // Perform the basic mapping.
+    const basic_tumor_mapping = ExtractedMCODE.codeMapper.extractCodeMappings(tumorMarker.coding);
     return (
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationPositive(tumorMarker.interpretation) ||
@@ -1176,10 +1125,12 @@ export class ExtractedMCODE {
           this.quantityMatch(valQuant.value, valQuant.code, [metric], '>=', '%')
         ) ||
         tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '>='))) &&
-      tumorMarker.coding.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, 'Biomarker-PR'))
+      basic_tumor_mapping.includes('Biomarker-PR')
     );
   }
   isPRNegative(tumorMarker: TumorMarker, metric: number): boolean {
+    // Perform the basic mapping.
+    const basic_tumor_mapping = ExtractedMCODE.codeMapper.extractCodeMappings(tumorMarker.coding);
     return (
       (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationNegative(tumorMarker.interpretation) ||
@@ -1189,24 +1140,28 @@ export class ExtractedMCODE {
             this.quantityMatch(valQuant.value, valQuant.code, [0], '=')
         ) ||
         tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '<'))) &&
-      tumorMarker.coding.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, 'Biomarker-PR'))
+      basic_tumor_mapping.includes('Biomarker-PR')
     );
   }
-  isBioMarkerPositiveCombo2(tumorMarker: TumorMarker, sheetName: string): boolean {
+  isBioMarkerPositiveCombo2(tumorMarker: TumorMarker, profileName: string): boolean {
+    // Perform the basic mapping.
+    const basic_tumor_mapping = ExtractedMCODE.codeMapper.extractCodeMappings(tumorMarker.coding);
     return (
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationPositiveCombo2(tumorMarker.interpretation))
-      && tumorMarker.coding.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, sheetName))
+      && basic_tumor_mapping.includes(profileName)
     );
   }
-  isBioMarkerNegativeCombo2(tumorMarker: TumorMarker, sheetName: string): boolean {
+  isBioMarkerNegativeCombo2(tumorMarker: TumorMarker, profileName: string): boolean {
+    const basic_tumor_mapping = ExtractedMCODE.codeMapper.extractCodeMappings(tumorMarker.coding);
     return (
       (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationNegativeCombo2(tumorMarker.interpretation))
-      && tumorMarker.coding.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, sheetName))
-    );
+        && basic_tumor_mapping.includes(profileName)
+      );
   }
   isRBPositive(tumorMarker: TumorMarker, metric: number): boolean {
+    const basic_tumor_mapping = ExtractedMCODE.codeMapper.extractCodeMappings(tumorMarker.coding);
     return (
       (tumorMarker.valueQuantity.some((valQuant) =>
         this.quantityMatch(valQuant.value, valQuant.code, [metric], '>', '%')
@@ -1214,10 +1169,11 @@ export class ExtractedMCODE {
         this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '>')) ||
         this.isInterpretationPositive(tumorMarker.interpretation)) &&
-      tumorMarker.coding.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, 'Biomarker-RB'))
-    );
+        basic_tumor_mapping.includes('Biomarker-RB')
+        );
   }
   isRBNegative(tumorMarker: TumorMarker, metric: number): boolean {
+    const basic_tumor_mapping = ExtractedMCODE.codeMapper.extractCodeMappings(tumorMarker.coding);
     return (
       (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
         tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '<')) ||
@@ -1227,12 +1183,13 @@ export class ExtractedMCODE {
             this.quantityMatch(valQuant.value, valQuant.code, [metric], '<', '%') ||
             this.quantityMatch(valQuant.value, valQuant.code, [0], '=')
         )) &&
-      tumorMarker.coding.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, 'Biomarker-RB'))
+      basic_tumor_mapping.includes('Biomarker-RB')
     );
   }
   isHER2Positive(tumorMarker: TumorMarker): boolean {
+    const basic_tumor_mapping = ExtractedMCODE.codeMapper.extractCodeMappings(tumorMarker.coding);
     return (
-      tumorMarker.coding.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, 'Biomarker-HER2')) &&
+      basic_tumor_mapping.includes('Biomarker-HER2') &&
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationPositive(tumorMarker.interpretation) ||
         tumorMarker.valueQuantity.some((valQuant) =>
@@ -1241,16 +1198,18 @@ export class ExtractedMCODE {
     );
   }
   isHER2Negative(tumorMarker: TumorMarker, quantities: string[]): boolean {
+    const basic_tumor_mapping = ExtractedMCODE.codeMapper.extractCodeMappings(tumorMarker.coding);
     return (
       (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationNegative(tumorMarker.interpretation) || // Information on Interpretation values can be found at: http://hl7.org/fhir/R4/valueset-observation-interpretation.html
         tumorMarker.valueQuantity.some((valQuant) =>
           this.quantityMatch(valQuant.value, valQuant.code, quantities, '=')
         )) &&
-      tumorMarker.coding.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, 'Biomarker-HER2'))
+        basic_tumor_mapping.includes('Biomarker-HER2')
     );
   }
   isFGFRPositive(tumorMarker: TumorMarker, metric: number): boolean {
+    const basic_tumor_mapping = ExtractedMCODE.codeMapper.extractCodeMappings(tumorMarker.coding);
     return (
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '>=')) ||
@@ -1258,10 +1217,11 @@ export class ExtractedMCODE {
         tumorMarker.valueQuantity.some((valQuant) =>
           this.quantityMatch(valQuant.value, valQuant.code, [metric], '>=', '%')
         )) &&
-      tumorMarker.coding.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, 'Biomarker-FGFR'))
+        basic_tumor_mapping.includes('Biomarker-FGFR')
     );
   }
   isFGFRNegative(tumorMarker: TumorMarker, metric: number): boolean {
+    const basic_tumor_mapping = ExtractedMCODE.codeMapper.extractCodeMappings(tumorMarker.coding);
     return (
       (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
         tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '<')) ||
@@ -1271,35 +1231,39 @@ export class ExtractedMCODE {
             this.quantityMatch(valQuant.value, valQuant.code, [metric], '<', '%') ||
             this.quantityMatch(valQuant.value, valQuant.code, [0], '=')
         )) &&
-      tumorMarker.coding.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, 'Biomarker-FGFR'))
+        basic_tumor_mapping.includes('Biomarker-FGFR')
     );
   }
   isPIK3CAPositive(tumorMarker: TumorMarker): boolean {
+    const basic_tumor_mapping = ExtractedMCODE.codeMapper.extractCodeMappings(tumorMarker.coding);
     return (
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationPositive(tumorMarker.interpretation))
-      && tumorMarker.coding.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, 'Biomarker-PIK3CA'))
+      && basic_tumor_mapping.includes('Biomarker-PIK3CA')
     );
   }
   isPIK3CANegative(tumorMarker: TumorMarker): boolean {
+    const basic_tumor_mapping = ExtractedMCODE.codeMapper.extractCodeMappings(tumorMarker.coding);
     return (
       (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationNegative(tumorMarker.interpretation))
-      && tumorMarker.coding.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, 'Biomarker-PIK3CA'))
+      && basic_tumor_mapping.includes('Biomarker-PIK3CA')
     );
   }
   isPDL1Positive(tumorMarker: TumorMarker): boolean {
+    const basic_tumor_mapping = ExtractedMCODE.codeMapper.extractCodeMappings(tumorMarker.coding);
     return (
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationPositive(tumorMarker.interpretation))
-      && tumorMarker.coding.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, 'Biomarker-PDL1'))
-    );
+        && basic_tumor_mapping.includes('Biomarker-PDL1')
+        );
   }
   isPDL1Negative(tumorMarker: TumorMarker): boolean {
+    const basic_tumor_mapping = ExtractedMCODE.codeMapper.extractCodeMappings(tumorMarker.coding);
     return (
       (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationNegative(tumorMarker.interpretation))
-      && tumorMarker.coding.some((code) => ExtractedMCODE.codeMapper.codeIsInMapping(code, 'Biomarker-PDL1'))
+      && basic_tumor_mapping.includes('Biomarker-PDL1')
     );
   }
 quantityMatch(
@@ -1356,7 +1320,7 @@ quantityMatch(
 
     // eribuline -> eribulin
     // progestin -> progesterone
-    // aluronidase -> hyaluronidase
+    // aluronidase -> hyaluronidase (this is missing from TJ doc?)
     // ('goserelin', 'goserelin') // THIS MEDICATION IS NOT CURRENTLY SUPPORTED BY TRIALJECTORY. WE WILL NEED TO DISCUSS THIS WITH THEM.
     // ('leuprolide', 'leuprolide') // THIS MEDICATION IS NOT CURRENTLY SUPPORTED BY TRIALJECTORY. WE WILL NEED TO DISCUSS THIS WITH THEM.
     // WE HAVE SINCE DISCUSSED THESE MEDICATIONS WITH THEM, WAITING FOR THEM TO PROCEED.
