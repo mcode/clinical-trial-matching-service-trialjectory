@@ -821,18 +821,19 @@ describe('checkMedicationStatementFilterLogic-progesterone', () => {
       expect(medications.some(medication => medication == 'progesterone')).toBeTrue();
   });
 });
-describe('checkMedicationStatementFilterLogic-Hyaluronidase', () => {
-  // Initialize
-  const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
-  // progestin medication filter
-  ms.push({ system: 'RxNorm', code: '630936', display: 'N/A' } as Coding);
-  extractedMCODE.cancerRelatedMedicationStatement = ms;
-  const medications: string[] = extractedMCODE.getMedicationStatementValues();
-  it('Test Hyaluronidase medication filter.', () => {
-      expect(medications.some(medication => medication == 'hyaluronidase')).toBeTrue();
-  });
-});
+// TODO - Temporarily removed this medication because it's no longer present in the TJ object list document. Will ask Noam to confirm.
+// describe('checkMedicationStatementFilterLogic-Hyaluronidase', () => {
+//   // Initialize
+//   const extractedMCODE = new mcode.ExtractedMCODE(null);
+//   const ms: Coding[] = [] as Coding[];
+//   // progestin medication filter
+//   ms.push({ system: 'RxNorm', code: '630936', display: 'N/A' } as Coding);
+//   extractedMCODE.cancerRelatedMedicationStatement = ms;
+//   const medications: string[] = extractedMCODE.getMedicationStatementValues();
+//   it('Test Hyaluronidase medication filter.', () => {
+//       expect(medications.some(medication => medication == 'hyaluronidase')).toBeTrue();
+//   });
+// });
 describe("checkMedicationStatementFilterLogic-fluoxymesterone", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
