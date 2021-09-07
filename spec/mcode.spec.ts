@@ -2165,10 +2165,7 @@ describe('checkAgeFilterLogic', () => {
 describe('checkHistologyMorphologyFilterLogic-ibc', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const pcc: PrimaryCancerCondition = {};
-  pcc.clinicalStatus = [] as Coding[];
-  pcc.coding = [] as Coding[];
-  pcc.histologyMorphologyBehavior = [] as Coding[];
+  const pcc: PrimaryCancerCondition = {clinicalStatus: [] as Coding[], coding: [] as Coding[], histologyMorphologyBehavior: [] as Coding[]};
 
   // Invasive Breast Cancer Filter Attributes
   pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
@@ -2187,10 +2184,7 @@ describe('checkHistologyMorphologyFilterLogic-ibc', () => {
 describe('checkHistologyMorphologyFilterLogic-idc', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const pcc: PrimaryCancerCondition = {};
-  pcc.clinicalStatus = [] as Coding[];
-  pcc.coding = [] as Coding[];
-  pcc.histologyMorphologyBehavior = [] as Coding[];
+  const pcc: PrimaryCancerCondition = {clinicalStatus: [] as Coding[], coding: [] as Coding[], histologyMorphologyBehavior: [] as Coding[]};
 
   // Invasive Ductal Carcinoma Filter Attributes
   pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
@@ -2209,10 +2203,7 @@ describe('checkHistologyMorphologyFilterLogic-idc', () => {
 describe('checkHistologyMorphologyFilterLogic-ilc', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const pcc: PrimaryCancerCondition = {};
-  pcc.clinicalStatus = [] as Coding[];
-  pcc.coding = [] as Coding[];
-  pcc.histologyMorphologyBehavior = [] as Coding[];
+  const pcc: PrimaryCancerCondition = {clinicalStatus: [] as Coding[], coding: [] as Coding[], histologyMorphologyBehavior: [] as Coding[]};
 
   // Invasive Lobular Carcinoma Filter Attributes
   pcc.coding.push({ system: 'http://snomed.info/sct', code: '1080261000119100', display: 'N/A' } as Coding); // Any Code in 'Cancer-Invas Lob Carc'
@@ -2226,10 +2217,7 @@ describe('checkHistologyMorphologyFilterLogic-ilc', () => {
 describe('checkHistologyMorphologyFilterLogic-dcis', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const pcc: PrimaryCancerCondition = {};
-  pcc.clinicalStatus = [] as Coding[];
-  pcc.coding = [] as Coding[];
-  pcc.histologyMorphologyBehavior = [] as Coding[];
+  const pcc: PrimaryCancerCondition = {clinicalStatus: [] as Coding[], coding: [] as Coding[], histologyMorphologyBehavior: [] as Coding[]};
 
   // Ductal Carcinoma In Situ Filter Attributes
   pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
@@ -2248,7 +2236,7 @@ describe('checkHistologyMorphologyFilterLogic-dcis', () => {
 describe('checkHistologyMorphologyFilterLogic-lcis_1', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const pcc: PrimaryCancerCondition = {};
+  const pcc: PrimaryCancerCondition = {clinicalStatus: [] as Coding[], coding: [] as Coding[], histologyMorphologyBehavior: [] as Coding[]};
   pcc.coding = [] as Coding[];
   pcc.histologyMorphologyBehavior = [] as Coding[];
 
@@ -2264,10 +2252,7 @@ describe('checkHistologyMorphologyFilterLogic-lcis_1', () => {
 describe('checkHistologyMorphologyFilterLogic-lcis_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const pcc: PrimaryCancerCondition = {};
-  pcc.clinicalStatus = [] as Coding[];
-  pcc.coding = [] as Coding[];
-  pcc.histologyMorphologyBehavior = [] as Coding[];
+  const pcc: PrimaryCancerCondition = {clinicalStatus: [] as Coding[], coding: [] as Coding[], histologyMorphologyBehavior: [] as Coding[]};
 
   // Lobular Carcinoma In Situ Filter Attributes
   pcc.histologyMorphologyBehavior.push({
@@ -2285,10 +2270,7 @@ describe('checkHistologyMorphologyFilterLogic-lcis_2', () => {
 describe('checkSecondaryCancerConditionLogic', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const scc: mcode.SecondaryCancerCondition = {};
-  scc.clinicalStatus = [] as Coding[];
-  scc.coding = [] as Coding[];
-
+    const scc: mcode.SecondaryCancerCondition = {clinicalStatus: [] as Coding[], coding: [] as Coding[]};
 
   scc.coding.push({ system: 'http://snomed.info/sct', code: '94222008' } as Coding);
   scc.coding.push({ system: 'http://snomed.info/sct', code: '00000000', display: 'Secondary malignant neoplasm of liver (disorder)' } as Coding);
@@ -2316,11 +2298,9 @@ describe('checkSecondaryCancerConditionLogic', () => {
   });
   it('is null if no matches', () => {
     const emptyExtractedMCODE = new mcode.ExtractedMCODE(null);
-    const scc: mcode.SecondaryCancerCondition = {};
-    scc.clinicalStatus = [] as Coding[];
-    scc.coding = [] as Coding[];
-    scc.coding.push({} as Coding);
+    const scc: mcode.SecondaryCancerCondition = {clinicalStatus: [] as Coding[], coding: [] as Coding[]};
 
+    scc.coding.push({} as Coding);
     emptyExtractedMCODE.secondaryCancerCondition.push(scc);
 
     expect(emptyExtractedMCODE.getSecondaryCancerValue()).toBeNull();
@@ -2358,9 +2338,7 @@ describe('checkKarnofskyFilterLogic', () => {
 describe('checkRadiationProcedureFilterLogic-WBRT', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const crrp: mcode.CancerRelatedRadiationProcedure = {};
-  crrp.bodySite = [] as Coding[];
-  crrp.coding = [] as Coding[];
+  const crrp: mcode.CancerRelatedRadiationProcedure = {bodySite: [] as Coding[], coding: [] as Coding[]};
 
   // WBRT Filter Attributes
   crrp.coding.push({ system: 'http://snomed.info/sct', code: '108290001', display: 'N/A' } as Coding);
@@ -2375,9 +2353,7 @@ describe('checkRadiationProcedureFilterLogic-WBRT', () => {
 describe('checkRadiationProcedureFilterLogic-EBRT', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const crrp: mcode.CancerRelatedRadiationProcedure = {};
-  crrp.bodySite = [] as Coding[];
-  crrp.coding = [] as Coding[];
+  const crrp: mcode.CancerRelatedRadiationProcedure = {bodySite: [] as Coding[], coding: [] as Coding[]};
 
   // EBRT Filter Attributes
   crrp.coding.push({ system: 'http://snomed.info/sct', code: '33356009', display: 'N/A' } as Coding);
@@ -2391,9 +2367,7 @@ describe('checkRadiationProcedureFilterLogic-EBRT', () => {
 describe('checkRadiationProcedureFilterLogic-Ablation', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const crrp: mcode.CancerRelatedRadiationProcedure = {};
-  crrp.bodySite = [] as Coding[];
-  crrp.coding = [] as Coding[];
+  const crrp: mcode.CancerRelatedRadiationProcedure = {bodySite: [] as Coding[], coding: [] as Coding[]};
 
   // Ablation Filter Attributes
   crrp.coding.push({ system: 'http://snomed.info/sct', code: '228692005', display: 'N/A' } as Coding);
@@ -2407,9 +2381,7 @@ describe('checkRadiationProcedureFilterLogic-Ablation', () => {
 describe('checkRadiationProcedureFilterLogic-rfa', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const crrp: mcode.CancerRelatedRadiationProcedure = {};
-  crrp.bodySite = [] as Coding[];
-  crrp.coding = [] as Coding[];
+  const crrp: mcode.CancerRelatedRadiationProcedure = {bodySite: [] as Coding[], coding: [] as Coding[]};
 
   // rfa Filter Attributes
   crrp.coding.push({ system: 'http://snomed.info/sct', code: '879916008', display: 'N/A' } as Coding);
@@ -2423,8 +2395,7 @@ describe('checkRadiationProcedureFilterLogic-rfa', () => {
 describe('checkSurgicalProcedureFilterLogic-Lumpectomy', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
-  crsp.coding = [] as Coding[];
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {coding: [] as Coding[]};
 
   // Lumpectomy Filter Attributes
   crsp.coding.push({ system: 'http://snomed.info/sct', code: '392022002', display: 'N/A' } as Coding);
@@ -2439,8 +2410,7 @@ describe('checkSurgicalProcedureFilterLogic-Lumpectomy', () => {
 describe('checkSurgicalProcedureFilterLogic-Mastectomy', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
-  crsp.coding = [] as Coding[];
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {coding: [] as Coding[]};
 
   // Mastectomy Filter Attributes
   crsp.coding.push({ system: 'http://snomed.info/sct', code: '429400009', display: 'N/A' } as Coding);
@@ -2455,8 +2425,7 @@ describe('checkSurgicalProcedureFilterLogic-Mastectomy', () => {
 describe('checkSurgicalProcedureFilterLogic-Alnd_1', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
-  crsp.coding = [] as Coding[];
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {coding: [] as Coding[]};
 
   // Alnd Filter Attributes
   crsp.coding.push({ system: 'http://snomed.info/sct', code: '234262008', display: 'N/A' } as Coding);
@@ -2471,9 +2440,7 @@ describe('checkSurgicalProcedureFilterLogic-Alnd_1', () => {
 describe('checkSurgicalProcedureFilterLogic-Alnd_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
-  crsp.coding = [] as Coding[];
-  crsp.bodySite = [] as Coding[];
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {coding: [] as Coding[], bodySite: [] as Coding[]};
 
   // Alnd Filter Attributes
   crsp.coding.push({ system: 'http://snomed.info/sct', code: '122459003', display: 'N/A' } as Coding);
@@ -2489,8 +2456,7 @@ describe('checkSurgicalProcedureFilterLogic-Alnd_2', () => {
 describe('checkSurgicalProcedureFilterLogic-Reconstruction', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
-  crsp.coding = [] as Coding[];
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {coding: [] as Coding[]};
 
   // Reconstruction Filter Attributes
   crsp.coding.push({ system: 'http://snomed.info/sct', code: '302342002', display: 'N/A' } as Coding);
@@ -2505,7 +2471,7 @@ describe('checkSurgicalProcedureFilterLogic-Reconstruction', () => {
 describe('checkSurgicalProcedureFilterLogic-Metastasis Resection', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const crsp: mcode.CancerRelatedSurgicalProcedure = {};
+  const crsp: mcode.CancerRelatedSurgicalProcedure = {coding: [] as Coding[]};
   crsp.reasonReference = [] as mcode.ReasonReference;
 
   // Metastasis Resection Filter Attributes (surgical procedure reason reference = SecondaryCancerCondition)
