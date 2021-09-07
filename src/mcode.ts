@@ -313,7 +313,7 @@ export class ExtractedMCODE {
     // Once all resources are loaded, check to add the meta.profile for cancer related surgical procedure reason references.
     for(const procedure of this.cancerRelatedSurgicalProcedure){
       const conditions = this.primaryCancerCondition.concat(this.secondaryCancerCondition)
-      let reasonReference = procedure.reasonReference;
+      const reasonReference = procedure.reasonReference;
       for (const condition of conditions) {
         if(condition.id === reasonReference.reference){
           const reasonReferenceResult = {reference: reasonReference.reference, display: reasonReference.display, meta_profile: condition.meta_profile} as ReasonReference;
@@ -1266,11 +1266,8 @@ quantityMatch(
     // WE HAVE SINCE DISCUSSED THESE MEDICATIONS WITH THEM, WAITING FOR THEM TO PROCEED.
 
     const medicationValues: string[] = ExtractedMCODE.codeMapper.extractCodeMappings(this.cancerRelatedMedicationStatement);
-
     // Filter any duplicate values.
     medicationValues.filter((a, b) => medicationValues.indexOf(a) === b)
-
     return medicationValues;
   }
-
  }

@@ -2498,7 +2498,7 @@ describe('checkNIHSystemNormalizer', () => {
 
 describe('checkInvalidCodeSystemError', () => {
   it('Test Invalid Input to System Normalizer.', () => {
-    var testFunc = function() {
+    const testFunc = function() {
       CodeMapper.normalizeCodeSystem("XXX")
     };
     expect(testFunc).toThrow(Error('Profile codes do not support code system: XXX'));
