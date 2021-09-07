@@ -32,11 +32,11 @@ describe('ExtractedMCODE Import', () => {
     expect(extractedData.primaryCancerCondition.length).toBe(1);
     expect(extractedData.TNMClinicalStageGroup.length).toBe(2);
     expect(extractedData.TNMPathologicalStageGroup.length).toBe(2);
-    expect(extractedData.secondaryCancerCondition.length).toBe(1);
+    expect(extractedData.secondaryCancerCondition.length).toBe(2);
     expect(extractedData.birthDate).toBe('1966-08-03');
     expect(extractedData.tumorMarker.length).toBe(3);
     expect(extractedData.cancerRelatedRadiationProcedure.length).toBe(2);
-    expect(extractedData.cancerRelatedSurgicalProcedure.length).toBe(2);
+    expect(extractedData.cancerRelatedSurgicalProcedure.length).toBe(3);
     expect(extractedData.cancerRelatedMedicationStatement.length).toBe(1);
     expect(extractedData.cancerGeneticVariant.length).toBe(2);
     expect(extractedData.ecogPerformaceStatus).toBe(3);
@@ -134,7 +134,8 @@ describe('ExtractedMCODE Import', () => {
     const extractedData = new mcode.ExtractedMCODE(sampleData);
     expect(extractedData.cancerRelatedSurgicalProcedure.some((procedure) => procedure.coding[0].code == '396487001')).toBeTrue();
     expect(extractedData.cancerRelatedSurgicalProcedure.some((procedure) => procedure.coding[0].code == '443497002')).toBeTrue();
-    expect(extractedData.cancerRelatedSurgicalProcedure.some((procedure) => procedure.reasonReference.reference_meta_profile == 'mcode-primary-cancer-condition')).toBeTrue();  
+    expect(extractedData.cancerRelatedSurgicalProcedure.some((procedure) => procedure.reasonReference.meta_profile == 'mcode-primary-cancer-condition')).toBeTrue();
+    expect(extractedData.cancerRelatedSurgicalProcedure.some((procedure) => procedure.reasonReference.meta_profile == 'mcode-secondary-cancer-condition')).toBeTrue();
   });
 
   it('checkExtractedCancerGeneticVariant', function () {
@@ -184,6 +185,34 @@ describe('ExtractedMCODE Import', () => {
   it('checkExtractedCancerRelatedMedicationStatement', function () {
     const extractedData = new mcode.ExtractedMCODE(sampleData);
     expect(extractedData.cancerRelatedMedicationStatement[0].code).toBe('583214');
+  });
+});
+
+describe('Missing Birthdate ExtractedMCODE Import', () => {
+  let sampleData: fhir.Bundle;
+  beforeAll(() => {
+    return new Promise((resolve, reject) => {
+      const patientDataPath = path.join(__dirname, '../../spec/data/patient_data_missing_birthdate.json');
+      fs.readFile(patientDataPath, { encoding: 'utf8' }, (error, data) => {
+        if (error) {
+          console.error('Could not read spec file');
+          reject(error);
+          return;
+        }
+        try {
+          sampleData = JSON.parse(data) as fhir.Bundle;
+          // The object we resolve to doesn't really matter
+          resolve(sampleData);
+        } catch (ex) {
+          reject(error);
+        }
+      });
+    });
+  });
+
+  it('checkMissingBirthDate', function () {
+    const extractedData = new mcode.ExtractedMCODE(sampleData);
+    expect(extractedData.birthDate).toBe('NA');
   });
 });
 
@@ -2916,11 +2945,51 @@ describe('checkSurgicalProcedureFilterLogic-Metastasis Resection', () => {
   crsp.reasonReference = [] as mcode.ReasonReference;
 
   // Metastasis Resection Filter Attributes (surgical procedure reason reference = SecondaryCancerCondition)
-  crsp.reasonReference = ({ reference_meta_profile: 'mcode-secondary-cancer-condition' } as mcode.ReasonReference);
+  crsp.reasonReference = ({ meta_profile: 'mcode-secondary-cancer-condition' } as mcode.ReasonReference);
 
   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
   it('Test Metastasis Resection Filter', () => {
     expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'metastasis_resection')).toBeTrue();
+  });
+});
+
+describe('checkNIHSystemNormalizer', () => {
+  it('Test NIH System Normalizer.', () => {
+    expect(CodeMapper.normalizeCodeSystem("nih")).toBe(CodeSystemEnum.NIH);
+  });
+});
+
+describe('checkNIHSystemNormalizer', () => {
+  it('Test NIH System Normalizer.', () => {
+    expect(CodeMapper.normalizeCodeSystem("nih")).toBe(CodeSystemEnum.NIH);
+  });
+});
+
+describe('checkInvalidCodeSystemError', () => {
+  it('Test Invalid Input to System Normalizer.', () => {
+    var testFunc = function() {
+      CodeMapper.normalizeCodeSystem("XXX")
+    };
+    expect(testFunc).toThrow(Error('Profile codes do not support code system: XXX'));
+  });
+});
+
+describe('checkInvalidOperatorError', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+  const tm: mcode.TumorMarker = {};
+  tm.coding = [] as Coding[];
+  tm.interpretation = [] as Coding[];
+  tm.valueCodeableConcept = [] as Coding[];
+  tm.valueQuantity = [] as mcode.Quantity[];
+  tm.valueRatio = [] as mcode.Ratio[];
+
+  it('Test Invalid Operator Input to Ratio of Tumor Marker.', () => {
+    tm.coding.push({ system: 'http://loinc.info/sct', code: '16112-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
+    tm.valueRatio.push({} as mcode.Ratio);
+    extractedMCODE.tumorMarker.push(tm);
+    const tumorMarker = extractedMCODE.getTumorMarkerValue()
+    expect(tumorMarker).toEqual([]);
   });
 });

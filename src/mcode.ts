@@ -18,7 +18,7 @@ export interface Coding {
 export interface ReasonReference {
   reference?: string;
   display?: string;
-  reference_meta_profile?: string;
+  meta_profile?: string;
 }
 
 export interface Quantity {
@@ -41,7 +41,7 @@ export interface BaseFhirResource {
 export interface CancerConditionParent extends BaseFhirResource {
   clinicalStatus?: Coding[];
   meta_profile?: string;
-  full_url?: string;
+  id?: string;
 }
 
 export interface PrimaryCancerCondition extends CancerConditionParent {
@@ -116,6 +116,21 @@ export class ExtractedMCODE {
    */
   constructor(patientBundle: fhir.Bundle) {
 
+    // Initialize fields to defaults.
+    this.primaryCancerCondition = [] as PrimaryCancerCondition[];
+    this.secondaryCancerCondition = [] as SecondaryCancerCondition[];
+    this.tumorMarker = [] as TumorMarker[];
+    this.cancerGeneticVariant = [] as CancerGeneticVariant[];
+    this.cancerRelatedRadiationProcedure = [] as CancerRelatedRadiationProcedure[];
+    this.cancerRelatedSurgicalProcedure = [] as CancerRelatedSurgicalProcedure[];
+    this.TNMClinicalStageGroup = [] as Coding[];
+    this.TNMPathologicalStageGroup = [] as Coding[];
+    this.birthDate = 'NA';
+    this.cancerRelatedMedicationStatement = [] as Coding[];
+    this.cancerGeneticVariant = [] as CancerGeneticVariant[];
+    this.ecogPerformaceStatus = null;
+    this.karnofskyPerformanceStatus = null;
+
     if (patientBundle != null) {
       for (const entry of patientBundle.entry) {
         if (!('resource' in entry)) {
@@ -131,7 +146,9 @@ export class ExtractedMCODE {
           const tempPrimaryCancerCondition: PrimaryCancerCondition = {};
           tempPrimaryCancerCondition.coding = this.lookup(resource, 'code.coding') as Coding[];
           tempPrimaryCancerCondition.clinicalStatus = this.lookup(resource, 'clinicalStatus.coding') as Coding[];
+          tempPrimaryCancerCondition.id = (this.lookup(resource, 'id') as string[])[0];
           tempPrimaryCancerCondition.meta_profile = 'mcode-primary-cancer-condition'
+          tempPrimaryCancerCondition.histologyMorphologyBehavior = [] as Coding[];
           if (this.lookup(resource, 'extension').length !== 0) {
             let count = 0;
             for (const extension of this.lookup(resource, 'extension')) {
@@ -148,15 +165,8 @@ export class ExtractedMCODE {
               count++;
             }
           }
-          if (!tempPrimaryCancerCondition.histologyMorphologyBehavior) {
-            tempPrimaryCancerCondition.histologyMorphologyBehavior = [] as Coding[];
-          }
-
-          if (this.primaryCancerCondition) {
-            this.primaryCancerCondition.push(tempPrimaryCancerCondition);
-          } else {
-            this.primaryCancerCondition = [tempPrimaryCancerCondition];
-          }
+          
+          this.primaryCancerCondition.push(tempPrimaryCancerCondition);
         }
 
         if (
@@ -187,12 +197,10 @@ export class ExtractedMCODE {
           tempSecondaryCancerCondition.coding = this.lookup(resource, 'code.coding') as Coding[];
           tempSecondaryCancerCondition.clinicalStatus = this.lookup(resource, 'clinicalStatus.coding') as Coding[];
           tempSecondaryCancerCondition.bodySite = this.lookup(resource, 'bodySite.coding') as Coding[];
+          const id = this.lookup(resource, 'id') as string[];
+          tempSecondaryCancerCondition.id = id[0];
           tempSecondaryCancerCondition.meta_profile = 'mcode-secondary-cancer-condition'
-          if (this.secondaryCancerCondition) {
-            this.secondaryCancerCondition.push(tempSecondaryCancerCondition); // needs specific de-dup helper function
-          } else {
-            this.secondaryCancerCondition = [tempSecondaryCancerCondition];
-          }
+          this.secondaryCancerCondition.push(tempSecondaryCancerCondition); // needs specific de-dup helper function
         }
 
         if (
@@ -216,11 +224,7 @@ export class ExtractedMCODE {
           tempTumorMarker.valueRatio = this.lookup(resource, 'valueRatio') as Ratio[];
           tempTumorMarker.valueCodeableConcept = this.lookup(resource, 'valueCodeableConcept.coding') as Coding[];
           tempTumorMarker.interpretation = this.lookup(resource, 'interpretation.coding') as Coding[];
-          if (this.tumorMarker) {
-            this.tumorMarker.push(tempTumorMarker);
-          } else {
-            this.tumorMarker = [tempTumorMarker];
-          }
+          this.tumorMarker.push(tempTumorMarker);
         }
         // Parse and Extract mCODE Cancer Genetic Variant
         if (
@@ -245,11 +249,7 @@ export class ExtractedMCODE {
           }
           tempCGV.valueCodeableConcept = this.lookup(resource, 'valueCodeableConcept.coding') as Coding[];
           tempCGV.interpretation = this.lookup(resource, 'interpretation.coding') as Coding[];
-          if (this.cancerGeneticVariant) {
-            this.cancerGeneticVariant.push(tempCGV);
-          } else {
-            this.cancerGeneticVariant = [tempCGV];
-          }
+          this.cancerGeneticVariant.push(tempCGV);
         }
 
         if (
@@ -259,17 +259,11 @@ export class ExtractedMCODE {
           const tempCancerRelatedRadiationProcedure: CancerRelatedRadiationProcedure = {};
           tempCancerRelatedRadiationProcedure.coding = this.lookup(resource, 'code.coding') as Coding[];
           tempCancerRelatedRadiationProcedure.bodySite = this.lookup(resource, 'bodySite.coding') as Coding[];
-          if (this.cancerRelatedRadiationProcedure) {
-            if (
-              !this.listContainsRadiationProcedure(
-                this.cancerRelatedRadiationProcedure,
-                tempCancerRelatedRadiationProcedure
-              )
-            ) {
-              this.cancerRelatedRadiationProcedure.push(tempCancerRelatedRadiationProcedure);
-            }
-          } else {
-            this.cancerRelatedRadiationProcedure = [tempCancerRelatedRadiationProcedure];
+          if (!this.listContainsRadiationProcedure(
+              this.cancerRelatedRadiationProcedure,
+              tempCancerRelatedRadiationProcedure)
+          ) {
+            this.cancerRelatedRadiationProcedure.push(tempCancerRelatedRadiationProcedure);
           }
         }
 
@@ -280,31 +274,13 @@ export class ExtractedMCODE {
           const tempCancerRelatedSurgicalProcedure: CancerRelatedSurgicalProcedure = {};
           tempCancerRelatedSurgicalProcedure.coding = this.lookup(resource, 'code.coding') as Coding[];
           tempCancerRelatedSurgicalProcedure.bodySite = this.lookup(resource, 'bodySite.coding') as Coding[];
-          const reasonReference = this.lookup(resource, 'reasonReference') as ReasonReference;
-          for(const condition of this.primaryCancerCondition){
-            if(condition.full_url == reasonReference.reference){
-              reasonReference.reference_meta_profile = condition.meta_profile
-            }
-          }
-          if(this.secondaryCancerCondition){
-            for(const condition of this.secondaryCancerCondition){
-              if(condition.full_url == reasonReference.reference){
-                reasonReference.reference_meta_profile = condition.meta_profile
-              }
-            }
-          }
-          tempCancerRelatedSurgicalProcedure.reasonReference = reasonReference;
-          if (this.cancerRelatedSurgicalProcedure) {
-            if (
-              !this.listContainsRadiationProcedure(
-                this.cancerRelatedSurgicalProcedure,
-                tempCancerRelatedSurgicalProcedure
-              )
-            ) {
-              this.cancerRelatedSurgicalProcedure.push(tempCancerRelatedSurgicalProcedure);
-            }
-          } else {
-            this.cancerRelatedSurgicalProcedure = [tempCancerRelatedSurgicalProcedure];
+          const reasonReference = this.lookup(resource, 'reasonReference') as ReasonReference[];
+          tempCancerRelatedSurgicalProcedure.reasonReference = reasonReference[0]
+          if (!this.listContainsRadiationProcedure(
+              this.cancerRelatedSurgicalProcedure,
+              tempCancerRelatedSurgicalProcedure)
+          ) {
+            this.cancerRelatedSurgicalProcedure.push(tempCancerRelatedSurgicalProcedure);
           }
         }
 
@@ -331,46 +307,25 @@ export class ExtractedMCODE {
         ) {
           this.karnofskyPerformanceStatus = this.lookup(resource, 'valueInteger')[0] as number; // so is this
         }
-
       }
     }
-    // add empty fields if they are not yet undefined
-    if (!this.primaryCancerCondition) {
-      this.primaryCancerCondition = [] as PrimaryCancerCondition[];
+
+    // Once all resources are loaded, check to add the meta.profile for cancer related surgical procedure reason references.
+    const extractReasonReference = (reasonReference: ReasonReference, conditions: CancerConditionParent[]) => {
+      for (const condition of conditions) {
+        if(condition.id === reasonReference.reference){
+          return {reference: reasonReference.reference, display: reasonReference.display, meta_profile: condition.meta_profile} as ReasonReference
+        }
+      }
+      return null;
     }
-    if (!this.TNMClinicalStageGroup) {
-      this.TNMClinicalStageGroup = [] as Coding[];
-    }
-    if (!this.TNMPathologicalStageGroup) {
-      this.TNMPathologicalStageGroup = [] as Coding[];
-    }
-    if (!this.secondaryCancerCondition) {
-      this.secondaryCancerCondition = [] as SecondaryCancerCondition[];
-    }
-    if (!this.birthDate) {
-      this.birthDate = 'NA';
-    }
-    if (!this.tumorMarker) {
-      this.tumorMarker = [] as TumorMarker[];
-    }
-    if (!this.cancerRelatedRadiationProcedure) {
-      this.cancerRelatedRadiationProcedure = [] as CancerRelatedRadiationProcedure[];
-    }
-    if (!this.cancerRelatedSurgicalProcedure) {
-      this.cancerRelatedSurgicalProcedure = [] as CancerRelatedSurgicalProcedure[];
-    }
-    if (!this.cancerRelatedMedicationStatement) {
-      this.cancerRelatedMedicationStatement = [] as Coding[];
-    }
-    if (!this.cancerGeneticVariant) {
-      this.cancerGeneticVariant = [] as CancerGeneticVariant[];
-    }
-    // Checking if the performanceStatus exists and also making sure it's not 0, as 0 is a valid score
-    if (!this.ecogPerformaceStatus && this.ecogPerformaceStatus != 0) {
-      this.ecogPerformaceStatus = null;
-    }
-    if (!this.karnofskyPerformanceStatus && this.karnofskyPerformanceStatus != 0) {
-      this.karnofskyPerformanceStatus = null;
+    for(const procedure of this.cancerRelatedSurgicalProcedure){
+      const conditions = this.primaryCancerCondition.concat(this.secondaryCancerCondition)
+      // throw JSON.stringify(conditions)
+      const primaryCancerReasonReference = extractReasonReference(procedure.reasonReference, conditions);
+      if(!(primaryCancerReasonReference == null || primaryCancerReasonReference == undefined)) {
+        procedure.reasonReference = primaryCancerReasonReference;
+      }
     }
   }
 
@@ -650,10 +605,6 @@ export class ExtractedMCODE {
    */
   getSurgicalProcedureValue(): string[] {
 
-    if(this.cancerRelatedSurgicalProcedure == null){
-      return [];
-    }
-
     const surgical_codes: Coding[] = this.extractCodings(this.cancerRelatedSurgicalProcedure);
     // Perform the basic mapping.
     let surgicalProcedureValues: string[] = ExtractedMCODE.codeMapper.extractCodeMappings(surgical_codes);
@@ -691,7 +642,7 @@ export class ExtractedMCODE {
     }
 
     // Metastasis Resection complex logic.
-    if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.reasonReference != null && surgicalProcedure.reasonReference.reference_meta_profile == 'mcode-secondary-cancer-condition')){
+    if(this.cancerRelatedSurgicalProcedure.some((surgicalProcedure) => surgicalProcedure.reasonReference != null && surgicalProcedure.reasonReference.meta_profile == 'mcode-secondary-cancer-condition')){
       surgicalProcedureValues.push('metastasis_resection');
     }
 
@@ -1289,7 +1240,6 @@ quantityMatch(
   }
   ratioMatch(numerator: Quantity, denominator: Quantity, metricValue: number, metricComparator: string): boolean {
     if (!numerator || !denominator || !numerator.value || !denominator.value) {
-      //console.log('missing info for ratio comparison');
       return false;
     }
     const num: number = typeof numerator.value == 'number' ? numerator.value : Number(numerator.value);
