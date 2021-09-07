@@ -311,20 +311,14 @@ export class ExtractedMCODE {
     }
 
     // Once all resources are loaded, check to add the meta.profile for cancer related surgical procedure reason references.
-    const extractReasonReference = (reasonReference: ReasonReference, conditions: CancerConditionParent[]) => {
-      for (const condition of conditions) {
-        if(condition.id === reasonReference.reference){
-          return {reference: reasonReference.reference, display: reasonReference.display, meta_profile: condition.meta_profile} as ReasonReference
-        }
-      }
-      return null;
-    }
     for(const procedure of this.cancerRelatedSurgicalProcedure){
       const conditions = this.primaryCancerCondition.concat(this.secondaryCancerCondition)
-      // throw JSON.stringify(conditions)
-      const primaryCancerReasonReference = extractReasonReference(procedure.reasonReference, conditions);
-      if(!(primaryCancerReasonReference == null || primaryCancerReasonReference == undefined)) {
-        procedure.reasonReference = primaryCancerReasonReference;
+      let reasonReference = procedure.reasonReference;
+      for (const condition of conditions) {
+        if(condition.id === reasonReference.reference){
+          const reasonReferenceResult = {reference: reasonReference.reference, display: reasonReference.display, meta_profile: condition.meta_profile} as ReasonReference;
+          procedure.reasonReference = reasonReferenceResult;
+        }
       }
     }
   }

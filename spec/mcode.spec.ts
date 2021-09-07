@@ -1440,8 +1440,6 @@ describe('checkTumorMarkerFilterLogic-BRCA1-', () => {
   const cgvGeneStudied = createEmptyCancerGeneticVariantGeneStudied();
   const cgvGenomicSourceClass = createEmptyCancerGeneticVariantGenomicsSource();
 
-
-
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1100', display: 'BRCA1' });
   cgv.valueCodeableConcept.push({ system: 'http://snomed.info/sct', code: '260385009', display: 'N/A' });
 
