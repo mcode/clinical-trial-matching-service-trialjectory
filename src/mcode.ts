@@ -716,11 +716,7 @@ export class ExtractedMCODE {
     stageConverter.set('Stage-4D', '4C');  // 4D is not a stage in Trialjectory, return 4C.
     stageConverter.set('Stage-0A', '0'); // 0A is not a stage in Trialjectory, return 0.
     stageValues = stageValues.map(stage => {
-      if(stageConverter.has(stage)) {
-        return stageConverter.get(stage);
-      } else {
-        throw "Stage does not exist in mapping: " + stage + ".";
-      }
+      return stageConverter.get(stage);
     });
 
     // Pull the highest stage value.
@@ -1270,4 +1266,4 @@ quantityMatch(
     medicationValues.filter((a, b) => medicationValues.indexOf(a) === b)
     return medicationValues;
   }
- }
+}

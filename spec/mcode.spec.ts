@@ -229,11 +229,11 @@ describe('ExtractedMCODE Import', () => {
   });
 });
 
-describe('Missing Birthdate ExtractedMCODE Import', () => {
+describe('Missing Birthdate/ECOG/Karnofsky ExtractedMCODE Import', () => {
   let sampleData: fhir.Bundle;
   beforeAll(() => {
     return new Promise((resolve, reject) => {
-      const patientDataPath = path.join(__dirname, '../../spec/data/patient_data_missing_birthdate.json');
+      const patientDataPath = path.join(__dirname, '../../spec/data/patient_data_missing_birthdate_invalid_ecog_karnofsky.json');
       fs.readFile(patientDataPath, { encoding: 'utf8' }, (error, data) => {
         if (error) {
           console.error('Could not read spec file');
@@ -251,9 +251,11 @@ describe('Missing Birthdate ExtractedMCODE Import', () => {
     });
   });
 
-  it('checkMissingBirthDate', function () {
+  it('checkMissingBirthdateEcogKarnofsky', function () {
     const extractedData = new mcode.ExtractedMCODE(sampleData);
     expect(extractedData.birthDate).toBe('NA');
+    expect(extractedData.getECOGScore()).toBeNull()
+    expect(extractedData.getKarnofskyScore()).toBeNull()
   });
 });
 
