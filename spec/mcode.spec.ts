@@ -2507,6 +2507,24 @@ describe('checkInvalidCodeSystemError', () => {
   });
 });
 
+describe('checkInvalidQuantityMatchError', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+
+  it('Test Invalid Input to System Normalizer.', () => {
+    expect(extractedMCODE.quantityMatch("0", "mm", ["test"], ">>", "mm")).toBeFalse();
+  });
+});
+
+describe('checkInvalidRatioMatchError', () => {
+  // Initialize
+  const extractedMCODE = new mcode.ExtractedMCODE(null);
+
+  it('Test Invalid Input to System Normalizer.', () => {
+    expect(extractedMCODE.ratioMatch({value: "0", comparator: "0", code: "0", unit: "0", system: "0"}, {value: "0", comparator: "0", code: "0", unit: "0", system: "0"}, 0, ">>")).toBeFalse();
+  });
+});
+
 describe('checkInvalidOperatorError', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
