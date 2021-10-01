@@ -1,19 +1,12 @@
 import { fhirclient } from 'fhirclient/lib/types';
 import * as fhirpath from 'fhirpath';
-import { fhir } from 'clinical-trial-matching-service';
-import { CodeMapper, CodeSystemEnum } from './codeMapper';
+import { fhir, CodeMapper, CodeSystemEnum } from 'clinical-trial-matching-service';
 import profile_system_codes from '../data/profile-system-codes.json';
 import system_metastasis_codes_json from '../data/system-metastasis-codes-json.json';
 
 const metastasis_codes = system_metastasis_codes_json as {[key:string]: {[key:string]: string}};
 
 export type FHIRPath = string;
-
-export interface Coding {
-  system?: string;
-  code?: string;
-  display?: string;
-}
 
 export interface ReasonReference {
   reference?: string;
@@ -35,29 +28,29 @@ export interface Ratio {
 }
 
 export interface BaseFhirResource {
-  coding?: Coding[];
+  coding?: fhir.Coding[];
 }
 
 export interface CancerConditionParent extends BaseFhirResource {
-  clinicalStatus?: Coding[];
+  clinicalStatus?: fhir.Coding[];
   meta_profile?: string;
   full_url?: string;
 }
 
 export interface PrimaryCancerCondition extends CancerConditionParent {
-  histologyMorphologyBehavior?: Coding[];
+  histologyMorphologyBehavior?: fhir.Coding[];
 }
 
 export interface SecondaryCancerCondition extends CancerConditionParent {
-  bodySite?: Coding[];
+  bodySite?: fhir.Coding[];
 }
 
 export interface CancerRelatedProcedureParent extends BaseFhirResource {
-  bodySite?: Coding[];
+  bodySite?: fhir.Coding[];
 }
 
 export interface CancerRelatedRadiationProcedure extends CancerRelatedProcedureParent {
-  mcodeTreatmentIntent?: Coding[];
+  mcodeTreatmentIntent?: fhir.Coding[];
 }
 
 export interface CancerRelatedSurgicalProcedure extends CancerRelatedProcedureParent {
@@ -67,14 +60,14 @@ export interface CancerRelatedSurgicalProcedure extends CancerRelatedProcedurePa
 export interface TumorMarker extends BaseFhirResource {
   valueQuantity?: Quantity[];
   valueRatio?: Ratio[];
-  valueCodeableConcept?: Coding[];
-  interpretation?: Coding[];
+  valueCodeableConcept?: fhir.Coding[];
+  interpretation?: fhir.Coding[];
 }
 
 export interface CancerGeneticVariant extends BaseFhirResource {
   component?: CancerGeneticVariantComponent;
-  valueCodeableConcept?: Coding[];
-  interpretation?: Coding[];
+  valueCodeableConcept?: fhir.Coding[];
+  interpretation?: fhir.Coding[];
 }
 
 export interface CancerGeneticVariantComponent {
@@ -83,9 +76,9 @@ export interface CancerGeneticVariantComponent {
 }
 
 export interface CancerGeneticVariantComponentType {
-  code?: { coding: Coding[] };
-  valueCodeableConcept?: { coding: Coding[] };
-  interpretation?: { coding: Coding[] };
+  code?: { coding: fhir.Coding[] };
+  valueCodeableConcept?: { coding: fhir.Coding[] };
+  interpretation?: { coding: fhir.Coding[] };
 }
 
 /**
@@ -93,15 +86,15 @@ export interface CancerGeneticVariantComponentType {
  */
 export class ExtractedMCODE {
   primaryCancerCondition: PrimaryCancerCondition[];
-  TNMClinicalStageGroup: Coding[];
-  TNMPathologicalStageGroup: Coding[];
+  TNMClinicalStageGroup: fhir.Coding[];
+  TNMPathologicalStageGroup: fhir.Coding[];
   secondaryCancerCondition: SecondaryCancerCondition[];
   birthDate: string;
   tumorMarker: TumorMarker[];
   cancerGeneticVariant: CancerGeneticVariant[];
   cancerRelatedRadiationProcedure: CancerRelatedRadiationProcedure[];
   cancerRelatedSurgicalProcedure: CancerRelatedSurgicalProcedure[];
-  cancerRelatedMedicationStatement: Coding[];
+  cancerRelatedMedicationStatement: fhir.Coding[];
   ecogPerformaceStatus: number;
   karnofskyPerformanceStatus: number;
 
@@ -129,8 +122,8 @@ export class ExtractedMCODE {
           this.resourceProfile(this.lookup(resource, 'meta.profile'), 'mcode-primary-cancer-condition')
         ) {
           const tempPrimaryCancerCondition: PrimaryCancerCondition = {};
-          tempPrimaryCancerCondition.coding = this.lookup(resource, 'code.coding') as Coding[];
-          tempPrimaryCancerCondition.clinicalStatus = this.lookup(resource, 'clinicalStatus.coding') as Coding[];
+          tempPrimaryCancerCondition.coding = this.lookup(resource, 'code.coding') as unknown as fhir.Coding[];
+          tempPrimaryCancerCondition.clinicalStatus = this.lookup(resource, 'clinicalStatus.coding') as unknown as fhir.Coding[];
           tempPrimaryCancerCondition.meta_profile = 'mcode-primary-cancer-condition'
           if (this.lookup(resource, 'extension').length !== 0) {
             let count = 0;
@@ -143,13 +136,13 @@ export class ExtractedMCODE {
                 tempPrimaryCancerCondition.histologyMorphologyBehavior = this.lookup(
                   resource,
                   `extension[${count}].valueCodeableConcept.coding`
-                ) as Coding[];
+                ) as unknown as fhir.Coding[];
               }
               count++;
             }
           }
           if (!tempPrimaryCancerCondition.histologyMorphologyBehavior) {
-            tempPrimaryCancerCondition.histologyMorphologyBehavior = [] as Coding[];
+            tempPrimaryCancerCondition.histologyMorphologyBehavior = [] as fhir.Coding[];
           }
 
           if (this.primaryCancerCondition) {
@@ -165,7 +158,7 @@ export class ExtractedMCODE {
         ) {
           this.TNMClinicalStageGroup = this.addCoding(
             this.TNMClinicalStageGroup,
-            this.lookup(resource, 'valueCodeableConcept.coding') as Coding[]
+            this.lookup(resource, 'valueCodeableConcept.coding') as unknown as fhir.Coding[]
           );
         }
 
@@ -175,7 +168,7 @@ export class ExtractedMCODE {
         ) {
           this.TNMPathologicalStageGroup = this.addCoding(
             this.TNMPathologicalStageGroup,
-            this.lookup(resource, 'valueCodeableConcept.coding') as Coding[]
+            this.lookup(resource, 'valueCodeableConcept.coding') as unknown as fhir.Coding[]
           );
         }
 
@@ -184,9 +177,9 @@ export class ExtractedMCODE {
           this.resourceProfile(this.lookup(resource, 'meta.profile'), 'mcode-secondary-cancer-condition')
         ) {
           const tempSecondaryCancerCondition: SecondaryCancerCondition = {};
-          tempSecondaryCancerCondition.coding = this.lookup(resource, 'code.coding') as Coding[];
-          tempSecondaryCancerCondition.clinicalStatus = this.lookup(resource, 'clinicalStatus.coding') as Coding[];
-          tempSecondaryCancerCondition.bodySite = this.lookup(resource, 'bodySite.coding') as Coding[];
+          tempSecondaryCancerCondition.coding = this.lookup(resource, 'code.coding') as unknown as fhir.Coding[];
+          tempSecondaryCancerCondition.clinicalStatus = this.lookup(resource, 'clinicalStatus.coding') as unknown as fhir.Coding[];
+          tempSecondaryCancerCondition.bodySite = this.lookup(resource, 'bodySite.coding') as unknown as fhir.Coding[];
           tempSecondaryCancerCondition.meta_profile = 'mcode-secondary-cancer-condition'
           if (this.secondaryCancerCondition) {
             this.secondaryCancerCondition.push(tempSecondaryCancerCondition); // needs specific de-dup helper function
@@ -211,11 +204,11 @@ export class ExtractedMCODE {
           this.resourceProfile(this.lookup(resource, 'meta.profile'), 'mcode-tumor-marker')
         ) {
           const tempTumorMarker: TumorMarker = {};
-          tempTumorMarker.coding = this.lookup(resource, 'code.coding') as Coding[];
+          tempTumorMarker.coding = this.lookup(resource, 'code.coding') as unknown as fhir.Coding[];
           tempTumorMarker.valueQuantity = this.lookup(resource, 'valueQuantity') as Quantity[];
           tempTumorMarker.valueRatio = this.lookup(resource, 'valueRatio') as Ratio[];
-          tempTumorMarker.valueCodeableConcept = this.lookup(resource, 'valueCodeableConcept.coding') as Coding[];
-          tempTumorMarker.interpretation = this.lookup(resource, 'interpretation.coding') as Coding[];
+          tempTumorMarker.valueCodeableConcept = this.lookup(resource, 'valueCodeableConcept.coding') as unknown as fhir.Coding[];
+          tempTumorMarker.interpretation = this.lookup(resource, 'interpretation.coding') as unknown as fhir.Coding[];
           if (this.tumorMarker) {
             this.tumorMarker.push(tempTumorMarker);
           } else {
@@ -228,7 +221,7 @@ export class ExtractedMCODE {
           this.resourceProfile(this.lookup(resource, 'meta.profile'), 'mcode-cancer-genetic-variant')
         ) {
           const tempCGV: CancerGeneticVariant = {};
-          tempCGV.coding = this.lookup(resource, 'code.coding') as Coding[]; // not used in logic
+          tempCGV.coding = this.lookup(resource, 'code.coding') as unknown as fhir.Coding[]; // not used in logic
           tempCGV.component = {
             geneStudied: [] as CancerGeneticVariantComponentType[],
             genomicsSourceClass: [] as CancerGeneticVariantComponentType[]
@@ -243,8 +236,8 @@ export class ExtractedMCODE {
               tempCGV.component.genomicsSourceClass.push(currentComponent);
             }
           }
-          tempCGV.valueCodeableConcept = this.lookup(resource, 'valueCodeableConcept.coding') as Coding[];
-          tempCGV.interpretation = this.lookup(resource, 'interpretation.coding') as Coding[];
+          tempCGV.valueCodeableConcept = this.lookup(resource, 'valueCodeableConcept.coding') as unknown as fhir.Coding[];
+          tempCGV.interpretation = this.lookup(resource, 'interpretation.coding') as unknown as fhir.Coding[];
           if (this.cancerGeneticVariant) {
             this.cancerGeneticVariant.push(tempCGV);
           } else {
@@ -257,8 +250,8 @@ export class ExtractedMCODE {
           this.resourceProfile(this.lookup(resource, 'meta.profile'), 'mcode-cancer-related-radiation-procedure')
         ) {
           const tempCancerRelatedRadiationProcedure: CancerRelatedRadiationProcedure = {};
-          tempCancerRelatedRadiationProcedure.coding = this.lookup(resource, 'code.coding') as Coding[];
-          tempCancerRelatedRadiationProcedure.bodySite = this.lookup(resource, 'bodySite.coding') as Coding[];
+          tempCancerRelatedRadiationProcedure.coding = this.lookup(resource, 'code.coding') as unknown as fhir.Coding[];
+          tempCancerRelatedRadiationProcedure.bodySite = this.lookup(resource, 'bodySite.coding') as unknown as fhir.Coding[];
           if (this.cancerRelatedRadiationProcedure) {
             if (
               !this.listContainsRadiationProcedure(
@@ -278,8 +271,8 @@ export class ExtractedMCODE {
           this.resourceProfile(this.lookup(resource, 'meta.profile'), 'mcode-cancer-related-surgical-procedure')
         ) {
           const tempCancerRelatedSurgicalProcedure: CancerRelatedSurgicalProcedure = {};
-          tempCancerRelatedSurgicalProcedure.coding = this.lookup(resource, 'code.coding') as Coding[];
-          tempCancerRelatedSurgicalProcedure.bodySite = this.lookup(resource, 'bodySite.coding') as Coding[];
+          tempCancerRelatedSurgicalProcedure.coding = this.lookup(resource, 'code.coding') as unknown as fhir.Coding[];
+          tempCancerRelatedSurgicalProcedure.bodySite = this.lookup(resource, 'bodySite.coding') as unknown as fhir.Coding[];
           const reasonReference = this.lookup(resource, 'reasonReference') as ReasonReference;
           for(const condition of this.primaryCancerCondition){
             if(condition.full_url == reasonReference.reference){
@@ -314,7 +307,7 @@ export class ExtractedMCODE {
         ) {
           this.cancerRelatedMedicationStatement = this.addCoding(
             this.cancerRelatedMedicationStatement,
-            this.lookup(resource, 'medicationCodeableConcept.coding') as Coding[]
+            this.lookup(resource, 'medicationCodeableConcept.coding') as unknown as fhir.Coding[]
           );
         }
 
@@ -339,10 +332,10 @@ export class ExtractedMCODE {
       this.primaryCancerCondition = [] as PrimaryCancerCondition[];
     }
     if (!this.TNMClinicalStageGroup) {
-      this.TNMClinicalStageGroup = [] as Coding[];
+      this.TNMClinicalStageGroup = [] as fhir.Coding[];
     }
     if (!this.TNMPathologicalStageGroup) {
-      this.TNMPathologicalStageGroup = [] as Coding[];
+      this.TNMPathologicalStageGroup = [] as fhir.Coding[];
     }
     if (!this.secondaryCancerCondition) {
       this.secondaryCancerCondition = [] as SecondaryCancerCondition[];
@@ -360,7 +353,7 @@ export class ExtractedMCODE {
       this.cancerRelatedSurgicalProcedure = [] as CancerRelatedSurgicalProcedure[];
     }
     if (!this.cancerRelatedMedicationStatement) {
-      this.cancerRelatedMedicationStatement = [] as Coding[];
+      this.cancerRelatedMedicationStatement = [] as fhir.Coding[];
     }
     if (!this.cancerGeneticVariant) {
       this.cancerGeneticVariant = [] as CancerGeneticVariant[];
@@ -389,10 +382,10 @@ export class ExtractedMCODE {
     }
     return false;
   }
-  contains(codingList: Coding[], coding: Coding): boolean {
+  contains(codingList: fhir.Coding[], coding: fhir.Coding): boolean {
     return codingList.some((list_coding) => list_coding.system === coding.system && list_coding.code === coding.code);
   }
-  addCoding(codingList: Coding[], codes: Coding[]): Coding[] {
+  addCoding(codingList: fhir.Coding[], codes: fhir.Coding[]): fhir.Coding[] {
     if (codingList) {
       for (const code of codes) {
         if (!this.contains(codingList, code)) {
@@ -465,7 +458,7 @@ export class ExtractedMCODE {
       return null;
     }
 
-    // const secondaryCancerCodings: Coding[] = this.extractCodings(this.secondaryCancerCondition);
+    // const secondaryCancerCodings: fhir.Coding[] = this.extractCodings(this.secondaryCancerCondition);
     // Perform the basic mapping.
     // let secondaryCancerMappings: string[] = ExtractedMCODE.codeMapper.extractCodeMappings(secondaryCancerCodings);
 
@@ -602,7 +595,7 @@ export class ExtractedMCODE {
    */
   getRadiationProcedureValue(): string[] {
 
-    const radiation_codes: Coding[] = this.extractCodings(this.cancerRelatedRadiationProcedure);
+    const radiation_codes: fhir.Coding[] = this.extractCodings(this.cancerRelatedRadiationProcedure);
     // Perform the basic mapping.
     let radiationValues: string[] = ExtractedMCODE.codeMapper.extractCodeMappings(radiation_codes);
 
@@ -654,7 +647,7 @@ export class ExtractedMCODE {
       return [];
     }
 
-    const surgical_codes: Coding[] = this.extractCodings(this.cancerRelatedSurgicalProcedure);
+    const surgical_codes: fhir.Coding[] = this.extractCodings(this.cancerRelatedSurgicalProcedure);
     // Perform the basic mapping.
     let surgicalProcedureValues: string[] = ExtractedMCODE.codeMapper.extractCodeMappings(surgical_codes);
 
@@ -675,7 +668,7 @@ export class ExtractedMCODE {
     // Additional ALND complex logic (if alnd has not already been added).
     if(!surgicalProcedureValues.includes('alnd')){
       const bodySiteCodingExtracor = (procedure: CancerRelatedSurgicalProcedure[]) => {
-        const codingList: Coding[] = []
+        const codingList: fhir.Coding[] = []
         for(const resource of procedure){
           if(resource.bodySite != null) {
             codingList.push(...resource.bodySite);
@@ -706,8 +699,8 @@ export class ExtractedMCODE {
    * @param resources The fhir resources to pull coding's from.
    * @returns 
    */
-  extractCodings(resources: BaseFhirResource[]): Coding[] {
-    const codingList: Coding[] = []
+  extractCodings(resources: BaseFhirResource[]): fhir.Coding[] {
+    const codingList: fhir.Coding[] = []
     for(const resource of resources){
       if(resource.coding != null){
         codingList.push(...resource.coding);
@@ -796,7 +789,7 @@ export class ExtractedMCODE {
     const tumorMarkersToCheck = this.tumorMarker;
     if (this.tumorMarker.length == 0) {
       // Prevents skipping of cancer genetic variant values.
-      tumorMarkersToCheck.push({coding: [] as Coding[], valueCodeableConcept: [] as Coding[], valueRatio: [] as Ratio[], valueQuantity: [] as Quantity[], interpretation: [] as Coding[]} as TumorMarker);
+      tumorMarkersToCheck.push({coding: [] as fhir.Coding[], valueCodeableConcept: [] as fhir.Coding[], valueRatio: [] as Ratio[], valueQuantity: [] as Quantity[], interpretation: [] as fhir.Coding[]} as TumorMarker);
     }
 
     // Array of Tumor Marker results.
@@ -1006,49 +999,49 @@ export class ExtractedMCODE {
     // Finally, return the fully appended array.
     return tumorMarkerArray;
   }
-  isValueCodeableConceptPositive(valueCodeableConcept: Coding[]): boolean {
+  isValueCodeableConceptPositive(valueCodeableConcept: fhir.Coding[]): boolean {
     return valueCodeableConcept.some(
                    (coding) =>
                     (CodeMapper.codesEqual(coding, CodeSystemEnum.SNOMED, '10828004')) ||
                     (CodeMapper.codesEqual(coding, CodeSystemEnum.HL7, 'POS'))
                  );
   }
-  isValueCodeableConceptNegative(valueCodeableConcept: Coding[]): boolean {
+  isValueCodeableConceptNegative(valueCodeableConcept: fhir.Coding[]): boolean {
     return valueCodeableConcept.some(
                    (coding) =>
                     (CodeMapper.codesEqual(coding, CodeSystemEnum.SNOMED, '260385009')) ||
                     (CodeMapper.codesEqual(coding, CodeSystemEnum.HL7, 'NEG'))
                  );
   }
-  isInterpretationPositive(interpretation: Coding[]): boolean {
+  isInterpretationPositive(interpretation: fhir.Coding[]): boolean {
     return interpretation.some(
                      (interp) =>
                        (interp.code == 'POS' || interp.code == 'DET' || interp.code == 'H') &&
                        interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
                    );
   }
-  isInterpretationNegative(interpretation: Coding[]): boolean {
+  isInterpretationNegative(interpretation: fhir.Coding[]): boolean {
     return interpretation.some(
                      (interp) =>
                        (interp.code == 'L' || interp.code == 'N' || interp.code == 'NEG' || interp.code == 'ND') &&
                        interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
                    );
   }
-  isInterpretationPositiveCombo2(interpretation: Coding[]): boolean {
+  isInterpretationPositiveCombo2(interpretation: fhir.Coding[]): boolean {
     return interpretation.some(
                      (interp) =>
                        (interp.code == 'POS' || interp.code == 'ND' || interp.code == 'L') &&
                        interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
                    );
   }
-  isInterpretationNegativeCombo2(interpretation: Coding[]): boolean {
+  isInterpretationNegativeCombo2(interpretation: fhir.Coding[]): boolean {
     return interpretation.some(
                      (interp) =>
                        (interp.code == 'NEG' || interp.code == 'DET' || interp.code == 'H') &&
                        interp.system == 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html'
                    );
   }
-  isInterpretationNegativeCombo3(interpretation: Coding[]): boolean {
+  isInterpretationNegativeCombo3(interpretation: fhir.Coding[]): boolean {
     return interpretation.some(
                      (interp) =>
                        (interp.code == 'L' || interp.code == 'NEG' || interp.code == 'ND') &&

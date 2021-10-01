@@ -22,7 +22,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "clinical-trial-matching-service": "^0.0.2",
+    "clinical-trial-matching-service": "file:../clinical-trial-matching-service",
     "dotenv-flow": "^3.2.0",
     "fhirclient": "^2.3.1",
     "fhirpath": "^2.3.0"

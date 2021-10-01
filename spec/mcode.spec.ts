@@ -1,9 +1,8 @@
 import * as mcode from "../src/mcode";
-import { fhir } from 'clinical-trial-matching-service';
+import { fhir, CodeMapper, CodeSystemEnum  } from 'clinical-trial-matching-service';
 import fs from 'fs';
 import path from 'path';
-import { Coding, PrimaryCancerCondition } from "../src/mcode";
-import { CodeMapper, CodeSystemEnum } from "../src/codeMapper";
+import { PrimaryCancerCondition } from "../src/mcode";
 
 describe('ExtractedMCODE Import', () => {
   let sampleData: fhir.Bundle;
@@ -191,13 +190,13 @@ describe('ExtractedMCODE Import', () => {
 describe("checkMedicationStatementFilterLogic-NoMedications", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // anastrozole medication filter
-  ms.push({ system: "RxNorm", code: "341545345", display: "N/A" } as Coding);
-  ms.push({ system: "RxNorm", code: "563563", display: "N/A" } as Coding);
-  ms.push({ system: "RxNorm", code: "35635463", display: "N/A" } as Coding);
-  ms.push({ system: "RxNorm", code: "5365712", display: "N/A" } as Coding);
-  ms.push({ system: "RxNorm", code: "2452456", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "341545345", display: "N/A" } as fhir.Coding);
+  ms.push({ system: "RxNorm", code: "563563", display: "N/A" } as fhir.Coding);
+  ms.push({ system: "RxNorm", code: "35635463", display: "N/A" } as fhir.Coding);
+  ms.push({ system: "RxNorm", code: "5365712", display: "N/A" } as fhir.Coding);
+  ms.push({ system: "RxNorm", code: "2452456", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test anastrozole medication filter.", () => {
@@ -207,9 +206,9 @@ describe("checkMedicationStatementFilterLogic-NoMedications", () => {
 describe("checkMedicationStatementFilterLogic-anastrozole", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // anastrozole medication filter
-  ms.push({ system: "RxNorm", code: "1157702", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1157702", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test anastrozole medication filter.", () => {
@@ -219,9 +218,9 @@ describe("checkMedicationStatementFilterLogic-anastrozole", () => {
 describe("checkMedicationStatementFilterLogic-exemestane", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // exemestane medication filter
-  ms.push({ system: "RxNorm", code: "310261", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "310261", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test exemestane medication filter.", () => {
@@ -231,9 +230,9 @@ describe("checkMedicationStatementFilterLogic-exemestane", () => {
 describe("checkMedicationStatementFilterLogic-letrozole", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // letrozole medication filter
-  ms.push({ system: "RxNorm", code: "372571", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "372571", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test letrozole medication filter.", () => {
@@ -243,9 +242,9 @@ describe("checkMedicationStatementFilterLogic-letrozole", () => {
 describe("checkMedicationStatementFilterLogic-tamoxifen", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // tamoxifen medication filter
-  ms.push({ system: "RxNorm", code: "1184837", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1184837", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test tamoxifen medication filter.", () => {
@@ -255,9 +254,9 @@ describe("checkMedicationStatementFilterLogic-tamoxifen", () => {
 describe("checkMedicationStatementFilterLogic-fulvestrant", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // fulvestrant medication filter
-  ms.push({ system: "RxNorm", code: "203870", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "203870", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test fulvestrant medication filter.", () => {
@@ -267,9 +266,9 @@ describe("checkMedicationStatementFilterLogic-fulvestrant", () => {
 describe("checkMedicationStatementFilterLogic-toremifene", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // toremifene medication filter
-  ms.push({ system: "RxNorm", code: "38409", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "38409", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test toremifene medication filter.", () => {
@@ -279,9 +278,9 @@ describe("checkMedicationStatementFilterLogic-toremifene", () => {
 describe("checkMedicationStatementFilterLogic-raloxifene_hcl", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // raloxifene_hcl medication filter
-  ms.push({ system: "RxNorm", code: "1490064", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1490064", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test raloxifene_hcl medication filter.", () => {
@@ -291,9 +290,9 @@ describe("checkMedicationStatementFilterLogic-raloxifene_hcl", () => {
 describe('checkMedicationStatementFilterLogic-trastuzumab', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // trastuzumab medication filter
-  ms.push({ system: 'RxNorm', code: '1658082', display: 'N/A' } as Coding);
+  ms.push({ system: 'RxNorm', code: '1658082', display: 'N/A' } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test trastuzumab medication filter.', () => {
@@ -303,9 +302,9 @@ describe('checkMedicationStatementFilterLogic-trastuzumab', () => {
 describe('checkMedicationStatementFilterLogicTreatment-Trastuzumab', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // Treatment Trastuzumab medication filter
-  ms.push({ system: 'RxNorm', code: '1162762', display: 'N/A' } as Coding);
+  ms.push({ system: 'RxNorm', code: '1162762', display: 'N/A' } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test trastuzumab medication filter.', () => {
@@ -315,9 +314,9 @@ describe('checkMedicationStatementFilterLogicTreatment-Trastuzumab', () => {
 describe("checkMedicationStatementFilterLogic-trastuzumab_hyaluronidase_conjugate", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // trastuzumab_hyaluronidase_conjugate medication filter
-  ms.push({ system: "RxNorm", code: "2119711", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "2119711", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test trastuzumab_hyaluronidase_conjugate medication filter.", () => {
@@ -329,9 +328,9 @@ describe("checkMedicationStatementFilterLogic-trastuzumab_deruxtecan_conjugate",
   // NOTE: This medication does not have one of the mCODE Compliant Term Types. Has PIN and IN.
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // trastuzumab_deruxtecan_conjugate medication filter
-  ms.push({ system: "RxNorm", code: "2267582", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "2267582", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test trastuzumab_deruxtecan_conjugate medication filter.", () => {
@@ -342,9 +341,9 @@ describe("checkMedicationStatementFilterLogic-trastuzumab_deruxtecan_conjugate",
 describe("checkMedicationStatementFilterLogic-pertuzumab", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // pertuzumab medication filter
-  ms.push({ system: "RxNorm", code: "1298952", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1298952", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test xxx medication filter.", () => {
@@ -354,9 +353,9 @@ describe("checkMedicationStatementFilterLogic-pertuzumab", () => {
 describe("checkMedicationStatementFilterLogic-lapatinib", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // lapatinib medication filter
-  ms.push({ system: "RxNorm", code: "672151", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "672151", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test lapatinib medication filter.", () => {
@@ -366,9 +365,9 @@ describe("checkMedicationStatementFilterLogic-lapatinib", () => {
 describe("checkMedicationStatementFilterLogic-pertuzumab_trastuzumab_hyaluronidase", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // pertuzumab_trastuzumab_hyaluronidase medication filter
-  ms.push({ system: "RxNorm", code: "2382607", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "2382607", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test pertuzumab_trastuzumab_hyaluronidase medication filter.", () => {
@@ -380,9 +379,9 @@ describe("checkMedicationStatementFilterLogic-pertuzumab_trastuzumab_hyaluronida
 describe("checkMedicationStatementFilterLogic-tucatinib", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // tucatinib medication filter
-  ms.push({ system: "RxNorm", code: "2361286", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "2361286", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test tucatinib medication filter.", () => {
@@ -392,9 +391,9 @@ describe("checkMedicationStatementFilterLogic-tucatinib", () => {
 describe("checkMedicationStatementFilterLogic-neratinib", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // neratinib medication filter
-  ms.push({ system: "RxNorm", code: "1940644", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1940644", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test neratinib medication filter.", () => {
@@ -404,9 +403,9 @@ describe("checkMedicationStatementFilterLogic-neratinib", () => {
 describe("checkMedicationStatementFilterLogic-tdm1", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // tdm1 medication filter
-  ms.push({ system: "RxNorm", code: "1371049", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1371049", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test tdm1 medication filter.", () => {
@@ -416,9 +415,9 @@ describe("checkMedicationStatementFilterLogic-tdm1", () => {
 describe("checkMedicationStatementFilterLogic-doxorubicin", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // doxorubicin medication filter
-  ms.push({ system: "RxNorm", code: "1799302", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1799302", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test doxorubicin medication filter.", () => {
@@ -428,9 +427,9 @@ describe("checkMedicationStatementFilterLogic-doxorubicin", () => {
 describe("checkMedicationStatementFilterLogic-epirubicin", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // epirubicin medication filter
-  ms.push({ system: "RxNorm", code: "1732174", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1732174", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test epirubicin medication filter.", () => {
@@ -440,9 +439,9 @@ describe("checkMedicationStatementFilterLogic-epirubicin", () => {
 describe("checkMedicationStatementFilterLogic-cyclophosphamide", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // cyclophosphamide medication filter
-  ms.push({ system: "RxNorm", code: "1734915", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1734915", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test cyclophosphamide medication filter.", () => {
@@ -452,9 +451,9 @@ describe("checkMedicationStatementFilterLogic-cyclophosphamide", () => {
 describe("checkMedicationStatementFilterLogic-cisplatin", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // cisplatin medication filter
-  ms.push({ system: "RxNorm", code: "376433", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "376433", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test cisplatin medication filter.", () => {
@@ -464,9 +463,9 @@ describe("checkMedicationStatementFilterLogic-cisplatin", () => {
 describe("checkMedicationStatementFilterLogic-carboplatin", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // carboplatin medication filter
-  ms.push({ system: "RxNorm", code: "93698", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "93698", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test carboplatin medication filter.", () => {
@@ -476,9 +475,9 @@ describe("checkMedicationStatementFilterLogic-carboplatin", () => {
 describe("checkMedicationStatementFilterLogic-paclitaxel", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // paclitaxel medication filter
-  ms.push({ system: "RxNorm", code: "1165953", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1165953", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test paclitaxel medication filter.", () => {
@@ -488,9 +487,9 @@ describe("checkMedicationStatementFilterLogic-paclitaxel", () => {
 describe("checkMedicationStatementFilterLogic-docetaxel", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // docetaxel medication filter
-  ms.push({ system: "RxNorm", code: "1093279", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1093279", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test docetaxel medication filter.", () => {
@@ -500,9 +499,9 @@ describe("checkMedicationStatementFilterLogic-docetaxel", () => {
 describe("checkMedicationStatementFilterLogic-gemcitabine", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // gemcitabine medication filter
-  ms.push({ system: "RxNorm", code: "1720977", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1720977", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test gemcitabine medication filter.", () => {
@@ -512,9 +511,9 @@ describe("checkMedicationStatementFilterLogic-gemcitabine", () => {
 describe("checkMedicationStatementFilterLogic-capecitabine", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // capecitabine medication filter
-  ms.push({ system: "RxNorm", code: "1158877", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1158877", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test capecitabine medication filter.", () => {
@@ -524,9 +523,9 @@ describe("checkMedicationStatementFilterLogic-capecitabine", () => {
 describe("checkMedicationStatementFilterLogic-vinblastine_sulfate", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // vinblastine_sulfate medication filter
-  ms.push({ system: "RxNorm", code: "376857", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "376857", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test vinblastine_sulfate medication filter.", () => {
@@ -536,9 +535,9 @@ describe("checkMedicationStatementFilterLogic-vinblastine_sulfate", () => {
 describe("checkMedicationStatementFilterLogic-sacituzumab_govitecan_hziy", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // sacituzumab_govitecan_hziy medication filter
-  ms.push({ system: "RxNorm", code: "2360533", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "2360533", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test sacituzumab_govitecan_hziy medication filter.", () => {
@@ -548,9 +547,9 @@ describe("checkMedicationStatementFilterLogic-sacituzumab_govitecan_hziy", () =>
 describe("checkMedicationStatementFilterLogic-methotrexate", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // methotrexate medication filter
-  ms.push({ system: "RxNorm", code: "1921593", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1921593", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test methotrexate medication filter.", () => {
@@ -560,9 +559,9 @@ describe("checkMedicationStatementFilterLogic-methotrexate", () => {
 describe("checkMedicationStatementFilterLogic-fluorouracil", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // fluorouracil medication filter
-  ms.push({ system: "RxNorm", code: "105584", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "105584", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test fluorouracil medication filter.", () => {
@@ -572,9 +571,9 @@ describe("checkMedicationStatementFilterLogic-fluorouracil", () => {
 describe("checkMedicationStatementFilterLogic-vinorelbine", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // xxx medication filter
-  ms.push({ system: "RxNorm", code: "1180490", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1180490", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test vinorelbine medication filter.", () => {
@@ -584,9 +583,9 @@ describe("checkMedicationStatementFilterLogic-vinorelbine", () => {
 describe('checkMedicationStatementFilterLogic-eribulin', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // eribuline medication filter
-  ms.push({ system: 'RxNorm', code: '1736562', display: 'N/A' } as Coding);
+  ms.push({ system: 'RxNorm', code: '1736562', display: 'N/A' } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test eribulin medication filter.', () => {
@@ -596,9 +595,9 @@ describe('checkMedicationStatementFilterLogic-eribulin', () => {
 describe("checkMedicationStatementFilterLogic-ixabepilone", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // ixabepilone medication filter
-  ms.push({ system: "RxNorm", code: "1726277", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1726277", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test ixabepilone medication filter.", () => {
@@ -608,9 +607,9 @@ describe("checkMedicationStatementFilterLogic-ixabepilone", () => {
 describe("checkMedicationStatementFilterLogic-etoposide", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // etoposide medication filter
-  ms.push({ system: "RxNorm", code: "1734344", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1734344", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test etoposide medication filter.", () => {
@@ -620,9 +619,9 @@ describe("checkMedicationStatementFilterLogic-etoposide", () => {
 describe("checkMedicationStatementFilterLogic-pemetrexed", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // pemetrexed medication filter
-  ms.push({ system: "RxNorm", code: "1728078", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1728078", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test pemetrexed medication filter.", () => {
@@ -632,9 +631,9 @@ describe("checkMedicationStatementFilterLogic-pemetrexed", () => {
 describe("checkMedicationStatementFilterLogic-irinotecan", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // irinotecan medication filter
-  ms.push({ system: "RxNorm", code: "2284502", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "2284502", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test irinotecan medication filter.", () => {
@@ -644,9 +643,9 @@ describe("checkMedicationStatementFilterLogic-irinotecan", () => {
 describe("checkMedicationStatementFilterLogic-topotecan", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // topotecan medication filter
-  ms.push({ system: "RxNorm", code: "1172714", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1172714", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test topotecan medication filter.", () => {
@@ -656,9 +655,9 @@ describe("checkMedicationStatementFilterLogic-topotecan", () => {
 describe("checkMedicationStatementFilterLogic-ifosfamide", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // ifosfamide medication filter
-  ms.push({ system: "RxNorm", code: "1791587", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1791587", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test ifosfamide medication filter.", () => {
@@ -668,9 +667,9 @@ describe("checkMedicationStatementFilterLogic-ifosfamide", () => {
 describe("checkMedicationStatementFilterLogic-nivolumab", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // nivolumab medication filter
-  ms.push({ system: "RxNorm", code: "1597878", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1597878", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test nivolumab medication filter.", () => {
@@ -680,9 +679,9 @@ describe("checkMedicationStatementFilterLogic-nivolumab", () => {
 describe("checkMedicationStatementFilterLogic-avelumab", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // avelumab medication filter
-  ms.push({ system: "RxNorm", code: "1875540", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1875540", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test avelumab medication filter.", () => {
@@ -692,9 +691,9 @@ describe("checkMedicationStatementFilterLogic-avelumab", () => {
 describe("checkMedicationStatementFilterLogic-thiotepa", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // thiotepa medication filter
-  ms.push({ system: "RxNorm", code: "1919208", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1919208", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test thiotepa medication filter.", () => {
@@ -704,9 +703,9 @@ describe("checkMedicationStatementFilterLogic-thiotepa", () => {
 describe("checkMedicationStatementFilterLogic-olaparib", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // olaparib medication filter
-  ms.push({ system: "RxNorm", code: "1942483", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1942483", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test olaparib medication filter.", () => {
@@ -716,9 +715,9 @@ describe("checkMedicationStatementFilterLogic-olaparib", () => {
 describe("checkMedicationStatementFilterLogic-talazoparib", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // talazoparib medication filter
-  ms.push({ system: "RxNorm", code: "2099949", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "2099949", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test talazoparib medication filter.", () => {
@@ -728,9 +727,9 @@ describe("checkMedicationStatementFilterLogic-talazoparib", () => {
 describe("checkMedicationStatementFilterLogic-atezolizumab", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // atezolizumab medication filter
-  ms.push({ system: "RxNorm", code: "1792778", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1792778", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test atezolizumab medication filter.", () => {
@@ -740,9 +739,9 @@ describe("checkMedicationStatementFilterLogic-atezolizumab", () => {
 describe("checkMedicationStatementFilterLogic-pembrolizumab", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // pembrolizumab medication filter
-  ms.push({ system: "RxNorm", code: "1657747", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1657747", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test pembrolizumab medication filter.", () => {
@@ -752,9 +751,9 @@ describe("checkMedicationStatementFilterLogic-pembrolizumab", () => {
 describe("checkMedicationStatementFilterLogic-zoledronic_acid", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // zoledronic_acid medication filter
-  ms.push({ system: "RxNorm", code: "1114086", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1114086", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test zoledronic_acid medication filter.", () => {
@@ -764,9 +763,9 @@ describe("checkMedicationStatementFilterLogic-zoledronic_acid", () => {
 describe("checkMedicationStatementFilterLogic-pamidronate", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // pamidronate medication filter
-  ms.push({ system: "RxNorm", code: "904918", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "904918", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test pamidronate medication filter.", () => {
@@ -776,9 +775,9 @@ describe("checkMedicationStatementFilterLogic-pamidronate", () => {
 describe("checkMedicationStatementFilterLogic-denosumab", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // denosumab medication filter
-  ms.push({ system: "RxNorm", code: "993457", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "993457", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test denosumab medication filter.", () => {
@@ -788,9 +787,9 @@ describe("checkMedicationStatementFilterLogic-denosumab", () => {
 describe("checkMedicationStatementFilterLogic-bevacizumab", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // bevacizumab medication filter
-  ms.push({ system: "RxNorm", code: "1175674", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1175674", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test bevacizumab medication filter.", () => {
@@ -800,9 +799,9 @@ describe("checkMedicationStatementFilterLogic-bevacizumab", () => {
 describe("checkMedicationStatementFilterLogic-everolimus", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // everolimus medication filter
-  ms.push({ system: "RxNorm", code: "1172066", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1172066", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test everolimus medication filter.", () => {
@@ -812,9 +811,9 @@ describe("checkMedicationStatementFilterLogic-everolimus", () => {
 describe('checkMedicationStatementFilterLogic-progesterone', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // progestin medication filter
-  ms.push({ system: 'RxNorm', code: '2537633', display: 'N/A' } as Coding);
+  ms.push({ system: 'RxNorm', code: '2537633', display: 'N/A' } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test progesterone medication filter.', () => {
@@ -825,9 +824,9 @@ describe('checkMedicationStatementFilterLogic-progesterone', () => {
 // describe('checkMedicationStatementFilterLogic-Hyaluronidase', () => {
 //   // Initialize
 //   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const ms: Coding[] = [] as Coding[];
+//   const ms: fhir.Coding[] = [] as fhir.Coding[];
 //   // progestin medication filter
-//   ms.push({ system: 'RxNorm', code: '630936', display: 'N/A' } as Coding);
+//   ms.push({ system: 'RxNorm', code: '630936', display: 'N/A' } as fhir.Coding);
 //   extractedMCODE.cancerRelatedMedicationStatement = ms;
 //   const medications: string[] = extractedMCODE.getMedicationStatementValues();
 //   it('Test Hyaluronidase medication filter.', () => {
@@ -837,9 +836,9 @@ describe('checkMedicationStatementFilterLogic-progesterone', () => {
 describe("checkMedicationStatementFilterLogic-fluoxymesterone", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // fluoxymesterone medication filter
-  ms.push({ system: "RxNorm", code: "1175599", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1175599", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test fluoxymesterone medication filter.", () => {
@@ -849,9 +848,9 @@ describe("checkMedicationStatementFilterLogic-fluoxymesterone", () => {
 describe('checkMedicationStatementFilterLogic-high_dose_estrogen', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // high_dose_estrogen medication filter
-  ms.push({ system: 'RxNorm', code: '4099', display: 'N/A' } as Coding);
+  ms.push({ system: 'RxNorm', code: '4099', display: 'N/A' } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it('Test high_dose_estrogen medication filter.', () => {
@@ -861,9 +860,9 @@ describe('checkMedicationStatementFilterLogic-high_dose_estrogen', () => {
 describe("checkMedicationStatementFilterLogic-palbociclib", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // palbociclib medication filter
-  ms.push({ system: "RxNorm", code: "1601385", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1601385", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test palbociclib medication filter.", () => {
@@ -873,9 +872,9 @@ describe("checkMedicationStatementFilterLogic-palbociclib", () => {
 describe("checkMedicationStatementFilterLogic-ribociclib", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // ribociclib medication filter
-  ms.push({ system: "RxNorm", code: "1873987", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1873987", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test ribociclib medication filter.", () => {
@@ -885,9 +884,9 @@ describe("checkMedicationStatementFilterLogic-ribociclib", () => {
 describe("checkMedicationStatementFilterLogic-abemaciclib", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // abemaciclib medication filter
-  ms.push({ system: "RxNorm", code: "1946825", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1946825", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test abemaciclib medication filter.", () => {
@@ -897,9 +896,9 @@ describe("checkMedicationStatementFilterLogic-abemaciclib", () => {
 describe("checkMedicationStatementFilterLogic-alpelisib", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // alpelisib medication filter
-  ms.push({ system: "RxNorm", code: "2169317", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "2169317", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test alpelisib medication filter.", () => {
@@ -909,21 +908,21 @@ describe("checkMedicationStatementFilterLogic-alpelisib", () => {
 describe("checkMedicationStatementFilterLogic-seven_medications", () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const ms: Coding[] = [] as Coding[];
+  const ms: fhir.Coding[] = [] as fhir.Coding[];
   // letrozole medication filter
-  ms.push({ system: "RxNorm", code: "372571", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "372571", display: "N/A" } as fhir.Coding);
   // lapatinib medication filter
-  ms.push({ system: "RxNorm", code: "672151", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "672151", display: "N/A" } as fhir.Coding);
   // tucatinib medication filter
-  ms.push({ system: "RxNorm", code: "2361286", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "2361286", display: "N/A" } as fhir.Coding);
   // topotecan medication filter
-  ms.push({ system: "RxNorm", code: "1172714", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1172714", display: "N/A" } as fhir.Coding);
   // palbociclib medication filter
-  ms.push({ system: "RxNorm", code: "1601385", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1601385", display: "N/A" } as fhir.Coding);
   // abemaciclib medication filter
-  ms.push({ system: "RxNorm", code: "1946825", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "1946825", display: "N/A" } as fhir.Coding);
   // alpelisib medication filter
-  ms.push({ system: "RxNorm", code: "2169317", display: "N/A" } as Coding);
+  ms.push({ system: "RxNorm", code: "2169317", display: "N/A" } as fhir.Coding);
   extractedMCODE.cancerRelatedMedicationStatement = ms;
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test alpelisib medication filter.", () => {
@@ -940,9 +939,9 @@ describe("checkMedicationStatementFilterLogic-seven_medications", () => {
 describe('checkStageFilterLogic-Stage0', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 0 Filter Attributes
-  tnmPathological.push({ system: 'snomed', code: '261645004', display: 'N/A' } as Coding); // Any code in 'Stage-0'
+  tnmPathological.push({ system: 'snomed', code: '261645004', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-0'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 0 Filter', () => {
@@ -952,9 +951,9 @@ describe('checkStageFilterLogic-Stage0', () => {
 describe('checkStageFilterLogic-Stage1', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 1 Filter Attributes
-  tnmPathological.push({ system: 'AJCC', code: '1', display: 'N/A' } as Coding); // Any code in 'Stage-1'
+  tnmPathological.push({ system: 'AJCC', code: '1', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-1'
   extractedMCODE.TNMClinicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 1 Filter', () => {
@@ -964,9 +963,9 @@ describe('checkStageFilterLogic-Stage1', () => {
 describe('checkStageFilterLogic-Stage1A', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 1A Filter Attributes
-  tnmPathological.push({ system: 'snomed', code: '261634002', display: 'N/A' } as Coding); // Any code in 'Stage-1A'
+  tnmPathological.push({ system: 'snomed', code: '261634002', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-1A'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 1A Filter', () => {
@@ -976,9 +975,9 @@ describe('checkStageFilterLogic-Stage1A', () => {
 describe('checkStageFilterLogic-Stage1B', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 1B Filter Attributes
-  tnmPathological.push({ system: 'snomed', code: '261635001', display: 'N/A' } as Coding); // Any code in 'Stage-1B'
+  tnmPathological.push({ system: 'snomed', code: '261635001', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-1B'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 1B Filter', () => {
@@ -988,9 +987,9 @@ describe('checkStageFilterLogic-Stage1B', () => {
 describe('checkStageFilterLogic-Stage1C', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 1C Filter Attributes
-  tnmPathological.push({ system: 'snomed', code: '261636000', display: 'N/A' } as Coding); // Any code in 'Stage-1C'
+  tnmPathological.push({ system: 'snomed', code: '261636000', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-1C'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 1C Filter', () => {
@@ -1000,9 +999,9 @@ describe('checkStageFilterLogic-Stage1C', () => {
 describe('checkStageFilterLogic-Stage2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 2 Filter Attributes
-  tnmPathological.push({ system: 'AJCC', code: 'II', display: 'N/A' } as Coding); // Any code in 'Stage-2'
+  tnmPathological.push({ system: 'AJCC', code: 'II', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-2'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 2 Filter', () => {
@@ -1012,9 +1011,9 @@ describe('checkStageFilterLogic-Stage2', () => {
 describe('checkStageFilterLogic-Stage2A', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 2A Filter Attributes
-  tnmPathological.push({ system: 'snomed', code: '261614003', display: 'N/A' } as Coding); // Any code in 'Stage-2A'
+  tnmPathological.push({ system: 'snomed', code: '261614003', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-2A'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 2A Filter', () => {
@@ -1024,9 +1023,9 @@ describe('checkStageFilterLogic-Stage2A', () => {
 describe('checkStageFilterLogic-Stage2B', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 2B Filter Attributes
-  tnmPathological.push({ system: 'snomed', code: '261615002', display: 'N/A' } as Coding); // Any code in 'Stage-2B'
+  tnmPathological.push({ system: 'snomed', code: '261615002', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-2B'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 2B Filter', () => {
@@ -1036,9 +1035,9 @@ describe('checkStageFilterLogic-Stage2B', () => {
 describe('checkStageFilterLogic-Stage2C', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 2C Filter Attributes
-  tnmPathological.push({ system: 'snomed', code: '261637009', display: 'N/A' } as Coding); // Any code in 'Stage-2C'
+  tnmPathological.push({ system: 'snomed', code: '261637009', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-2C'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 2C Filter', () => {
@@ -1048,9 +1047,9 @@ describe('checkStageFilterLogic-Stage2C', () => {
 describe('checkStageFilterLogic-Stage3', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 3 Filter Attributes
-  tnmPathological.push({ system: 'AJCC', code: '3', display: 'N/A' } as Coding); // Any code in 'Stage-3'
+  tnmPathological.push({ system: 'AJCC', code: '3', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-3'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 3 Filter', () => {
@@ -1060,9 +1059,9 @@ describe('checkStageFilterLogic-Stage3', () => {
 describe('checkStageFilterLogic-Stage3A', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 3A Filter Attributes
-  tnmPathological.push({ system: 'AJCC', code: 'IIIA', display: 'N/A' } as Coding); // Any code in 'Stage-3A'
+  tnmPathological.push({ system: 'AJCC', code: 'IIIA', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-3A'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 3A Filter', () => {
@@ -1072,9 +1071,9 @@ describe('checkStageFilterLogic-Stage3A', () => {
 describe('checkStageFilterLogic-Stage3B', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 3B Filter Attributes
-  tnmPathological.push({ system: 'snomed', code: '261639007', display: 'N/A' } as Coding); // Any code in 'Stage-3B'
+  tnmPathological.push({ system: 'snomed', code: '261639007', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-3B'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 3B Filter', () => {
@@ -1084,9 +1083,9 @@ describe('checkStageFilterLogic-Stage3B', () => {
 describe('checkStageFilterLogic-Stage3C', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 3C Filter Attributes
-  tnmPathological.push({ system: 'AJCC', code: '3c', display: 'N/A' } as Coding); // Any code in 'Stage-3C'
+  tnmPathological.push({ system: 'AJCC', code: '3c', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-3C'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 3C Filter', () => {
@@ -1096,9 +1095,9 @@ describe('checkStageFilterLogic-Stage3C', () => {
 describe('checkStageFilterLogic-Stage4', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 4 Filter Attributes
-  tnmPathological.push({ system: 'SNOMED', code: '258228008', display: 'N/A' } as Coding); // Any code in 'Stage-4'
+  tnmPathological.push({ system: 'SNOMED', code: '258228008', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-4'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 4 Filter', () => {
@@ -1108,9 +1107,9 @@ describe('checkStageFilterLogic-Stage4', () => {
 describe('checkStageFilterLogic-Stage4A', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 4A Filter Attributes
-  tnmPathological.push({ system: 'ajcc', code: '4a', display: 'N/A' } as Coding); // Any code in 'Stage-4A'
+  tnmPathological.push({ system: 'ajcc', code: '4a', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-4A'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 4A Filter', () => {
@@ -1120,9 +1119,9 @@ describe('checkStageFilterLogic-Stage4A', () => {
 describe('checkStageFilterLogic-Stage4B', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 4B Filter Attributes
-  tnmPathological.push({ system: 'snomed', code: '261643006', display: 'N/A' } as Coding); // Any code in 'Stage-4B'
+  tnmPathological.push({ system: 'snomed', code: '261643006', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-4B'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 4B Filter', () => {
@@ -1132,9 +1131,9 @@ describe('checkStageFilterLogic-Stage4B', () => {
 describe('checkStageFilterLogic-Stage4C', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 4C Filter Attributes
-  tnmPathological.push({ system: 'ajcc', code: '4c', display: 'N/A' } as Coding); // Any code in 'Stage-4C'
+  tnmPathological.push({ system: 'ajcc', code: '4c', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-4C'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 4C Filter', () => {
@@ -1144,10 +1143,10 @@ describe('checkStageFilterLogic-Stage4C', () => {
 describe('checkStageFilterLogic-Stage4C_With_Stage1_InOrder', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 4C Filter Attributes
-  tnmPathological.push({ system: 'AJCC', code: '1', display: 'N/A' } as Coding); // Any code in 'Stage-1'
-  tnmPathological.push({ system: 'ajcc', code: '4c', display: 'N/A' } as Coding); // Any code in 'Stage-4C'
+  tnmPathological.push({ system: 'AJCC', code: '1', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-1'
+  tnmPathological.push({ system: 'ajcc', code: '4c', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-4C'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 4C Filter With 1', () => {
@@ -1157,10 +1156,10 @@ describe('checkStageFilterLogic-Stage4C_With_Stage1_InOrder', () => {
 describe('checkStageFilterLogic-Stage3C_With_Stage3B_NotOrdered', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
-  const tnmPathological: Coding[] = [] as Coding[];
+  const tnmPathological: fhir.Coding[] = [] as fhir.Coding[];
   // Stage 4C Filter Attributes
-  tnmPathological.push({ system: 'AJCC', code: '3c', display: 'N/A' } as Coding); // Any code in 'Stage-3C'
-  tnmPathological.push({ system: 'snomed', code: '261639007', display: 'N/A' } as Coding); // Any code in 'Stage-3B'
+  tnmPathological.push({ system: 'AJCC', code: '3c', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-3C'
+  tnmPathological.push({ system: 'snomed', code: '261639007', display: 'N/A' } as fhir.Coding); // Any code in 'Stage-3B'
   extractedMCODE.TNMPathologicalStageGroup = tnmPathological;
   const stage: string = extractedMCODE.getStageValues();
   it('Test Stage 3C Filter With 3B', () => {
@@ -1171,18 +1170,18 @@ describe('checkTumorMarkerFilterLogic-ER+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '16112-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '16112-5', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-ER'
   tm.interpretation.push({
     system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html',
     code: 'H',
     display: 'N/A'
-  } as Coding);  extractedMCODE.tumorMarker.push(tm);
+  } as fhir.Coding);  extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
   it('Test ER+ Filter', () => {
     expect(tumorMarkerValues[0]).toBe('ER+');
@@ -1192,13 +1191,13 @@ describe('checkTumorMarkerFilterLogic-ER+_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '16112-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '16112-5', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-ER'
   tm.valueRatio.push({numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
@@ -1210,18 +1209,18 @@ describe('checkTumorMarkerFilterLogic-ER-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '85310-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '85310-1', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-ER'
   tm.interpretation.push({
     system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html',
     code: 'NEG',
     display: 'N/A'
-  } as Coding);
+  } as fhir.Coding);
   extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
   it('Test ER- Filter', () => {
@@ -1232,13 +1231,13 @@ describe('checkTumorMarkerFilterLogic-ER-_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '85310-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '85310-1', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-ER'
   tm.valueRatio.push({numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
@@ -1250,18 +1249,18 @@ describe('checkTumorMarkerFilterLogic-PR+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-PR'
   tm.interpretation.push({
     system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html',
     code: 'H',
     display: 'N/A'
-  } as Coding);  extractedMCODE.tumorMarker.push(tm);
+  } as fhir.Coding);  extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
   it('Test PR+ Filter', () => {
     expect(tumorMarkerValues[0]).toBe('PR+');
@@ -1271,13 +1270,13 @@ describe('checkTumorMarkerFilterLogic-PR+_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-PR'
   tm.valueRatio.push({numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
@@ -1289,18 +1288,18 @@ describe('checkTumorMarkerFilterLogic-PR-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-PR'
   tm.valueCodeableConcept.push({
     system: 'snomed',
     code: '260385009',
     display: 'N/A'
-  } as Coding);  extractedMCODE.tumorMarker.push(tm);
+  } as fhir.Coding);  extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
   it('Test PR- Filter', () => {
     expect(tumorMarkerValues[0]).toBe('PR-');
@@ -1310,13 +1309,13 @@ describe('checkTumorMarkerFilterLogic-PR-_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-PR'
   tm.valueRatio.push({numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
@@ -1328,8 +1327,8 @@ describe('checkTumorMarkerFilterLogic-BRCA1+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -1337,12 +1336,12 @@ describe('checkTumorMarkerFilterLogic-BRCA1+', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1100', display: 'BRCA1' });
@@ -1367,8 +1366,8 @@ describe('checkTumorMarkerFilterLogic-BRCA1+_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -1376,12 +1375,12 @@ describe('checkTumorMarkerFilterLogic-BRCA1+_2', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1100', display: 'BRCA1' });
@@ -1406,8 +1405,8 @@ describe('checkTumorMarkerFilterLogic-BRCA1+_3', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -1415,12 +1414,12 @@ describe('checkTumorMarkerFilterLogic-BRCA1+_3', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1100', display: 'BRCA1' });
@@ -1445,8 +1444,8 @@ describe('checkTumorMarkerFilterLogic-BRCA1-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -1454,12 +1453,12 @@ describe('checkTumorMarkerFilterLogic-BRCA1-', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1100', display: 'BRCA1' });
@@ -1479,8 +1478,8 @@ describe('checkTumorMarkerFilterLogic-BRCA2+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -1488,12 +1487,12 @@ describe('checkTumorMarkerFilterLogic-BRCA2+', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1101', display: 'BRCA2' });
@@ -1513,8 +1512,8 @@ describe('checkTumorMarkerFilterLogic-BRCA2-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -1522,12 +1521,12 @@ describe('checkTumorMarkerFilterLogic-BRCA2-', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1101', display: 'BRCA2' });
@@ -1547,8 +1546,8 @@ describe('checkTumorMarkerFilterLogic-ATM-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -1556,12 +1555,12 @@ describe('checkTumorMarkerFilterLogic-ATM-', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '795', display: 'ATM' });
@@ -1581,8 +1580,8 @@ describe('checkTumorMarkerFilterLogic-ATM+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -1590,12 +1589,12 @@ describe('checkTumorMarkerFilterLogic-ATM+', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '795', display: 'ATM' });
@@ -1617,10 +1616,10 @@ describe('checkTumorMarkerFilterLogic-CDH1+', () => {
   const extractedMCODE = new mcode.ExtractedMCODE(null);
 
   const tumorMarker : mcode.TumorMarker = {
-    coding: [] as Coding[],
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
-    valueQuantity: [] as Coding[],
+    coding: [] as fhir.Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
+    valueQuantity: [] as fhir.Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
@@ -1638,8 +1637,8 @@ describe('checkTumorMarkerFilterLogic-CDH1-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -1647,12 +1646,12 @@ describe('checkTumorMarkerFilterLogic-CDH1-', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1748', display: 'CDH1' });
@@ -1673,10 +1672,10 @@ describe('checkTumorMarkerFilterLogic-CHEK2+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tumorMarker : mcode.TumorMarker = {
-    coding: [] as Coding[],
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
-    valueQuantity: [] as Coding[],
+    coding: [] as fhir.Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
+    valueQuantity: [] as fhir.Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
@@ -1694,8 +1693,8 @@ describe('checkTumorMarkerFilterLogic-CHEK2-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -1703,12 +1702,12 @@ describe('checkTumorMarkerFilterLogic-CHEK2-', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '16627', display: 'CHEK2' });
@@ -1728,10 +1727,10 @@ describe('checkTumorMarkerFilterLogic-NBN+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tumorMarker : mcode.TumorMarker = {
-    coding: [] as Coding[],
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
-    valueQuantity: [] as Coding[],
+    coding: [] as fhir.Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
+    valueQuantity: [] as fhir.Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
@@ -1749,10 +1748,10 @@ describe('checkTumorMarkerFilterLogic-NBN-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tumorMarker : mcode.TumorMarker = {
-    coding: [] as Coding[],
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
-    valueQuantity: [] as Coding[],
+    coding: [] as fhir.Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
+    valueQuantity: [] as fhir.Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
@@ -1770,10 +1769,10 @@ describe('checkTumorMarkerFilterLogic-NF1+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tumorMarker : mcode.TumorMarker = {
-    coding: [] as Coding[],
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
-    valueQuantity: [] as Coding[],
+    coding: [] as fhir.Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
+    valueQuantity: [] as fhir.Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
@@ -1791,10 +1790,10 @@ describe('checkTumorMarkerFilterLogic-NF1-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tumorMarker : mcode.TumorMarker = {
-    coding: [] as Coding[],
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
-    valueQuantity: [] as Coding[],
+    coding: [] as fhir.Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
+    valueQuantity: [] as fhir.Coding[],
     valueRatio: [] as mcode.Ratio[]
   };
 
@@ -1812,8 +1811,8 @@ describe('checkTumorMarkerFilterLogic-PALB2+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -1821,12 +1820,12 @@ describe('checkTumorMarkerFilterLogic-PALB2+', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '26144', display: 'PALB2' });
@@ -1846,8 +1845,8 @@ describe('checkTumorMarkerFilterLogic-PALB2-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -1855,12 +1854,12 @@ describe('checkTumorMarkerFilterLogic-PALB2-', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '26144', display: 'PALB2' });
@@ -1880,8 +1879,8 @@ describe('checkTumorMarkerFilterLogic-PTEN+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -1889,12 +1888,12 @@ describe('checkTumorMarkerFilterLogic-PTEN+', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '9588', display: 'PTEN' });
@@ -1914,8 +1913,8 @@ describe('checkTumorMarkerFilterLogic-PTEN-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -1923,12 +1922,12 @@ describe('checkTumorMarkerFilterLogic-PTEN-', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '9588', display: 'PTEN' });
@@ -1948,8 +1947,8 @@ describe('checkTumorMarkerFilterLogic-STK11+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -1957,12 +1956,12 @@ describe('checkTumorMarkerFilterLogic-STK11+', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '11389', display: 'STK11' });
@@ -1982,8 +1981,8 @@ describe('checkTumorMarkerFilterLogic-STK11-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -1991,12 +1990,12 @@ describe('checkTumorMarkerFilterLogic-STK11-', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '11389', display: 'STK11' });
@@ -2016,8 +2015,8 @@ describe('checkTumorMarkerFilterLogic-P53+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -2025,12 +2024,12 @@ describe('checkTumorMarkerFilterLogic-P53+', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '11998', display: 'P53' });
@@ -2050,8 +2049,8 @@ describe('checkTumorMarkerFilterLogic-P53-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -2059,12 +2058,12 @@ describe('checkTumorMarkerFilterLogic-P53-', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '11998', display: 'P53' });
@@ -2084,13 +2083,13 @@ describe('checkTumorMarkerFilterLogic-RB+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-RB'
   tm.valueQuantity.push({ value: '51', comparator: '>', unit: '%', code: '%' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2103,13 +2102,13 @@ describe('checkTumorMarkerFilterLogic-RB+_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-RB'
   tm.valueRatio.push({numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2122,13 +2121,13 @@ describe('checkTumorMarkerFilterLogic-RB-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-RB'
   tm.valueQuantity.push({ value: '49', comparator: '<=', unit: '%', code: '%' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2141,13 +2140,13 @@ describe('checkTumorMarkerFilterLogic-RB-_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-RB'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42795-5', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-RB'
   tm.valueRatio.push({numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2160,13 +2159,13 @@ describe('checkTumorMarkerFilterLogic-HER2+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '32996-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-HER2'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '32996-1', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-HER2'
   tm.valueQuantity.push({ value: '3+', comparator: '=' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2179,13 +2178,13 @@ describe('checkTumorMarkerFilterLogic-HER2-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '32996-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-HER2'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '32996-1', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-HER2'
   tm.valueQuantity.push({ value: '2+', comparator: '=' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2198,13 +2197,13 @@ describe('checkTumorMarkerFilterLogic-FGFR+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-FGFR'
   tm.valueQuantity.push({ value: '1', comparator: '>=', unit: '%', code: '%' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2217,13 +2216,13 @@ describe('checkTumorMarkerFilterLogic-FGFR+_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-FGFR'
   tm.valueRatio.push({numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2236,13 +2235,13 @@ describe('checkTumorMarkerFilterLogic-FGFR-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-FGFR'
   tm.valueQuantity.push({ value: '0.5', comparator: '<', unit: '%', code: '%' } as mcode.Quantity);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2255,13 +2254,13 @@ describe('checkTumorMarkerFilterLogic-FGFR-_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as Coding); // Any code in 'Biomarker-FGFR'
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '42785-6', display: 'N/A' } as fhir.Coding); // Any code in 'Biomarker-FGFR'
   tm.valueRatio.push({numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as mcode.Ratio);
   extractedMCODE.tumorMarker.push(tm);
 
@@ -2274,8 +2273,8 @@ describe('checkTumorMarkerFilterLogic-ESR1+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -2283,12 +2282,12 @@ describe('checkTumorMarkerFilterLogic-ESR1+', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '3467', display: 'ESR1' });
@@ -2308,8 +2307,8 @@ describe('checkTumorMarkerFilterLogic-ESR1-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -2317,12 +2316,12 @@ describe('checkTumorMarkerFilterLogic-ESR1-', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '3467', display: 'ESR1' });
@@ -2342,8 +2341,8 @@ describe('checkTumorMarkerFilterLogic-PIK3CA+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -2351,12 +2350,12 @@ describe('checkTumorMarkerFilterLogic-PIK3CA+', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '8975', display: 'PIK3CA' });
@@ -2376,8 +2375,8 @@ describe('checkTumorMarkerFilterLogic-PIK3CA-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -2385,12 +2384,12 @@ describe('checkTumorMarkerFilterLogic-PIK3CA-', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '8975', display: 'PIK3CA' });
@@ -2410,14 +2409,14 @@ describe('checkTumorMarkerFilterLogic-PDL1+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '96268-8', display: 'N/A' } as Coding);
-  tm.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'POS', display: 'POS' } as Coding);
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '96268-8', display: 'N/A' } as fhir.Coding);
+  tm.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'POS', display: 'POS' } as fhir.Coding);
   extractedMCODE.tumorMarker.push(tm);
 
   it('Test PDL1+ Filter', () => {
@@ -2429,14 +2428,14 @@ describe('checkTumorMarkerFilterLogic-PDL1-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const tm: mcode.TumorMarker = {};
-  tm.coding = [] as Coding[];
-  tm.interpretation = [] as Coding[];
-  tm.valueCodeableConcept = [] as Coding[];
+  tm.coding = [] as fhir.Coding[];
+  tm.interpretation = [] as fhir.Coding[];
+  tm.valueCodeableConcept = [] as fhir.Coding[];
   tm.valueQuantity = [] as mcode.Quantity[];
   tm.valueRatio = [] as mcode.Ratio[];
 
-  tm.coding.push({ system: 'http://loinc.info/sct', code: '83052-1', display: 'N/A' } as Coding);
-  tm.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'ND', display: 'ND' } as Coding);
+  tm.coding.push({ system: 'http://loinc.info/sct', code: '83052-1', display: 'N/A' } as fhir.Coding);
+  tm.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'ND', display: 'ND' } as fhir.Coding);
   extractedMCODE.tumorMarker.push(tm);
 
   it('Test PDL1- Filter', () => {
@@ -2448,8 +2447,8 @@ describe('checkTumorMarkerFilterLogic-NTRK_FUSION+', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -2457,12 +2456,12 @@ describe('checkTumorMarkerFilterLogic-NTRK_FUSION+', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '8031', display: 'NTRK_FUSION' });
@@ -2482,8 +2481,8 @@ describe('checkTumorMarkerFilterLogic-NTRK_FUSION-', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -2491,12 +2490,12 @@ describe('checkTumorMarkerFilterLogic-NTRK_FUSION-', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '8031', display: 'NTRK_FUSION' });
@@ -2516,8 +2515,8 @@ describe('checkTumorMarkerFilterLogic-No_Match', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const cgv: mcode.CancerGeneticVariant = {
-    valueCodeableConcept: [] as Coding[],
-    interpretation: [] as Coding[],
+    valueCodeableConcept: [] as fhir.Coding[],
+    interpretation: [] as fhir.Coding[],
     component: {} as mcode.CancerGeneticVariantComponent
   };
   const cgvComponent: mcode.CancerGeneticVariantComponent = {
@@ -2525,12 +2524,12 @@ describe('checkTumorMarkerFilterLogic-No_Match', () => {
     genomicsSourceClass: [] as mcode.CancerGeneticVariantComponentType[]
   };
   const cgvGeneStudied: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
   const cgvGenomicSourceClass: mcode.CancerGeneticVariantComponentType = {
-    valueCodeableConcept: { coding: [] as Coding[] },
-    interpretation: { coding: [] as Coding[] }
+    valueCodeableConcept: { coding: [] as fhir.Coding[] },
+    interpretation: { coding: [] as fhir.Coding[] }
   };
 
   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: 'XXX', display: 'XXX' });
@@ -2573,17 +2572,17 @@ describe('checkHistologyMorphologyFilterLogic-ibc', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const pcc: PrimaryCancerCondition = {};
-  pcc.clinicalStatus = [] as Coding[];
-  pcc.coding = [] as Coding[];
-  pcc.histologyMorphologyBehavior = [] as Coding[];
+  pcc.clinicalStatus = [] as fhir.Coding[];
+  pcc.coding = [] as fhir.Coding[];
+  pcc.histologyMorphologyBehavior = [] as fhir.Coding[];
 
   // Invasive Breast Cancer Filter Attributes
-  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as fhir.Coding); // Any Code in 'Cancer-Breast'
   pcc.histologyMorphologyBehavior.push({
     system: 'http://snomed.info/sct',
     code: '446688004',
     display: 'N/A'
-  } as Coding); // Any code in 'Morphology-Invasive'
+  } as fhir.Coding); // Any code in 'Morphology-Invasive'
 
   extractedMCODE.primaryCancerCondition.push(pcc);
 
@@ -2595,17 +2594,17 @@ describe('checkHistologyMorphologyFilterLogic-idc', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const pcc: PrimaryCancerCondition = {};
-  pcc.clinicalStatus = [] as Coding[];
-  pcc.coding = [] as Coding[];
-  pcc.histologyMorphologyBehavior = [] as Coding[];
+  pcc.clinicalStatus = [] as fhir.Coding[];
+  pcc.coding = [] as fhir.Coding[];
+  pcc.histologyMorphologyBehavior = [] as fhir.Coding[];
 
   // Invasive Ductal Carcinoma Filter Attributes
-  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as fhir.Coding); // Any Code in 'Cancer-Breast'
   pcc.histologyMorphologyBehavior.push({
     system: 'http://snomed.info/sct',
     code: '444134008',
     display: 'N/A'
-  } as Coding); // Any code in 'Morphology-Invas_Duct_Carc'
+  } as fhir.Coding); // Any code in 'Morphology-Invas_Duct_Carc'
 
   extractedMCODE.primaryCancerCondition.push(pcc);
 
@@ -2617,12 +2616,12 @@ describe('checkHistologyMorphologyFilterLogic-ilc', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const pcc: PrimaryCancerCondition = {};
-  pcc.clinicalStatus = [] as Coding[];
-  pcc.coding = [] as Coding[];
-  pcc.histologyMorphologyBehavior = [] as Coding[];
+  pcc.clinicalStatus = [] as fhir.Coding[];
+  pcc.coding = [] as fhir.Coding[];
+  pcc.histologyMorphologyBehavior = [] as fhir.Coding[];
 
   // Invasive Lobular Carcinoma Filter Attributes
-  pcc.coding.push({ system: 'http://snomed.info/sct', code: '1080261000119100', display: 'N/A' } as Coding); // Any Code in 'Cancer-Invas Lob Carc'
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '1080261000119100', display: 'N/A' } as fhir.Coding); // Any Code in 'Cancer-Invas Lob Carc'
 
   extractedMCODE.primaryCancerCondition.push(pcc);
 
@@ -2634,17 +2633,17 @@ describe('checkHistologyMorphologyFilterLogic-dcis', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const pcc: PrimaryCancerCondition = {};
-  pcc.clinicalStatus = [] as Coding[];
-  pcc.coding = [] as Coding[];
-  pcc.histologyMorphologyBehavior = [] as Coding[];
+  pcc.clinicalStatus = [] as fhir.Coding[];
+  pcc.coding = [] as fhir.Coding[];
+  pcc.histologyMorphologyBehavior = [] as fhir.Coding[];
 
   // Ductal Carcinoma In Situ Filter Attributes
-  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as fhir.Coding); // Any Code in 'Cancer-Breast'
   pcc.histologyMorphologyBehavior.push({
     system: 'http://snomed.info/sct',
     code: '18680006',
     display: 'N/A'
-  } as Coding); // Any code in 'Morphology-Duct_Car_In_Situ'
+  } as fhir.Coding); // Any code in 'Morphology-Duct_Car_In_Situ'
 
   extractedMCODE.primaryCancerCondition.push(pcc);
 
@@ -2656,11 +2655,11 @@ describe('checkHistologyMorphologyFilterLogic-lcis_1', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const pcc: PrimaryCancerCondition = {};
-  pcc.coding = [] as Coding[];
-  pcc.histologyMorphologyBehavior = [] as Coding[];
+  pcc.coding = [] as fhir.Coding[];
+  pcc.histologyMorphologyBehavior = [] as fhir.Coding[];
 
   // Lobular Carcinoma In Situ Filter Attributes
-  pcc.coding.push({ system: 'http://snomed.info/sct', code: '109888004', display: 'N/A' } as Coding); // Any Code in 'lcis-condition'
+  pcc.coding.push({ system: 'http://snomed.info/sct', code: '109888004', display: 'N/A' } as fhir.Coding); // Any Code in 'lcis-condition'
 
   extractedMCODE.primaryCancerCondition.push(pcc);
 
@@ -2672,16 +2671,16 @@ describe('checkHistologyMorphologyFilterLogic-lcis_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const pcc: PrimaryCancerCondition = {};
-  pcc.clinicalStatus = [] as Coding[];
-  pcc.coding = [] as Coding[];
-  pcc.histologyMorphologyBehavior = [] as Coding[];
+  pcc.clinicalStatus = [] as fhir.Coding[];
+  pcc.coding = [] as fhir.Coding[];
+  pcc.histologyMorphologyBehavior = [] as fhir.Coding[];
 
   // Lobular Carcinoma In Situ Filter Attributes
   pcc.histologyMorphologyBehavior.push({
     system: 'http://snomed.info/sct',
     code: '77284006',
     display: 'N/A'
-  } as Coding); // Any Code in 'lcis-histology'
+  } as fhir.Coding); // Any Code in 'lcis-histology'
 
   extractedMCODE.primaryCancerCondition.push(pcc);
 
@@ -2693,14 +2692,14 @@ describe('checkSecondaryCancerConditionLogic', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const scc: mcode.SecondaryCancerCondition = {};
-  scc.clinicalStatus = [] as Coding[];
-  scc.coding = [] as Coding[];
+  scc.clinicalStatus = [] as fhir.Coding[];
+  scc.coding = [] as fhir.Coding[];
 
 
-  scc.coding.push({ system: 'http://snomed.info/sct', code: '94222008' } as Coding);
-  scc.coding.push({ system: 'http://snomed.info/sct', code: '00000000', display: 'Secondary malignant neoplasm of liver (disorder)' } as Coding);
-  scc.coding.push({ display: 'Secondary malignant neoplasm of chest wall (disorder)' } as Coding);
-  scc.coding.push({ display: 'Cannot be read' } as Coding);
+  scc.coding.push({ system: 'http://snomed.info/sct', code: '94222008' } as fhir.Coding);
+  scc.coding.push({ system: 'http://snomed.info/sct', code: '00000000', display: 'Secondary malignant neoplasm of liver (disorder)' } as fhir.Coding);
+  scc.coding.push({ display: 'Secondary malignant neoplasm of chest wall (disorder)' } as fhir.Coding);
+  scc.coding.push({ display: 'Cannot be read' } as fhir.Coding);
 
   extractedMCODE.secondaryCancerCondition.push(scc);
 
@@ -2724,9 +2723,9 @@ describe('checkSecondaryCancerConditionLogic', () => {
   it('is null if no matches', () => {
     const emptyExtractedMCODE = new mcode.ExtractedMCODE(null);
     const scc: mcode.SecondaryCancerCondition = {};
-    scc.clinicalStatus = [] as Coding[];
-    scc.coding = [] as Coding[];
-    scc.coding.push({} as Coding);
+    scc.clinicalStatus = [] as fhir.Coding[];
+    scc.coding = [] as fhir.Coding[];
+    scc.coding.push({} as fhir.Coding);
 
     emptyExtractedMCODE.secondaryCancerCondition.push(scc);
 
@@ -2766,12 +2765,12 @@ describe('checkRadiationProcedureFilterLogic-WBRT', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const crrp: mcode.CancerRelatedRadiationProcedure = {};
-  crrp.bodySite = [] as Coding[];
-  crrp.coding = [] as Coding[];
+  crrp.bodySite = [] as fhir.Coding[];
+  crrp.coding = [] as fhir.Coding[];
 
   // WBRT Filter Attributes
-  crrp.coding.push({ system: 'http://snomed.info/sct', code: '108290001', display: 'N/A' } as Coding);
-  crrp.bodySite.push({ system: 'http://snomed.info/sct', code: '12738006', display: 'N/A' } as Coding);
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '108290001', display: 'N/A' } as fhir.Coding);
+  crrp.bodySite.push({ system: 'http://snomed.info/sct', code: '12738006', display: 'N/A' } as fhir.Coding);
 
   extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
 
@@ -2783,11 +2782,11 @@ describe('checkRadiationProcedureFilterLogic-EBRT', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const crrp: mcode.CancerRelatedRadiationProcedure = {};
-  crrp.bodySite = [] as Coding[];
-  crrp.coding = [] as Coding[];
+  crrp.bodySite = [] as fhir.Coding[];
+  crrp.coding = [] as fhir.Coding[];
 
   // EBRT Filter Attributes
-  crrp.coding.push({ system: 'http://snomed.info/sct', code: '33356009', display: 'N/A' } as Coding);
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '33356009', display: 'N/A' } as fhir.Coding);
 
   extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
 
@@ -2799,11 +2798,11 @@ describe('checkRadiationProcedureFilterLogic-Ablation', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const crrp: mcode.CancerRelatedRadiationProcedure = {};
-  crrp.bodySite = [] as Coding[];
-  crrp.coding = [] as Coding[];
+  crrp.bodySite = [] as fhir.Coding[];
+  crrp.coding = [] as fhir.Coding[];
 
   // Ablation Filter Attributes
-  crrp.coding.push({ system: 'http://snomed.info/sct', code: '228692005', display: 'N/A' } as Coding);
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '228692005', display: 'N/A' } as fhir.Coding);
 
   extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
 
@@ -2815,11 +2814,11 @@ describe('checkRadiationProcedureFilterLogic-rfa', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const crrp: mcode.CancerRelatedRadiationProcedure = {};
-  crrp.bodySite = [] as Coding[];
-  crrp.coding = [] as Coding[];
+  crrp.bodySite = [] as fhir.Coding[];
+  crrp.coding = [] as fhir.Coding[];
 
   // rfa Filter Attributes
-  crrp.coding.push({ system: 'http://snomed.info/sct', code: '879916008', display: 'N/A' } as Coding);
+  crrp.coding.push({ system: 'http://snomed.info/sct', code: '879916008', display: 'N/A' } as fhir.Coding);
 
   extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
 
@@ -2831,10 +2830,10 @@ describe('checkSurgicalProcedureFilterLogic-Lumpectomy', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const crsp: mcode.CancerRelatedSurgicalProcedure = {};
-  crsp.coding = [] as Coding[];
+  crsp.coding = [] as fhir.Coding[];
 
   // Lumpectomy Filter Attributes
-  crsp.coding.push({ system: 'http://snomed.info/sct', code: '392022002', display: 'N/A' } as Coding);
+  crsp.coding.push({ system: 'http://snomed.info/sct', code: '392022002', display: 'N/A' } as fhir.Coding);
 
   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
@@ -2847,10 +2846,10 @@ describe('checkSurgicalProcedureFilterLogic-Mastectomy', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const crsp: mcode.CancerRelatedSurgicalProcedure = {};
-  crsp.coding = [] as Coding[];
+  crsp.coding = [] as fhir.Coding[];
 
   // Mastectomy Filter Attributes
-  crsp.coding.push({ system: 'http://snomed.info/sct', code: '429400009', display: 'N/A' } as Coding);
+  crsp.coding.push({ system: 'http://snomed.info/sct', code: '429400009', display: 'N/A' } as fhir.Coding);
 
   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
@@ -2863,10 +2862,10 @@ describe('checkSurgicalProcedureFilterLogic-Alnd_1', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const crsp: mcode.CancerRelatedSurgicalProcedure = {};
-  crsp.coding = [] as Coding[];
+  crsp.coding = [] as fhir.Coding[];
 
   // Alnd Filter Attributes
-  crsp.coding.push({ system: 'http://snomed.info/sct', code: '234262008', display: 'N/A' } as Coding);
+  crsp.coding.push({ system: 'http://snomed.info/sct', code: '234262008', display: 'N/A' } as fhir.Coding);
 
   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
@@ -2879,12 +2878,12 @@ describe('checkSurgicalProcedureFilterLogic-Alnd_2', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const crsp: mcode.CancerRelatedSurgicalProcedure = {};
-  crsp.coding = [] as Coding[];
-  crsp.bodySite = [] as Coding[];
+  crsp.coding = [] as fhir.Coding[];
+  crsp.bodySite = [] as fhir.Coding[];
 
   // Alnd Filter Attributes
-  crsp.coding.push({ system: 'http://snomed.info/sct', code: '122459003', display: 'N/A' } as Coding);
-  crsp.bodySite.push({ system: 'http://snomed.info/sct', code: '746224000', display: 'N/A' } as Coding);
+  crsp.coding.push({ system: 'http://snomed.info/sct', code: '122459003', display: 'N/A' } as fhir.Coding);
+  crsp.bodySite.push({ system: 'http://snomed.info/sct', code: '746224000', display: 'N/A' } as fhir.Coding);
 
   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
@@ -2897,10 +2896,10 @@ describe('checkSurgicalProcedureFilterLogic-Reconstruction', () => {
   // Initialize
   const extractedMCODE = new mcode.ExtractedMCODE(null);
   const crsp: mcode.CancerRelatedSurgicalProcedure = {};
-  crsp.coding = [] as Coding[];
+  crsp.coding = [] as fhir.Coding[];
 
   // Reconstruction Filter Attributes
-  crsp.coding.push({ system: 'http://snomed.info/sct', code: '302342002', display: 'N/A' } as Coding);
+  crsp.coding.push({ system: 'http://snomed.info/sct', code: '302342002', display: 'N/A' } as fhir.Coding);
 
   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
