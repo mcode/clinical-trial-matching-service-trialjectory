@@ -5,9 +5,7 @@ import { Coding } from "./mcode";
  * Source: https://masteringjs.io/tutorials/fundamentals/enum
  */
 export class CodeSystemEnum {
-  /**
-   * Enums.
-   */
+
   static ICD10 = new CodeSystemEnum("ICD10");
   static SNOMED = new CodeSystemEnum("SNOMED");
   static RXNORM = new CodeSystemEnum("RXNORM");
@@ -21,7 +19,7 @@ export class CodeSystemEnum {
 
   /**
    * Constructor
-   * @param system
+   * @param system The system name.
    */
   constructor(system: string) {
     this.system = system;
@@ -71,9 +69,14 @@ export class CodeMapper {
     return code_map;
   }
 
-  extractCodeMappings(coding: Coding[]): string[] {
+  /**
+   * Extracts the code mappings for the given list of codings.
+   * @param codings The codings to map to profiles.
+   * @returns The list of mapped strings for the codings.
+   */
+  extractCodeMappings(codings: Coding[]): string[] {
     const extracted_mappings: string[] = [];
-    for (const code of coding) {
+    for (const code of codings) {
       const medical_code_key = new MedicalCode(code.code, code.system).toString();
       if (this.code_map.has(medical_code_key)) {
         extracted_mappings.push(...this.code_map.get(medical_code_key));
@@ -84,9 +87,9 @@ export class CodeMapper {
 
   /**
    * Returns whether the given coding equals the given code attributes.
-   * @param input_coding
-   * @param system
-   * @param code
+   * @param input_coding The coding to check against.
+   * @param system The system of the code to compare to.
+   * @param code The code of the code to compare to.
    */
   static codesEqual(input_coding: Coding, system: CodeSystemEnum, code: string ): boolean {
     return new MedicalCode(input_coding.code, input_coding.system).equalsMedicalCode(new MedicalCode(code, system.toString()));
