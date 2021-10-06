@@ -1,6 +1,8 @@
-import { fhir, CodeMapper, CodeSystemEnum, Quantity, TumorMarker, CancerGeneticVariant, Ratio, BaseFhirResource, CancerRelatedSurgicalProcedure, CancerRelatedRadiationProcedure, SecondaryCancerCondition, MappingLogic } from 'clinical-trial-matching-service';
-import { Bundle, Coding, Resource } from "clinical-trial-matching-service/dist/fhir-types";
-import {TrialjectoryMappingLogic} from '../src/trialjectorymappinglogic'
+import {
+  Bundle,
+  Resource,
+} from "clinical-trial-matching-service/dist/fhir-types";
+import { TrialjectoryMappingLogic } from "../src/trialjectorymappinglogic";
 
 describe("checkMedicationStatementFilterLogic-NoMedications", () => {
   // Initialize
@@ -8,45 +10,48 @@ describe("checkMedicationStatementFilterLogic-NoMedications", () => {
     resourceType: "Bundle",
     type: "transaction",
     entry: [
-        {
-            resource: {
-              resourceType: "MedicationStatement",
-              meta: {
-                profile: [
-                  "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement"
-                ]
+      {
+        resource: {
+          resourceType: "MedicationStatement",
+          meta: {
+            profile: [
+              "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement",
+            ],
+          },
+          status: "completed",
+          medicationCodeableConcept: {
+            coding: [
+              {
+                system: "RxNorm",
+                code: 341545345,
+                display: "N/A",
               },
-              status: "completed",
-              medicationCodeableConcept: {
-                coding: [
-                  {
-                    system: "RxNorm",
-                    code: 341545345,
-                    display: "N/A"
-                  },
-                  {
-                    system: "RxNorm",
-                    code: 563563,
-                    display: "N/A"
-                  },
-                  {
-                    system: "RxNorm",
-                    code: 35635463,
-                    display: "N/A"
-                  },
-                  {
-                    system: "RxNorm",
-                    code: 5365712,
-                    display: "N/A"
-                  },
-                  {
-                    system: "RxNorm",
-                    code: 2452456,
-                    display: "N/A"
-                  }
-                ]
-              }
-            } as unknown as Resource }]};
+              {
+                system: "RxNorm",
+                code: 563563,
+                display: "N/A",
+              },
+              {
+                system: "RxNorm",
+                code: 35635463,
+                display: "N/A",
+              },
+              {
+                system: "RxNorm",
+                code: 5365712,
+                display: "N/A",
+              },
+              {
+                system: "RxNorm",
+                code: 2452456,
+                display: "N/A",
+              },
+            ],
+          },
+        } as unknown as Resource,
+      },
+    ],
+  };
   const extractedMCODE = new TrialjectoryMappingLogic(bundle);
 
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
@@ -60,25 +65,28 @@ describe("checkMedicationStatementFilterLogic-anastrozole", () => {
     resourceType: "Bundle",
     type: "transaction",
     entry: [
-        {
-            resource: {
-              resourceType: "MedicationStatement",
-              meta: {
-                profile: [
-                  "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement"
-                ]
+      {
+        resource: {
+          resourceType: "MedicationStatement",
+          meta: {
+            profile: [
+              "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement",
+            ],
+          },
+          status: "completed",
+          medicationCodeableConcept: {
+            coding: [
+              {
+                system: "RxNorm",
+                code: 1157702,
+                display: "N/A",
               },
-              status: "completed",
-              medicationCodeableConcept: {
-                coding: [
-                  {
-                    system: "RxNorm",
-                    code: 1157702,
-                    display: "N/A"
-                  }
-                ]
-              }
-            } as unknown as Resource }]};
+            ],
+          },
+        } as unknown as Resource,
+      },
+    ],
+  };
   const extractedMCODE = new TrialjectoryMappingLogic(bundle);
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
   it("Test anastrozole medication filter.", () => {
@@ -87,95 +95,104 @@ describe("checkMedicationStatementFilterLogic-anastrozole", () => {
 });
 describe("checkMedicationStatementFilterLogic-fluoxymesterone", () => {
   // Initialize
-    const bundle: Bundle = {
+  const bundle: Bundle = {
     resourceType: "Bundle",
     type: "transaction",
     entry: [
-        {
-            resource: {
-              resourceType: "MedicationStatement",
-              meta: {
-                profile: [
-                  "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement"
-                ]
+      {
+        resource: {
+          resourceType: "MedicationStatement",
+          meta: {
+            profile: [
+              "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement",
+            ],
+          },
+          status: "completed",
+          medicationCodeableConcept: {
+            coding: [
+              {
+                system: "RxNorm",
+                code: 1175599,
+                display: "N/A",
               },
-              status: "completed",
-              medicationCodeableConcept: {
-                coding: [
-                  {
-                    system: "RxNorm",
-                    code: 1175599,
-                    display: "N/A"
-                  }
-                ]
-              }
-            } as unknown as Resource }]};
-            const extractedMCODE = new TrialjectoryMappingLogic(bundle);
-            const medications: string[] = extractedMCODE.getMedicationStatementValues();
+            ],
+          },
+        } as unknown as Resource,
+      },
+    ],
+  };
+  const extractedMCODE = new TrialjectoryMappingLogic(bundle);
+  const medications: string[] = extractedMCODE.getMedicationStatementValues();
   // fluoxymesterone medication filter
   it("Test fluoxymesterone medication filter.", () => {
     expect(medications[0]).toBe("fluoxymesterone");
   });
 });
-describe('checkMedicationStatementFilterLogic-high_dose_estrogen', () => {
+describe("checkMedicationStatementFilterLogic-high_dose_estrogen", () => {
   // Initialize
-    const bundle: Bundle = {
+  const bundle: Bundle = {
     resourceType: "Bundle",
     type: "transaction",
     entry: [
-        {
-            resource: {
-              resourceType: "MedicationStatement",
-              meta: {
-                profile: [
-                  "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement"
-                ]
+      {
+        resource: {
+          resourceType: "MedicationStatement",
+          meta: {
+            profile: [
+              "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement",
+            ],
+          },
+          status: "completed",
+          medicationCodeableConcept: {
+            coding: [
+              {
+                system: "RxNorm",
+                code: 4099,
+                display: "N/A",
               },
-              status: "completed",
-              medicationCodeableConcept: {
-                coding: [
-                  {
-                    system: "RxNorm",
-                    code: 4099,
-                    display: "N/A"
-                  }
-                ]
-              }
-            } as unknown as Resource }]};
-            const extractedMCODE = new TrialjectoryMappingLogic(bundle);
-            const medications: string[] = extractedMCODE.getMedicationStatementValues();
+            ],
+          },
+        } as unknown as Resource,
+      },
+    ],
+  };
+  const extractedMCODE = new TrialjectoryMappingLogic(bundle);
+  const medications: string[] = extractedMCODE.getMedicationStatementValues();
   // high_dose_estrogen medication filter
-  it('Test high_dose_estrogen medication filter.', () => {
-    expect(medications.includes('high_dose_estrogen')).toBeTrue();
+  it("Test high_dose_estrogen medication filter.", () => {
+    expect(medications.includes("high_dose_estrogen")).toBeTrue();
   });
 });
 describe("checkMedicationStatementFilterLogic-palbociclib", () => {
   // Initialize
-    const bundle: Bundle = {
+  const bundle: Bundle = {
     resourceType: "Bundle",
     type: "transaction",
     entry: [
-        {
-            resource: {
-              resourceType: "MedicationStatement",
-              meta: {
-                profile: [
-                  "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement"
-                ]
+      {
+        resource: {
+          resourceType: "MedicationStatement",
+          meta: {
+            profile: [
+              "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement",
+            ],
+          },
+          status: "completed",
+          medicationCodeableConcept: {
+            coding: [
+              {
+                system: "RxNorm",
+                code: 1601385,
+                display: "N/A",
               },
-              status: "completed",
-              medicationCodeableConcept: {
-                coding: [
-                  {
-                    system: "RxNorm",
-                    code: 1601385,
-                    display: "N/A"
-                  }
-                ]
-              }
-            } as unknown as Resource }]};
-            const extractedMCODE = new TrialjectoryMappingLogic(bundle);
-            const medications: string[] = extractedMCODE.getMedicationStatementValues();
+            ],
+          },
+        } as unknown as Resource,
+      },
+    ],
+  };
+  const extractedMCODE = new TrialjectoryMappingLogic(bundle);
+  const medications: string[] = extractedMCODE.getMedicationStatementValues();
   // palbociclib medication filter
   it("Test palbociclib medication filter.", () => {
     expect(medications[0]).toBe("palbociclib");
@@ -183,29 +200,32 @@ describe("checkMedicationStatementFilterLogic-palbociclib", () => {
 });
 describe("checkMedicationStatementFilterLogic-ribociclib", () => {
   // Initialize
-    const bundle: Bundle = {
+  const bundle: Bundle = {
     resourceType: "Bundle",
     type: "transaction",
     entry: [
-        {
-            resource: {
-              resourceType: "MedicationStatement",
-              meta: {
-                profile: [
-                  "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement"
-                ]
+      {
+        resource: {
+          resourceType: "MedicationStatement",
+          meta: {
+            profile: [
+              "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement",
+            ],
+          },
+          status: "completed",
+          medicationCodeableConcept: {
+            coding: [
+              {
+                system: "RxNorm",
+                code: 1873987,
+                display: "N/A",
               },
-              status: "completed",
-              medicationCodeableConcept: {
-                coding: [
-                  {
-                    system: "RxNorm",
-                    code: 1873987,
-                    display: "N/A"
-                  }
-                ]
-              }
-            } as unknown as Resource }]};
+            ],
+          },
+        } as unknown as Resource,
+      },
+    ],
+  };
   // ribociclib medication filter
   const extractedMCODE = new TrialjectoryMappingLogic(bundle);
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
@@ -215,29 +235,32 @@ describe("checkMedicationStatementFilterLogic-ribociclib", () => {
 });
 describe("checkMedicationStatementFilterLogic-abemaciclib", () => {
   // Initialize
-    const bundle: Bundle = {
+  const bundle: Bundle = {
     resourceType: "Bundle",
     type: "transaction",
     entry: [
-        {
-            resource: {
-              resourceType: "MedicationStatement",
-              meta: {
-                profile: [
-                  "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement"
-                ]
+      {
+        resource: {
+          resourceType: "MedicationStatement",
+          meta: {
+            profile: [
+              "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement",
+            ],
+          },
+          status: "completed",
+          medicationCodeableConcept: {
+            coding: [
+              {
+                system: "RxNorm",
+                code: 1946825,
+                display: "N/A",
               },
-              status: "completed",
-              medicationCodeableConcept: {
-                coding: [
-                  {
-                    system: "RxNorm",
-                    code: 1946825,
-                    display: "N/A"
-                  }
-                ]
-              }
-            } as unknown as Resource }]};
+            ],
+          },
+        } as unknown as Resource,
+      },
+    ],
+  };
   // abemaciclib medication filter
   const extractedMCODE = new TrialjectoryMappingLogic(bundle);
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
@@ -247,29 +270,32 @@ describe("checkMedicationStatementFilterLogic-abemaciclib", () => {
 });
 describe("checkMedicationStatementFilterLogic-alpelisib", () => {
   // Initialize
-    const bundle: Bundle = {
+  const bundle: Bundle = {
     resourceType: "Bundle",
     type: "transaction",
     entry: [
-        {
-            resource: {
-              resourceType: "MedicationStatement",
-              meta: {
-                profile: [
-                  "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement"
-                ]
+      {
+        resource: {
+          resourceType: "MedicationStatement",
+          meta: {
+            profile: [
+              "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement",
+            ],
+          },
+          status: "completed",
+          medicationCodeableConcept: {
+            coding: [
+              {
+                system: "RxNorm",
+                code: 2169317,
+                display: "N/A",
               },
-              status: "completed",
-              medicationCodeableConcept: {
-                coding: [
-                  {
-                    system: "RxNorm",
-                    code: 2169317,
-                    display: "N/A"
-                  }
-                ]
-              }
-            } as unknown as Resource }]};
+            ],
+          },
+        } as unknown as Resource,
+      },
+    ],
+  };
   // alpelisib medication filter
   const extractedMCODE = new TrialjectoryMappingLogic(bundle);
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
@@ -283,55 +309,58 @@ describe("checkMedicationStatementFilterLogic-seven_medications", () => {
     resourceType: "Bundle",
     type: "transaction",
     entry: [
-        {
-            resource: {
-              resourceType: "MedicationStatement",
-              meta: {
-                profile: [
-                  "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement"
-                ]
+      {
+        resource: {
+          resourceType: "MedicationStatement",
+          meta: {
+            profile: [
+              "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement",
+            ],
+          },
+          status: "completed",
+          medicationCodeableConcept: {
+            coding: [
+              {
+                system: "RxNorm",
+                code: 372571,
+                display: "N/A",
               },
-              status: "completed",
-              medicationCodeableConcept: {
-                coding: [
-                  {
-                    system: "RxNorm",
-                    code: 372571,
-                    display: "N/A"
-                  },
-                  {
-                    system: "RxNorm",
-                    code: 672151,
-                    display: "N/A"
-                  },
-                  {
-                    system: "RxNorm",
-                    code: 2361286,
-                    display: "N/A"
-                  },
-                  {
-                    system: "RxNorm",
-                    code: 1172714,
-                    display: "N/A"
-                  },
-                  {
-                    system: "RxNorm",
-                    code: 1601385,
-                    display: "N/A"
-                  },
-                  {
-                    system: "RxNorm",
-                    code: 1946825,
-                    display: "N/A"
-                  },
-                  {
-                    system: "RxNorm",
-                    code: 2169317,
-                    display: "N/A"
-                  }
-                ]
-              }
-            } as unknown as Resource }]};
+              {
+                system: "RxNorm",
+                code: 672151,
+                display: "N/A",
+              },
+              {
+                system: "RxNorm",
+                code: 2361286,
+                display: "N/A",
+              },
+              {
+                system: "RxNorm",
+                code: 1172714,
+                display: "N/A",
+              },
+              {
+                system: "RxNorm",
+                code: 1601385,
+                display: "N/A",
+              },
+              {
+                system: "RxNorm",
+                code: 1946825,
+                display: "N/A",
+              },
+              {
+                system: "RxNorm",
+                code: 2169317,
+                display: "N/A",
+              },
+            ],
+          },
+        } as unknown as Resource,
+      },
+    ],
+  };
   const extractedMCODE = new TrialjectoryMappingLogic(bundle);
   const medications: string[] = extractedMCODE.getMedicationStatementValues();
 
@@ -1347,8 +1376,6 @@ describe("checkMedicationStatementFilterLogic-seven_medications", () => {
 //   const cgvGeneStudied = createEmptyCancerGeneticVariantGeneStudied();
 //   const cgvGenomicSourceClass = createEmptyCancerGeneticVariantGenomicsSource();
 
-
-
 //   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '3467', display: 'ESR1' });
 //   cgv.valueCodeableConcept.push({ system: 'loinc', code: 'LA9633-4', display: 'Present' });
 //   cgvComponent.geneStudied.push(cgvGeneStudied);
@@ -1368,8 +1395,6 @@ describe("checkMedicationStatementFilterLogic-seven_medications", () => {
 //   const cgvComponent = createEmptyCancerGeneticVariantComponent();
 //   const cgvGeneStudied = createEmptyCancerGeneticVariantGeneStudied();
 //   const cgvGenomicSourceClass = createEmptyCancerGeneticVariantGenomicsSource();
-
-
 
 //   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '3467', display: 'ESR1' });
 //   cgv.valueCodeableConcept.push({ system: 'loinc', code: 'LA9634-2', display: 'Absent' });
