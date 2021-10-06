@@ -373,11 +373,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
     stageConverter.set('Stage-4D', '4C');  // 4D is not a stage in Trialjectory, return 4C.
     stageConverter.set('Stage-0A', '0'); // 0A is not a stage in Trialjectory, return 0.
     stageValues = stageValues.map(stage => {
-      if(stageConverter.has(stage)) {
-        return stageConverter.get(stage);
-      } else {
-        throw "Stage does not exist in mapping: " + stage + ".";
-      }
+      return stageConverter.get(stage);
     });
 
     // Pull the highest stage value.
@@ -894,7 +890,6 @@ quantityMatch(
   }
   ratioMatch(numerator: Quantity, denominator: Quantity, metricValue: number, metricComparator: string): boolean {
     if (!numerator || !denominator || !numerator.value || !denominator.value) {
-      //console.log('missing info for ratio comparison');
       return false;
     }
     const num: number = typeof numerator.value == 'number' ? numerator.value : Number(numerator.value);
@@ -927,11 +922,8 @@ quantityMatch(
     // WE HAVE SINCE DISCUSSED THESE MEDICATIONS WITH THEM, WAITING FOR THEM TO PROCEED.
 
     const medicationValues: string[] = TrialjectoryMappingLogic.codeMapper.extractCodeMappings(this.getExtractedCancerRelatedMedicationStatements());
-
     // Filter any duplicate values.
     medicationValues.filter((a, b) => medicationValues.indexOf(a) === b)
-
     return medicationValues;
   }
-
- }
+}

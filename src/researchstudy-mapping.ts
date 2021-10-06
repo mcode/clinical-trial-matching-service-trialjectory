@@ -45,6 +45,7 @@ export function convertToResearchStudy(trial: QueryTrial, id: number): ResearchS
 
   if(trial.nct_number) {
     result.identifier = [{ use: 'official', system: 'http://clinicaltrials.gov', value: trial.nct_number }];
+    result.id = trial.nct_number;
   }
 
   if (trial.phases) { // Needs mapping verified

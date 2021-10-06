@@ -309,11 +309,21 @@ export function convertResponseToSearchSet(
   if (ctgService) {
     // If given a backup service, use it
     return ctgService.updateResearchStudies(studies).then(() => {
-      return new SearchSet(studies);
+      const ss = new SearchSet();
+      for (const study of studies) {
+        // If returned from TrialJectory, then the study has a match likelihood of 1
+        ss.addEntry(study, 1);
+      }
+      return ss;
     });
   } else {
     // Otherwise, resolve immediately
-    return Promise.resolve(new SearchSet(studies));
+    const ss = new SearchSet();
+    for (const study of studies) {
+      // If returned from TrialJectory, then the study has a match likelihood of 1
+      ss.addEntry(study, 1);
+    }
+    return Promise.resolve(ss);
   }
 }
 
