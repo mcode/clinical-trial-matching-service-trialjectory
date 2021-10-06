@@ -10,9 +10,10 @@ import {
   ServiceConfiguration,
   ResearchStudy,
   SearchSet,
+  MappingLogic
 } from "clinical-trial-matching-service";
 import convertToResearchStudy from "./researchstudy-mapping";
-import * as mcode from './mcode';
+import { TrialjectoryMappingLogic } from "./trialjectorymappinglogic";
 
 export interface QueryConfiguration extends ServiceConfiguration {
   endpoint?: string;
@@ -235,19 +236,19 @@ export class APIQuery {
       }
     }
 
-    const extractedMCODE = new mcode.ExtractedMCODE(patientBundle);
-    console.log(extractedMCODE);
-    this.biomarkers = extractedMCODE.getTumorMarkerValue();
-    this.stage = extractedMCODE.getStageValues();
-    this.cancerType = extractedMCODE.getPrimaryCancerValue();
-    this.cancerSubType = extractedMCODE.getHistologyMorphologyValue();
-    this.ecog = extractedMCODE.getECOGScore();
-    this.karnofsky = extractedMCODE.getKarnofskyScore();
-    this.medications = extractedMCODE.getMedicationStatementValues();
-    this.radiationProcedures = extractedMCODE.getRadiationProcedureValue();
-    this.surgicalProcedures = extractedMCODE.getSurgicalProcedureValue();
-    this.metastasis = extractedMCODE.getSecondaryCancerValue();
-    this.age = extractedMCODE.getAgeValue();
+    const mappingLogic: MappingLogic = new TrialjectoryMappingLogic(patientBundle);
+    console.log(mappingLogic);
+    this.biomarkers = mappingLogic.getTumorMarkerValues();
+    this.stage = mappingLogic.getStageValues();
+    this.cancerType = mappingLogic.getPrimaryCancerValues();
+    this.cancerSubType = mappingLogic.getHistologyMorphologyValue();
+    this.ecog = mappingLogic.getECOGScore();
+    this.karnofsky = mappingLogic.getKarnofskyScore();
+    this.medications = mappingLogic.getMedicationStatementValues();
+    this.radiationProcedures = mappingLogic.getRadiationProcedureValues();
+    this.surgicalProcedures = mappingLogic.getSurgicalProcedureValues();
+    this.metastasis = mappingLogic.getSecondaryCancerValues();
+    this.age = mappingLogic.getAgeValue();
   }
 
   /**
