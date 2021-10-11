@@ -102,14 +102,9 @@ export class TrialjectoryMappingLogic extends MappingLogic {
 
     const extractedPrimaryCancerConditions = this.getExtractedPrimaryCancerConditions();
 
-    if (
-      extractedPrimaryCancerConditions.length == 0 &&
-      this.getExtractedTNMclinicalStageGroup().length == 0 &&
-      this.getExtractedTNMpathologicalStageGroup().length == 0
-    ) {
+    if (extractedPrimaryCancerConditions.length == 0) {
       return null;
     }
-
 
     // Invasive Ductal Carcinoma
     for (const primaryCancerCondition of extractedPrimaryCancerConditions) {
