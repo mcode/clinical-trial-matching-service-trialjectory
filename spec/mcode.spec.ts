@@ -1,12 +1,12 @@
-import { fhir } from "clinical-trial-matching-service";
+import { Ratio } from "clinical-trial-matching-service";
 import {
   Bundle,
+  Coding,
   Resource,
 } from "clinical-trial-matching-service/dist/fhir-types";
 import { TrialjectoryMappingLogic } from "../src/trialjectorymappinglogic";
 
-
-function createMedicationStatementBundle(...coding: fhir.Coding[]): Bundle {
+function createMedicationStatementBundle(...coding: Coding[]): Bundle {
   const bundle: Bundle = {
     resourceType: "Bundle",
     type: "transaction",
@@ -20,178 +20,87 @@ function createMedicationStatementBundle(...coding: fhir.Coding[]): Bundle {
             ],
           },
           medicationCodeableConcept: {
-            coding: coding
+            coding: coding,
           },
         } as unknown as Resource,
-      },
-    ],
+      }
+    ]
   };
   return bundle;
 }
 
 describe("Test Medication Logic", () => {
-
   // Function to eliminate redundant test setup.
-  let createMedicationsToTest = (...coding: fhir.Coding[]): string[] => {
+  let createMedicationsToTest = (...coding: Coding[]): string[] => {
     const bundle = createMedicationStatementBundle(...coding);
     const extractedMCODE = new TrialjectoryMappingLogic(bundle);
     return extractedMCODE.getMedicationStatementValues();
-  }
+  };
 
   it("Test with no valid medications", () => {
-    const coding: fhir.Coding[] = [
-      {
-        system: "RxNorm",
-        code: "341545345",
-        display: "N/A",
-      },
-      {
-        system: "RxNorm",
-        code: "563563",
-        display: "N/A",
-      },
-      {
-        system: "RxNorm",
-        code: "35635463",
-        display: "N/A",
-      },
-      {
-        system: "RxNorm",
-        code: "5365712",
-        display: "N/A",
-      },
-      {
-        system: "RxNorm",
-        code: "2452456",
-        display: "N/A",
-      }
+    const coding: Coding[] = [
+      { system: "RxNorm", code: "341545345", display: "N/A" },
+      { system: "RxNorm", code: "563563", display: "N/A" },
+      { system: "RxNorm", code: "35635463", display: "N/A" },
+      { system: "RxNorm", code: "5365712", display: "N/A" },
+      { system: "RxNorm", code: "2452456", display: "N/A" },
     ];
     const medications = createMedicationsToTest(...coding);
     expect(medications.length).toBe(0);
   });
 
   it("Test medication anastrozole", () => {
-    const coding: fhir.Coding[] = [
-      {
-        system: "RxNorm",
-        code: "1157702",
-        display: "N/A",
-      }
-    ];
+    const coding: Coding[] = [{ system: "RxNorm", code: "1157702", display: "N/A" }];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("anastrozole");
   });
 
   it("Test medication fluoxymesterone", () => {
-    const coding: fhir.Coding[] = [
-      {
-        system: "RxNorm",
-        code: "1175599",
-        display: "N/A",
-      }
-    ];
+    const coding: Coding[] = [{ system: "RxNorm", code: "1175599", display: "N/A" }];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("fluoxymesterone");
   });
 
   it("Test medication high_dose_estrogen", () => {
-    const coding: fhir.Coding[] = [
-      {
-        system: "RxNorm",
-        code: "4099",
-        display: "N/A",
-      }
-    ];
+    const coding: Coding[] = [{ system: "RxNorm", code: "4099", display: "N/A" }];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("high_dose_estrogen");
   });
 
   it("Test medication palbociclib", () => {
-    const coding: fhir.Coding[] = [
-      {
-        system: "RxNorm",
-        code: "1601385",
-        display: "N/A",
-      }
-    ];
+    const coding: Coding[] = [{ system: "RxNorm", code: "1601385", display: "N/A" },];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("palbociclib");
   });
 
   it("Test medication ribociclib", () => {
-    const coding: fhir.Coding[] = [
-      {
-        system: "RxNorm",
-        code: "1873987",
-        display: "N/A",
-      }
-    ];
+    const coding: Coding[] = [{ system: "RxNorm", code: "1873987", display: "N/A" },];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("ribociclib");
   });
 
   it("Test medication abemaciclib", () => {
-    const coding: fhir.Coding[] = [
-      {
-        system: "RxNorm",
-        code: "1946825",
-        display: "N/A",
-      }
-    ];
+    const coding: Coding[] = [{system: "RxNorm", code: "1946825", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("abemaciclib");
   });
 
   it("Test medication alpelisib", () => {
-    const coding: fhir.Coding[] = [
-      {
-        system: "RxNorm",
-        code: "2169317",
-        display: "N/A",
-      }
-    ];
+    const coding: Coding[] = [{system: "RxNorm", code: "2169317", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("alpelisib");
   });
 
   it("Test 7 medications together", () => {
-    const coding: fhir.Coding[] = [
-      {
-        system: "RxNorm",
-        code: "372571",
-        display: "N/A",
-      },
-      {
-        system: "RxNorm",
-        code: "672151",
-        display: "N/A",
-      },
-      {
-        system: "RxNorm",
-        code: "2361286",
-        display: "N/A",
-      },
-      {
-        system: "RxNorm",
-        code: "1172714",
-        display: "N/A",
-      },
-      {
-        system: "RxNorm",
-        code: "1601385",
-        display: "N/A",
-      },
-      {
-        system: "RxNorm",
-        code: "1946825",
-        display: "N/A",
-      },
-      {
-        system: "RxNorm",
-        code: "2169317",
-        display: "N/A",
-      }
-    ]
+    const coding: Coding[] = [
+      {system: "RxNorm", code: "372571", display: "N/A"},
+      {system: "RxNorm", code: "672151", display: "N/A"},
+      {system: "RxNorm", code: "2361286", display: "N/A"},
+      {system: "RxNorm", code: "1172714", display: "N/A"},
+      {system: "RxNorm", code: "1601385", display: "N/A"},
+      {system: "RxNorm", code: "1946825", display: "N/A"},
+      {system: "RxNorm", code: "2169317", display: "N/A"},
+    ];
     const medications = createMedicationsToTest(...coding);
     expect(medications.length).toBe(7);
     expect(medications.indexOf("letrozole") > -1).toBeTrue();
@@ -204,7 +113,7 @@ describe("Test Medication Logic", () => {
   });
 });
 
-function createTnmPathologicalBundle(...coding: fhir.Coding[]): Bundle {
+function createTnmPathologicalBundle(...coding: Coding[]): Bundle {
   const bundle: Bundle = {
     resourceType: "Bundle",
     type: "transaction",
@@ -218,260 +127,432 @@ function createTnmPathologicalBundle(...coding: fhir.Coding[]): Bundle {
             ],
           },
           valueCodeableConcept: {
-            coding:
-              coding
+            coding: coding,
           },
         } as unknown as Resource,
-      },
-    ],
+      }
+    ]
   };
   return bundle;
 }
 
-describe('Test Stage Logic', () => {
-
+describe("Test Stage Logic", () => {
   // Function to eliminate redundant test setup.
-  let createStageToTest = (...coding: fhir.Coding[]): string => {
+  let createStageToTest = (...coding: Coding[]): string => {
     const bundle = createTnmPathologicalBundle(...coding);
     const extractedMCODE = new TrialjectoryMappingLogic(bundle);
     return extractedMCODE.getStageValues();
-  }
+  };
 
-  it('Test Stage 0 Filter', () => {
-    const coding: fhir.Coding = { system: 'snomed', code: '261645004', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 0 Filter", () => {
+    const coding: Coding = {system: "snomed", code: "261645004", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('0');
+    expect(stage).toBe("0");
   });
 
-  it('Test Stage 1 Filter', () => {
-    const coding: fhir.Coding = {system: 'AJCC', code: '1', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 1 Filter", () => {
+    const coding: Coding = {system: "AJCC", code: "1", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('1');
+    expect(stage).toBe("1");
   });
 
-  it('Test Stage 1A Filter', () => {
-    const coding: fhir.Coding = { system: 'snomed', code: '261634002', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 1A Filter", () => {
+    const coding: Coding = {system: "snomed", code: "261634002", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('1A');
+    expect(stage).toBe("1A");
   });
 
-  it('Test Stage 1B Filter', () => {
-    const coding: fhir.Coding = { system: 'snomed', code: '261635001', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 1B Filter", () => {
+    const coding: Coding = {system: "snomed", code: "261635001", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('1B');
+    expect(stage).toBe("1B");
   });
 
-  it('Test Stage 1C Filter', () => {
-    const coding: fhir.Coding = { system: 'snomed', code: '261636000', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 1C Filter", () => {
+    const coding: Coding = {system: "snomed", code: "261636000", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('1C');
+    expect(stage).toBe("1C");
   });
 
-  it('Test Stage 2 Filter', () => {
-    const coding: fhir.Coding = { system: 'AJCC', code: 'II', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 2 Filter", () => {
+    const coding: Coding = {system: "AJCC", code: "II", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('2');
+    expect(stage).toBe("2");
   });
 
-  it('Test Stage 2A Filter', () => {
-    const coding: fhir.Coding = { system: 'snomed', code: '261614003', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 2A Filter", () => {
+    const coding: Coding = {system: "snomed", code: "261614003", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('2A');
+    expect(stage).toBe("2A");
   });
 
-  it('Test Stage 2B Filter', () => {
-    const coding: fhir.Coding = { system: 'snomed', code: '261615002', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 2B Filter", () => {
+    const coding: Coding = {system: "snomed", code: "261615002", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('2B');
+    expect(stage).toBe("2B");
   });
 
-  it('Test Stage 2C Filter', () => {
-    const coding: fhir.Coding = { system: 'snomed', code: '261637009', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 2C Filter", () => {
+    const coding: Coding = {system: "snomed", code: "261637009", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('2C');
+    expect(stage).toBe("2C");
   });
 
-  it('Test Stage 3 Filter', () => {
-    const coding: fhir.Coding = { system: 'AJCC', code: '3', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 3 Filter", () => {
+    const coding: Coding = {system: "AJCC", code: "3", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('3');
+    expect(stage).toBe("3");
   });
 
-  it('Test Stage 3A Filter', () => {
-    const coding: fhir.Coding = { system: 'AJCC', code: 'IIIA', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 3A Filter", () => {
+    const coding: Coding = {system: "AJCC", code: "IIIA", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('3A');
+    expect(stage).toBe("3A");
   });
 
-  it('Test Stage 3B Filter', () => {
-    const coding: fhir.Coding = { system: 'snomed', code: '261639007', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 3B Filter", () => {
+    const coding: Coding = {system: "snomed", code: "261639007", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('3B');
+    expect(stage).toBe("3B");
   });
 
-  it('Test Stage 3C Filter', () => {
-    const coding: fhir.Coding = { system: 'AJCC', code: '3c', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 3C Filter", () => {
+    const coding: Coding = {system: "AJCC", code: "3c", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('3C');
+    expect(stage).toBe("3C");
   });
 
-  it('Test Stage 4 Filter', () => {
-    const coding: fhir.Coding = { system: 'SNOMED', code: '258228008', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 4 Filter", () => {
+    const coding: Coding = {system: "SNOMED", code: "258228008", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('4');
+    expect(stage).toBe("4");
   });
 
-  it('Test Stage 4A Filter', () => {
-    const coding: fhir.Coding = { system: 'aJcC', code: '4a', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 4A Filter", () => {
+    const coding: Coding = {system: "aJcC", code: "4a", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('4A');
+    expect(stage).toBe("4A");
   });
 
-  it('Test Stage 4B Filter', () => {
-    const coding: fhir.Coding = { system: 'snomed', code: '261643006', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 4B Filter", () => {
+    const coding: Coding = {system: "snomed", code: "261643006", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('4B');
+    expect(stage).toBe("4B");
   });
 
-  it('Test Stage 4C Filter', () => {
-    const coding: fhir.Coding = { system: 'aJcC', code: '4c', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 4C Filter", () => {
+    const coding: Coding = {system: "aJcC", code: "4c", display: "N/A"} as Coding;
     const stage = createStageToTest(coding);
-    expect(stage).toBe('4C');
+    expect(stage).toBe("4C");
   });
 
-  it('Test Stage 4C Filter with Stage 1 Ordering', () => {
-    const coding4c: fhir.Coding = { system: 'aJcC', code: '4c', display: 'N/A' } as fhir.Coding;
-    const coding1: fhir.Coding = { system: 'aJcC', code: '1', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 4C Filter with Stage 1 Ordering", () => {
+    const coding4c: Coding = {system: "aJcC", code: "4c", display: "N/A",
+    } as Coding;
+    const coding1: Coding = {system: "aJcC", code: "1", display: "N/A"} as Coding;
     const stage = createStageToTest(coding4c, coding1);
-    expect(stage).toBe('4C');
+    expect(stage).toBe("4C");
   });
 
-  it('Test Stage 3C Filter with Stage 3B Ordering', () => {
-    const coding3b: fhir.Coding = { system: 'aJcC', code: '3c', display: 'N/A' } as fhir.Coding;
-    const coding3c: fhir.Coding = { system: 'SnOmEd', code: '261639007', display: 'N/A' } as fhir.Coding;
+  it("Test Stage 3C Filter with Stage 3B Ordering", () => {
+    const coding3b: Coding = {system: "aJcC", code: "3c", display: "N/A"} as Coding;
+    const coding3c: Coding = {system: "SnOmEd", code: "261639007", display: "N/A"} as Coding;
     const stage = createStageToTest(coding3b, coding3c);
-    expect(stage).toBe('3C');
+    expect(stage).toBe("3C");
   });
 });
 
+function createTumorMarkerBundle(
+  valueRatio?: Ratio,
+  interpretation?: Coding,
+  valueCodeableConcept?: Coding,
+  ...coding: Coding[]
+): Bundle {
+  let bundle: Bundle = undefined;
 
-// describe('checkTumorMarkerFilterLogic-ER+', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const tm = createEmptyTumorMarker();
+  if (interpretation) {
+    bundle = {
+      resourceType: "Bundle",
+      type: "transaction",
+      entry: [
+        {
+          resource: {
+            resourceType: "Observation",
+            meta: {
+              profile: [
+                "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tumor-marker",
+              ],
+            },
+            interpretation: {
+              coding: [interpretation],
+            },
+            code: {
+              coding: coding,
+            },
+          } as unknown as Resource,
+        },
+      ],
+    };
+  } else if (valueCodeableConcept) {
+    bundle = {
+      resourceType: "Bundle",
+      type: "transaction",
+      entry: [
+        {
+          resource: {
+            resourceType: "Observation",
+            meta: {
+              profile: [
+                "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tumor-marker",
+              ],
+            },
+            valueCodeableConcept: {
+              coding: [valueCodeableConcept],
+            },
+            code: {
+              coding: coding,
+            },
+          } as unknown as Resource,
+        },
+      ],
+    };
+  } else if (valueRatio) {
+    bundle = {
+      resourceType: "Bundle",
+      type: "transaction",
+      entry: [
+        {
+          resource: {
+            resourceType: "Observation",
+            meta: {
+              profile: [
+                "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tumor-marker",
+              ],
+            },
+            code: {
+              coding: coding,
+            },
+            valueRatio: valueRatio,
+          } as unknown as Resource,
+        },
+      ],
+    };
+  }
 
-//   tm.coding.push({ system: 'http://loinc.info/sct', code: '16112-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
-//   tm.interpretation.push({
-//     system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html',
-//     code: 'H',
-//     display: 'N/A'
-//   } as Coding);  extractedMCODE.tumorMarker.push(tm);
-//   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//   it('Test ER+ Filter', () => {
-//     expect(tumorMarkerValues[0]).toBe('ER+');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-ER+_2', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const tm = createEmptyTumorMarker();
+  return bundle;
+}
 
-//   tm.coding.push({ system: 'http://loinc.info/sct', code: '16112-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
-//   tm.valueRatio.push({numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as mcode.Ratio);
-//   extractedMCODE.tumorMarker.push(tm);
-//   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//   it('Test ER+ Filter_2', () => {
-//     expect(tumorMarkerValues[0]).toBe('ER+');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-ER-', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const tm = createEmptyTumorMarker();
+describe("Test Tumor Marker Logic", () => {
+  // Function to eliminate redundant test setup.
+  let createTumorMarkerToTest = (
+    valueRatio?: Ratio,
+    interpretation?: Coding,
+    ...coding: Coding[]
+  ): string[] => {
+    const bundle = createTumorMarkerBundle(
+      valueRatio,
+      interpretation,
+      ...coding
+    );
+    const extractedMCODE = new TrialjectoryMappingLogic(bundle);
+    return extractedMCODE.getTumorMarkerValues();
+  };
 
-//   tm.coding.push({ system: 'http://loinc.info/sct', code: '85310-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
-//   tm.interpretation.push({
-//     system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html',
-//     code: 'NEG',
-//     display: 'N/A'
-//   } as Coding);
-//   extractedMCODE.tumorMarker.push(tm);
-//   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//   it('Test ER- Filter', () => {
-//     expect(tumorMarkerValues[0]).toBe('ER-');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-ER-_2', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const tm = createEmptyTumorMarker();
+  it("Test ER+ Logic 1", () => {
+    const coding = {
+      system: "http://loinc.info/sct",
+      code: "16112-5",
+      display: "N/A",
+    } as Coding; // Any code in 'Biomarker-ER'
+    const interpretation = {
+      system: "http://hl7.org/fhir/R4/valueset-observation-interpretation.html",
+      code: "H",
+      display: "N/A",
+    } as Coding;
+    const tumorMarkerValues = createTumorMarkerToTest(
+      undefined,
+      interpretation,
+      undefined,
+      coding
+    );
+    expect(tumorMarkerValues[0]).toBe("ER+");
+  });
 
-//   tm.coding.push({ system: 'http://loinc.info/sct', code: '85310-1', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
-//   tm.valueRatio.push({numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as mcode.Ratio);
-//   extractedMCODE.tumorMarker.push(tm);
-//   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//   it('Test ER- Filter_2', () => {
-//     expect(tumorMarkerValues[0]).toBe('ER-');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-PR+', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const tm = createEmptyTumorMarker();
+  it("Test ER+ Logic 2", () => {
+    const coding = {
+      system: "http://loinc.info/sct",
+      code: "16112-5",
+      display: "N/A",
+    } as Coding; // Any code in 'Biomarker-ER'
+    const valueRatio = {
+      numerator: { value: 6, comparator: ">", unit: "%" },
+      denominator: { value: 3, comparator: ">", unit: "%" },
+      metric: ">",
+    } as Ratio;
+    const tumorMarkerValues = createTumorMarkerToTest(
+      valueRatio,
+      undefined,
+      undefined,
+      coding
+    );
+    expect(tumorMarkerValues[0]).toBe("ER+");
+  });
 
-//   tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
-//   tm.interpretation.push({
-//     system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html',
-//     code: 'H',
-//     display: 'N/A'
-//   } as Coding);  extractedMCODE.tumorMarker.push(tm);
-//   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//   it('Test PR+ Filter', () => {
-//     expect(tumorMarkerValues[0]).toBe('PR+');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-PR+_2', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const tm = createEmptyTumorMarker();
+  it("Test ER- Logic 1", () => {
+    const coding = {
+      system: "http://loinc.info/sct",
+      code: "85310-1",
+      display: "N/A",
+    } as Coding; // Any code in 'Biomarker-ER'
+    const interpretation = {
+      system: "http://hl7.org/fhir/R4/valueset-observation-interpretation.html",
+      code: "NEG",
+      display: "N/A",
+    } as Coding;
+    const tumorMarkerValues = createTumorMarkerToTest(
+      undefined,
+      interpretation,
+      undefined,
+      coding
+    );
+    expect(tumorMarkerValues[0]).toBe("ER-");
+  });
 
-//   tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
-//   tm.valueRatio.push({numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as mcode.Ratio);
-//   extractedMCODE.tumorMarker.push(tm);
-//   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//   it('Test PR+ Filter_2', () => {
-//     expect(tumorMarkerValues[0]).toBe('PR+');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-PR-', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const tm = createEmptyTumorMarker();
+  it("Test ER- Logic 2", () => {
+    const coding = {
+      system: "http://loinc.info/sct",
+      code: "16112-5",
+      display: "N/A",
+    } as Coding; // Any code in 'Biomarker-ER'
+    const valueRatio = {
+      numerator: { value: 1, comparator: "<", unit: "%" },
+      denominator: { value: 101, comparator: "<", unit: "%" },
+      metric: "<",
+    } as Ratio;
+    const tumorMarkerValues = createTumorMarkerToTest(
+      valueRatio,
+      undefined,
+      undefined,
+      coding
+    );
+    expect(tumorMarkerValues[0]).toBe("ER-");
+  });
 
-//   tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
-//   tm.valueCodeableConcept.push({
-//     system: 'snomed',
-//     code: '260385009',
-//     display: 'N/A'
-//   } as Coding);  extractedMCODE.tumorMarker.push(tm);
-//   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//   it('Test PR- Filter', () => {
-//     expect(tumorMarkerValues[0]).toBe('PR-');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-PR-_2', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-// const tm = createEmptyTumorMarker();
+  it("Test PR+ Logic 1", () => {
+    const coding = {
+      system: "http://loinc.info/sct",
+      code: "10861-3",
+      display: "N/A",
+    } as Coding; // Any code in 'Biomarker-PR'
+    const interpretation = {
+      system: "http://hl7.org/fhir/R4/valueset-observation-interpretation.html",
+      code: "H",
+      display: "N/A",
+    } as Coding;
+    const tumorMarkerValues = createTumorMarkerToTest(
+      undefined,
+      interpretation,
+      undefined,
+      coding
+    );
+    expect(tumorMarkerValues[0]).toBe("PR+");
+  });
 
-//   tm.coding.push({ system: 'http://loinc.info/sct', code: '10861-3', display: 'N/A' } as Coding); // Any code in 'Biomarker-PR'
-//   tm.valueRatio.push({numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as mcode.Ratio);
-//   extractedMCODE.tumorMarker.push(tm);
-//   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//   it('Test PR- Filter_2', () => {
-//     expect(tumorMarkerValues[0]).toBe('PR-');
-//   });
-// });
+  it("Test PR+ Logic 2", () => {
+    const coding = {
+      system: "http://loinc.info/sct",
+      code: "10861-3",
+      display: "N/A",
+    } as Coding; // Any code in 'Biomarker-PR'
+    const valueRatio = {
+      numerator: { value: 6, comparator: ">", unit: "%" },
+      denominator: { value: 3, comparator: ">", unit: "%" },
+      metric: ">",
+    } as Ratio;
+    const tumorMarkerValues = createTumorMarkerToTest(
+      valueRatio,
+      undefined,
+      undefined,
+      coding
+    );
+    expect(tumorMarkerValues[0]).toBe("PR+");
+  });
+
+  it("Test PR- Logic 1", () => {
+    const coding = {
+      system: "http://loinc.info/sct",
+      code: "10861-3",
+      display: "N/A",
+    } as Coding; // Any code in 'Biomarker-PR'
+    const valueCodeableConcept = {
+      system: "snomed",
+      code: "260385009",
+      display: "N/A",
+    } as Coding;
+    const tumorMarkerValues = createTumorMarkerToTest(
+      undefined,
+      undefined,
+      valueCodeableConcept,
+      coding
+    );
+    expect(tumorMarkerValues[0]).toBe("PR-");
+  });
+
+  it("Test PR- Logic 2", () => {
+    const coding = {
+      system: "http://loinc.info/sct",
+      code: "10861-3",
+      display: "N/A",
+    } as Coding; // Any code in 'Biomarker-PR'
+    const valueRatio = {
+      numerator: { value: 1, comparator: "<", unit: "%" },
+      denominator: { value: 101, comparator: "<", unit: "%" },
+      metric: "<",
+    } as Ratio;
+    const tumorMarkerValues = createTumorMarkerToTest(
+      valueRatio,
+      undefined,
+      undefined,
+      coding
+    );
+    expect(tumorMarkerValues[0]).toBe("PR-");
+  });
+
+  it("Test Invalid Quantity", () => {
+    const mappingLogic = new TrialjectoryMappingLogic(null);
+    expect(
+      mappingLogic.quantityMatch("0", "mm", ["test"], ">>", "mm")
+    ).toBeFalse();
+  });
+
+  it("Test Invalid Ratio Match", () => {
+    const mappingLogic = new TrialjectoryMappingLogic(null);
+    expect(
+      mappingLogic.ratioMatch(
+        { value: "0", comparator: "0", code: "0", unit: "0", system: "0" },
+        { value: "0", comparator: "0", code: "0", unit: "0", system: "0" },
+        0,
+        ">>"
+      )
+    ).toBeFalse();
+  });
+
+  it("Test Invalid Operator Input to Ratio of Tumor Marker.", () => {
+    const coding = {
+      system: "http://loinc.info/sct",
+      code: "16112-5",
+      display: "N/A",
+    } as Coding; // Any code in 'Biomarker-ER'
+    const valueRatio = {} as Ratio;
+    const tumorMarkerValues = createTumorMarkerToTest(
+      valueRatio,
+      undefined,
+      undefined,
+      coding
+    );
+    expect(tumorMarkerValues).toEqual([]);
+  });
+});
 // describe('checkTumorMarkerFilterLogic-BRCA1+', () => {
 //   // Initialize
 //   const extractedMCODE = new mcode.ExtractedMCODE(null);
@@ -667,8 +748,8 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const cgv: mappinglogic.CancerGeneticVariant = {
-// //     valueCodeableConcept: [] as fhir.Coding[],
-// //     interpretation: [] as fhir.Coding[],
+// //     valueCodeableConcept: [] as Coding[],
+// //     interpretation: [] as Coding[],
 // //     component: {} as mappinglogic.CancerGeneticVariantComponent
 // //   };
 // //   const cgvComponent: mappinglogic.CancerGeneticVariantComponent = {
@@ -676,12 +757,12 @@ describe('Test Stage Logic', () => {
 // //     genomicsSourceClass: [] as mappinglogic.CancerGeneticVariantComponentType[]
 // //   };
 // //   const cgvGeneStudied: mappinglogic.CancerGeneticVariantComponentType = {
-// //     valueCodeableConcept: { coding: [] as fhir.Coding[] },
-// //     interpretation: { coding: [] as fhir.Coding[] }
+// //     valueCodeableConcept: { coding: [] as Coding[] },
+// //     interpretation: { coding: [] as Coding[] }
 // //   };
 // //   const cgvGenomicSourceClass: mappinglogic.CancerGeneticVariantComponentType = {
-// //     valueCodeableConcept: { coding: [] as fhir.Coding[] },
-// //     interpretation: { coding: [] as fhir.Coding[] }
+// //     valueCodeableConcept: { coding: [] as Coding[] },
+// //     interpretation: { coding: [] as Coding[] }
 // //   };
 
 // //   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1100', display: 'BRCA1' });
@@ -1361,8 +1442,8 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const cgv: mappinglogic.CancerGeneticVariant = {
-// //     valueCodeableConcept: [] as fhir.Coding[],
-// //     interpretation: [] as fhir.Coding[],
+// //     valueCodeableConcept: [] as Coding[],
+// //     interpretation: [] as Coding[],
 // //     component: {} as mappinglogic.CancerGeneticVariantComponent
 // //   };
 // //   const cgvComponent: mappinglogic.CancerGeneticVariantComponent = {
@@ -1370,12 +1451,12 @@ describe('Test Stage Logic', () => {
 // //     genomicsSourceClass: [] as mappinglogic.CancerGeneticVariantComponentType[]
 // //   };
 // //   const cgvGeneStudied: mappinglogic.CancerGeneticVariantComponentType = {
-// //     valueCodeableConcept: { coding: [] as fhir.Coding[] },
-// //     interpretation: { coding: [] as fhir.Coding[] }
+// //     valueCodeableConcept: { coding: [] as Coding[] },
+// //     interpretation: { coding: [] as Coding[] }
 // //   };
 // //   const cgvGenomicSourceClass: mappinglogic.CancerGeneticVariantComponentType = {
-// //     valueCodeableConcept: { coding: [] as fhir.Coding[] },
-// //     interpretation: { coding: [] as fhir.Coding[] }
+// //     valueCodeableConcept: { coding: [] as Coding[] },
+// //     interpretation: { coding: [] as Coding[] }
 // //   };
 
 // //   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1100', display: 'BRCA1' });
@@ -1395,8 +1476,8 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const cgv: mappinglogic.CancerGeneticVariant = {
-// //     valueCodeableConcept: [] as fhir.Coding[],
-// //     interpretation: [] as fhir.Coding[],
+// //     valueCodeableConcept: [] as Coding[],
+// //     interpretation: [] as Coding[],
 // //     component: {} as mappinglogic.CancerGeneticVariantComponent
 // //   };
 // //   const cgvComponent: mappinglogic.CancerGeneticVariantComponent = {
@@ -1404,12 +1485,12 @@ describe('Test Stage Logic', () => {
 // //     genomicsSourceClass: [] as mappinglogic.CancerGeneticVariantComponentType[]
 // //   };
 // //   const cgvGeneStudied: mappinglogic.CancerGeneticVariantComponentType = {
-// //     valueCodeableConcept: { coding: [] as fhir.Coding[] },
-// //     interpretation: { coding: [] as fhir.Coding[] }
+// //     valueCodeableConcept: { coding: [] as Coding[] },
+// //     interpretation: { coding: [] as Coding[] }
 // //   };
 // //   const cgvGenomicSourceClass: mappinglogic.CancerGeneticVariantComponentType = {
-// //     valueCodeableConcept: { coding: [] as fhir.Coding[] },
-// //     interpretation: { coding: [] as fhir.Coding[] }
+// //     valueCodeableConcept: { coding: [] as Coding[] },
+// //     interpretation: { coding: [] as Coding[] }
 // //   };
 
 // //   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1101', display: 'BRCA2' });
@@ -1429,8 +1510,8 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const cgv: mappinglogic.CancerGeneticVariant = {
-// //     valueCodeableConcept: [] as fhir.Coding[],
-// //     interpretation: [] as fhir.Coding[],
+// //     valueCodeableConcept: [] as Coding[],
+// //     interpretation: [] as Coding[],
 // //     component: {} as mappinglogic.CancerGeneticVariantComponent
 // //   };
 // //   const cgvComponent: mappinglogic.CancerGeneticVariantComponent = {
@@ -1438,12 +1519,12 @@ describe('Test Stage Logic', () => {
 // //     genomicsSourceClass: [] as mappinglogic.CancerGeneticVariantComponentType[]
 // //   };
 // //   const cgvGeneStudied: mappinglogic.CancerGeneticVariantComponentType = {
-// //     valueCodeableConcept: { coding: [] as fhir.Coding[] },
-// //     interpretation: { coding: [] as fhir.Coding[] }
+// //     valueCodeableConcept: { coding: [] as Coding[] },
+// //     interpretation: { coding: [] as Coding[] }
 // //   };
 // //   const cgvGenomicSourceClass: mappinglogic.CancerGeneticVariantComponentType = {
-// //     valueCodeableConcept: { coding: [] as fhir.Coding[] },
-// //     interpretation: { coding: [] as fhir.Coding[] }
+// //     valueCodeableConcept: { coding: [] as Coding[] },
+// //     interpretation: { coding: [] as Coding[] }
 // //   };
 
 // //   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1101', display: 'BRCA2' });
@@ -1463,8 +1544,8 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const cgv: mappinglogic.CancerGeneticVariant = {
-// //     valueCodeableConcept: [] as fhir.Coding[],
-// //     interpretation: [] as fhir.Coding[],
+// //     valueCodeableConcept: [] as Coding[],
+// //     interpretation: [] as Coding[],
 // //     component: {} as mappinglogic.CancerGeneticVariantComponent
 // //   };
 // //   const cgvComponent: mappinglogic.CancerGeneticVariantComponent = {
@@ -1472,12 +1553,12 @@ describe('Test Stage Logic', () => {
 // //     genomicsSourceClass: [] as mappinglogic.CancerGeneticVariantComponentType[]
 // //   };
 // //   const cgvGeneStudied: mappinglogic.CancerGeneticVariantComponentType = {
-// //     valueCodeableConcept: { coding: [] as fhir.Coding[] },
-// //     interpretation: { coding: [] as fhir.Coding[] }
+// //     valueCodeableConcept: { coding: [] as Coding[] },
+// //     interpretation: { coding: [] as Coding[] }
 // //   };
 // //   const cgvGenomicSourceClass: mappinglogic.CancerGeneticVariantComponentType = {
-// //     valueCodeableConcept: { coding: [] as fhir.Coding[] },
-// //     interpretation: { coding: [] as fhir.Coding[] }
+// //     valueCodeableConcept: { coding: [] as Coding[] },
+// //     interpretation: { coding: [] as Coding[] }
 // //   };
 
 // //   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '795', display: 'ATM' });
@@ -1497,8 +1578,8 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const cgv: mappinglogic.CancerGeneticVariant = {
-// //     valueCodeableConcept: [] as fhir.Coding[],
-// //     interpretation: [] as fhir.Coding[],
+// //     valueCodeableConcept: [] as Coding[],
+// //     interpretation: [] as Coding[],
 // //     component: {} as mappinglogic.CancerGeneticVariantComponent
 // //   };
 // //   const cgvComponent: mappinglogic.CancerGeneticVariantComponent = {
@@ -1506,12 +1587,12 @@ describe('Test Stage Logic', () => {
 // //     genomicsSourceClass: [] as mappinglogic.CancerGeneticVariantComponentType[]
 // //   };
 // //   const cgvGeneStudied: mappinglogic.CancerGeneticVariantComponentType = {
-// //     valueCodeableConcept: { coding: [] as fhir.Coding[] },
-// //     interpretation: { coding: [] as fhir.Coding[] }
+// //     valueCodeableConcept: { coding: [] as Coding[] },
+// //     interpretation: { coding: [] as Coding[] }
 // //   };
 // //   const cgvGenomicSourceClass: mappinglogic.CancerGeneticVariantComponentType = {
-// //     valueCodeableConcept: { coding: [] as fhir.Coding[] },
-// //     interpretation: { coding: [] as fhir.Coding[] }
+// //     valueCodeableConcept: { coding: [] as Coding[] },
+// //     interpretation: { coding: [] as Coding[] }
 // //   };
 
 // //   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '795', display: 'ATM' });
@@ -1533,10 +1614,10 @@ describe('Test Stage Logic', () => {
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 
 // //   const tumorMarker : mappinglogic.TumorMarker = {
-// //     coding: [] as fhir.Coding[],
-// //     valueCodeableConcept: [] as fhir.Coding[],
-// //     interpretation: [] as fhir.Coding[],
-// //     valueQuantity: [] as fhir.Coding[],
+// //     coding: [] as Coding[],
+// //     valueCodeableConcept: [] as Coding[],
+// //     interpretation: [] as Coding[],
+// //     valueQuantity: [] as Coding[],
 // //     valueRatio: [] as mappinglogic.Ratio[]
 // //   };
 
@@ -1571,7 +1652,7 @@ describe('Test Stage Logic', () => {
 //   pcc.histologyMorphologyBehavior = [] as Coding[];
 
 // //   // Invasive Lobular Carcinoma Filter Attributes
-// //   pcc.coding.push({ system: 'http://snomed.info/sct', code: '1080261000119100', display: 'N/A' } as fhir.Coding); // Any Code in 'Cancer-Invas Lob Carc'
+// //   pcc.coding.push({ system: 'http://snomed.info/sct', code: '1080261000119100', display: 'N/A' } as Coding); // Any Code in 'Cancer-Invas Lob Carc'
 
 // //   extractedMCODE.primaryCancerCondition.push(pcc);
 
@@ -1612,16 +1693,16 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const pcc: PrimaryCancerCondition = {};
-// //   pcc.clinicalStatus = [] as fhir.Coding[];
-// //   pcc.coding = [] as fhir.Coding[];
-// //   pcc.histologyMorphologyBehavior = [] as fhir.Coding[];
+// //   pcc.clinicalStatus = [] as Coding[];
+// //   pcc.coding = [] as Coding[];
+// //   pcc.histologyMorphologyBehavior = [] as Coding[];
 
 // //   // Lobular Carcinoma In Situ Filter Attributes
 // //   pcc.histologyMorphologyBehavior.push({
 // //     system: 'http://snomed.info/sct',
 // //     code: '77284006',
 // //     display: 'N/A'
-// //   } as fhir.Coding); // Any Code in 'lcis-histology'
+// //   } as Coding); // Any Code in 'lcis-histology'
 
 // //   extractedMCODE.primaryCancerCondition.push(pcc);
 
@@ -1633,8 +1714,8 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const scc: mappinglogic.SecondaryCancerCondition = {};
-// //   scc.clinicalStatus = [] as fhir.Coding[];
-// //   scc.coding = [] as fhir.Coding[];
+// //   scc.clinicalStatus = [] as Coding[];
+// //   scc.coding = [] as Coding[];
 
 //   it('is populated', () => {
 //     expect(extractedMCODE.getSecondaryCancerValue()).not.toBeNull();
@@ -1682,9 +1763,9 @@ describe('Test Stage Logic', () => {
 // //   it('is null if no matches', () => {
 // //     const emptyExtractedMCODE = new TrialjectoryMappingLogic(null);
 // //     const scc: mappinglogic.SecondaryCancerCondition = {};
-// //     scc.clinicalStatus = [] as fhir.Coding[];
-// //     scc.coding = [] as fhir.Coding[];
-// //     scc.coding.push({} as fhir.Coding);
+// //     scc.clinicalStatus = [] as Coding[];
+// //     scc.coding = [] as Coding[];
+// //     scc.coding.push({} as Coding);
 
 // //     emptyExtractedMCODE.secondaryCancerCondition.push(scc);
 
@@ -1705,8 +1786,8 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const crrp: mappinglogic.CancerRelatedRadiationProcedure = {};
-// //   crrp.bodySite = [] as fhir.Coding[];
-// //   crrp.coding = [] as fhir.Coding[];
+// //   crrp.bodySite = [] as Coding[];
+// //   crrp.coding = [] as Coding[];
 
 //   it('Test WBRT Filter', () => {
 //     expect(extractedMCODE.getRadiationProcedureValue().includes('wbrt')).toBeTrue();
@@ -1727,8 +1808,8 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const crrp: mappinglogic.CancerRelatedRadiationProcedure = {};
-// //   crrp.bodySite = [] as fhir.Coding[];
-// //   crrp.coding = [] as fhir.Coding[];
+// //   crrp.bodySite = [] as Coding[];
+// //   crrp.coding = [] as Coding[];
 
 //   it('Test EBRT Filter', () => {
 //     expect(extractedMCODE.getRadiationProcedureValue().includes('ebrt')).toBeTrue();
@@ -1749,8 +1830,8 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const crrp: mappinglogic.CancerRelatedRadiationProcedure = {};
-// //   crrp.bodySite = [] as fhir.Coding[];
-// //   crrp.coding = [] as fhir.Coding[];
+// //   crrp.bodySite = [] as Coding[];
+// //   crrp.coding = [] as Coding[];
 
 //   it('Test Ablation Filter', () => {
 //     expect(extractedMCODE.getRadiationProcedureValue().includes('ablation')).toBeTrue();
@@ -1771,8 +1852,8 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const crrp: mappinglogic.CancerRelatedRadiationProcedure = {};
-// //   crrp.bodySite = [] as fhir.Coding[];
-// //   crrp.coding = [] as fhir.Coding[];
+// //   crrp.bodySite = [] as Coding[];
+// //   crrp.coding = [] as Coding[];
 
 //   it('Test rfa Filter', () => {
 //     expect(extractedMCODE.getRadiationProcedureValue().includes('rfa')).toBeTrue();
@@ -1793,10 +1874,10 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const crsp: mappinglogic.CancerRelatedSurgicalProcedure = {};
-// //   crsp.coding = [] as fhir.Coding[];
+// //   crsp.coding = [] as Coding[];
 
 // //   // Lumpectomy Filter Attributes
-// //   crsp.coding.push({ system: 'http://snomed.info/sct', code: '392022002', display: 'N/A' } as fhir.Coding);
+// //   crsp.coding.push({ system: 'http://snomed.info/sct', code: '392022002', display: 'N/A' } as Coding);
 
 // describe('checkSurgicalProcedureFilterLogic-Mastectomy', () => {
 //   // Initialize
@@ -1807,10 +1888,10 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const crsp: mappinglogic.CancerRelatedSurgicalProcedure = {};
-// //   crsp.coding = [] as fhir.Coding[];
+// //   crsp.coding = [] as Coding[];
 
 // //   // Mastectomy Filter Attributes
-// //   crsp.coding.push({ system: 'http://snomed.info/sct', code: '429400009', display: 'N/A' } as fhir.Coding);
+// //   crsp.coding.push({ system: 'http://snomed.info/sct', code: '429400009', display: 'N/A' } as Coding);
 
 // //   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
@@ -1823,10 +1904,10 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const crsp: mappinglogic.CancerRelatedSurgicalProcedure = {};
-// //   crsp.coding = [] as fhir.Coding[];
+// //   crsp.coding = [] as Coding[];
 
 // //   // Alnd Filter Attributes
-// //   crsp.coding.push({ system: 'http://snomed.info/sct', code: '234262008', display: 'N/A' } as fhir.Coding);
+// //   crsp.coding.push({ system: 'http://snomed.info/sct', code: '234262008', display: 'N/A' } as Coding);
 
 // //   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
@@ -1839,12 +1920,12 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const crsp: mappinglogic.CancerRelatedSurgicalProcedure = {};
-// //   crsp.coding = [] as fhir.Coding[];
-// //   crsp.bodySite = [] as fhir.Coding[];
+// //   crsp.coding = [] as Coding[];
+// //   crsp.bodySite = [] as Coding[];
 
 // //   // Alnd Filter Attributes
-// //   crsp.coding.push({ system: 'http://snomed.info/sct', code: '122459003', display: 'N/A' } as fhir.Coding);
-// //   crsp.bodySite.push({ system: 'http://snomed.info/sct', code: '746224000', display: 'N/A' } as fhir.Coding);
+// //   crsp.coding.push({ system: 'http://snomed.info/sct', code: '122459003', display: 'N/A' } as Coding);
+// //   crsp.bodySite.push({ system: 'http://snomed.info/sct', code: '746224000', display: 'N/A' } as Coding);
 
 // //   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
@@ -1857,10 +1938,10 @@ describe('Test Stage Logic', () => {
 // //   // Initialize
 // //   const extractedMCODE = new TrialjectoryMappingLogic(null);
 // //   const crsp: mappinglogic.CancerRelatedSurgicalProcedure = {};
-// //   crsp.coding = [] as fhir.Coding[];
+// //   crsp.coding = [] as Coding[];
 
 // //   // Reconstruction Filter Attributes
-// //   crsp.coding.push({ system: 'http://snomed.info/sct', code: '302342002', display: 'N/A' } as fhir.Coding);
+// //   crsp.coding.push({ system: 'http://snomed.info/sct', code: '302342002', display: 'N/A' } as Coding);
 
 // //   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
@@ -1878,58 +1959,5 @@ describe('Test Stage Logic', () => {
 
 //   it('Test Metastasis Resection Filter', () => {
 //     expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'metastasis_resection')).toBeTrue();
-//   });
-// });
-
-// describe('checkNIHSystemNormalizer', () => {
-//   it('Test NIH System Normalizer.', () => {
-//     expect(CodeMapper.normalizeCodeSystem("nih")).toBe(CodeSystemEnum.NIH);
-//   });
-// });
-
-// describe('checkNIHSystemNormalizer', () => {
-//   it('Test NIH System Normalizer.', () => {
-//     expect(CodeMapper.normalizeCodeSystem("nih")).toBe(CodeSystemEnum.NIH);
-//   });
-// });
-
-// describe('checkInvalidCodeSystemError', () => {
-//   it('Test Invalid Input to System Normalizer.', () => {
-//     const testFunc = function() {
-//       CodeMapper.normalizeCodeSystem("XXX")
-//     };
-//     expect(testFunc).toThrow(Error('Profile codes do not support code system: XXX'));
-//   });
-// });
-
-// describe('checkInvalidQuantityMatchError', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-
-//   it('Test Invalid Input to System Normalizer.', () => {
-//     expect(extractedMCODE.quantityMatch("0", "mm", ["test"], ">>", "mm")).toBeFalse();
-//   });
-// });
-
-// describe('checkInvalidRatioMatchError', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-
-//   it('Test Invalid Input to System Normalizer.', () => {
-//     expect(extractedMCODE.ratioMatch({value: "0", comparator: "0", code: "0", unit: "0", system: "0"}, {value: "0", comparator: "0", code: "0", unit: "0", system: "0"}, 0, ">>")).toBeFalse();
-//   });
-// });
-
-// describe('checkInvalidOperatorError', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const tm = createEmptyTumorMarker();
-
-//   it('Test Invalid Operator Input to Ratio of Tumor Marker.', () => {
-//     tm.coding.push({ system: 'http://loinc.info/sct', code: '16112-5', display: 'N/A' } as Coding); // Any code in 'Biomarker-ER'
-//     tm.valueRatio.push({} as mcode.Ratio);
-//     extractedMCODE.tumorMarker.push(tm);
-//     const tumorMarker = extractedMCODE.getTumorMarkerValue()
-//     expect(tumorMarker).toEqual([]);
 //   });
 // });
