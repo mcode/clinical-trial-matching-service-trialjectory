@@ -438,6 +438,39 @@ describe("Test Tumor Marker Logic", () => {
     expect(tumorMarkerValues[0]).toBe("ER-");
   });
 
+  it("Test Invalid Quantity", () => {
+    const mappingLogic = new TrialjectoryMappingLogic(null);
+    expect(
+      mappingLogic.quantityMatch("0", "mm", ["test"], ">>", "mm")
+    ).toBeFalse();
+  });
+
+  it("Test Invalid Ratio Match", () => {
+    const mappingLogic = new TrialjectoryMappingLogic(null);
+    expect(
+      mappingLogic.ratioMatch(
+        { value: "0", comparator: "0", code: "0", unit: "0", system: "0" },
+        { value: "0", comparator: "0", code: "0", unit: "0", system: "0" }, 0, ">>"
+      )
+    ).toBeFalse();
+  });
+
+  it("Test Invalid Operator Input to Ratio of Tumor Marker.", () => {
+    const coding = {
+      system: "http://loinc.info/sct",
+      code: "16112-5",
+      display: "N/A",
+    } as Coding; // Any code in 'Biomarker-ER'
+    const valueRatio = {} as Ratio;
+    const tumorMarkerValues = createTumorMarkerToTest(
+      valueRatio,
+      undefined,
+      undefined,
+      coding
+    );
+    expect(tumorMarkerValues).toEqual([]);
+  });
+
   it("Test PR+ Logic 1", () => {
     const coding = {
       system: "http://loinc.info/sct",
@@ -518,40 +551,8 @@ describe("Test Tumor Marker Logic", () => {
     expect(tumorMarkerValues[0]).toBe("PR-");
   });
 
-  it("Test Invalid Quantity", () => {
-    const mappingLogic = new TrialjectoryMappingLogic(null);
-    expect(
-      mappingLogic.quantityMatch("0", "mm", ["test"], ">>", "mm")
-    ).toBeFalse();
-  });
+  /////
 
-  it("Test Invalid Ratio Match", () => {
-    const mappingLogic = new TrialjectoryMappingLogic(null);
-    expect(
-      mappingLogic.ratioMatch(
-        { value: "0", comparator: "0", code: "0", unit: "0", system: "0" },
-        { value: "0", comparator: "0", code: "0", unit: "0", system: "0" },
-        0,
-        ">>"
-      )
-    ).toBeFalse();
-  });
-
-  it("Test Invalid Operator Input to Ratio of Tumor Marker.", () => {
-    const coding = {
-      system: "http://loinc.info/sct",
-      code: "16112-5",
-      display: "N/A",
-    } as Coding; // Any code in 'Biomarker-ER'
-    const valueRatio = {} as Ratio;
-    const tumorMarkerValues = createTumorMarkerToTest(
-      valueRatio,
-      undefined,
-      undefined,
-      coding
-    );
-    expect(tumorMarkerValues).toEqual([]);
-  });
 });
 // describe('checkTumorMarkerFilterLogic-BRCA1+', () => {
 //   // Initialize
@@ -1367,29 +1368,53 @@ describe("Test Tumor Marker Logic", () => {
 //     expect(tumorMarkerValues.length).toBe(0);
 //   });
 // })
-// describe('checkAgeFilterLogic', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const today: Date = new Date();
+describe('checkAgeFilterLogic', () => {
+  // Initialize
+  const today: Date = new Date("Oct-09-2021");
+  const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365;
 
-//   it('Test Age is over 18 Filter', () => {
-//     const birthdate = '1950-06-11';
-//     const checkDate: Date = new Date(birthdate);
-//     const millisecondsAge = today.getTime() - checkDate.getTime();
-//     const milliseconds1Years = 1000 * 60 * 60 * 24 * 365;
-//     extractedMCODE.birthDate = birthdate;
-//     expect(extractedMCODE.getAgeValue()).toBe(Math.floor(millisecondsAge/milliseconds1Years));
-//   });
+  const createBirthdateResource = (birthdate: string): any => {
+    const birthdateResource = {
+      resourceType: "Bundle",
+      type: "transaction",
+      entry: [
+        {
+          fullUrl: "urn:uuid:1e208b6b-77f1-4808-a32b-9f9caf1ec334",
+          resource: {
+            resourceType: "Patient",
+            id: "1e208b6b-77f1-4808-a32b-9f9caf1ec334",
+            meta: {
+              profile: [
+                "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-patient",
+                "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"
+              ]
+            },
+            gender: "female",
+            birthDate: birthdate
+            }
+          }
+        ]
+      };
+      return birthdateResource;
+    };
+  
 
-//   it('Test Age is under 18 Filter', () => {
-//     const birthdate = '2021-10-10';
-//     const checkDate: Date = new Date(birthdate);
-//     const millisecondsAge = today.getTime() - checkDate.getTime();
-//     const milliseconds1Years = 1000 * 60 * 60 * 24 * 365;
-//     extractedMCODE.birthDate = birthdate;
-//     expect(extractedMCODE.getAgeValue()).toBe(Math.floor(millisecondsAge/milliseconds1Years));
-//   });
-// });
+  it('Test Age is over 18 Filter', () => {
+    const birthdate = '1950-06-11';
+    const mappingLogic = new TrialjectoryMappingLogic(createBirthdateResource(birthdate));
+    const checkDate: Date = new Date(birthdate);
+    const millisecondsAge = today.getTime() - checkDate.getTime();
+    expect(mappingLogic.getAgeValue()).toBe(Math.floor(millisecondsAge/millisecondsPerYear));
+  });
+
+  it('Test Age is under 18 Filter', () => {
+    const birthdate = '2020-11-11';
+    const mappingLogic = new TrialjectoryMappingLogic(createBirthdateResource(birthdate));
+    const checkDate: Date = new Date(birthdate);
+    const millisecondsAge = today.getTime() - checkDate.getTime();
+    expect(mappingLogic.getAgeValue()).toBe(Math.floor(millisecondsAge/millisecondsPerYear));
+  });
+});
 // describe('checkHistologyMorphologyFilterLogic-ibc', () => {
 //   // Initialize
 //   const extractedMCODE = new mcode.ExtractedMCODE(null);
