@@ -1652,13 +1652,8 @@ describe('checkRadiationProcedureFilterLogic', () => {
     };
     return radiationBundle;
   };
-  
 
   it('Test WBRT Filter', () => {
-    const crrp: CancerRelatedRadiationProcedure = {
-      bodySite: [] as Coding[], coding: [] as Coding[],
-      mcodeTreatmentIntent: []
-    };
     const coding = ({ system: 'http://snomed.info/sct', code: '108290001', display: 'N/A' } as Coding);
     const bodySite = ({ system: 'http://snomed.info/sct', code: '12738006', display: 'N/A' } as Coding);
     const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, bodySite));
@@ -1666,10 +1661,6 @@ describe('checkRadiationProcedureFilterLogic', () => {
   });
 
   it('Test EBRT Filter', () => {
-    const crrp: CancerRelatedRadiationProcedure = {
-      bodySite: [] as Coding[], coding: [] as Coding[],
-      mcodeTreatmentIntent: []
-    };
     const coding = ({ system: 'http://snomed.info/sct', code: '33356009', display: 'N/A' } as Coding);
     const bodySite = ({ system: 'http://snomed.info/sct', code: 'test', display: 'N/A' } as Coding);
     const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, bodySite));
@@ -1688,118 +1679,133 @@ describe('checkRadiationProcedureFilterLogic', () => {
   });
 
   it('Test RFA Filter', () => {
-    const crrp: CancerRelatedRadiationProcedure = {
-      bodySite: [] as Coding[], coding: [] as Coding[],
-      mcodeTreatmentIntent: []
-    };
     const coding = ({ system: 'http://snomed.info/sct', code: '879916008', display: 'N/A' } as Coding);
     const bodySite = ({ system: 'http://snomed.info/sct', code: 'test', display: 'N/A' } as Coding);
     const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, bodySite));
     expect(mappingLogic.getRadiationProcedureValues().includes('rfa')).toBeTrue();
   });
 });
-// describe('checkSurgicalProcedureFilterLogic-Lumpectomy', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const crsp: mcode.CancerRelatedSurgicalProcedure = {coding: [] as Coding[]};
 
-// //   extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
+describe('checkSurgicalProcedureFilterLogic', () => {
 
-// //   it('Test rfa Filter', () => {
-// //     expect(extractedMCODE.getRadiationProcedureValue().includes('rfa')).toBeTrue();
-// //   });
-// // });
-// // describe('checkSurgicalProcedureFilterLogic-Lumpectomy', () => {
-// //   // Initialize
-// //   const extractedMCODE = new TrialjectoryMappingLogic(null);
-// //   const crsp: mappinglogic.CancerRelatedSurgicalProcedure = {};
-// //   crsp.coding = [] as Coding[];
+  const createSurgicalBundle = (coding: Coding, bodySite: Coding): any => {
+    const surgicalBundle: any = {
+      resourceType: "Bundle",
+      type: "transaction",
+      entry: [
+        {
+          fullUrl: "urn:uuid:6a401855-9277-4b01-ac59-48ac734eece6",
+          resource: {
+            resourceType: "Procedure",
+            id: "6a401855-9277-4b01-ac59-48ac734eece6xxx",
+            meta: {
+              profile: [
+                "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-surgical-procedure",
+                "http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure"
+              ]
+            },
+            status: "completed",
+            code: {coding: [coding],},
+            bodySite: [{coding: [bodySite]}],
+            reasonReference: [
+              {
+                reference: "4dee068c-5ffe-4977-8677-4ff9b518e763x",
+                display: "Secondary Cancer Condition Reference - for tests."
+              }
+            ]
+         }
+      }
+    ]
+    };
+    return surgicalBundle;
+  };
 
-// //   // Lumpectomy Filter Attributes
-// //   crsp.coding.push({ system: 'http://snomed.info/sct', code: '392022002', display: 'N/A' } as Coding);
+  it('Test Lumpectomy Filter', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '392022002', display: 'N/A' } as Coding);
+    const bodySite = ({ system: 'http://snomed.info/sct', code: 'TEST', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, bodySite));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'lumpectomy')).toBeTrue();
+  });
 
-// describe('checkSurgicalProcedureFilterLogic-Mastectomy', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const crsp: mcode.CancerRelatedSurgicalProcedure = {coding: [] as Coding[]};
+  it('Test Mastectomy Filter', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '429400009', display: 'N/A' } as Coding);
+    const bodySite = ({ system: 'http://snomed.info/sct', code: 'TEST', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, bodySite));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'mastectomy')).toBeTrue();
+  });
 
-// // describe('checkSurgicalProcedureFilterLogic-Mastectomy', () => {
-// //   // Initialize
-// //   const extractedMCODE = new TrialjectoryMappingLogic(null);
-// //   const crsp: mappinglogic.CancerRelatedSurgicalProcedure = {};
-// //   crsp.coding = [] as Coding[];
+  it('Test ALND Filter 1', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '234262008', display: 'N/A' } as Coding);
+    const bodySite = ({ system: 'http://snomed.info/sct', code: 'TEST', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, bodySite));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'alnd')).toBeTrue();
+  });
 
-// //   // Mastectomy Filter Attributes
-// //   crsp.coding.push({ system: 'http://snomed.info/sct', code: '429400009', display: 'N/A' } as Coding);
+  it('Test ALND Filter 1', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '122459003', display: 'N/A' } as Coding);
+    const bodySite = ({ system: 'http://snomed.info/sct', code: '746224000', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, bodySite));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'alnd')).toBeTrue();
+  });
 
-// //   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
 
-// describe('checkSurgicalProcedureFilterLogic-Alnd_1', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const crsp: mcode.CancerRelatedSurgicalProcedure = {coding: [] as Coding[]};
+  it('Test Reconstruction Filter 1', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '302342002', display: 'N/A' } as Coding);
+    const bodySite = ({ system: 'http://snomed.info/sct', code: 'TEST', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, bodySite));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'reconstruction')).toBeTrue();
+  });
 
-// // describe('checkSurgicalProcedureFilterLogic-Alnd_1', () => {
-// //   // Initialize
-// //   const extractedMCODE = new TrialjectoryMappingLogic(null);
-// //   const crsp: mappinglogic.CancerRelatedSurgicalProcedure = {};
-// //   crsp.coding = [] as Coding[];
-
-// //   // Alnd Filter Attributes
-// //   crsp.coding.push({ system: 'http://snomed.info/sct', code: '234262008', display: 'N/A' } as Coding);
-
-// //   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
-
-// describe('checkSurgicalProcedureFilterLogic-Alnd_2', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const crsp: mcode.CancerRelatedSurgicalProcedure = {coding: [] as Coding[], bodySite: [] as Coding[]};
-
-// // describe('checkSurgicalProcedureFilterLogic-Alnd_2', () => {
-// //   // Initialize
-// //   const extractedMCODE = new TrialjectoryMappingLogic(null);
-// //   const crsp: mappinglogic.CancerRelatedSurgicalProcedure = {};
-// //   crsp.coding = [] as Coding[];
-// //   crsp.bodySite = [] as Coding[];
-
-// //   // Alnd Filter Attributes
-// //   crsp.coding.push({ system: 'http://snomed.info/sct', code: '122459003', display: 'N/A' } as Coding);
-// //   crsp.bodySite.push({ system: 'http://snomed.info/sct', code: '746224000', display: 'N/A' } as Coding);
-
-// //   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
-
-// describe('checkSurgicalProcedureFilterLogic-Reconstruction', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const crsp: mcode.CancerRelatedSurgicalProcedure = {coding: [] as Coding[]};
-
-// // describe('checkSurgicalProcedureFilterLogic-Reconstruction', () => {
-// //   // Initialize
-// //   const extractedMCODE = new TrialjectoryMappingLogic(null);
-// //   const crsp: mappinglogic.CancerRelatedSurgicalProcedure = {};
-// //   crsp.coding = [] as Coding[];
-
-// //   // Reconstruction Filter Attributes
-// //   crsp.coding.push({ system: 'http://snomed.info/sct', code: '302342002', display: 'N/A' } as Coding);
-
-// //   extractedMCODE.cancerRelatedSurgicalProcedure.push(crsp);
-
-// describe('checkSurgicalProcedureFilterLogic-Metastasis Resection', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const crsp: mcode.CancerRelatedSurgicalProcedure = {coding: [] as Coding[]};
-//   crsp.reasonReference = [] as mcode.ReasonReference;
-
-//   // Metastasis Resection Filter Attributes (surgical procedure reason reference = SecondaryCancerCondition)
-//   crsp.reasonReference = ({ meta_profile: 'mcode-secondary-cancer-condition' } as mcode.ReasonReference);
-
-// //   // Metastasis Resection Filter Attributes (surgical procedure reason reference = SecondaryCancerCondition)
-// //   crsp.reasonReference = ({ reference_meta_profile: 'mcode-secondary-cancer-condition' } as mappinglogic.ReasonReference);
-
-//   it('Test Metastasis Resection Filter', () => {
-//     expect(extractedMCODE.getSurgicalProcedureValue().some(sp => sp == 'metastasis_resection')).toBeTrue();
-//   });
-// });
+  it('Test Metastasis Resection Filter 1', () => {
+    const reasonReferenceBundle: any = {
+      resourceType: "Bundle",
+      type: "transaction",
+      entry: [
+        {
+          fullUrl: "urn:uuid:6a401855-9277-4b01-ac59-48ac734eece6",
+          resource: {
+            resourceType: "Procedure",
+            id: "6a401855-9277-4b01-ac59-48ac734eece6xxx",
+            meta: {
+              profile: [
+                "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-surgical-procedure",
+                "http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure"
+              ]
+            },
+            status: "completed",
+            code: {coding: []},
+            bodySite: [{coding: []}],
+            reasonReference: [
+              {
+                reference: "TEST-SEC",
+                display: "Secondary Cancer Condition Reference - for tests."
+              }
+            ]
+         }
+      },
+      {
+        fullUrl: "urn:uuid:4dee068c-5ffe-4977-8677-4ff9b518e763",
+        resource: {
+          resourceType: "Condition",
+          id: "TEST-SEC",
+          meta: {
+            profile: [
+              "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-secondary-cancer-condition",
+              "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition"
+            ]
+          },
+          code: {
+            coding: {},
+            text: "Malignant neoplasm of breast (disorder)"
+          }
+        }
+      }
+    ]
+    };
+    const mappingLogic = new TrialjectoryMappingLogic(reasonReferenceBundle);
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'metastasis_resection')).toBeTrue();
+  });
+});
 
 
 //   it('Test BRCA+ Filter_3', () => {
