@@ -1,4 +1,4 @@
-import { Ratio, SecondaryCancerCondition } from "clinical-trial-matching-service";
+import { CancerRelatedRadiationProcedure, Ratio, SecondaryCancerCondition } from "clinical-trial-matching-service";
 import {
   Bundle,
   Coding,
@@ -1614,90 +1614,90 @@ describe('checkSecondaryCancerConditionLogic', () => {
   });
 });
 
-// describe('checkRadiationProcedureFilterLogic-WBRT', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const crrp: mcode.CancerRelatedRadiationProcedure = {bodySite: [] as Coding[], coding: [] as Coding[]};
+describe('checkRadiationProcedureFilterLogic', () => {
 
-// // /** Procedure Tests */
+  const createRadiationBundle = (coding: Coding, bodySite: Coding): any => {
+    const radiationBundle: any = {
+      resourceType: "Bundle",
+      type: "transaction",
+      entry: [
+        {
+          fullUrl: "urn:uuid:92df8252-84bd-4cbe-b1dc-f80a9f28d1cc",
+          resource: {
+            resourceType: "Procedure",
+            id: "92df8252-84bd-4cbe-b1dc-f80a9f28d1cc",
+            meta: {
+              profile: [
+                "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-radiation-procedure",
+                "http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure"
+              ]
+            },
+            code: {
+              coding: [coding],
+            },
+            bodySite: [
+              {
+                coding: [bodySite]
+              }
+            ],
+            reasonReference: [
+              {
+                "reference": "4dee068c-5ffe-4977-8677-4ff9b518e763",
+                "display": "Malignant neoplasm of breast (disorder)"
+              }
+            ]
+          }
+        }
+      ]
+    };
+    return radiationBundle;
+  };
+  
 
-// // describe('checkRadiationProcedureFilterLogic-WBRT', () => {
-// //   // Initialize
-// //   const extractedMCODE = new TrialjectoryMappingLogic(null);
-// //   const crrp: mappinglogic.CancerRelatedRadiationProcedure = {};
-// //   crrp.bodySite = [] as Coding[];
-// //   crrp.coding = [] as Coding[];
+  it('Test WBRT Filter', () => {
+    const crrp: CancerRelatedRadiationProcedure = {
+      bodySite: [] as Coding[], coding: [] as Coding[],
+      mcodeTreatmentIntent: []
+    };
+    const coding = ({ system: 'http://snomed.info/sct', code: '108290001', display: 'N/A' } as Coding);
+    const bodySite = ({ system: 'http://snomed.info/sct', code: '12738006', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, bodySite));
+    expect(mappingLogic.getRadiationProcedureValues().includes('wbrt')).toBeTrue();
+  });
 
-//   it('Test WBRT Filter', () => {
-//     expect(extractedMCODE.getRadiationProcedureValue().includes('wbrt')).toBeTrue();
-//   });
-// });
-// describe('checkRadiationProcedureFilterLogic-EBRT', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const crrp: mcode.CancerRelatedRadiationProcedure = {bodySite: [] as Coding[], coding: [] as Coding[]};
+  it('Test EBRT Filter', () => {
+    const crrp: CancerRelatedRadiationProcedure = {
+      bodySite: [] as Coding[], coding: [] as Coding[],
+      mcodeTreatmentIntent: []
+    };
+    const coding = ({ system: 'http://snomed.info/sct', code: '33356009', display: 'N/A' } as Coding);
+    const bodySite = ({ system: 'http://snomed.info/sct', code: 'test', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, bodySite));
+    expect(mappingLogic.getRadiationProcedureValues().includes('ebrt')).toBeTrue();
+  });
 
-// //   extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
+  it('Test ablation Filter', () => {
+    const crrp: CancerRelatedRadiationProcedure = {
+      bodySite: [] as Coding[], coding: [] as Coding[],
+      mcodeTreatmentIntent: []
+    };
+    const coding = ({ system: 'http://snomed.info/sct', code: '228692005', display: 'N/A' } as Coding);
+    const bodySite = ({ system: 'http://snomed.info/sct', code: 'test', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, bodySite));
+    expect(mappingLogic.getRadiationProcedureValues().includes('ablation')).toBeTrue();
+  });
 
-// //   it('Test WBRT Filter', () => {
-// //     expect(extractedMCODE.getRadiationProcedureValue().includes('wbrt')).toBeTrue();
-// //   });
-// // });
-// // describe('checkRadiationProcedureFilterLogic-EBRT', () => {
-// //   // Initialize
-// //   const extractedMCODE = new TrialjectoryMappingLogic(null);
-// //   const crrp: mappinglogic.CancerRelatedRadiationProcedure = {};
-// //   crrp.bodySite = [] as Coding[];
-// //   crrp.coding = [] as Coding[];
-
-//   it('Test EBRT Filter', () => {
-//     expect(extractedMCODE.getRadiationProcedureValue().includes('ebrt')).toBeTrue();
-//   });
-// });
-// describe('checkRadiationProcedureFilterLogic-Ablation', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const crrp: mcode.CancerRelatedRadiationProcedure = {bodySite: [] as Coding[], coding: [] as Coding[]};
-
-// //   extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
-
-// //   it('Test EBRT Filter', () => {
-// //     expect(extractedMCODE.getRadiationProcedureValue().includes('ebrt')).toBeTrue();
-// //   });
-// // });
-// // describe('checkRadiationProcedureFilterLogic-Ablation', () => {
-// //   // Initialize
-// //   const extractedMCODE = new TrialjectoryMappingLogic(null);
-// //   const crrp: mappinglogic.CancerRelatedRadiationProcedure = {};
-// //   crrp.bodySite = [] as Coding[];
-// //   crrp.coding = [] as Coding[];
-
-//   it('Test Ablation Filter', () => {
-//     expect(extractedMCODE.getRadiationProcedureValue().includes('ablation')).toBeTrue();
-//   });
-// });
-// describe('checkRadiationProcedureFilterLogic-rfa', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const crrp: mcode.CancerRelatedRadiationProcedure = {bodySite: [] as Coding[], coding: [] as Coding[]};
-
-// //   extractedMCODE.cancerRelatedRadiationProcedure.push(crrp);
-
-// //   it('Test Ablation Filter', () => {
-// //     expect(extractedMCODE.getRadiationProcedureValue().includes('ablation')).toBeTrue();
-// //   });
-// // });
-// // describe('checkRadiationProcedureFilterLogic-rfa', () => {
-// //   // Initialize
-// //   const extractedMCODE = new TrialjectoryMappingLogic(null);
-// //   const crrp: mappinglogic.CancerRelatedRadiationProcedure = {};
-// //   crrp.bodySite = [] as Coding[];
-// //   crrp.coding = [] as Coding[];
-
-//   it('Test rfa Filter', () => {
-//     expect(extractedMCODE.getRadiationProcedureValue().includes('rfa')).toBeTrue();
-//   });
-// });
+  it('Test RFA Filter', () => {
+    const crrp: CancerRelatedRadiationProcedure = {
+      bodySite: [] as Coding[], coding: [] as Coding[],
+      mcodeTreatmentIntent: []
+    };
+    const coding = ({ system: 'http://snomed.info/sct', code: '879916008', display: 'N/A' } as Coding);
+    const bodySite = ({ system: 'http://snomed.info/sct', code: 'test', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, bodySite));
+    expect(mappingLogic.getRadiationProcedureValues().includes('rfa')).toBeTrue();
+  });
+});
 // describe('checkSurgicalProcedureFilterLogic-Lumpectomy', () => {
 //   // Initialize
 //   const extractedMCODE = new mcode.ExtractedMCODE(null);
