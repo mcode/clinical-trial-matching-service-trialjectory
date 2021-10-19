@@ -1418,7 +1418,8 @@ describe('checkAgeFilterLogic', () => {
 
 describe('checkHistologyMorphologyFilterLogic-ibc', () => {
 
-  const createHistologyMorphologyResource = (primaryCoding: Coding, histologyBehavior: Coding): any => {
+  const createHistologyMorphologyResource = (primaryCoding: Coding, histologyBehavior?: Coding): any => {
+    if(histologyBehavior){
     const histologyMorphology = {
       resourceType: "Bundle",
       type: "transaction",
@@ -1455,6 +1456,34 @@ describe('checkHistologyMorphologyFilterLogic-ibc', () => {
       ]
     }
     return histologyMorphology
+  } else {
+    const histologyMorphology = {
+      resourceType: "Bundle",
+      type: "transaction",
+      entry: [
+        {
+          fullUrl: "urn:uuid:4dee068c-5ffe-4977-8677-4ff9b518e763",
+          resource: {
+            resourceType: "Condition",
+            id: "4dee068c-5ffe-4977-8677-4ff9b518e763",
+            meta: {
+              profile: [
+                "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-primary-cancer-condition",
+                "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition"
+              ]
+            },
+            code: {
+              coding: [
+                primaryCoding
+              ],
+              text: "Malignant neoplasm of breast (disorder)"
+            }
+          }
+        }
+      ]
+    }
+    return histologyMorphology
+  }
   }
  
 
@@ -1472,67 +1501,37 @@ describe('checkHistologyMorphologyFilterLogic-ibc', () => {
     expect(mappingLogic.getHistologyMorphologyValue()).toBe('idc');
   });
 
-  it('Test Invasive Invasive Ductal Carcinoma Filter', () => {
+  it('Test Invasive Invasive Lobular Carcinoma Filter', () => {
     const primaryCoding = { system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding;
     const histologyBehavior = { system: 'http://snomed.info/sct', code: '443757001', display: 'N/A' } as Coding; // Any code in 'Morphology-Invas_Lob_Carc'
     const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(primaryCoding, histologyBehavior));
     expect(mappingLogic.getHistologyMorphologyValue()).toBe('ilc');
   });
+
+  it('Test Ductal Carcinoma In Situ Filter', () => {
+    const primaryCoding = { system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding;
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '18680006', display: 'N/A' } as Coding; // Any code in 'Morphology-Invas_Lob_Carc'
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(primaryCoding, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('dcis');
+  });
+
+  it('Test Lobular Carcinoma In Situ Filter_1', () => {
+    const primaryCoding = { system: 'http://snomed.info/sct', code: '1080261000119100', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(primaryCoding, undefined));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('lcis');
+  });
+
+  it('Test Lobular Carcinoma In Situ Filter_2', () => {
+    const primaryCoding = { system: 'http://snomed.info/sct', code: '77284006', display: 'N/A' } as Coding;
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '77284006', display: 'N/A' } as Coding; // Any code in 'lcis-histology'
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(primaryCoding, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('lcis');
+  });
 });
 
-// describe('checkHistologyMorphologyFilterLogic-dcis', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const pcc: PrimaryCancerCondition = {clinicalStatus: [] as Coding[], coding: [] as Coding[], histologyMorphologyBehavior: [] as Coding[]};
 
-//   // Ductal Carcinoma In Situ Filter Attributes
-//   pcc.coding.push({ system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding); // Any Code in 'Cancer-Breast'
-//   pcc.histologyMorphologyBehavior.push({
-//     system: 'http://snomed.info/sct',
-//     code: '18680006',
-//     display: 'N/A'
-//   } as Coding); // Any code in 'Morphology-Duct_Car_In_Situ'
 
-//   extractedMCODE.primaryCancerCondition.push(pcc);
 
-//   it('Test Ductal Carcinoma In Situ Filter', () => {
-//     expect(extractedMCODE.getHistologyMorphologyValue()).toBe('dcis');
-//   });
-// });
-// describe('checkHistologyMorphologyFilterLogic-lcis_1', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const pcc: PrimaryCancerCondition = {clinicalStatus: [] as Coding[], coding: [] as Coding[], histologyMorphologyBehavior: [] as Coding[]};
-//   pcc.coding = [] as Coding[];
-//   pcc.histologyMorphologyBehavior = [] as Coding[];
-
-// //   // Invasive Lobular Carcinoma Filter Attributes
-// //   pcc.coding.push({ system: 'http://snomed.info/sct', code: '1080261000119100', display: 'N/A' } as Coding); // Any Code in 'Cancer-Invas Lob Carc'
-
-// //   extractedMCODE.primaryCancerCondition.push(pcc);
-
-//   it('Test Lobular Carcinoma In Situ Filter_1', () => {
-//     expect(extractedMCODE.getHistologyMorphologyValue()).toBe('lcis');
-//   });
-// });
-// describe('checkHistologyMorphologyFilterLogic-lcis_2', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const pcc: PrimaryCancerCondition = {clinicalStatus: [] as Coding[], coding: [] as Coding[], histologyMorphologyBehavior: [] as Coding[]};
-
-//   // Lobular Carcinoma In Situ Filter Attributes
-//   pcc.histologyMorphologyBehavior.push({
-//     system: 'http://snomed.info/sct',
-//     code: '77284006',
-//     display: 'N/A'
-//   } as Coding); // Any Code in 'lcis-histology'
-
-//   extractedMCODE.primaryCancerCondition.push(pcc);
-
-//   it('Test Lobular Carcinoma In Situ Filter_2', () => {
-//     expect(extractedMCODE.getHistologyMorphologyValue()).toBe('lcis');
-//   });
-// });
 
 // describe('checkSecondaryCancerConditionLogic', () => {
 //   // Initialize
@@ -1819,7 +1818,7 @@ describe('checkHistologyMorphologyFilterLogic-ibc', () => {
 // });
 
 
-/ //   it('Test BRCA+ Filter_3', () => {
+//   it('Test BRCA+ Filter_3', () => {
 // //     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
 // //     expect(tumorMarkerValues[0]).toBe('BRCA1+');
 // //   });
