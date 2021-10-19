@@ -1,4 +1,4 @@
-import { Ratio } from "clinical-trial-matching-service";
+import { Ratio, SecondaryCancerCondition } from "clinical-trial-matching-service";
 import {
   Bundle,
   Coding,
@@ -1416,7 +1416,7 @@ describe('checkAgeFilterLogic', () => {
   });
 });
 
-describe('checkHistologyMorphologyFilterLogic-ibc', () => {
+describe('checkHistologyMorphologyFilterLogic', () => {
 
   const createHistologyMorphologyResource = (primaryCoding: Coding, histologyBehavior?: Coding): any => {
     if(histologyBehavior){
@@ -1454,8 +1454,8 @@ describe('checkHistologyMorphologyFilterLogic-ibc', () => {
           }
         }
       ]
-    }
-    return histologyMorphology
+    };
+    return histologyMorphology;
   } else {
     const histologyMorphology = {
       resourceType: "Bundle",
@@ -1481,8 +1481,8 @@ describe('checkHistologyMorphologyFilterLogic-ibc', () => {
           }
         }
       ]
-    }
-    return histologyMorphology
+    };
+    return histologyMorphology;
   }
   }
  
@@ -1529,106 +1529,90 @@ describe('checkHistologyMorphologyFilterLogic-ibc', () => {
   });
 });
 
+describe('checkSecondaryCancerConditionLogic', () => {
+
+  const secondaryCancerCondition: Coding[] = [];
+  secondaryCancerCondition.push({ system: 'http://snomed.info/sct', code: '94222008' } as Coding);
+  secondaryCancerCondition.push({ system: 'http://snomed.info/sct', code: '00000000', display: 'Secondary malignant neoplasm of liver (disorder)' } as Coding);
+  secondaryCancerCondition.push({ display: 'Secondary malignant neoplasm of chest wall (disorder)' } as Coding);
+  secondaryCancerCondition.push({ display: 'Cannot be read' } as Coding);
+  const secondaryCancerBundle: any = {
+    resourceType: "Bundle",
+    type: "transaction",
+    entry: [
+      {
+        fullUrl: "urn:uuid:4dee068c-5ffe-4977-8677-4ff9b518e763",
+        resource: {
+          resourceType: "Condition",
+          id: "4dee068c-5ffe-4977-8677-4ff9b518e763",
+          meta: {
+            profile: [
+              "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-secondary-cancer-condition",
+              "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition"
+            ]
+          },
+          code: {
+            coding: secondaryCancerCondition,
+            text: "Malignant neoplasm of breast (disorder)"
+          }
+        }
+      }
+    ]
+  };
 
 
-
-
-// describe('checkSecondaryCancerConditionLogic', () => {
-//   // Initialize
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//     const scc: mcode.SecondaryCancerCondition = {clinicalStatus: [] as Coding[], coding: [] as Coding[]};
-
-// //   extractedMCODE.primaryCancerCondition.push(pcc);
-
-// //   it('Test Lobular Carcinoma In Situ Filter_1', () => {
-// //     expect(extractedMCODE.getHistologyMorphologyValue()).toBe('lcis');
-// //   });
-// // });
-// // describe('checkHistologyMorphologyFilterLogic-lcis_2', () => {
-// //   // Initialize
-// //   const extractedMCODE = new TrialjectoryMappingLogic(null);
-// //   const pcc: PrimaryCancerCondition = {};
-// //   pcc.clinicalStatus = [] as Coding[];
-// //   pcc.coding = [] as Coding[];
-// //   pcc.histologyMorphologyBehavior = [] as Coding[];
-
-// //   // Lobular Carcinoma In Situ Filter Attributes
-// //   pcc.histologyMorphologyBehavior.push({
-// //     system: 'http://snomed.info/sct',
-// //     code: '77284006',
-// //     display: 'N/A'
-// //   } as Coding); // Any Code in 'lcis-histology'
-
-// //   extractedMCODE.primaryCancerCondition.push(pcc);
-
-// //   it('Test Lobular Carcinoma In Situ Filter_2', () => {
-// //     expect(extractedMCODE.getHistologyMorphologyValue()).toBe('lcis');
-// //   });
-// // });
-// // describe('checkSecondaryCancerConditionLogic', () => {
-// //   // Initialize
-// //   const extractedMCODE = new TrialjectoryMappingLogic(null);
-// //   const scc: mappinglogic.SecondaryCancerCondition = {};
-// //   scc.clinicalStatus = [] as Coding[];
-// //   scc.coding = [] as Coding[];
-
-//   it('is populated', () => {
-//     expect(extractedMCODE.getSecondaryCancerValue()).not.toBeNull();
-//     expect(extractedMCODE.getSecondaryCancerValue()).toHaveSize(3);
-//   });
-//   it('uses snomed codes', () => {
-//     expect(extractedMCODE.getSecondaryCancerValue()).toContain("bone");
-//   });
-//   it('uses display text if code is not present', () => {
-//     expect(extractedMCODE.getSecondaryCancerValue()).toContain("liver");
-//   });
-//   it('uses display text if system and code is not present', () => {
-//     expect(extractedMCODE.getSecondaryCancerValue()).toContain("chest wall");
-//   });
-//   it('is null if no Secondary Cancer Conditions', () => {
-//     const emptyExtractedMCODE = new mcode.ExtractedMCODE(null);
-//     expect(emptyExtractedMCODE.getSecondaryCancerValue()).toBeNull();
-//   });
-//   it('is null if no matches', () => {
-//     const emptyExtractedMCODE = new mcode.ExtractedMCODE(null);
-//     const scc: mcode.SecondaryCancerCondition = {clinicalStatus: [] as Coding[], coding: [] as Coding[]};
-
-//     scc.coding.push({} as Coding);
-//     emptyExtractedMCODE.secondaryCancerCondition.push(scc);
-
-// //   extractedMCODE.secondaryCancerCondition.push(scc);
-
-// //   it('is populated', () => {
-// //     expect(extractedMCODE.getSecondaryCancerValue()).not.toBeNull();
-// //     expect(extractedMCODE.getSecondaryCancerValue()).toHaveSize(3);
-// //   });
-// //   it('uses snomed codes', () => {
-// //     expect(extractedMCODE.getSecondaryCancerValue()).toContain("bone");
-// //   });
-// //   it('uses display text if code is not present', () => {
-// //     expect(extractedMCODE.getSecondaryCancerValue()).toContain("liver");
-// //   });
-// //   it('uses display text if system and code is not present', () => {
-// //     expect(extractedMCODE.getSecondaryCancerValue()).toContain("chest wall");
-// //   });
-// //   it('is null if no Secondary Cancer Conditions', () => {
-// //     const emptyExtractedMCODE = new TrialjectoryMappingLogic(null);
-// //     expect(emptyExtractedMCODE.getSecondaryCancerValue()).toBeNull();
-// //   });
-// //   it('is null if no matches', () => {
-// //     const emptyExtractedMCODE = new TrialjectoryMappingLogic(null);
-// //     const scc: mappinglogic.SecondaryCancerCondition = {};
-// //     scc.clinicalStatus = [] as Coding[];
-// //     scc.coding = [] as Coding[];
-// //     scc.coding.push({} as Coding);
-
-// //     emptyExtractedMCODE.secondaryCancerCondition.push(scc);
-
-// //     expect(emptyExtractedMCODE.getSecondaryCancerValue()).toBeNull();
-// //   });
-// //   it('is null if no coding', () => {
-// //     const emptyExtractedMCODE = new TrialjectoryMappingLogic(null);
-// //     const scc: mappinglogic.SecondaryCancerCondition = {};
+  const mappingLogic = new TrialjectoryMappingLogic(secondaryCancerBundle);
+  it('is populated', () => {
+    expect(mappingLogic.getSecondaryCancerValues()).not.toBeNull();
+    expect(mappingLogic.getSecondaryCancerValues()).toHaveSize(3);
+  });
+  it('uses snomed codes', () => {
+    expect(mappingLogic.getSecondaryCancerValues()).toContain("bone");
+  });
+  it('uses display text if code is not present', () => {
+    expect(mappingLogic.getSecondaryCancerValues()).toContain("liver");
+  });
+  it('uses display text if system and code is not present', () => {
+    expect(mappingLogic.getSecondaryCancerValues()).toContain("chest wall");
+  });
+  it('is null if no Secondary Cancer Conditions', () => {
+    const emptyBundle: any = {
+      resourceType: "Bundle",
+      type: "transaction",
+      entry: []
+    };
+    const mappingLogicNoSecondary = new TrialjectoryMappingLogic(emptyBundle);
+    expect(mappingLogicNoSecondary.getSecondaryCancerValues()).toBeNull();
+  });
+  it('is null if no matches', () => {
+    const falseSecondaryCancerCondition: Coding = { system: 'http://snomed.info/sct', code: 'test', display: 'test' } as Coding;
+    const falseSecondaryCancerBundle: any = {
+      resourceType: "Bundle",
+      type: "transaction",
+      entry: [
+        {
+          fullUrl: "urn:uuid:4dee068c-5ffe-4977-8677-4ff9b518e763",
+          resource: {
+            resourceType: "Condition",
+            id: "4dee068c-5ffe-4977-8677-4ff9b518e763",
+            meta: {
+              profile: [
+                "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-secondary-cancer-condition",
+                "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition"
+              ]
+            },
+            code: {
+              coding: [falseSecondaryCancerCondition],
+              text: "Malignant neoplasm of breast (disorder)"
+            }
+          }
+        }
+      ]
+    };
+    const emptyExtractedMCODE = new TrialjectoryMappingLogic(falseSecondaryCancerBundle)
+    expect(emptyExtractedMCODE.getSecondaryCancerValues()).toBeNull();
+  });
+});
 
 // describe('checkRadiationProcedureFilterLogic-WBRT', () => {
 //   // Initialize
