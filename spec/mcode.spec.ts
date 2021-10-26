@@ -354,8 +354,93 @@ describe("Test Tumor Marker Logic", () => {
       interpretation,
       ...coding
     );
-    const extractedMCODE = new TrialjectoryMappingLogic(bundle);
-    return extractedMCODE.getTumorMarkerValues();
+    const mappingLogic = new TrialjectoryMappingLogic(bundle);
+    return mappingLogic.getTumorMarkerValues();
+  };
+
+  let createCgvTumorMarker = (cgvGeneStudiedVcc: Coding, cgvGeneStudiedInterpretation: Coding, cgvGenomicSourceClassVcc: Coding, cgvVcc: Coding, cgvInterpretation: Coding): string[] => {
+    let bundle: any = {
+        resourceType: "Bundle",
+        type: "transaction",
+        entry: [
+          {
+            fullUrl: "urn:uuid:6556b6b3-678c-4fd6-9309-8df77xxxxxxx",
+            resource: {
+              resourceType: "Observation",
+              id: "6556b6b3-678c-4fd6-9309-8df77xxxxxxx",
+              meta: {
+                profile: [
+                  "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-genetic-variant"
+                ]
+              },
+              component: [
+                {
+                  code: {
+                    coding: [
+                      {
+                        system: "http://loinc.org",
+                        code: "48018-6"
+                      }
+                    ]
+                  },
+                  valueCodeableConcept: {
+                    coding: [
+                      cgvGeneStudiedVcc
+                    ]
+                  },
+                  interpretation: {
+                    coding: []
+                  }
+                },
+                {
+                  code: {
+                    coding: [
+                      {
+                        system: "http://loinc.org",
+                        code: "48002-0"
+                      }
+                    ]
+                  },
+                  valueCodeableConcept: {
+                    coding: []
+                  }
+                }
+              ]
+            }
+          }
+        ]
+    };
+
+    if(cgvGeneStudiedInterpretation != undefined) {
+      bundle.entry[0].resource.component[0].interpretation = {coding: [
+        cgvGeneStudiedInterpretation
+      ]};
+    }
+
+    if(cgvGenomicSourceClassVcc != undefined) {
+      bundle.entry[0].resource.component[1].valueCodeableConcept = {coding: [
+        cgvGenomicSourceClassVcc
+      ]};
+    }
+
+    if(cgvVcc != undefined){
+      bundle.entry[0].resource.valueCodeableConcept = {
+        coding: [
+            cgvVcc
+        ]
+      }
+    }
+
+    if(cgvInterpretation != undefined){
+      bundle.entry[0].resource.interpretation = {
+        coding: [
+          cgvInterpretation
+        ]
+      }
+    }
+
+    const mappingLogic = new TrialjectoryMappingLogic(bundle);
+    return mappingLogic.getTumorMarkerValues();
   };
 
   it("Test ER+ Logic 1", () => {
@@ -550,290 +635,100 @@ describe("Test Tumor Marker Logic", () => {
     );
     expect(tumorMarkerValues[0]).toBe("PR-");
   });
+
+  it('Test BRCA1+ Filter 1', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1100', display: 'BRCA1' };
+    const cgvGeneStudiedInterpretation: Coding = { system: 'N/A', code: 'CAR', display: 'CAR' };
+    const cgvGenomicSourceClassVcc: Coding = {system: ' http://loinc.info/sct', code: 'LA6683-2', display: 'N/A'};
+    const tumorMarkerValues = createCgvTumorMarker(cgvGeneStudiedVcc, cgvGeneStudiedInterpretation, cgvGenomicSourceClassVcc, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('BRCA1+');
+  });
+
+  it('Test BRCA1+ Filter 2', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1100', display: 'BRCA1' };
+    const cgvGeneStudiedInterpretation: Coding = { system: 'N/A', code: 'A', display: 'A' };
+    const cgvGenomicSourceClassVcc: Coding = {system: ' http://loinc.info/sct', code: 'LA6683-2', display: 'N/A'};
+    const tumorMarkerValues = createCgvTumorMarker(cgvGeneStudiedVcc, cgvGeneStudiedInterpretation, cgvGenomicSourceClassVcc, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('BRCA1+');
+  });
+
+  it('Test BRCA1+ Filter 3', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1100', display: 'BRCA1' };
+    const cgvGeneStudiedInterpretation: Coding = { system: 'N/A', code: 'POS', display: 'POS' };
+    const cgvGenomicSourceClassVcc: Coding = {system: ' http://loinc.info/sct', code: 'LA6683-2', display: 'N/A'};
+    const tumorMarkerValues = createCgvTumorMarker(cgvGeneStudiedVcc, cgvGeneStudiedInterpretation, cgvGenomicSourceClassVcc, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('BRCA1+');
+  });
+
+  it('Test BRCA1- Filter', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1100', display: 'BRCA1' };
+    const cgvVcc: Coding = {system: 'http://snomed.info/sct', code: '260385009', display: 'N/A'};
+    const tumorMarkerValues = createCgvTumorMarker(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
+    expect(tumorMarkerValues[0]).toBe('BRCA1-');
+  });
+
+  it('Test BRCA2+ Filter', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1101', display: 'BRCA2' };
+    const cgvVcc: Coding = {system: 'http://snomed.info/sct', code: '10828004', display: 'N/A'};
+    const tumorMarkerValues = createCgvTumorMarker(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
+    expect(tumorMarkerValues[0]).toBe('BRCA2+');
+  });
+
+  it('Test BRCA2- Filter', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1101', display: 'BRCA2' };
+    const cgvVcc: Coding = {system: 'http://snomed.info/sct', code: '260385009', display: 'N/A'};
+    const tumorMarkerValues = createCgvTumorMarker(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
+    expect(tumorMarkerValues[0]).toBe('BRCA2-');
+  });
+
+  it('Test ATM+ Filter', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '795', display: 'BRCA2' };
+    const cgvVcc: Coding = {system: 'http://loinc.info/sct', code: 'LA9633-4', display: 'N/A'};
+    const tumorMarkerValues = createCgvTumorMarker(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
+    expect(tumorMarkerValues[0]).toBe('ATM+');
+  });
+
+  it('Test ATM- Filter', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '795', display: 'BRCA2' };
+    const cgvVcc: Coding = {system: 'http://snomed.info/sct', code: '260385009', display: 'N/A'};
+    const tumorMarkerValues = createCgvTumorMarker(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
+    expect(tumorMarkerValues[0]).toBe('ATM-');
+  });
+
+  it('Test CDH1+ Filter', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1748', display: 'BRCA2' };
+    const cgvInterpretation: Coding = {system: 'n/a', code: 'POS', display: 'N/A'};
+    const tumorMarkerValues = createCgvTumorMarker(cgvGeneStudiedVcc, undefined, undefined, undefined, cgvInterpretation);
+    expect(tumorMarkerValues[0]).toBe('CDH1+');
+  });
+
+  it('Test CDH1- Filter', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1748', display: 'BRCA2' };
+    const cgvInterpretation: Coding = {system: 'n/a', code: 'NEG', display: 'N/A'};
+    const tumorMarkerValues = createCgvTumorMarker(cgvGeneStudiedVcc, undefined, undefined, undefined, cgvInterpretation);
+    expect(tumorMarkerValues[0]).toBe('CDH1-');
+  });
+
+  it("Test CHEK2+ Logic", () => {
+    const coding = {system: "http://loinc.info/sct", code: "72518-4", display: "N/A"} as Coding;
+    const interpretation = {
+      system: "http://hl7.org/fhir/R4/valueset-observation-interpretation.html",
+      code: "POS",
+      display: "N/A",
+    } as Coding;
+    const tumorMarkerValues = createTumorMarkerToTest(undefined, interpretation, undefined, coding);
+    expect(tumorMarkerValues[0]).toBe("CHEK2+");
+  });
+
+  it('Test CHEK2- Filter', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '16627', display: 'BRCA2' };
+    const cgvVcc: Coding = {system: 'http://snomed.info/sct', code: '260385009', display: 'N/A'};
+    const tumorMarkerValues = createCgvTumorMarker(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
+    expect(tumorMarkerValues[0]).toBe('CHEK2-');
+  });
 });
-// describe('checkTumorMarkerFilterLogic-BRCA1+', () => {
 
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const cgv = createEmptyCancerGeneticVariant();
-//   const cgvComponent = createEmptyCancerGeneticVariantComponent();
-//   const cgvGeneStudied = createEmptyCancerGeneticVariantGeneStudied();
-//   const cgvGenomicSourceClass = createEmptyCancerGeneticVariantGenomicsSource();
 
-//   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1100', display: 'BRCA1' });
-//   cgvGeneStudied.interpretation.coding.push({ system: 'N/A', code: 'CAR', display: 'CAR' });
-//   cgvGenomicSourceClass.valueCodeableConcept.coding.push({
-//     system: ' http://loinc.info/sct',
-//     code: 'LA6683-2',
-//     display: 'N/A'
-//   });
-
-//   cgvComponent.geneStudied.push(cgvGeneStudied);
-//   cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
-//   cgv.component = cgvComponent;
-//   extractedMCODE.cancerGeneticVariant.push(cgv);
-
-//   it('Test BRCA+ Filter', () => {
-//     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//     expect(tumorMarkerValues[0]).toBe('BRCA1+');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-BRCA1+_2', () => {
-
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const cgv = createEmptyCancerGeneticVariant();
-//   const cgvComponent = createEmptyCancerGeneticVariantComponent();
-//   const cgvGeneStudied = createEmptyCancerGeneticVariantGeneStudied();
-//   const cgvGenomicSourceClass = createEmptyCancerGeneticVariantGenomicsSource();
-
-//   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1100', display: 'BRCA1' });
-//   cgvGeneStudied.interpretation.coding.push({ system: 'N/A', code: 'A', display: 'A' });
-//   cgvGenomicSourceClass.valueCodeableConcept.coding.push({
-//     system: ' http://loinc.info/sct',
-//     code: 'LA6683-2',
-//     display: 'N/A'
-//   });
-
-//   cgvComponent.geneStudied.push(cgvGeneStudied);
-//   cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
-//   cgv.component = cgvComponent;
-//   extractedMCODE.cancerGeneticVariant.push(cgv);
-
-//   it('Test BRCA+ Filter+2', () => {
-//     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//     expect(tumorMarkerValues[0]).toBe('BRCA1+');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-BRCA1+_3', () => {
-
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const cgv = createEmptyCancerGeneticVariant();
-//   const cgvComponent = createEmptyCancerGeneticVariantComponent();
-//   const cgvGeneStudied = createEmptyCancerGeneticVariantGeneStudied();
-//   const cgvGenomicSourceClass = createEmptyCancerGeneticVariantGenomicsSource();
-
-//   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1100', display: 'BRCA1' });
-//   cgvGeneStudied.interpretation.coding.push({ system: 'N/A', code: 'POS', display: 'POS' });
-//   cgvGenomicSourceClass.valueCodeableConcept.coding.push({
-//     system: ' http://loinc.info/sct',
-//     code: 'LA6683-2',
-//     display: 'N/A'
-//   });
-
-//   cgvComponent.geneStudied.push(cgvGeneStudied);
-//   cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
-//   cgv.component = cgvComponent;
-//   extractedMCODE.cancerGeneticVariant.push(cgv);
-
-//   it('Test BRCA+ Filter_3', () => {
-//     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//     expect(tumorMarkerValues[0]).toBe('BRCA1+');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-BRCA1-', () => {
-
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const cgv = createEmptyCancerGeneticVariant();
-//   const cgvComponent = createEmptyCancerGeneticVariantComponent();
-//   const cgvGeneStudied = createEmptyCancerGeneticVariantGeneStudied();
-//   const cgvGenomicSourceClass = createEmptyCancerGeneticVariantGenomicsSource();
-
-//   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1100', display: 'BRCA1' });
-//   cgv.valueCodeableConcept.push({ system: 'http://snomed.info/sct', code: '260385009', display: 'N/A' });
-
-//   cgvComponent.geneStudied.push(cgvGeneStudied);
-//   cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
-//   cgv.component = cgvComponent;
-//   extractedMCODE.cancerGeneticVariant.push(cgv);
-
-//   it('Test BRCA- Filter', () => {
-//     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//     expect(tumorMarkerValues[0]).toBe('BRCA1-');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-BRCA2+', () => {
-
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const cgv = createEmptyCancerGeneticVariant();
-//   const cgvComponent = createEmptyCancerGeneticVariantComponent();
-//   const cgvGeneStudied = createEmptyCancerGeneticVariantGeneStudied();
-//   const cgvGenomicSourceClass = createEmptyCancerGeneticVariantGenomicsSource();
-
-//   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1101', display: 'BRCA2' });
-//   cgv.valueCodeableConcept.push({ system: 'http://snomed.info/sct', code: '10828004', display: 'N/A' });
-//   cgvComponent.geneStudied.push(cgvGeneStudied);
-//   cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
-//   cgv.component = cgvComponent;
-//   extractedMCODE.cancerGeneticVariant.push(cgv);
-
-//   it('Test BRCA2+ Filter', () => {
-//     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//     expect(tumorMarkerValues[0]).toBe('BRCA2+');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-BRCA2-', () => {
-
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const cgv = createEmptyCancerGeneticVariant();
-//   const cgvComponent = createEmptyCancerGeneticVariantComponent();
-//   const cgvGeneStudied = createEmptyCancerGeneticVariantGeneStudied();
-//   const cgvGenomicSourceClass = createEmptyCancerGeneticVariantGenomicsSource();
-
-//   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1101', display: 'BRCA2' });
-//   cgv.valueCodeableConcept.push({ system: 'http://snomed.info/sct', code: '260385009', display: 'N/A' });
-//   cgvComponent.geneStudied.push(cgvGeneStudied);
-//   cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
-//   cgv.component = cgvComponent;
-//   extractedMCODE.cancerGeneticVariant.push(cgv);
-
-//   it('Test BRCA2- Filter', () => {
-//     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//     expect(tumorMarkerValues[0]).toBe('BRCA2-');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-ATM-', () => {
-
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const cgv = createEmptyCancerGeneticVariant();
-//   const cgvComponent = createEmptyCancerGeneticVariantComponent();
-//   const cgvGeneStudied = createEmptyCancerGeneticVariantGeneStudied();
-//   const cgvGenomicSourceClass = createEmptyCancerGeneticVariantGenomicsSource();
-
-//   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '795', display: 'ATM' });
-//   cgv.valueCodeableConcept.push({ system: 'http://snomed.info/sct', code: '260385009', display: 'N/A' });
-//   cgvComponent.geneStudied.push(cgvGeneStudied);
-//   cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
-//   cgv.component = cgvComponent;
-//   extractedMCODE.cancerGeneticVariant.push(cgv);
-
-//   it('Test ATM- Filter', () => {
-//     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//     expect(tumorMarkerValues[0]).toBe('ATM-');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-ATM+', () => {
-
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const cgv = createEmptyCancerGeneticVariant();
-//   const cgvComponent = createEmptyCancerGeneticVariantComponent();
-//   const cgvGeneStudied = createEmptyCancerGeneticVariantGeneStudied();
-//   const cgvGenomicSourceClass = createEmptyCancerGeneticVariantGenomicsSource();
-
-//   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '795', display: 'ATM' });
-//   cgv.valueCodeableConcept.push({ system: 'loinc', code: 'LA9633-4', display: 'Present' });
-//   cgvComponent.geneStudied.push(cgvGeneStudied);
-//   cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
-//   cgv.component = cgvComponent;
-//   extractedMCODE.cancerGeneticVariant.push(cgv);
-
-//   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-
-//   it('Test ATM+ Filter', () => {
-//     expect(tumorMarkerValues[0]).toBe('ATM+');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-CDH1+', () => {
-
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-
-//   const tumorMarker = createEmptyTumorMarker();
-
-// //   it('Test BRCA+ Filter', () => {
-// //     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-// //     expect(tumorMarkerValues[0]).toBe('BRCA1+');
-// //   });
-// // });
-// // describe('checkTumorMarkerFilterLogic-BRCA1+_2', () => {
-// 
-// //   const extractedMCODE = new TrialjectoryMappingLogic(null);
-// //   const cgv: mappinglogic.CancerGeneticVariant = {
-// //     valueCodeableConcept: [] as Coding[],
-// //     interpretation: [] as Coding[],
-// //     component: {} as mappinglogic.CancerGeneticVariantComponent
-// //   };
-// //   const cgvComponent: mappinglogic.CancerGeneticVariantComponent = {
-// //     geneStudied: [] as mappinglogic.CancerGeneticVariantComponentType[],
-// //     genomicsSourceClass: [] as mappinglogic.CancerGeneticVariantComponentType[]
-// //   };
-// //   const cgvGeneStudied: mappinglogic.CancerGeneticVariantComponentType = {
-// //     valueCodeableConcept: { coding: [] as Coding[] },
-// //     interpretation: { coding: [] as Coding[] }
-// //   };
-// //   const cgvGenomicSourceClass: mappinglogic.CancerGeneticVariantComponentType = {
-// //     valueCodeableConcept: { coding: [] as Coding[] },
-// //     interpretation: { coding: [] as Coding[] }
-// //   };
-
-// //   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1100', display: 'BRCA1' });
-// //   cgvGeneStudied.interpretation.coding.push({ system: 'N/A', code: 'A', display: 'A' });
-// //   cgvGenomicSourceClass.valueCodeableConcept.coding.push({
-// //     system: ' http://loinc.info/sct',
-// //     code: 'LA6683-2',
-// //     display: 'N/A'
-// //   });
-
-// //   cgvComponent.geneStudied.push(cgvGeneStudied);
-// //   cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
-// //   cgv.component = cgvComponent;
-// //   extractedMCODE.cancerGeneticVariant.push(cgv);
-
-//   it('Test CDH1+ Filter', () => {
-//     expect(tumorMarkerValues[0]).toBe('CDH1+');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-CDH1-', () => {
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const cgv = createEmptyCancerGeneticVariant();
-//   const cgvComponent = createEmptyCancerGeneticVariantComponent();
-//   const cgvGeneStudied = createEmptyCancerGeneticVariantGeneStudied();
-//   const cgvGenomicSourceClass = createEmptyCancerGeneticVariantGenomicsSource();
-
-//   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1748', display: 'CDH1' });
-//   cgv.interpretation.push({ system: 'n/a', code: 'NEG', display: 'NEG' });
-//   cgvComponent.geneStudied.push(cgvGeneStudied);
-//   cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
-//   cgv.component = cgvComponent;
-//   extractedMCODE.cancerGeneticVariant.push(cgv);
-
-//   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-
-//   it('Test CDH1- Filter', () => {
-//     expect(tumorMarkerValues[0]).toBe('CDH1-');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-CHEK2+', () => {
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const tumorMarker = createEmptyTumorMarker();
-
-//   tumorMarker.coding.push({ system: 'loinc', code: '72518-4', display: 'n/a' });
-//   tumorMarker.interpretation.push({ system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'POS', display: 'POS'});
-
-//   extractedMCODE.tumorMarker.push(tumorMarker);
-
-//   it('Test CHEK2+ Filter', () => {
-//     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//     expect(tumorMarkerValues[0]).toBe('CHEK2+');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-CHEK2-', () => {
-
-//   const extractedMCODE = new mcode.ExtractedMCODE(null);
-//   const cgv = createEmptyCancerGeneticVariant();
-//   const cgvComponent = createEmptyCancerGeneticVariantComponent();
-//   const cgvGeneStudied = createEmptyCancerGeneticVariantGeneStudied();
-//   const cgvGenomicSourceClass = createEmptyCancerGeneticVariantGenomicsSource();
-
-//   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '16627', display: 'CHEK2' });
-//   cgv.valueCodeableConcept.push({ system: 'snomed', code: '260385009', display: 'n/a' });
-//   cgvComponent.geneStudied.push(cgvGeneStudied);
-//   cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
-//   cgv.component = cgvComponent;
-//   extractedMCODE.cancerGeneticVariant.push(cgv);
-
-//   it('Test CHEK2- Filter', () => {
-//     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//     expect(tumorMarkerValues[0]).toBe('CHEK2-');
-//   });
-// });
 // describe('checkTumorMarkerFilterLogic-NBN+', () => {
 
 //   const extractedMCODE = new mcode.ExtractedMCODE(null);
@@ -1364,193 +1259,6 @@ describe("Test Tumor Marker Logic", () => {
 //   });
 // })
 
-//   it('Test BRCA+ Filter_3', () => {
-//     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//     expect(tumorMarkerValues[0]).toBe('BRCA1+');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-BRCA1-', () => {
-
-//   const extractedMCODE = new TrialjectoryMappingLogic(null);
-//   const cgv: mappinglogic.CancerGeneticVariant = {
-//     valueCodeableConcept: [] as Coding[],
-//     interpretation: [] as Coding[],
-//     component: {} as mappinglogic.CancerGeneticVariantComponent
-//   };
-//   const cgvComponent: mappinglogic.CancerGeneticVariantComponent = {
-//     geneStudied: [] as mappinglogic.CancerGeneticVariantComponentType[],
-//     genomicsSourceClass: [] as mappinglogic.CancerGeneticVariantComponentType[]
-//   };
-//   const cgvGeneStudied: mappinglogic.CancerGeneticVariantComponentType = {
-//     valueCodeableConcept: { coding: [] as Coding[] },
-//     interpretation: { coding: [] as Coding[] }
-//   };
-//   const cgvGenomicSourceClass: mappinglogic.CancerGeneticVariantComponentType = {
-//     valueCodeableConcept: { coding: [] as Coding[] },
-//     interpretation: { coding: [] as Coding[] }
-//   };
-
-//   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1100', display: 'BRCA1' });
-//   cgv.valueCodeableConcept.push({ system: 'http://snomed.info/sct', code: '260385009', display: 'N/A' });
-
-//   cgvComponent.geneStudied.push(cgvGeneStudied);
-//   cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
-//   cgv.component = cgvComponent;
-//   extractedMCODE.cancerGeneticVariant.push(cgv);
-
-//   it('Test BRCA- Filter', () => {
-//     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//     expect(tumorMarkerValues[0]).toBe('BRCA1-');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-BRCA2+', () => {
-
-//   const extractedMCODE = new TrialjectoryMappingLogic(null);
-//   const cgv: mappinglogic.CancerGeneticVariant = {
-//     valueCodeableConcept: [] as Coding[],
-//     interpretation: [] as Coding[],
-//     component: {} as mappinglogic.CancerGeneticVariantComponent
-//   };
-//   const cgvComponent: mappinglogic.CancerGeneticVariantComponent = {
-//     geneStudied: [] as mappinglogic.CancerGeneticVariantComponentType[],
-//     genomicsSourceClass: [] as mappinglogic.CancerGeneticVariantComponentType[]
-//   };
-//   const cgvGeneStudied: mappinglogic.CancerGeneticVariantComponentType = {
-//     valueCodeableConcept: { coding: [] as Coding[] },
-//     interpretation: { coding: [] as Coding[] }
-//   };
-//   const cgvGenomicSourceClass: mappinglogic.CancerGeneticVariantComponentType = {
-//     valueCodeableConcept: { coding: [] as Coding[] },
-//     interpretation: { coding: [] as Coding[] }
-//   };
-
-//   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1101', display: 'BRCA2' });
-//   cgv.valueCodeableConcept.push({ system: 'http://snomed.info/sct', code: '10828004', display: 'N/A' });
-
-//   cgvComponent.geneStudied.push(cgvGeneStudied);
-//   cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
-//   cgv.component = cgvComponent;
-//   extractedMCODE.cancerGeneticVariant.push(cgv);
-
-//   it('Test BRCA2+ Filter', () => {
-//     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//     expect(tumorMarkerValues[0]).toBe('BRCA2+');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-BRCA2-', () => {
-
-//   const extractedMCODE = new TrialjectoryMappingLogic(null);
-//   const cgv: mappinglogic.CancerGeneticVariant = {
-//     valueCodeableConcept: [] as Coding[],
-//     interpretation: [] as Coding[],
-//     component: {} as mappinglogic.CancerGeneticVariantComponent
-//   };
-//   const cgvComponent: mappinglogic.CancerGeneticVariantComponent = {
-//     geneStudied: [] as mappinglogic.CancerGeneticVariantComponentType[],
-//     genomicsSourceClass: [] as mappinglogic.CancerGeneticVariantComponentType[]
-//   };
-//   const cgvGeneStudied: mappinglogic.CancerGeneticVariantComponentType = {
-//     valueCodeableConcept: { coding: [] as Coding[] },
-//     interpretation: { coding: [] as Coding[] }
-//   };
-//   const cgvGenomicSourceClass: mappinglogic.CancerGeneticVariantComponentType = {
-//     valueCodeableConcept: { coding: [] as Coding[] },
-//     interpretation: { coding: [] as Coding[] }
-//   };
-
-//   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '1101', display: 'BRCA2' });
-//   cgv.valueCodeableConcept.push({ system: 'http://snomed.info/sct', code: '260385009', display: 'N/A' });
-
-//   cgvComponent.geneStudied.push(cgvGeneStudied);
-//   cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
-//   cgv.component = cgvComponent;
-//   extractedMCODE.cancerGeneticVariant.push(cgv);
-
-//   it('Test BRCA2- Filter', () => {
-//     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//     expect(tumorMarkerValues[0]).toBe('BRCA2-');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-ATM-', () => {
-
-//   const extractedMCODE = new TrialjectoryMappingLogic(null);
-//   const cgv: mappinglogic.CancerGeneticVariant = {
-//     valueCodeableConcept: [] as Coding[],
-//     interpretation: [] as Coding[],
-//     component: {} as mappinglogic.CancerGeneticVariantComponent
-//   };
-//   const cgvComponent: mappinglogic.CancerGeneticVariantComponent = {
-//     geneStudied: [] as mappinglogic.CancerGeneticVariantComponentType[],
-//     genomicsSourceClass: [] as mappinglogic.CancerGeneticVariantComponentType[]
-//   };
-//   const cgvGeneStudied: mappinglogic.CancerGeneticVariantComponentType = {
-//     valueCodeableConcept: { coding: [] as Coding[] },
-//     interpretation: { coding: [] as Coding[] }
-//   };
-//   const cgvGenomicSourceClass: mappinglogic.CancerGeneticVariantComponentType = {
-//     valueCodeableConcept: { coding: [] as Coding[] },
-//     interpretation: { coding: [] as Coding[] }
-//   };
-
-//   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '795', display: 'ATM' });
-//   cgv.valueCodeableConcept.push({ system: 'http://snomed.info/sct', code: '260385009', display: 'N/A' });
-
-//   cgvComponent.geneStudied.push(cgvGeneStudied);
-//   cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
-//   cgv.component = cgvComponent;
-//   extractedMCODE.cancerGeneticVariant.push(cgv);
-
-//   it('Test ATM- Filter', () => {
-//     const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-//     expect(tumorMarkerValues[0]).toBe('ATM-');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-ATM+', () => {
-
-//   const extractedMCODE = new TrialjectoryMappingLogic(null);
-//   const cgv: mappinglogic.CancerGeneticVariant = {
-//     valueCodeableConcept: [] as Coding[],
-//     interpretation: [] as Coding[],
-//     component: {} as mappinglogic.CancerGeneticVariantComponent
-//   };
-//   const cgvComponent: mappinglogic.CancerGeneticVariantComponent = {
-//     geneStudied: [] as mappinglogic.CancerGeneticVariantComponentType[],
-//     genomicsSourceClass: [] as mappinglogic.CancerGeneticVariantComponentType[]
-//   };
-//   const cgvGeneStudied: mappinglogic.CancerGeneticVariantComponentType = {
-//     valueCodeableConcept: { coding: [] as Coding[] },
-//     interpretation: { coding: [] as Coding[] }
-//   };
-//   const cgvGenomicSourceClass: mappinglogic.CancerGeneticVariantComponentType = {
-//     valueCodeableConcept: { coding: [] as Coding[] },
-//     interpretation: { coding: [] as Coding[] }
-//   };
-
-//   cgvGeneStudied.valueCodeableConcept.coding.push({ system: 'hgnc', code: '795', display: 'ATM' });
-//   cgv.valueCodeableConcept.push({ system: 'loinc', code: 'LA9633-4', display: 'Present' });
-
-//   cgvComponent.geneStudied.push(cgvGeneStudied);
-//   cgvComponent.genomicsSourceClass.push(cgvGenomicSourceClass);
-//   cgv.component = cgvComponent;
-//   extractedMCODE.cancerGeneticVariant.push(cgv);
-
-//   const tumorMarkerValues: string[] = extractedMCODE.getTumorMarkerValue()
-
-//   it('Test ATM+ Filter', () => {
-//     expect(tumorMarkerValues[0]).toBe('ATM+');
-//   });
-// });
-// describe('checkTumorMarkerFilterLogic-CDH1+', () => {
-
-//   const extractedMCODE = new TrialjectoryMappingLogic(null);
-
-//   const tumorMarker : mappinglogic.TumorMarker = {
-//     coding: [] as Coding[],
-//     valueCodeableConcept: [] as Coding[],
-//     interpretation: [] as Coding[],
-//     valueQuantity: [] as Coding[],
-//     valueRatio: [] as mappinglogic.Ratio[]
-//   };
 
 describe('checkAgeFilterLogic', () => {
   // Initialize
