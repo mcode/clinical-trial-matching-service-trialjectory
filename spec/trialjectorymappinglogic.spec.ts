@@ -977,8 +977,7 @@ describe('checkAgeFilterLogic', () => {
 describe('checkHistologyMorphologyFilterLogic', () => {
 
   const createHistologyMorphologyResource = (primaryCoding: Coding, histologyBehavior?: Coding): any => {
-    if(histologyBehavior){
-    const histologyMorphology = {
+      const histologyMorphology: any = {
       resourceType: "Bundle",
       type: "transaction",
       entry: [
@@ -992,58 +991,36 @@ describe('checkHistologyMorphologyFilterLogic', () => {
                 "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-primary-cancer-condition",
                 "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition"
               ]
-            },
-            code: {
-              coding: [
-                primaryCoding
-              ],
-              text: "Malignant neoplasm of breast (disorder)"
-            },
-            extension: [
-              {
-                url: "http://hl7.org/fhir/us/mcode/ValueSet/mcode-histology-morphology-behavior-vs",
-                valueCodeableConcept: {
-                  coding: [
-                    histologyBehavior
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    };
-    return histologyMorphology;
-  } else {
-    const histologyMorphology = {
-      resourceType: "Bundle",
-      type: "transaction",
-      entry: [
-        {
-          fullUrl: "urn:uuid:4dee068c-5ffe-4977-8677-4ff9b518e763",
-          resource: {
-            resourceType: "Condition",
-            id: "4dee068c-5ffe-4977-8677-4ff9b518e763",
-            meta: {
-              profile: [
-                "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-primary-cancer-condition",
-                "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition"
-              ]
-            },
-            code: {
-              coding: [
-                primaryCoding
-              ],
-              text: "Malignant neoplasm of breast (disorder)"
             }
           }
         }
       ]
     };
+
+    if(primaryCoding) {
+      histologyMorphology.entry[0].resource.code = {
+        coding: [
+          primaryCoding
+        ],
+        text: "Malignant neoplasm of breast (disorder)"
+      }
+    }
+
+    if(histologyBehavior){
+      histologyMorphology.entry[0].resource.extension = [
+        {
+          url: "http://hl7.org/fhir/us/mcode/ValueSet/mcode-histology-morphology-behavior-vs",
+          valueCodeableConcept: {
+            coding: [
+              histologyBehavior
+            ]
+          }
+        }
+      ]
+    }
+
     return histologyMorphology;
   }
-  }
- 
 
   it('Test Invasive Breast Cancer Filter', () => {
     const primaryCoding = { system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding;
@@ -1074,7 +1051,7 @@ describe('checkHistologyMorphologyFilterLogic', () => {
   });
 
   it('Test Lobular Carcinoma In Situ Filter_1', () => {
-    const primaryCoding = { system: 'http://snomed.info/sct', code: '1080261000119100', display: 'N/A' } as Coding;
+    const primaryCoding = { system: 'http://snomed.info/sct', code: '109888004', display: 'N/A' } as Coding; // Any Code in 'lcis-condition'
     const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(primaryCoding, undefined));
     expect(mappingLogic.getHistologyMorphologyValue()).toBe('lcis');
   });
@@ -1117,7 +1094,6 @@ describe('checkSecondaryCancerConditionLogic', () => {
       }
     ]
   };
-
 
   const mappingLogic = new TrialjectoryMappingLogic(secondaryCancerBundle);
   it('is populated', () => {
