@@ -238,17 +238,17 @@ export class APIQuery {
 
     const mappingLogic: MappingLogic = new TrialjectoryMappingLogic(patientBundle);
     console.log(mappingLogic);
-    this.biomarkers = mappingLogic.getTumorMarkerValues();
-    this.stage = mappingLogic.getStageValues();
+    this.biomarkers = mappingLogic.getTumorMarkerValues() as string[];
+    this.stage = mappingLogic.getStageValues() as string;
     this.cancerType = mappingLogic.getPrimaryCancerValues();
     this.cancerSubType = mappingLogic.getHistologyMorphologyValue();
-    this.ecog = mappingLogic.getECOGScore();
-    this.karnofsky = mappingLogic.getKarnofskyScore();
+    this.ecog = mappingLogic.getECOGScore() as number;
+    this.karnofsky = mappingLogic.getKarnofskyScore() as number;
     this.medications = mappingLogic.getMedicationStatementValues();
-    this.radiationProcedures = mappingLogic.getRadiationProcedureValues();
-    this.surgicalProcedures = mappingLogic.getSurgicalProcedureValues();
-    this.metastasis = mappingLogic.getSecondaryCancerValues();
-    this.age = mappingLogic.getAgeValue();
+    this.radiationProcedures = mappingLogic.getRadiationProcedureValues() as string[];
+    this.surgicalProcedures = mappingLogic.getSurgicalProcedureValues() as string[];
+    this.metastasis = mappingLogic.getSecondaryCancerValues() as string[];
+    this.age = mappingLogic.getAgeValue() as number;
   }
 
   /**

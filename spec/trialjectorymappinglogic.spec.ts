@@ -1130,7 +1130,9 @@ describe('checkSecondaryCancerConditionLogic', () => {
           code: {
             coding: secondaryCancerCondition,
             text: "Malignant neoplasm of breast (disorder)"
-          }
+          },
+          clinicalStatus: {coding: []},
+          bodySite: {coding: []}
         }
       }
     ]
@@ -1180,7 +1182,9 @@ describe('checkSecondaryCancerConditionLogic', () => {
             code: {
               coding: [falseSecondaryCancerCondition],
               text: "Malignant neoplasm of breast (disorder)"
-            }
+            },
+            clinicalStatus: {coding: []},
+            bodySite: {coding: []}
           }
         }
       ]

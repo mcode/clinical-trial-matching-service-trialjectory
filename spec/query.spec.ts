@@ -192,6 +192,8 @@ describe("APIQuery", () => {
                 },
               ],
             },
+            clinicalStatus: {coding: []},
+            bodySite: {coding: []}
           },
         },
         {
@@ -205,6 +207,8 @@ describe("APIQuery", () => {
                 },
               ],
             },
+            clinicalStatus: {coding: []},
+            bodySite: {coding: []}
           },
         },
       ],
