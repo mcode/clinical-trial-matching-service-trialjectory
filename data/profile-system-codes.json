@@ -4524,5 +4524,175 @@
       "1161327",
       "1186646"
     ]
+  },
+  "Adenocarcinoma": {
+    "SNOMED": [
+      "35917007"
+    ]
+  },
+  "Mucinous adenocarcinoma": {
+    "SNOMED": [
+      "72495009"
+    ]
+  },
+  "Signet ring cell carcinoma (morphologic abnormality)": {
+    "SNOMED": [
+      "87737001"
+    ]
+  },
+  "Carcinoid tumor - morphology (morphologic abnormality)": {
+    "SNOMED": [
+      "189607006"
+    ]
+  },
+  "Gastrointestinal stromal tumor, uncertain malignant potential (morphologic abnormality)": {
+    "SNOMED": [
+      "128755003"
+    ]
+  },
+  "Sarcoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
+    "SNOMED": [
+      "2424003"
+    ]
+  },
+  "Malignant neoplasm of colon and/or rectum (disorder)": {
+    "SNOMED": [
+      "781382000"
+    ]
+  },
+  "Microsatellite instability-high colorectal cancer": {
+    "SNOMED": [
+      "737058005"
+    ]
+  },
+  "Hereditary nonpolyposis colon cancer": {
+    "SNOMED": [
+      "315058005"
+    ]
+  },
+  "APC gene": {
+    "HGNC": [
+      "583"
+    ]
+  },
+  "MLH1 gene": {
+    "HGNC": [
+      "7127"
+    ]
+  },
+  "MSH2": {
+    "HGNC": [
+      "7325"
+    ]
+  },
+  "MSH6": {
+    "HGNC": [
+      "7329"
+    ]
+  },
+  "PMS2": {
+    "HGNC": [
+      "9122"
+    ]
+  },
+  "EPCAM": {
+    "HGNC": [
+      "11529"
+    ]
+  },
+  "STK11": {
+    "HGNC": [
+      "11389"
+    ]
+  },
+  "MUTYH": {
+    "HGNC": [
+      "7527"
+    ]
+  },
+  "Resection of polyp (procedure)": {
+    "SNOMED": [
+      "82035006"
+    ]
+  },
+  "Left colectomy (procedure)": {
+    "SNOMED": [
+      "82619000"
+    ]
+  },
+  "Right colectomy (procedure)": {
+    "SNOMED": [
+      "359571009"
+    ]
+  },
+  "Partial resection of colon (procedure)": {
+    "SNOMED": [
+      "43075005"
+    ]
+  },
+  "Multiple segmental resections of large intestine (procedure)": {
+    "SNOMED": [
+      "54747001"
+    ]
+  },
+  "Total colectomy (procedure)": {
+    "SNOMED": [
+      "26390003"
+    ]
+  },
+  "Excision of malignant tumor of rectum by transanal approach (procedure)": {
+    "SNOMED": [
+      "33507007"
+    ]
+  },
+  "Low anterior resection of rectum (procedure)": {
+    "SNOMED": [
+      "314592008"
+    ]
+  },
+  "Resection of rectum (procedure)": { 
+    "SNOMED": [
+      "87677003"
+    ]
+  },
+  "Total proctectomy (procedure)": {
+    "SNOMED": [
+      "235364003"
+    ]
+  },
+  "Excision of part of rectum (procedure)": {
+    "SNOMED": [
+      "12827003"
+    ]
+  },
+  "Abdominoperineal resection of rectum (procedure)": {
+    "SNOMED": [
+      "265414003"
+    ]
+  },
+  "Destructive procedure (procedure)": {
+    "SNOMED": [
+      "64597002"
+    ]
+  },
+  "Radiofrequency ablation (procedure)": {
+    "SNOMED": [
+      "879916008"
+    ]
+  },
+  "External beam radiation therapy procedure (procedure)": {
+    "SNOMED": [
+      "33195004"
+    ]
+  },
+  "Brachytherapy (procedure)": {
+    "SNOMED": [
+      "152198000"
+    ]
+  },
+  "Interstitial brachytherapy (procedure)": {
+    "SNOMED": [
+      "113120007"
+    ]
   }
 }
