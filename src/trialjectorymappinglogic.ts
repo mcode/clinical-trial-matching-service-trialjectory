@@ -43,7 +43,18 @@ export class TrialjectoryMappingLogic extends MappingLogic {
    * @returns 
    */
   getPrimaryCancerValues(): string {
-    // TODO - Awaiting primary cancer values from Trialjectory.
+
+    /** Colorectal Primary Cancer Conditions */
+    const fullPrimaryCancerMappings = TrialjectoryMappingLogic.codeMapper.extractCodeMappings([].concat(...this.getExtractedPrimaryCancerConditions().map(pcc => pcc.coding)));
+    if(fullPrimaryCancerMappings.length > 0) {
+      const validColorectalPrimaries = ["Malignant neoplasm of colon and/or rectum (disorder)", "Microsatellite instability-high colorectal cancer", "Hereditary nonpolyposis colon cancer"];
+      const colorectalPrimaryMappings = fullPrimaryCancerMappings.filter(mapping => validColorectalPrimaries.includes(mapping));
+      if(colorectalPrimaryMappings.length > 0){
+        return colorectalPrimaryMappings[0];
+      }
+    }
+
+    // No conditions were met.
     return null;
   }
 
@@ -182,6 +193,13 @@ export class TrialjectoryMappingLogic extends MappingLogic {
       ) {
         return "INVASIVE_CARCINOMA";
       }
+    }
+
+    /** Colorectal Histology Morphology */
+    // TODO - find out if it's ok that this only returns one Histology Morphology value.
+    const fullHistologyMorphology = TrialjectoryMappingLogic.codeMapper.extractCodeMappings([].concat(...extractedPrimaryCancerConditions.map(pcc => pcc.histologyMorphologyBehavior)));
+    if(fullHistologyMorphology.length > 0){
+      return fullHistologyMorphology[0];
     }
 
     // None of the conditions are satisfied.
@@ -386,7 +404,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
     const cancerGeneticVariant: CancerGeneticVariant[] = this.getExtractedCancerGeneticVariants();
 
     if (tumorMarker.length == 0 && cancerGeneticVariant.length == 0) {
-      // Prevents unnecessary checks if the tumor marker values are empty.
+      // Prevents unnecessary checks if there are no tumor marker values.
       return [];
     }
     const tumorMarkersToCheck = tumorMarker;
@@ -594,6 +612,16 @@ export class TrialjectoryMappingLogic extends MappingLogic {
        cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '8032')) ||
        cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '8033')) ){
       tumorMarkerArray.push('NTRK_FUSION-');
+    }
+
+    /** Colorectal Primary Cancer Conditions */
+    const fullTumorMarkerMappings = TrialjectoryMappingLogic.codeMapper.extractCodeMappings([].concat(...tumorMarker.map(tm => tm.coding)));
+    if(fullTumorMarkerMappings.length > 0) {
+      const validColorectalValues = ["APC gene", "MLH1 gene", "MSH2", "MSH6", "PMS2", "EPCAM", "STK11", "MUTYH"];
+      const colorectalMappings = fullTumorMarkerMappings.filter(mapping => validColorectalValues.includes(mapping));
+      if(colorectalMappings.length > 0){
+        tumorMarkerArray.push(...colorectalMappings);
+      }
     }
 
     // Remove potential duplicates.
