@@ -1,6 +1,7 @@
 import { Quantity, Ratio } from "clinical-trial-matching-service";
 import {
   Bundle,
+  BundleEntry,
   Coding,
   Condition,
   Observation,
@@ -31,6 +32,127 @@ function createMedicationStatementBundle(...coding: Coding[]): Bundle {
   };
   return bundle;
 }
+
+const createPrimaryCancerResource = (
+  primaryCoding: Coding,
+  histologyBehavior: Coding,
+  clinicalStatus: Coding,
+  tnmClinical: Coding,
+  tnmPathological: Coding
+): Bundle => {
+  const primaryCancerBundle: Bundle = {
+    resourceType: 'Bundle',
+    type: 'transaction',
+    entry: [
+      {
+        fullUrl: 'urn:uuid:4dee068c-5ffe-4977-8677-4ff9b518e763',
+        resource: {
+          resourceType: 'Condition',
+          id: '4dee068c-5ffe-4977-8677-4ff9b518e763',
+          meta: {
+            profile: [
+              'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-primary-cancer-condition',
+              'http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition'
+            ],
+            lastUpdated: ''
+          }
+        } as Condition
+      }
+    ]
+  };
+
+  if (primaryCoding) {
+    primaryCancerBundle.entry[0].resource.code = {
+      coding: [primaryCoding],
+      text: 'Malignant neoplasm of breast (disorder)'
+    };
+  }
+
+  if (histologyBehavior) {
+    primaryCancerBundle.entry[0].resource.extension = [
+      {
+        url: 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-histology-morphology-behavior-vs',
+        valueCodeableConcept: {
+          coding: [histologyBehavior]
+        }
+      }
+    ];
+  }
+
+  if (clinicalStatus) {
+    (primaryCancerBundle.entry[0].resource as Condition).clinicalStatus = {
+      coding: [clinicalStatus]
+    };
+  }
+
+  if (tnmClinical) {
+    const tnmClinicalResource: BundleEntry = {
+      resource: ({
+        resourceType: 'Observation',
+        meta: {
+          profile: ['http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-clinical-stage-group']
+        },
+        valueCodeableConcept: {
+          coding: tnmClinical
+        }
+      } as unknown) as Resource
+    };
+    primaryCancerBundle.entry.push(tnmClinicalResource);
+  }
+
+  if (tnmPathological) {
+    const tnmPathologicalResource: BundleEntry = {
+      resource: ({
+        resourceType: 'Observation',
+        meta: {
+          profile: ['http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-pathological-stage-group']
+        },
+        valueCodeableConcept: {
+          coding: tnmPathological
+        }
+      } as unknown) as Resource
+    };
+    primaryCancerBundle.entry.push(tnmPathologicalResource);
+  }
+
+  return primaryCancerBundle;
+};
+
+describe('checkPrimaryCancerFilterLogic', () => {
+  const createPrimaryCancerValues = (
+    primaryCoding: Coding,
+    histologyBehavior: Coding,
+    clinicalStatus: Coding,
+    tnmClinical: Coding,
+    tnmPathological: Coding
+  ): string => {
+    const mappingLogic = new TrialjectoryMappingLogic(
+      createPrimaryCancerResource(primaryCoding, histologyBehavior, clinicalStatus, tnmClinical, tnmPathological)
+    );
+    return mappingLogic.getPrimaryCancerValues();
+  };
+
+  it('Test Malignant neoplasm of colon and/or rectum (disorder) - Colorectal', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '781382000', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Malignant neoplasm of colon and/or rectum (disorder)'
+    );
+  });
+
+  it('Test Microsatellite instability-high colorectal cancer - Colorectal', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '737058005', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Microsatellite instability-high colorectal cancer'
+    );
+  });
+
+  it('Test Hereditary nonpolyposis colon cancer - Colorectal', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '315058005', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Hereditary nonpolyposis colon cancer'
+    );
+  });
+});
 
 describe("Test Medication Logic", () => {
   // Function to eliminate redundant test setup.
