@@ -94,6 +94,90 @@ describe("Test Medication Logic", () => {
     expect(medications[0]).toBe("alpelisib");
   });
 
+  it("Test medication 5-Fluorouracil", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "224945", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications.includes("5-Fluorouracil")).toBeTrue();
+  });
+
+  it("Test medication Xeloda", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "220961", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications.includes("Xeloda")).toBeTrue();
+  });
+
+  it("Test medication Camptosar", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1172305", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications.includes("Camptosar")).toBeTrue();
+  });
+
+  it("Test medication Eloxatin", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "32592", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Eloxatin");
+  });
+
+  it("Test medication Lonsurf", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1670311", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Lonsurf");
+  });
+
+  it("Test medication Avastin", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "337521", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications.includes("Avastin")).toBeTrue();
+  });
+
+  it("Test medication Cyramza", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1535996", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Cyramza");
+  });
+
+  it("Test medication Zaltrap", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1304483", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Zaltrap");
+  });
+
+  it("Test medication Erbitux", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "355460", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Erbitux");
+  });
+
+  it("Test medication Vectibix", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1187748", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Vectibix");
+  });
+
+  it("Test medication Braftovi", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2049112", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Braftovi");
+  });
+
+  it("Test medication Keytruda", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1547553", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications.includes("Keytruda")).toBeTrue();
+  });
+
+  it("Test medication Opdivo", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2569081", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Opdivo");
+  });
+
+  it("Test medication Yervoy", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1094837", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Yervoy");
+  });
+
   it("Test 7 medications together", () => {
     const coding: Coding[] = [
       {system: "RxNorm", code: "372571", display: "N/A"},
