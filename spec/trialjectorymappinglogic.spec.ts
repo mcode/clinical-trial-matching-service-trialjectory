@@ -94,85 +94,85 @@ describe("Test Medication Logic", () => {
     expect(medications[0]).toBe("alpelisib");
   });
 
-  it("Test medication 5-Fluorouracil", () => {
+  it("Test medication 5-Fluorouracil - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "224945", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications.includes("5-Fluorouracil")).toBeTrue();
   });
 
-  it("Test medication Xeloda", () => {
+  it("Test medication Xeloda - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "220961", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications.includes("Xeloda")).toBeTrue();
   });
 
-  it("Test medication Camptosar", () => {
+  it("Test medication Camptosar - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1172305", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications.includes("Camptosar")).toBeTrue();
   });
 
-  it("Test medication Eloxatin", () => {
+  it("Test medication Eloxatin - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "32592", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Eloxatin");
   });
 
-  it("Test medication Lonsurf", () => {
+  it("Test medication Lonsurf - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1670311", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Lonsurf");
   });
 
-  it("Test medication Avastin", () => {
+  it("Test medication Avastin - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "337521", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications.includes("Avastin")).toBeTrue();
   });
 
-  it("Test medication Cyramza", () => {
+  it("Test medication Cyramza - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1535996", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Cyramza");
   });
 
-  it("Test medication Zaltrap", () => {
+  it("Test medication Zaltrap - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1304483", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Zaltrap");
   });
 
-  it("Test medication Erbitux", () => {
+  it("Test medication Erbitux - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "355460", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Erbitux");
   });
 
-  it("Test medication Vectibix", () => {
+  it("Test medication Vectibix - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1187748", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Vectibix");
   });
 
-  it("Test medication Braftovi", () => {
+  it("Test medication Braftovi - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "2049112", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Braftovi");
   });
 
-  it("Test medication Keytruda", () => {
+  it("Test medication Keytruda - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1547553", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications.includes("Keytruda")).toBeTrue();
   });
 
-  it("Test medication Opdivo", () => {
+  it("Test medication Opdivo - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "2569081", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Opdivo");
   });
 
-  it("Test medication Yervoy", () => {
+  it("Test medication Yervoy - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1094837", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Yervoy");
@@ -1186,6 +1186,43 @@ describe('checkHistologyMorphologyFilterLogic', () => {
     const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(primaryCoding, histologyBehavior));
     expect(mappingLogic.getHistologyMorphologyValue()).toBe('lcis');
   });
+
+  it('Test Adenocarcinoma Filter - Colorectal', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '35917007', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Adenocarcinoma');
+  });
+
+  it('Test Mucinous adenocarcinoma Filter - Colorectal', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '72495009', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Mucinous adenocarcinoma');
+  });
+
+  it('Test Signet ring cell carcinoma (morphologic abnormality) Filter - Colorectal', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '87737001', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Signet ring cell carcinoma (morphologic abnormality)');
+  });
+
+  it('Test Carcinoid tumor - morphology (morphologic abnormality) Filter - Colorectal', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '189607006', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Carcinoid tumor - morphology (morphologic abnormality)');
+  });
+
+  it('Test Gastrointestinal stromal tumor, uncertain malignant potential (morphologic abnormality) Filter - Colorectal', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '128755003', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Gastrointestinal stromal tumor, uncertain malignant potential (morphologic abnormality)');
+  });
+
+  it('Test Sarcoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality) Filter - Colorectal', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '2424003', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Sarcoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)');
+  });
+  
 });
 
 describe('checkSecondaryCancerConditionLogic', () => {
