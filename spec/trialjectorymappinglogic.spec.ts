@@ -1219,9 +1219,6 @@ describe("Test Tumor Marker Logic", () => {
 });
 
 describe('checkAgeFilterLogic', () => {
-  // Initialize
-  const today: Date = new Date("Oct-09-2021");
-  const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365;
 
   const createBirthdateBundle = (birthdate: string): Bundle => {
     const birthdateResource: Bundle = {
@@ -1248,7 +1245,9 @@ describe('checkAgeFilterLogic', () => {
       };
       return birthdateResource;
     };
-  
+
+  const today: Date = new Date();
+  const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365;
 
   it('Test Age is over 18 Filter', () => {
     const birthdate = '1950-06-11';
@@ -1574,7 +1573,6 @@ describe('checkSurgicalProcedureFilterLogic', () => {
               lastUpdated: ""
             },
             code: {coding: [coding],},
-            bodySite: [{coding: [bodySite]}],
             reasonReference: [
               {
                 reference: "4dee068c-5ffe-4977-8677-4ff9b518e763x",
@@ -1585,6 +1583,11 @@ describe('checkSurgicalProcedureFilterLogic', () => {
       }
     ]
     };
+
+    if(bodySite){
+      (surgicalBundle.entry[0].resource as Procedure).bodySite = [{coding: [bodySite]}];
+    }
+
     return surgicalBundle;
   };
 
@@ -1674,5 +1677,78 @@ describe('checkSurgicalProcedureFilterLogic', () => {
     };
     const mappingLogic = new TrialjectoryMappingLogic(reasonReferenceBundle);
     expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'metastasis_resection')).toBeTrue();
+  });
+
+
+  it('Test Resection of polyp (procedure) Filter - Colorectal', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '82035006', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, undefined));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'Resection of polyp (procedure)')).toBeTrue();
+  });
+
+  it('Test Left colectomy (procedure) Filter - Colorectal', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '82619000', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, undefined));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'Left colectomy (procedure)')).toBeTrue();
+  });
+
+  it('Test Right colectomy (procedure) Filter - Colorectal', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '359571009', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, undefined));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'Right colectomy (procedure)')).toBeTrue();
+  });
+
+  it('Test Partial resection of colon (procedure) Filter - Colorectal', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '43075005', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, undefined));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'Partial resection of colon (procedure)')).toBeTrue();
+  });
+
+  it('Test Multiple segmental resections of large intestine (procedure) Filter - Colorectal', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '54747001', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, undefined));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'Multiple segmental resections of large intestine (procedure)')).toBeTrue();
+  });
+
+  it('Test Total colectomy (procedure) Filter - Colorectal', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '26390003', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, undefined));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'Total colectomy (procedure)')).toBeTrue();
+  });
+
+  it('Test Excision of malignant tumor of rectum by transanal approach (procedure) Filter - Colorectal', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '33507007', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, undefined));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'Excision of malignant tumor of rectum by transanal approach (procedure)')).toBeTrue();
+  });
+
+  it('Test Low anterior resection of rectum (procedure) Filter - Colorectal', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '314592008', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, undefined));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'Low anterior resection of rectum (procedure)')).toBeTrue();
+  });
+
+  it('Test Resection of rectum (procedure) Filter - Colorectal', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '87677003', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, undefined));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'Resection of rectum (procedure)')).toBeTrue();
+  });
+
+  it('Test Total proctectomy (procedure) Filter - Colorectal', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '235364003', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, undefined));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'Total proctectomy (procedure)')).toBeTrue();
+  });
+
+  it('Test Excision of part of rectum (procedure) Filter - Colorectal', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '12827003', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, undefined));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'Excision of part of rectum (procedure)')).toBeTrue();
+  });
+
+  it('Test Abdominoperineal resection of rectum (procedure) Filter - Colorectal', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '265414003', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createSurgicalBundle(coding, undefined));
+    expect(mappingLogic.getSurgicalProcedureValues().some(sp => sp == 'Abdominoperineal resection of rectum (procedure)')).toBeTrue();
   });
 });
