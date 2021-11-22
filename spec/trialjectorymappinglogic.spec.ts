@@ -1168,6 +1168,54 @@ describe("Test Tumor Marker Logic", () => {
     expect(tumorMarkerValues.length).toBe(0);
   });
 
+  it('Test APC gene Filter - Colorectal', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '583', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('APC gene');
+  });
+
+  it('Test MLH1 gene Filter - Colorectal', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7127', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('MLH1 gene');
+  });
+
+  it('Test MSH2 Filter - Colorectal', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7325', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('MSH2');
+  });
+
+  it('Test MSH6 Filter - Colorectal', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7329', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('MSH6');
+  });
+
+  it('Test PMS2 Filter - Colorectal', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '9122', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('PMS2');
+  });
+
+  it('Test EPCAM Filter - Colorectal', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '11529', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('EPCAM');
+  });
+
+  it('Test STK11 Filter - Colorectal', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '11389', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('STK11');
+  });
+
+  it('Test MUTYH Filter - Colorectal', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7527', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('MUTYH');
+  });
+
 });
 
 describe('checkAgeFilterLogic', () => {

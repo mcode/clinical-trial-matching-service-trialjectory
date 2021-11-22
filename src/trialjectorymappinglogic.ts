@@ -615,10 +615,11 @@ export class TrialjectoryMappingLogic extends MappingLogic {
     }
 
     /** Colorectal Primary Cancer Conditions */
-    const fullTumorMarkerMappings = TrialjectoryMappingLogic.codeMapper.extractCodeMappings([].concat(...tumorMarker.map(tm => tm.coding)));
-    if(fullTumorMarkerMappings.length > 0) {
+    const geneStudiedCodings: fhir.Coding[] = [].concat(...cancerGeneticVariant.map(cgv => [].concat(...cgv.component.geneStudied.map(gs => gs.valueCodeableConcept.coding))));
+    const fullCancerGeneticVariantGeneStudied = TrialjectoryMappingLogic.codeMapper.extractCodeMappings(geneStudiedCodings);
+    if(fullCancerGeneticVariantGeneStudied.length > 0) {
       const validColorectalValues = ["APC gene", "MLH1 gene", "MSH2", "MSH6", "PMS2", "EPCAM", "STK11", "MUTYH"];
-      const colorectalMappings = fullTumorMarkerMappings.filter(mapping => validColorectalValues.includes(mapping));
+      const colorectalMappings = fullCancerGeneticVariantGeneStudied.filter(mapping => validColorectalValues.includes(mapping));
       if(colorectalMappings.length > 0){
         tumorMarkerArray.push(...colorectalMappings);
       }
