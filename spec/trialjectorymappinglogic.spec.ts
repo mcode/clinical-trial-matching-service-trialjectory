@@ -1506,11 +1506,6 @@ describe('checkRadiationProcedureFilterLogic', () => {
             code: {
               coding: [coding],
             },
-            bodySite: [
-              {
-                coding: [bodySite]
-              }
-            ],
             reasonReference: [
               {
                 "reference": "4dee068c-5ffe-4977-8677-4ff9b518e763",
@@ -1521,6 +1516,11 @@ describe('checkRadiationProcedureFilterLogic', () => {
         }
       ]
     };
+
+    if(bodySite){
+      (radiationBundle.entry[0].resource as Procedure).bodySite = [{coding: [bodySite]}];
+    }
+    
     return radiationBundle;
   };
 
@@ -1551,6 +1551,37 @@ describe('checkRadiationProcedureFilterLogic', () => {
     const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, bodySite));
     expect(mappingLogic.getRadiationProcedureValues().includes('rfa')).toBeTrue();
   });
+
+  it('Test Destructive procedure (procedure) Filter', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '64597002', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Destructive procedure (procedure)')).toBeTrue();
+  });
+
+  it('Test Radiofrequency ablation (procedure) Filter', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '879916008', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Radiofrequency ablation (procedure)')).toBeTrue();
+  });
+
+  it('Test External beam radiation therapy procedure (procedure) Filter', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '33195004', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('External beam radiation therapy procedure (procedure)')).toBeTrue();
+  });
+
+  it('Test Brachytherapy (procedure) Filter', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '152198000', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Brachytherapy (procedure)')).toBeTrue();
+  });
+
+  it('Test Interstitial brachytherapy (procedure) Filter', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '113120007', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Interstitial brachytherapy (procedure)')).toBeTrue();
+  });
+
 });
 
 describe('checkSurgicalProcedureFilterLogic', () => {
