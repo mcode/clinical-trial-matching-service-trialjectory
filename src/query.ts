@@ -253,7 +253,7 @@ export class APIQuery {
     this.age = mappingLogic.getAgeValue() as number;
     // Extraneous Fields
     this.phase = "";
-    // this.status = "All";
+    this.recruitmentStatus = "Active";
   }
 
   /**
