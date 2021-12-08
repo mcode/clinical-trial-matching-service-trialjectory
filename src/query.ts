@@ -127,7 +127,9 @@ export function isQueryTrial(o: unknown): o is QueryTrial {
 
 // Generic type for the response data being received from the server.
 export interface QueryResponse extends Record<string, unknown> {
-  trials: QueryTrial[];
+  data: {
+    trials: QueryTrial[];
+  }
 }
 
 /**
@@ -142,7 +144,7 @@ export function isQueryResponse(o: unknown): o is QueryResponse {
   // makes this type guard or the QueryResponse type sort of invalid. However,
   // the assumption is that a single unparsable trial should not cause the
   // entire response to be thrown away.
-  return Array.isArray((o as QueryResponse).trials);
+  return Array.isArray((o as QueryResponse).data.trials);
 }
 
 export interface QueryErrorResponse extends Record<string, unknown> {
@@ -249,6 +251,9 @@ export class APIQuery {
     this.surgicalProcedures = mappingLogic.getSurgicalProcedureValues() as string[];
     this.metastasis = mappingLogic.getSecondaryCancerValues() as string[];
     this.age = mappingLogic.getAgeValue() as number;
+    // Extraneous Fields
+    this.phase = "";
+    // this.status = "All";
   }
 
   /**
@@ -297,7 +302,7 @@ export function convertResponseToSearchSet(
   const studies: ResearchStudy[] = [];
   // For generating IDs
   let id = 0;
-  for (const trial of response.trials) {
+  for (const trial of response.data.trials) {
     if (isQueryTrial(trial)) {
       studies.push(convertToResearchStudy(trial, id++));
     } else {
@@ -390,7 +395,7 @@ function sendQuery(
                 )
               );
             } else {
-              reject(new Error("Unable to parse response from server"));
+              reject(new Error("Unable to parse response from server. Raw response: " + JSON.stringify(responseBody)));
             }
           } else {
             reject(

@@ -625,11 +625,14 @@ export class TrialjectoryMappingLogic extends MappingLogic {
       }
     }
 
+    // Set to lowercase values, as expected by trialjectory.
+    const lowerTumorMarkerArray = tumorMarkerArray.map(tumorMarker => tumorMarker.toLowerCase());
+
     // Remove potential duplicates.
-    tumorMarkerArray.filter((a, b) => tumorMarkerArray.indexOf(a) === b)
+    lowerTumorMarkerArray.filter((a, b) => lowerTumorMarkerArray.indexOf(a) === b)
 
     // Finally, return the fully appended array.
-    return tumorMarkerArray;
+    return lowerTumorMarkerArray;
   }
   isValueCodeableConceptPositive(valueCodeableConcept: fhir.Coding[]): boolean {
     return valueCodeableConcept.some(
