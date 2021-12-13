@@ -294,7 +294,7 @@ describe("APIQuery", () => {
 describe("convertResponseToSearchSet()", () => {
   it("converts trials", () => {
     return expectAsync(
-      convertResponseToSearchSet({
+      convertResponseToSearchSet({data: {
         trials: [{
                            main_objectives: [
                              "Extend overall survival" ],
@@ -347,7 +347,7 @@ describe("convertResponseToSearchSet()", () => {
                            formatted_address: "Marietta, GA 30060, USA"
                            }
                          }],
-      }).then((searchSet) => {
+      }}).then((searchSet) => {
         expect(searchSet.entry.length).toEqual(1);
         expect(searchSet.entry[0].resource).toBeInstanceOf(ResearchStudy);
         expect(
@@ -359,10 +359,10 @@ describe("convertResponseToSearchSet()", () => {
 
   it("skips invalid trials", () => {
     const response: QueryResponse = {
-      trials: [],
+      data:{ trials: [] }
     };
     // Push on an invalid object
-    response.trials.push(({
+    response.data.trials.push(({
       invalidObject: true,
     } as unknown) as QueryTrial);
     return expectAsync(convertResponseToSearchSet(response)).toBeResolved();
@@ -379,7 +379,7 @@ describe("convertResponseToSearchSet()", () => {
       }
     );
     return expectAsync(
-      convertResponseToSearchSet(
+      convertResponseToSearchSet({data:
         {
           trials: [{
             main_objectives: [
@@ -433,7 +433,7 @@ describe("convertResponseToSearchSet()", () => {
             formatted_address: "Marietta, GA 30060, USA"
             }
           }],
-        },
+        }},
         backupService
       )
     )
