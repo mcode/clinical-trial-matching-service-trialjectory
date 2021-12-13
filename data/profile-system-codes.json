@@ -4351,11 +4351,6 @@
       "7325"
     ]
   },
-  "MSH6": {
-    "HGNC": [
-      "7329"
-    ]
-  },
   "PMS2": {
     "HGNC": [
       "9122"
@@ -7878,31 +7873,6 @@
       "232647000"
     ]
   },
-  "Destructive procedure (procedure)": {
-    "SNOMED": [
-      "64597002"
-    ]
-  },
-  "Radiofrequency ablation (procedure)": {
-    "SNOMED": [
-      "879916008"
-    ]
-  },
-  "External beam radiation therapy procedure (procedure)": {
-    "SNOMED": [
-      "33195004"
-    ]
-  },
-  "Brachytherapy (procedure)": {
-    "SNOMED": [
-      "152198000"
-    ]
-  },
-  "Interstitial brachytherapy (procedure)": {
-    "SNOMED": [
-      "113120007"
-    ]
-  },
   "Intensity modulated radiation therapy (procedure)": {
     "SNOMED": [
       "441799006"
@@ -8298,12 +8268,12 @@
       "404134006"
     ]
   },
-  "Breast implant\u2013associated anaplastic large-cell lymphoma (disorder)": {
+  "Breast implant associated anaplastic large-cell lymphoma (disorder)": {
     "SNOMED": [
       "783541009"
     ]
   },
-  "   Peripheral T-cell lymphoma (disorder)": {
+  "Peripheral T-cell lymphoma (disorder)": {
     "SNOMED": [
       "109977009"
     ]
@@ -8313,7 +8283,7 @@
       "990"
     ]
   },
-  " Astrocytoma (morphologic abnormality)": {
+  "Astrocytoma (morphologic abnormality)": {
     "SNOMED": [
       "1157043006"
     ]
@@ -8353,7 +8323,7 @@
       "78303004"
     ]
   },
-  " Primary malignant meningioma (disorder)": {
+  "Primary malignant meningioma (disorder)": {
     "SNOMED": [
       "722718001"
     ]
@@ -8383,7 +8353,7 @@
       "428061005"
     ]
   },
-  "   Astrocytoma of brain (disorder)": {
+  "Astrocytoma of brain (disorder)": {
     "SNOMED": [
       "254938000"
     ]
@@ -8408,12 +8378,12 @@
       "277461004"
     ]
   },
-  "   Medulloblastoma (disorder)": {
+  "Medulloblastoma (disorder)": {
     "SNOMED": [
       "443333004"
     ]
   },
-  "   Anaplastic ganglioglioma (disorder)": {
+  "Anaplastic ganglioglioma (disorder)": {
     "SNOMED": [
       "1157071000"
     ]
@@ -8436,16 +8406,6 @@
   "TSC2": {
     "HGNC": [
       "12363"
-    ]
-  },
-  "MLH1 gene": {
-    "HGNC": [
-      "7127"
-    ]
-  },
-  "PMS2": {
-    "HGNC": [
-      "9122"
     ]
   },
   " Intensity modulated radiation therapy (procedure)": {
@@ -8533,7 +8493,7 @@
       "236886002"
     ]
   },
-  "   Total hysterectomy (procedure)": {
+  "Total hysterectomy (procedure)": {
     "SNOMED": [
       "116140006"
     ]
@@ -8548,7 +8508,7 @@
       "116143008"
     ]
   },
-  "   Vaginal hysterectomy (procedure)": {
+  "Vaginal hysterectomy (procedure)": {
     "SNOMED": [
       "265056007"
     ]
@@ -8558,7 +8518,7 @@
       "767610009"
     ]
   },
-  "   Radical hysterectomy (procedure)": {
+  "Radical hysterectomy (procedure)": {
     "SNOMED": [
       "116142003"
     ]
@@ -8571,11 +8531,6 @@
   "Neuroendocrine tumor (morphologic abnormality)": {
     "SNOMED": [
       "55937004"
-    ]
-  },
-  "Sarcoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
-    "SNOMED": [
-      "2424003"
     ]
   },
   "Primary malignant neoplasm of prostate (disorder)": {
@@ -8623,11 +8578,6 @@
       "9823"
     ]
   },
-  "MSH2": {
-    "HGNC": [
-      "7325"
-    ]
-  },
   "MSH6": {
     "HGNC": [
       "7329"
@@ -8653,12 +8603,12 @@
       "10611004"
     ]
   },
-  "   Radical prostatectomy (procedure)": {
+  "Radical prostatectomy (procedure)": {
     "SNOMED": [
       "26294005"
     ]
   },
-  "   Open prostatectomy (procedure)": {
+  "Open prostatectomy (procedure)": {
     "SNOMED": [
       "176258007"
     ]
