@@ -7707,5 +7707,980 @@
       "1597591",
       "1597592"
     ]
+  },
+  "Adenocarcinoma ": {
+    "SNOMED": [
+      "35917007"
+    ]
+  },
+  "Adenocarcinoma in situ (morphologic abnormality)": {
+    "SNOMED": [
+      "51642000"
+    ]
+  },
+  "Squamous cell carcinoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
+    "SNOMED": [
+      "28899001"
+    ]
+  },
+  "Large cell carcinoma (morphologic abnormality)": {
+    "SNOMED": [
+      "22687000"
+    ]
+  },
+  " Large cell neuroendocrine carcinoma (morphologic abnormality)": {
+    "SNOMED": [
+      "128628002"
+    ]
+  },
+  "Adenocarcinoma of lung (disorder)": {
+    "SNOMED": [
+      "254626006"
+    ]
+  },
+  "Adenocarcinoma of left lung (disorder)": {
+    "SNOMED": [
+      "15956341000119105"
+    ]
+  },
+  "Adenocarcinoma of right lung (disorder)": {
+    "SNOMED": [
+      "15956381000119100"
+    ]
+  },
+  "Primary adenocarcinoma of lung (disorder)": {
+    "SNOMED": [
+      "707451005"
+    ]
+  },
+  "Squamous cell carcinoma of lung (disorder)": {
+    "SNOMED": [
+      "254634000"
+    ]
+  },
+  "Squamous cell carcinoma of left lung (disorder)": {
+    "SNOMED": [
+      "12240951000119107"
+    ]
+  },
+  "Squamous cell carcinoma of right lung (disorder)": {
+    "SNOMED": [
+      "12240991000119102"
+    ]
+  },
+  "Large cell carcinoma of lung (disorder)": {
+    "SNOMED": [
+      "254629004"
+    ]
+  },
+  " Small cell carcinoma of lung (disorder)": {
+    "SNOMED": [
+      "254632001"
+    ]
+  },
+  "Primary malignant neoplasm of lung (disorder)": {
+    "SNOMED": [
+      "93880001"
+    ]
+  },
+  "Malignant tumor of lung (disorder)": {
+    "SNOMED": [
+      "363358000"
+    ]
+  },
+  "EGFR": {
+    "HGNC": [
+      "3236"
+    ]
+  },
+  "RB1": {
+    "HGNC": [
+      "9884"
+    ]
+  },
+  "TP53": {
+    "HGNC": [
+      "11998"
+    ]
+  },
+  "KRAS": {
+    "HGNC": [
+      "6407"
+    ]
+  },
+  "ALK": {
+    "HGNC": [
+      "427"
+    ]
+  },
+  "ROS1": {
+    "HGNC": [
+      "10261"
+    ]
+  },
+  "RET": {
+    "HGNC": [
+      "9967"
+    ]
+  },
+  "BRAF": {
+    "HGNC": [
+      "1097"
+    ]
+  },
+  "MET": {
+    "HGNC": [
+      "7029"
+    ]
+  },
+  "Total pneumonectomy (procedure)": {
+    "SNOMED": [
+      "49795001"
+    ]
+  },
+  "Complete excision of left lung (procedure)": {
+    "SNOMED": [
+      "735015005"
+    ]
+  },
+  "Completion pneumonectomy (procedure)": {
+    "SNOMED": [
+      "232646009"
+    ]
+  },
+  "Complete excision of right lung (procedure)": {
+    "SNOMED": [
+      "735016006"
+    ]
+  },
+  "Lobectomy (procedure)": {
+    "SNOMED": [
+      "125571002"
+    ]
+  },
+  "Lobectomy of lung (procedure)": {
+    "SNOMED": [
+      "173171007"
+    ]
+  },
+  "Wedge resection (procedure)": {
+    "SNOMED": [
+      "20418004"
+    ]
+  },
+  "Thoracoscopic wedge resection of lung (procedure)": {
+    "SNOMED": [
+      "444188003"
+    ]
+  },
+  "Pneumonectomy with tracheobronchoplasty (procedure)": {
+    "SNOMED": [
+      "232647000"
+    ]
+  },
+  "Destructive procedure (procedure)": {
+    "SNOMED": [
+      "64597002"
+    ]
+  },
+  "Radiofrequency ablation (procedure)": {
+    "SNOMED": [
+      "879916008"
+    ]
+  },
+  "External beam radiation therapy procedure (procedure)": {
+    "SNOMED": [
+      "33195004"
+    ]
+  },
+  "Brachytherapy (procedure)": {
+    "SNOMED": [
+      "152198000"
+    ]
+  },
+  "Interstitial brachytherapy (procedure)": {
+    "SNOMED": [
+      "113120007"
+    ]
+  },
+  "Intensity modulated radiation therapy (procedure)": {
+    "SNOMED": [
+      "441799006"
+    ]
+  },
+  "Stereotactic radiosurgery (procedure)": {
+    "SNOMED": [
+      "115959002"
+    ]
+  },
+  "Superficial spreading melanoma (morphologic abnormality)": {
+    "SNOMED": [
+      "55320002"
+    ]
+  },
+  "Nodular melanoma (morphologic abnormality)": {
+    "SNOMED": [
+      "2142002"
+    ]
+  },
+  "Hutchinson's melanotic freckle (morphologic abnormality)": {
+    "SNOMED": [
+      "61217001"
+    ]
+  },
+  "Acral lentiginous melanoma, malignant (morphologic abnormality)": {
+    "SNOMED": [
+      "16974005"
+    ]
+  },
+  "Desmoplastic melanoma, malignant (morphologic abnormality)": {
+    "SNOMED": [
+      "51757004"
+    ]
+  },
+  "Spindle cell melanoma (morphologic abnormality)": {
+    "SNOMED": [
+      "68827007"
+    ]
+  },
+  "Minimal deviation melanoma (morphologic abnormality)": {
+    "SNOMED": [
+      "399475009"
+    ]
+  },
+  "Amelanotic melanoma (morphologic abnormality)": {
+    "SNOMED": [
+      "70594002"
+    ]
+  },
+  "Malignant melanoma (disorder)": {
+    "SNOMED": [
+      "372244006"
+    ]
+  },
+  " Lentigo maligna melanoma (disorder)": {
+    "": [
+      "sCT#302837001"
+    ]
+  },
+  "Desmoplastic malignant melanoma (disorder)": {
+    "": [
+      "sCT#403924008"
+    ]
+  },
+  " Spindle cell malignant melanoma (disorder)": {
+    "SNOMED": [
+      "403923002"
+    ]
+  },
+  "Amelanotic malignant melanoma of skin (disorder)": {
+    "SNOMED": [
+      "276751004"
+    ]
+  },
+  "NRAS": {
+    "HGNC": [
+      "7989"
+    ]
+  },
+  "CDKN2A": {
+    "HGNC": [
+      "1787"
+    ]
+  },
+  "NF1": {
+    "HGNC": [
+      "7765"
+    ]
+  },
+  "KIT": {
+    "HGNC": [
+      "6342"
+    ]
+  },
+  "CDK4": {
+    "HGNC": [
+      "1773"
+    ]
+  },
+  "Wide excision (procedure)": {
+    "SNOMED": [
+      "787439005"
+    ]
+  },
+  "Wide excision of skin lesion (procedure)": {
+    "SNOMED": [
+      "177302005"
+    ]
+  },
+  "   Mohs surgery (procedure)": {
+    "SNOMED": [
+      "418024000"
+    ]
+  },
+  "Amputation (procedure)": {
+    "SNOMED": [
+      "81723002"
+    ]
+  },
+  "Dissection of lymph node (procedure)": {
+    "SNOMED": [
+      "11971000224104"
+    ]
+  },
+  "Polycythemia vera (morphologic abnormality)": {
+    "SNOMED": [
+      "128841001"
+    ]
+  },
+  "Myelosclerosis with myeloid metaplasia (morphologic abnormality)": {
+    "": [
+      "SCT128843003"
+    ]
+  },
+  "Essential thrombocythemia (morphologic abnormality)": {
+    "SNOMED": [
+      "128844009"
+    ]
+  },
+  "Chronic neutrophilic leukemia (morphologic abnormality)": {
+    "SNOMED": [
+      "128834007"
+    ]
+  },
+  "Chronic eosinophilic leukemia (morphologic abnormality)": {
+    "SNOMED": [
+      "413836008"
+    ]
+  },
+  "Polycythemia vera (disorder)": {
+    "SNOMED": [
+      "109992005"
+    ]
+  },
+  "Myelosclerosis with myeloid metaplasia (disorder)": {
+    "SNOMED": [
+      "307651005"
+    ]
+  },
+  "Essential thrombocythemia (disorder)": {
+    "SNOMED": [
+      "109994006"
+    ]
+  },
+  "Chronic neutrophilic leukemia (disorder)": {
+    "SNOMED": [
+      "188734009"
+    ]
+  },
+  "Chronic eosinophilic leukemia (disorder)": {
+    "SNOMED": [
+      "188733003"
+    ]
+  },
+  "Splenectomy (procedure)": {
+    "SNOMED": [
+      "234319005"
+    ]
+  },
+  "Total splenectomy (procedure)": {
+    "SNOMED": [
+      "174776001"
+    ]
+  },
+  " Multiple myeloma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
+    "SNOMED": [
+      "55921005"
+    ]
+  },
+  "Multiple myeloma (disorder)": {
+    "SNOMED": [
+      "109989006"
+    ]
+  },
+  "MYC": {
+    "HGNC": [
+      "7553"
+    ]
+  },
+  "Non-Hodgkin lymphoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
+    "SNOMED": [
+      "1929004"
+    ]
+  },
+  "Non-Hodgkin lymphoma - category (morphologic abnormality)": {
+    "SNOMED": [
+      "128929007"
+    ]
+  },
+  "Malignant lymphoma, large B-cell, diffuse, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
+    "SNOMED": [
+      "46732000"
+    ]
+  },
+  "Diffuse large B-cell lymphoma - category (morphologic abnormality)": {
+    "SNOMED": [
+      "413990004"
+    ]
+  },
+  "Diffuse large B-cell lymphoma activated B-cell subtype (morphologic abnormality)": {
+    "SNOMED": [
+      "787565006"
+    ]
+  },
+  "Follicular lymphoma (morphologic abnormality)": {
+    "SNOMED": [
+      "55150002"
+    ]
+  },
+  "B-cell chronic lymphocytic leukemia/small lymphocytic lymphoma (morphologic abnormality)": {
+    "SNOMED": [
+      "51092000"
+    ]
+  },
+  "Mantle cell lymphoma (morphologic abnormality)": {
+    "": [
+      "SCT374654000"
+    ]
+  },
+  "Nodal marginal zone B-cell lymphoma (morphologic abnormality)": {
+    "SNOMED": [
+      "397349003"
+    ]
+  },
+  "Burkitt lymphoma (morphologic abnormality)": {
+    "SNOMED": [
+      "77381001"
+    ]
+  },
+  "Malignant lymphoma, lymphoplasmacytic (morphologic abnormality)": {
+    "SNOMED": [
+      "19340000"
+    ]
+  },
+  " Hairy cell leukemia (morphologic abnormality)": {
+    "SNOMED": [
+      "54087003"
+    ]
+  },
+  "Precursor T cell lymphoblastic leukemia/lymphoblastic lymphoma (morphologic abnormality)": {
+    "SNOMED": [
+      "397348006"
+    ]
+  },
+  "Cutaneous T-cell lymphoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
+    "SNOMED": [
+      "28054005"
+    ]
+  },
+  "Angioimmunoblastic T-cell lymphoma (morphologic abnormality)": {
+    "SNOMED": [
+      "835009"
+    ]
+  },
+  "Primary cutaneous anaplastic large T-cell lymphoma, CD30-positive (morphologic abnormality)": {
+    "SNOMED": [
+      "397352006"
+    ]
+  },
+  "Peripheral T-cell lymphoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
+    "SNOMED": [
+      "3172003"
+    ]
+  },
+  "Non-Hodgkin's lymphoma (disorder)": {
+    "SNOMED": [
+      "118601006"
+    ]
+  },
+  "Primary mediastinal (thymic) large B-cell lymphoma (disorder)": {
+    "SNOMED": [
+      "444910004"
+    ]
+  },
+  "Follicular non-Hodgkin's lymphoma (disorder)": {
+    "SNOMED": [
+      "308121000"
+    ]
+  },
+  "Chronic lymphoid leukemia, disease (disorder)": {
+    "SNOMED": [
+      "92814006"
+    ]
+  },
+  "T-cell chronic lymphocytic leukemia (disorder)": {
+    "SNOMED": [
+      "277545003"
+    ]
+  },
+  "B-cell chronic lymphocytic leukemia (disorder)": {
+    "SNOMED": [
+      "277473004"
+    ]
+  },
+  "   Mantle cell lymphoma (disorder)": {
+    "SNOMED": [
+      "443487006"
+    ]
+  },
+  "Mucosa-associated lymphoma (disorder)": {
+    "SNOMED": [
+      "277622004"
+    ]
+  },
+  "Nodal marginal zone B-cell lymphoma (disorder)": {
+    "SNOMED": [
+      "726721002"
+    ]
+  },
+  "Splenic marginal zone B-cell lymphoma (disorder)": {
+    "SNOMED": [
+      "763666008"
+    ]
+  },
+  "Malignant lymphoma - lymphoplasmacytic (disorder)": {
+    "SNOMED": [
+      "307623001"
+    ]
+  },
+  "Hairy cell leukemia (disorder)": {
+    "SNOMED": [
+      "118613001"
+    ]
+  },
+  "Microglioma (disorder)": {
+    "SNOMED": [
+      "307649006"
+    ]
+  },
+  "Intraocular non-Hodgkin malignant lymphoma (disorder)": {
+    "SNOMED": [
+      "420788006"
+    ]
+  },
+  "Primary cutaneous T-cell lymphoma (disorder)": {
+    "SNOMED": [
+      "400122007"
+    ]
+  },
+  "Adult T-cell leukemia/lymphoma (disorder)": {
+    "SNOMED": [
+      "110007008"
+    ]
+  },
+  "Angioimmunoblastic T-cell lymphoma (disorder)": {
+    "SNOMED": [
+      "413537009"
+    ]
+  },
+  "Extranodal natural killer/T-cell lymphoma, nasal type (disorder)": {
+    "SNOMED": [
+      "414166008"
+    ]
+  },
+  "Enteropathy-associated T-cell lymphoma (disorder)": {
+    "SNOMED": [
+      "277654008"
+    ]
+  },
+  "Large cell anaplastic lymphoma (disorder)": {
+    "SNOMED": [
+      "277637000"
+    ]
+  },
+  "Primary cutaneous anaplastic large cell lymphoma (disorder)": {
+    "SNOMED": [
+      "773995001"
+    ]
+  },
+  "Anaplastic large T-cell systemic malignant lymphoma (disorder)": {
+    "SNOMED": [
+      "404134006"
+    ]
+  },
+  "Breast implant\u2013associated anaplastic large-cell lymphoma (disorder)": {
+    "SNOMED": [
+      "783541009"
+    ]
+  },
+  "   Peripheral T-cell lymphoma (disorder)": {
+    "SNOMED": [
+      "109977009"
+    ]
+  },
+  "BCL2": {
+    "HGNC": [
+      "990"
+    ]
+  },
+  " Astrocytoma (morphologic abnormality)": {
+    "SNOMED": [
+      "1157043006"
+    ]
+  },
+  " Oligodendroglioma (morphologic abnormality)": {
+    "SNOMED": [
+      "1156974002"
+    ]
+  },
+  "Malignant ependymoma (morphologic abnormality)": {
+    "SNOMED": [
+      "1156903009"
+    ]
+  },
+  "Glioblastoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
+    "SNOMED": [
+      "63634009"
+    ]
+  },
+  "Astrocytoma, anaplastic (morphologic abnormality)": {
+    "SNOMED": [
+      "55353007"
+    ]
+  },
+  "Oligodendroglioma, anaplastic (morphologic abnormality)": {
+    "SNOMED": [
+      "3102004"
+    ]
+  },
+  "Ependymoma, anaplastic (morphologic abnormality)": {
+    "SNOMED": [
+      "21589007"
+    ]
+  },
+  "Meningioma, malignant (morphologic abnormality)": {
+    "SNOMED": [
+      "78303004"
+    ]
+  },
+  " Primary malignant meningioma (disorder)": {
+    "SNOMED": [
+      "722718001"
+    ]
+  },
+  "Medulloblastoma (morphologic abnormality)": {
+    "SNOMED": [
+      "1156923005"
+    ]
+  },
+  "Ganglioglioma, anaplastic (morphologic abnormality)": {
+    "SNOMED": [
+      "128912009"
+    ]
+  },
+  "Melanotic malignant peripheral nerve sheath tumor (morphologic abnormality)": {
+    "SNOMED": [
+      "253094006"
+    ]
+  },
+  "Primary malignant neoplasm of brain (disorder)": {
+    "SNOMED": [
+      "93727008"
+    ]
+  },
+  "Malignant neoplasm of brain (disorder)": {
+    "SNOMED": [
+      "428061005"
+    ]
+  },
+  "   Astrocytoma of brain (disorder)": {
+    "SNOMED": [
+      "254938000"
+    ]
+  },
+  "Oligodendroglioma (disorder)": {
+    "SNOMED": [
+      "443936004"
+    ]
+  },
+  "Oligodendroglioma of brain (disorder)": {
+    "SNOMED": [
+      "254940005"
+    ]
+  },
+  "Glioblastoma multiforme of brain": {
+    "SNOMED": [
+      "276828006"
+    ]
+  },
+  "Anaplastic astrocytoma of brain (disorder)": {
+    "SNOMED": [
+      "277461004"
+    ]
+  },
+  "   Medulloblastoma (disorder)": {
+    "SNOMED": [
+      "443333004"
+    ]
+  },
+  "   Anaplastic ganglioglioma (disorder)": {
+    "SNOMED": [
+      "1157071000"
+    ]
+  },
+  "Malignant peripheral nerve sheath tumor (disorder)": {
+    "SNOMED": [
+      "404037002"
+    ]
+  },
+  "NF2": {
+    "HGNC": [
+      "7773"
+    ]
+  },
+  "TSC1": {
+    "HGNC": [
+      "12362"
+    ]
+  },
+  "TSC2": {
+    "HGNC": [
+      "12363"
+    ]
+  },
+  "MLH1 gene": {
+    "HGNC": [
+      "7127"
+    ]
+  },
+  "PMS2": {
+    "HGNC": [
+      "9122"
+    ]
+  },
+  " Intensity modulated radiation therapy (procedure)": {
+    "SNOMED": [
+      "441799006"
+    ]
+  },
+  "Volumetric modulated arc therapy (procedure)": {
+    "SNOMED": [
+      "1156530009"
+    ]
+  },
+  "   Craniotomy (procedure)": {
+    "SNOMED": [
+      "25353009"
+    ]
+  },
+  "Adenocarcinoma, no subtype (morphologic abnormality)": {
+    "SNOMED": [
+      "35917007"
+    ]
+  },
+  "Carcinosarcoma (morphologic abnormality)": {
+    "SNOMED": [
+      "63264007"
+    ]
+  },
+  "Small cell carcinoma (morphologic abnormality)": {
+    "SNOMED": [
+      "74364000"
+    ]
+  },
+  "Transitional cell carcinoma (morphologic abnormality)": {
+    "SNOMED": [
+      "27090000"
+    ]
+  },
+  "Serous carcinoma (morphologic abnormality)": {
+    "SNOMED": [
+      "90725004"
+    ]
+  },
+  "Leiomyosarcoma, no subtype (morphologic abnormality)": {
+    "SNOMED": [
+      "51549004"
+    ]
+  },
+  "Endometrial stromal sarcoma, high grade (morphologic abnormality)": {
+    "SNOMED": [
+      "70555003"
+    ]
+  },
+  "Malignant neoplasm of uterus (disorder)": {
+    "SNOMED": [
+      "371973000"
+    ]
+  },
+  "Sarcoma of uterus (disorder)": {
+    "SNOMED": [
+      "254877001"
+    ]
+  },
+  "Adenocarcinoma of uterus (disorder)": {
+    "SNOMED": [
+      "309245001"
+    ]
+  },
+  "Carcinosarcoma of uterus (disorder)": {
+    "SNOMED": [
+      "702369008"
+    ]
+  },
+  "Squamous cell carcinoma (disorder)": {
+    "SNOMED": [
+      "402815007"
+    ]
+  },
+  "Endometrial stromal sarcoma (disorder)": {
+    "SNOMED": [
+      "699356008"
+    ]
+  },
+  "Hysterectomy (procedure)": {
+    "SNOMED": [
+      "236886002"
+    ]
+  },
+  "   Total hysterectomy (procedure)": {
+    "SNOMED": [
+      "116140006"
+    ]
+  },
+  "Abdominal hysterectomy (procedure)": {
+    "SNOMED": [
+      "116141005"
+    ]
+  },
+  "Total abdominal hysterectomy (procedure)": {
+    "SNOMED": [
+      "116143008"
+    ]
+  },
+  "   Vaginal hysterectomy (procedure)": {
+    "SNOMED": [
+      "265056007"
+    ]
+  },
+  "Total hysterectomy via vaginal approach (procedure)": {
+    "SNOMED": [
+      "767610009"
+    ]
+  },
+  "   Radical hysterectomy (procedure)": {
+    "SNOMED": [
+      "116142003"
+    ]
+  },
+  "Bilateral salpingectomy with oophorectomy (procedure)": {
+    "SNOMED": [
+      "29827000"
+    ]
+  },
+  "Neuroendocrine tumor (morphologic abnormality)": {
+    "SNOMED": [
+      "55937004"
+    ]
+  },
+  "Sarcoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
+    "SNOMED": [
+      "2424003"
+    ]
+  },
+  "Primary malignant neoplasm of prostate (disorder)": {
+    "SNOMED": [
+      "93974005"
+    ]
+  },
+  "Malignant tumor of prostate (disorder)": {
+    "SNOMED": [
+      "399068003"
+    ]
+  },
+  "Small cell carcinoma of prostate (disorder)": {
+    "SNOMED": [
+      "396198006"
+    ]
+  },
+  "BRCA1": {
+    "HGNC": [
+      "1100"
+    ]
+  },
+  "BRCA2": {
+    "HGNC": [
+      "1101"
+    ]
+  },
+  "CHEK2": {
+    "HGNC": [
+      "16627"
+    ]
+  },
+  "ATM": {
+    "HGNC": [
+      "795"
+    ]
+  },
+  "PALB2": {
+    "HGNC": [
+      "26144"
+    ]
+  },
+  "RAD51D": {
+    "HGNC": [
+      "9823"
+    ]
+  },
+  "MSH2": {
+    "HGNC": [
+      "7325"
+    ]
+  },
+  "MSH6": {
+    "HGNC": [
+      "7329"
+    ]
+  },
+  "MLH1": {
+    "HGNC": [
+      "7127"
+    ]
+  },
+  "RNASEL": {
+    "HGNC": [
+      "10050"
+    ]
+  },
+  "HOXB13": {
+    "HGNC": [
+      "5112"
+    ]
+  },
+  "External beam radiation therapy protons (procedure)": {
+    "SNOMED": [
+      "10611004"
+    ]
+  },
+  "   Radical prostatectomy (procedure)": {
+    "SNOMED": [
+      "26294005"
+    ]
+  },
+  "   Open prostatectomy (procedure)": {
+    "SNOMED": [
+      "176258007"
+    ]
+  },
+  "Radical retropubic prostatectomy (procedure)": {
+    "SNOMED": [
+      "65551008"
+    ]
+  },
+  "Radical perineal prostatectomy (procedure)": {
+    "SNOMED": [
+      "8782006"
+    ]
+  },
+  "Laparoscopic radical prostatectomy using robotic assistance (procedure)": {
+    "SNOMED": [
+      "708919000"
+    ]
+  },
+  "Total orchidectomy (procedure)": {
+    "SNOMED": [
+      "236334001"
+    ]
   }
 }
