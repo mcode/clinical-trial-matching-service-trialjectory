@@ -300,7 +300,7 @@ describe("Test Medication Logic", () => {
     expect(medications[0]).toBe("Yervoy");
   });
 
-  it("Test 7 medications together", () => {
+  it("Test 8 medications together with one duplicate (372571)", () => {
     const coding: Coding[] = [
       {system: "RxNorm", code: "372571", display: "N/A"},
       {system: "RxNorm", code: "672151", display: "N/A"},
@@ -311,7 +311,7 @@ describe("Test Medication Logic", () => {
       {system: "RxNorm", code: "2169317", display: "N/A"},
     ];
     const medications = createMedicationsToTest(...coding);
-    expect(medications.length).toBe(7);
+    expect(medications.length).toBe(8);
     expect(medications.indexOf("letrozole") > -1).toBeTrue();
     expect(medications.indexOf("lapatinib") > -1).toBeTrue();
     expect(medications.indexOf("tucatinib") > -1).toBeTrue();
@@ -319,6 +319,7 @@ describe("Test Medication Logic", () => {
     expect(medications.indexOf("palbociclib") > -1).toBeTrue();
     expect(medications.indexOf("abemaciclib") > -1).toBeTrue();
     expect(medications.indexOf("alpelisib") > -1).toBeTrue();
+    expect(medications.indexOf("Femara") > -1).toBeTrue();
   });
 });
 
@@ -696,64 +697,64 @@ describe("Test Tumor Marker Logic", () => {
     return bundle;
   };
 
-  it("Test ER+ Logic 1", () => {
+  it("Test er+ Logic 1", () => {
     const coding = {
       system: "http://loinc.info/sct",
       code: "16112-5",
       display: "N/A",
-    } as Coding; // Any code in 'Biomarker-ER'
+    } as Coding; // Any code in 'Biomarker-er'
     const interpretation = {
       system: "http://hl7.org/fhir/R4/valueset-observation-interpretation.html",
       code: "H",
       display: "N/A",
     } as Coding;
     const tumorMarkerValues = createTumorMarkerValues(undefined, undefined, interpretation, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("ER+");
+    expect(tumorMarkerValues[0]).toBe("er+");
   });
 
-  it("Test ER+ Logic 2", () => {
+  it("Test er+ Logic 2", () => {
     const coding = {
       system: "http://loinc.info/sct",
       code: "16112-5",
       display: "N/A",
-    } as Coding; // Any code in 'Biomarker-ER'
-    const valueRatio = {
+    } as Coding; // Any code in 'Biomarker-er'
+    const valueratio = {
       numerator: { value: 6, comparator: ">", unit: "%" },
       denominator: { value: 3, comparator: ">", unit: "%" },
       metric: ">",
     } as Ratio;
-    const tumorMarkerValues = createTumorMarkerValues(valueRatio, undefined, undefined, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("ER+");
+    const tumorMarkerValues = createTumorMarkerValues(valueratio, undefined, undefined, undefined, coding);
+    expect(tumorMarkerValues[0]).toBe("er+");
   });
 
-  it("Test ER- Logic 1", () => {
+  it("Test er- Logic 1", () => {
     const coding = {
       system: "http://loinc.info/sct",
       code: "85310-1",
       display: "N/A",
-    } as Coding; // Any code in 'Biomarker-ER'
+    } as Coding; // Any code in 'Biomarker-er'
     const interpretation = {
       system: "http://hl7.org/fhir/R4/valueset-observation-interpretation.html",
       code: "NEG",
       display: "N/A",
     } as Coding;
     const tumorMarkerValues = createTumorMarkerValues(undefined, undefined, interpretation, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("ER-");
+    expect(tumorMarkerValues[0]).toBe("er-");
   });
 
-  it("Test ER- Logic 2", () => {
+  it("Test er- Logic 2", () => {
     const coding = {
       system: "http://loinc.info/sct",
       code: "16112-5",
       display: "N/A",
-    } as Coding; // Any code in 'Biomarker-ER'
-    const valueRatio = {
+    } as Coding; // Any code in 'Biomarker-er'
+    const valueratio = {
       numerator: { value: 1, comparator: "<", unit: "%" },
       denominator: { value: 101, comparator: "<", unit: "%" },
       metric: "<",
     } as Ratio;
-    const tumorMarkerValues = createTumorMarkerValues(valueRatio, undefined, undefined, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("ER-");
+    const tumorMarkerValues = createTumorMarkerValues(valueratio, undefined, undefined, undefined, coding);
+    expect(tumorMarkerValues[0]).toBe("er-");
   });
 
   it("Test Invalid Quantity", () => {
@@ -778,146 +779,146 @@ describe("Test Tumor Marker Logic", () => {
       system: "http://loinc.info/sct",
       code: "16112-5",
       display: "N/A",
-    } as Coding; // Any code in 'Biomarker-ER'
-    const valueRatio = {} as Ratio;
-    const tumorMarkerValues = createTumorMarkerValues(valueRatio, undefined, undefined, coding);
+    } as Coding; // Any code in 'Biomarker-er'
+    const valueratio = {} as Ratio;
+    const tumorMarkerValues = createTumorMarkerValues(valueratio, undefined, undefined, coding);
     expect(tumorMarkerValues).toEqual([]);
   });
 
-  it("Test PR+ Logic 1", () => {
+  it("Test pr+ Logic 1", () => {
     const coding = {
       system: "http://loinc.info/sct",
       code: "10861-3",
       display: "N/A",
-    } as Coding; // Any code in 'Biomarker-PR'
+    } as Coding; // Any code in 'Biomarker-pr'
     const interpretation = {
       system: "http://hl7.org/fhir/R4/valueset-observation-interpretation.html",
       code: "H",
       display: "N/A",
     } as Coding;
     const tumorMarkerValues = createTumorMarkerValues(undefined, undefined, interpretation, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("PR+");
+    expect(tumorMarkerValues[0]).toBe("pr+");
   });
 
-  it("Test PR+ Logic 2", () => {
+  it("Test pr+ Logic 2", () => {
     const coding = {
       system: "http://loinc.info/sct",
       code: "10861-3",
       display: "N/A",
-    } as Coding; // Any code in 'Biomarker-PR'
-    const valueRatio = {
+    } as Coding; // Any code in 'Biomarker-pr'
+    const valueratio = {
       numerator: { value: 6, comparator: ">", unit: "%" },
       denominator: { value: 3, comparator: ">", unit: "%" },
       metric: ">",
     } as Ratio;
-    const tumorMarkerValues = createTumorMarkerValues(valueRatio, undefined, undefined, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("PR+");
+    const tumorMarkerValues = createTumorMarkerValues(valueratio, undefined, undefined, undefined, coding);
+    expect(tumorMarkerValues[0]).toBe("pr+");
   });
 
-  it("Test PR- Logic 1", () => {
+  it("Test pr- Logic 1", () => {
     const coding = {
       system: "http://loinc.info/sct",
       code: "10861-3",
       display: "N/A",
-    } as Coding; // Any code in 'Biomarker-PR'
+    } as Coding; // Any code in 'Biomarker-pr'
     const valueCodeableConcept = {
       system: "snomed",
       code: "260385009",
       display: "N/A",
     } as Coding;
     const tumorMarkerValues = createTumorMarkerValues(undefined, undefined, undefined, valueCodeableConcept, coding);
-    expect(tumorMarkerValues[0]).toBe("PR-");
+    expect(tumorMarkerValues[0]).toBe("pr-");
   });
 
-  it("Test PR- Logic 2", () => {
+  it("Test pr- Logic 2", () => {
     const coding = {
       system: "http://loinc.info/sct",
       code: "10861-3",
       display: "N/A",
-    } as Coding; // Any code in 'Biomarker-PR'
-    const valueRatio = {
+    } as Coding; // Any code in 'Biomarker-pr'
+    const valueratio = {
       numerator: { value: 1, comparator: "<", unit: "%" },
       denominator: { value: 101, comparator: "<", unit: "%" },
       metric: "<",
     } as Ratio;
-    const tumorMarkerValues = createTumorMarkerValues(valueRatio, undefined, undefined, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("PR-");
+    const tumorMarkerValues = createTumorMarkerValues(valueratio, undefined, undefined, undefined, coding);
+    expect(tumorMarkerValues[0]).toBe("pr-");
   });
 
-  it('Test BRCA1+ Filter 1', () => {
-    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1100', display: 'BRCA1' };
+  it('Test brca1+ Filter 1', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1100', display: 'brca1' };
     const cgvGeneStudiedInterpretation: Coding = { system: 'N/A', code: 'CAR', display: 'CAR' };
     const cgvGenomicSourceClassVcc: Coding = {system: ' http://loinc.info/sct', code: 'LA6683-2', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, cgvGeneStudiedInterpretation, cgvGenomicSourceClassVcc, undefined, undefined);
-    expect(tumorMarkerValues[0]).toBe('BRCA1+');
+    expect(tumorMarkerValues[0]).toBe('brca1+');
   });
 
-  it('Test BRCA1+ Filter 2', () => {
-    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1100', display: 'BRCA1' };
+  it('Test brca1+ Filter 2', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1100', display: 'brca1' };
     const cgvGeneStudiedInterpretation: Coding = { system: 'N/A', code: 'A', display: 'A' };
     const cgvGenomicSourceClassVcc: Coding = {system: ' http://loinc.info/sct', code: 'LA6683-2', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, cgvGeneStudiedInterpretation, cgvGenomicSourceClassVcc, undefined, undefined);
-    expect(tumorMarkerValues[0]).toBe('BRCA1+');
+    expect(tumorMarkerValues[0]).toBe('brca1+');
   });
 
-  it('Test BRCA1+ Filter 3', () => {
-    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1100', display: 'BRCA1' };
+  it('Test brca1+ Filter 3', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1100', display: 'brca1' };
     const cgvGeneStudiedInterpretation: Coding = { system: 'N/A', code: 'POS', display: 'POS' };
     const cgvGenomicSourceClassVcc: Coding = {system: ' http://loinc.info/sct', code: 'LA6683-2', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, cgvGeneStudiedInterpretation, cgvGenomicSourceClassVcc, undefined, undefined);
-    expect(tumorMarkerValues[0]).toBe('BRCA1+');
+    expect(tumorMarkerValues[0]).toBe('brca1+');
   });
 
-  it('Test BRCA1- Filter', () => {
-    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1100', display: 'BRCA1' };
+  it('Test brca1- Filter', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1100', display: 'brca1' };
     const cgvVcc: Coding = {system: 'http://snomed.info/sct', code: '260385009', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
-    expect(tumorMarkerValues[0]).toBe('BRCA1-');
+    expect(tumorMarkerValues[0]).toBe('brca1-');
   });
 
-  it('Test BRCA2+ Filter', () => {
+  it('Test brca2+ Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1101', display: 'N/A' };
     const cgvVcc: Coding = {system: 'http://snomed.info/sct', code: '10828004', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
-    expect(tumorMarkerValues[0]).toBe('BRCA2+');
+    expect(tumorMarkerValues[0]).toBe('brca2+');
   });
 
-  it('Test BRCA2- Filter', () => {
+  it('Test brca2- Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1101', display: 'N/A' };
     const cgvVcc: Coding = {system: 'http://snomed.info/sct', code: '260385009', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
-    expect(tumorMarkerValues[0]).toBe('BRCA2-');
+    expect(tumorMarkerValues[0]).toBe('brca2-');
   });
 
-  it('Test ATM+ Filter', () => {
+  it('Test atm+ Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '795', display: 'N/A' };
     const cgvVcc: Coding = {system: 'http://loinc.info/sct', code: 'LA9633-4', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
-    expect(tumorMarkerValues[0]).toBe('ATM+');
+    expect(tumorMarkerValues[0]).toBe('atm+');
   });
 
-  it('Test ATM- Filter', () => {
+  it('Test atm- Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '795', display: 'N/A' };
     const cgvVcc: Coding = {system: 'http://snomed.info/sct', code: '260385009', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
-    expect(tumorMarkerValues[0]).toBe('ATM-');
+    expect(tumorMarkerValues[0]).toBe('atm-');
   });
 
-  it('Test CDH1+ Filter', () => {
+  it('Test cdh1+ Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1748', display: 'N/A' };
     const cgvInterpretation: Coding = {system: 'n/a', code: 'POS', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, cgvInterpretation);
-    expect(tumorMarkerValues[0]).toBe('CDH1+');
+    expect(tumorMarkerValues[0]).toBe('cdh1+');
   });
 
-  it('Test CDH1- Filter', () => {
+  it('Test cdh1- Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1748', display: 'N/A' };
     const cgvInterpretation: Coding = {system: 'n/a', code: 'NEG', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, cgvInterpretation);
-    expect(tumorMarkerValues[0]).toBe('CDH1-');
+    expect(tumorMarkerValues[0]).toBe('cdh1-');
   });
 
-  it("Test CHEK2+ Logic", () => {
+  it("Test chek2+ Logic", () => {
     const coding = {system: "http://loinc.info/sct", code: "72518-4", display: "N/A"} as Coding;
     const interpretation = {
       system: "http://hl7.org/fhir/R4/valueset-observation-interpretation.html",
@@ -925,17 +926,17 @@ describe("Test Tumor Marker Logic", () => {
       display: "N/A",
     } as Coding;
     const tumorMarkerValues = createTumorMarkerValues(undefined, undefined, interpretation, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("CHEK2+");
+    expect(tumorMarkerValues[0]).toBe("chek2+");
   });
 
-  it('Test CHEK2- Filter', () => {
+  it('Test chek2- Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '16627', display: 'N/A' };
     const cgvVcc: Coding = {system: 'http://snomed.info/sct', code: '260385009', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
-    expect(tumorMarkerValues[0]).toBe('CHEK2-');
+    expect(tumorMarkerValues[0]).toBe('chek2-');
   });
 
-  it("Test NBN+ Logic", () => {
+  it("Test nbn+ Logic", () => {
     const coding = {system: "http://loinc.info/sct", code: "82515-8", display: "N/A"} as Coding;
     const interpretation = {
       system: "http://hl7.org/fhir/R4/valueset-observation-interpretation.html",
@@ -943,10 +944,10 @@ describe("Test Tumor Marker Logic", () => {
       display: "N/A",
     } as Coding;
     const tumorMarkerValues = createTumorMarkerValues(undefined, undefined, interpretation, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("NBN+");
+    expect(tumorMarkerValues[0]).toBe("nbn+");
   });
 
-  it("Test NBN- Logic", () => {
+  it("Test nbn- Logic", () => {
     const coding = {system: "http://loinc.info/sct", code: "82515-8", display: "N/A"} as Coding;
     const interpretation = {
       system: "http://hl7.org/fhir/R4/valueset-observation-interpretation.html",
@@ -954,10 +955,10 @@ describe("Test Tumor Marker Logic", () => {
       display: "N/A",
     } as Coding;
     const tumorMarkerValues = createTumorMarkerValues(undefined, undefined, interpretation, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("NBN-");
+    expect(tumorMarkerValues[0]).toBe("nbn-");
   });
 
-  it("Test NF1+ Logic", () => {
+  it("Test nf1+ Logic", () => {
     const coding = {system: "http://loinc.info/sct", code: "21717-4", display: "N/A"} as Coding;
     const interpretation = {
       system: "http://hl7.org/fhir/R4/valueset-observation-interpretation.html",
@@ -965,10 +966,10 @@ describe("Test Tumor Marker Logic", () => {
       display: "N/A",
     } as Coding;
     const tumorMarkerValues = createTumorMarkerValues(undefined, undefined, interpretation, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("NF1+");
+    expect(tumorMarkerValues[0]).toBe("nf1+");
   });
 
-  it("Test NF1- Logic", () => {
+  it("Test nf1- Logic", () => {
     const coding = {system: "http://loinc.info/sct", code: "21717-4", display: "N/A"} as Coding;
     const interpretation = {
       system: "http://hl7.org/fhir/R4/valueset-observation-interpretation.html",
@@ -976,189 +977,189 @@ describe("Test Tumor Marker Logic", () => {
       display: "N/A",
     } as Coding;
     const tumorMarkerValues = createTumorMarkerValues(undefined, undefined, interpretation, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("NF1-");
+    expect(tumorMarkerValues[0]).toBe("nf1-");
   });
 
-  it('Test PALB2+ Filter', () => {
+  it('Test palb2+ Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '26144', display: 'N/A' };
     const cgvInterpretation: Coding = {system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'CAR', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, cgvInterpretation);
-    expect(tumorMarkerValues[0]).toBe('PALB2+');
+    expect(tumorMarkerValues[0]).toBe('palb2+');
   });
 
-  it('Test PALB2- Filter', () => {
+  it('Test palb2- Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '26144', display: 'N/A' };
     const cgvInterpretation: Coding = {system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'N', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, cgvInterpretation);
-    expect(tumorMarkerValues[0]).toBe('PALB2-');
+    expect(tumorMarkerValues[0]).toBe('palb2-');
   });
 
-  it('Test PTEN+ Filter', () => {
+  it('Test pten+ Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '9588', display: 'N/A' };
     const cgvInterpretation: Coding = {system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'A', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, cgvInterpretation);
-    expect(tumorMarkerValues[0]).toBe('PTEN+');
+    expect(tumorMarkerValues[0]).toBe('pten+');
   });
 
-  it('Test PTEN- Filter', () => {
+  it('Test pten- Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '9588', display: 'N/A' };
     const cgvInterpretation: Coding = {system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'NEG', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, cgvInterpretation);
-    expect(tumorMarkerValues[0]).toBe('PTEN-');
+    expect(tumorMarkerValues[0]).toBe('pten-');
   });
 
-  it('Test STK11+ Filter', () => {
+  it('Test stk11+ Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '11389', display: 'N/A' };
     const cgvInterpretation: Coding = {system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'POS', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, cgvInterpretation);
-    expect(tumorMarkerValues[0]).toBe('STK11+');
+    expect(tumorMarkerValues[0]).toBe('stk11+');
   });
 
-  it('Test STK11- Filter', () => {
+  it('Test stk11- Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '11389', display: 'N/A' };
     const cgvVcc: Coding = {system: 'http://loinc.info/sct', code: 'LA9634-2', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
-    expect(tumorMarkerValues[0]).toBe('STK11-');
+    expect(tumorMarkerValues[0]).toBe('stk11-');
   });
 
-  it('Test P53+ Filter', () => {
+  it('Test p53+ Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '11998', display: 'N/A' };
     const cgvInterpretation: Coding = {system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'POS', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, cgvInterpretation);
-    expect(tumorMarkerValues[0]).toBe('P53+');
+    expect(tumorMarkerValues[0]).toBe('p53+');
   });
 
-  it('Test P53- Filter', () => {
+  it('Test p53- Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '11998', display: 'N/A' };
     const cgvVcc: Coding = {system: 'http://loinc.info/sct', code: 'LA9634-2', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
-    expect(tumorMarkerValues[0]).toBe('P53-');
+    expect(tumorMarkerValues[0]).toBe('p53-');
   });
 
-  it("Test RB+ Logic 1", () => {
-    const coding = {system: "http://loinc.info/sct", code: "42795-5", display: "N/A" } as Coding; // Any code in 'Biomarker-RB'
+  it("Test rb+ Logic 1", () => {
+    const coding = {system: "http://loinc.info/sct", code: "42795-5", display: "N/A" } as Coding; // Any code in 'Biomarker-rb'
     const valueQuantity = ({ value: '51', comparator: '>', unit: '%', code: '%' } as Quantity);
     const tumorMarkerValues = createTumorMarkerValues(undefined, valueQuantity, undefined, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("RB+");
+    expect(tumorMarkerValues[0]).toBe("rb+");
   });
 
-  it("Test RB+ Logic 2", () => {
-    const coding = {system: "http://loinc.info/sct", code: "42795-5", display: "N/A" } as Coding; // Any code in 'Biomarker-RB'
-    const valueRatio = {numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as Ratio
-    const tumorMarkerValues = createTumorMarkerValues(valueRatio, undefined, undefined, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("RB+");
+  it("Test rb+ Logic 2", () => {
+    const coding = {system: "http://loinc.info/sct", code: "42795-5", display: "N/A" } as Coding; // Any code in 'Biomarker-rb'
+    const valueratio = {numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as Ratio
+    const tumorMarkerValues = createTumorMarkerValues(valueratio, undefined, undefined, undefined, coding);
+    expect(tumorMarkerValues[0]).toBe("rb+");
   });
 
-  it("Test RB- Logic 1", () => {
-    const coding = {system: "http://loinc.info/sct", code: "42795-5", display: "N/A" } as Coding; // Any code in 'Biomarker-RB'
+  it("Test rb- Logic 1", () => {
+    const coding = {system: "http://loinc.info/sct", code: "42795-5", display: "N/A" } as Coding; // Any code in 'Biomarker-rb'
     const valueQuantity = ({ value: '49', comparator: '<=', unit: '%', code: '%' } as Quantity);
     const tumorMarkerValues = createTumorMarkerValues(undefined, valueQuantity, undefined, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("RB-");
+    expect(tumorMarkerValues[0]).toBe("rb-");
   });
 
-  it("Test RB- Logic 2", () => {
-    const coding = {system: "http://loinc.info/sct", code: "42795-5", display: "N/A" } as Coding; // Any code in 'Biomarker-RB'
-    const valueRatio = {numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as Ratio
-    const tumorMarkerValues = createTumorMarkerValues(valueRatio, undefined, undefined, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("RB-");
+  it("Test rb- Logic 2", () => {
+    const coding = {system: "http://loinc.info/sct", code: "42795-5", display: "N/A" } as Coding; // Any code in 'Biomarker-rb'
+    const valueratio = {numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as Ratio
+    const tumorMarkerValues = createTumorMarkerValues(valueratio, undefined, undefined, undefined, coding);
+    expect(tumorMarkerValues[0]).toBe("rb-");
   });
 
-  it("Test HER2+ Logic", () => {
-    const coding = {system: "http://loinc.info/sct", code: "32996-1", display: "N/A" } as Coding; // Any code in 'Biomarker-HER2'
+  it("Test her2+ Logic", () => {
+    const coding = {system: "http://loinc.info/sct", code: "32996-1", display: "N/A" } as Coding; // Any code in 'Biomarker-her2'
     const valueQuantity = ({ value: '3+', comparator: '=' } as Quantity);
     const tumorMarkerValues = createTumorMarkerValues(undefined, valueQuantity, undefined, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("HER2+");
+    expect(tumorMarkerValues[0]).toBe("her2+");
   });
 
-  it("Test HER2- Logic", () => {
-    const coding = {system: "http://loinc.info/sct", code: "32996-1", display: "N/A" } as Coding; // Any code in 'Biomarker-HER2'
+  it("Test her2- Logic", () => {
+    const coding = {system: "http://loinc.info/sct", code: "32996-1", display: "N/A" } as Coding; // Any code in 'Biomarker-her2'
     const valueQuantity = ({ value: '2+', comparator: '=' } as Quantity);
     const tumorMarkerValues = createTumorMarkerValues(undefined, valueQuantity, undefined, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("HER2-");
+    expect(tumorMarkerValues[0]).toBe("her2-");
   });
 
-  it("Test FGFR+ Logic 1", () => {
-    const coding = {system: "http://loinc.info/sct", code: "42785-6", display: "N/A" } as Coding; // Any code in 'Biomarker-FGFR'
+  it("Test fgfr+ Logic 1", () => {
+    const coding = {system: "http://loinc.info/sct", code: "42785-6", display: "N/A" } as Coding; // Any code in 'Biomarker-fgfr'
     const valueQuantity = ({ value: '1', comparator: '>=', unit: '%', code: '%' } as Quantity);
     const tumorMarkerValues = createTumorMarkerValues(undefined, valueQuantity, undefined, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("FGFR+");
+    expect(tumorMarkerValues[0]).toBe("fgfr+");
   });
 
-  it("Test FGFR+ Logic 2", () => {
-    const coding = {system: "http://loinc.info/sct", code: "42785-6", display: "N/A" } as Coding; // Any code in 'Biomarker-FGFR'
-    const valueRatio = {numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as Ratio
-    const tumorMarkerValues = createTumorMarkerValues(valueRatio, undefined, undefined, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("FGFR+");
+  it("Test fgfr+ Logic 2", () => {
+    const coding = {system: "http://loinc.info/sct", code: "42785-6", display: "N/A" } as Coding; // Any code in 'Biomarker-fgfr'
+    const valueratio = {numerator: {value: 6, comparator: '>', unit: '%'}, denominator: {value: 3, comparator: '>', unit: '%'}, metric: '>'} as Ratio
+    const tumorMarkerValues = createTumorMarkerValues(valueratio, undefined, undefined, undefined, coding);
+    expect(tumorMarkerValues[0]).toBe("fgfr+");
   });
 
-  it("Test FGFR- Logic 1", () => {
-    const coding = {system: "http://loinc.info/sct", code: "42785-6", display: "N/A" } as Coding; // Any code in 'Biomarker-FGFR'
+  it("Test fgfr- Logic 1", () => {
+    const coding = {system: "http://loinc.info/sct", code: "42785-6", display: "N/A" } as Coding; // Any code in 'Biomarker-fgfr'
     const valueQuantity = ({ value: '0.5', comparator: '<', unit: '%', code: '%' } as Quantity);
     const tumorMarkerValues = createTumorMarkerValues(undefined, valueQuantity, undefined, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("FGFR-");
+    expect(tumorMarkerValues[0]).toBe("fgfr-");
   });
 
-  it("Test FGFR- Logic 2", () => {
-    const coding = {system: "http://loinc.info/sct", code: "42785-6", display: "N/A" } as Coding; // Any code in 'Biomarker-FGFR'
-    const valueRatio = {numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as Ratio
-    const tumorMarkerValues = createTumorMarkerValues(valueRatio, undefined, undefined, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("FGFR-");
+  it("Test fgfr- Logic 2", () => {
+    const coding = {system: "http://loinc.info/sct", code: "42785-6", display: "N/A" } as Coding; // Any code in 'Biomarker-fgfr'
+    const valueratio = {numerator: {value: 1, comparator: '<', unit: '%'}, denominator: {value: 101, comparator: '<', unit: '%'}, metric: '<'} as Ratio
+    const tumorMarkerValues = createTumorMarkerValues(valueratio, undefined, undefined, undefined, coding);
+    expect(tumorMarkerValues[0]).toBe("fgfr-");
   });
 
-  it('Test ESR1+ Filter', () => {
+  it('Test esr1+ Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '3467', display: 'N/A' };
     const cgvVcc: Coding = {system: 'http://loinc.info/sct', code: 'LA9633-4', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
-    expect(tumorMarkerValues[0]).toBe('ESR1+');
+    expect(tumorMarkerValues[0]).toBe('esr1+');
   });
 
-  it('Test ESR1- Filter', () => {
+  it('Test esr1- Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '3467', display: 'N/A' };
     const cgvVcc: Coding = {system: 'http://loinc.info/sct', code: 'LA9634-2', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
-    expect(tumorMarkerValues[0]).toBe('ESR1-');
+    expect(tumorMarkerValues[0]).toBe('esr1-');
   });
 
-  it('Test PIK3CA+ Filter', () => {
+  it('Test pik3ca+ Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '8975', display: 'N/A' };
     const cgvVcc: Coding = {system: 'httsnomed/sct', code: '10828004', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
-    expect(tumorMarkerValues[0]).toBe('PIK3CA+');
+    expect(tumorMarkerValues[0]).toBe('pik3ca+');
   });
 
-  it('Test PIK3CA- Filter', () => {
+  it('Test pik3ca- Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '8975', display: 'N/A' };
     const cgvVcc: Coding = {system: 'httsnomed/sct', code: '260385009', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
-    expect(tumorMarkerValues[0]).toBe('PIK3CA-');
+    expect(tumorMarkerValues[0]).toBe('pik3ca-');
   });
 
-  it("Test PDL1+ Logic", () => {
+  it("Test pdl1+ Logic", () => {
     const coding = {system: "http://loinc.info/sct", code: "96268-8", display: "N/A"} as Coding;
     const interpretation = {system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'POS', display: 'POS'} as Coding;
     const tumorMarkerValues = createTumorMarkerValues(undefined, undefined, interpretation, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("PDL1+");
+    expect(tumorMarkerValues[0]).toBe("pdl1+");
   });
 
-  it("Test PDL1- Logic", () => {
+  it("Test pdl1- Logic", () => {
     const coding = {system: "http://loinc.info/sct", code: "83052-1", display: "N/A"} as Coding;
     const interpretation = {system: 'http://hl7.org/fhir/R4/valueset-observation-interpretation.html', code: 'ND', display: 'ND'} as Coding;
     const tumorMarkerValues = createTumorMarkerValues(undefined, undefined, interpretation, undefined, coding);
-    expect(tumorMarkerValues[0]).toBe("PDL1-");
+    expect(tumorMarkerValues[0]).toBe("pdl1-");
   });
 
-  it('Test NTRK_FUSION+ Filter', () => {
+  it('Test ntrk_fusion+ Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '8031', display: 'N/A' };
     const cgvVcc: Coding = {system: 'httsnomed/sct', code: '10828004', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
-    expect(tumorMarkerValues[0]).toBe('NTRK_FUSION+');
+    expect(tumorMarkerValues[0]).toBe('ntrk_fusion+');
   });
 
-  it('Test NTRK_FUSION- Filter', () => {
+  it('Test ntrk_fusion- Filter', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '8031', display: 'N/A' };
     const cgvVcc: Coding = {system: 'httsnomed/sct', code: '260385009', display: 'N/A'};
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, cgvVcc, undefined);
-    expect(tumorMarkerValues[0]).toBe('NTRK_FUSION-');
+    expect(tumorMarkerValues[0]).toBe('ntrk_fusion-');
   });
 
   it('Test No-Match Tumor Marker', () => {
@@ -1168,52 +1169,52 @@ describe("Test Tumor Marker Logic", () => {
     expect(tumorMarkerValues.length).toBe(0);
   });
 
-  it('Test APC gene Filter - Colorectal', () => {
+  it('Test apc gene Filter - Colorectal', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '583', display: 'N/A' };
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
-    expect(tumorMarkerValues[0]).toBe('APC gene');
+    expect(tumorMarkerValues[0]).toBe('apc gene');
   });
 
-  it('Test MLH1 gene Filter - Colorectal', () => {
+  it('Test mlh1 gene Filter - Colorectal', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7127', display: 'N/A' };
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
-    expect(tumorMarkerValues[0]).toBe('MLH1 gene');
+    expect(tumorMarkerValues[0]).toBe('mlh1 gene');
   });
 
-  it('Test MSH2 Filter - Colorectal', () => {
+  it('Test msh2 Filter - Colorectal', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7325', display: 'N/A' };
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
-    expect(tumorMarkerValues[0]).toBe('MSH2');
+    expect(tumorMarkerValues[0]).toBe('msh2');
   });
 
-  it('Test MSH6 Filter - Colorectal', () => {
+  it('Test msh6 Filter - Colorectal', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7329', display: 'N/A' };
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
-    expect(tumorMarkerValues[0]).toBe('MSH6');
+    expect(tumorMarkerValues[0]).toBe('msh6');
   });
 
-  it('Test PMS2 Filter - Colorectal', () => {
+  it('Test pms2 Filter - Colorectal', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '9122', display: 'N/A' };
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
-    expect(tumorMarkerValues[0]).toBe('PMS2');
+    expect(tumorMarkerValues[0]).toBe('pms2');
   });
 
-  it('Test EPCAM Filter - Colorectal', () => {
+  it('Test epcam Filter - Colorectal', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '11529', display: 'N/A' };
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
-    expect(tumorMarkerValues[0]).toBe('EPCAM');
+    expect(tumorMarkerValues[0]).toBe('epcam');
   });
 
-  it('Test STK11 Filter - Colorectal', () => {
+  it('Test stk11 Filter - Colorectal', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '11389', display: 'N/A' };
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
-    expect(tumorMarkerValues[0]).toBe('STK11');
+    expect(tumorMarkerValues[0]).toBe('stk11');
   });
 
-  it('Test MUTYH Filter - Colorectal', () => {
+  it('Test mutyh Filter - Colorectal', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7527', display: 'N/A' };
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
-    expect(tumorMarkerValues[0]).toBe('MUTYH');
+    expect(tumorMarkerValues[0]).toBe('mutyh');
   });
 
 });
@@ -1221,7 +1222,7 @@ describe("Test Tumor Marker Logic", () => {
 describe('checkAgeFilterLogic', () => {
 
   const createBirthdateBundle = (birthdate: string): Bundle => {
-    const birthdateResource: Bundle = {
+    const birthdateresource: Bundle = {
       resourceType: "Bundle",
       type: "transaction",
       entry: [
@@ -1243,7 +1244,7 @@ describe('checkAgeFilterLogic', () => {
           }
         ]
       };
-      return birthdateResource;
+      return birthdateresource;
     };
 
   const today: Date = new Date();
@@ -1391,6 +1392,77 @@ describe('checkHistologyMorphologyFilterLogic', () => {
     const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
     expect(mappingLogic.getHistologyMorphologyValue()).toBe('Sarcoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)');
   });
+
+  it('Test Adenocarcinoma - Lung', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '35917007', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Adenocarcinoma');
+  });
+
+  it('Test Adenocarcinoma in situ (morphologic abnormality) - Lung', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '51642000', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Adenocarcinoma in situ (morphologic abnormality)');
+  });
+
+  it('Test Squamous cell carcinoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality) - Lung', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '28899001', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Squamous cell carcinoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)');
+  });
+
+  it('Test Large cell carcinoma (morphologic abnormality) - Lung', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '22687000', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Large cell carcinoma (morphologic abnormality)');
+  });
+
+  it('Test Large cell neuroendocrine carcinoma (morphologic abnormality) - Lung', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '128628002', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Large cell neuroendocrine carcinoma (morphologic abnormality)');
+  });
+
+  it('Test Superficial spreading melanoma (morphologic abnormality) - Melanoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '55320002', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Superficial spreading melanoma (morphologic abnormality)');
+  });
+  it('Test Nodular melanoma (morphologic abnormality) - Melanoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '2142002', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Nodular melanoma (morphologic abnormality)');
+  });
+  it('Test Hutchinsons melanotic freckle (morphologic abnormality) - Melanoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '61217001', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Hutchinsons melanotic freckle (morphologic abnormality)');
+  });
+  it('Test Acral lentiginous melanoma, malignant (morphologic abnormality) - Melanoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '16974005', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Acral lentiginous melanoma, malignant (morphologic abnormality)');
+  });
+  it('Test Desmoplastic melanoma, malignant (morphologic abnormality) - Melanoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '51757004', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Desmoplastic melanoma, malignant (morphologic abnormality)');
+  });
+  it('Test Spindle cell melanoma (morphologic abnormality) - Melanoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '68827007', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Spindle cell melanoma (morphologic abnormality)');
+  });
+  it('Test Minimal deviation melanoma (morphologic abnormality) - Melanoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '399475009', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Minimal deviation melanoma (morphologic abnormality)');
+  });
+  it('Test Amelanotic melanoma (morphologic abnormality) - Melanoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '70594002', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Amelanotic melanoma (morphologic abnormality)');
+  });
   
 });
 
@@ -1486,7 +1558,7 @@ describe('checkSecondaryCancerConditionLogic', () => {
 
 describe('checkRadiationProcedureFilterLogic', () => {
 
-  const createRadiationBundle = (coding: Coding, bodySite: Coding): Bundle => {
+  const createradiationBundle = (coding: Coding, bodySite: Coding): Bundle => {
     const radiationBundle: Bundle = {
       resourceType: "Bundle",
       type: "transaction",
@@ -1527,58 +1599,58 @@ describe('checkRadiationProcedureFilterLogic', () => {
   it('Test WBRT Filter', () => {
     const coding = ({ system: 'http://snomed.info/sct', code: '108290001', display: 'N/A' } as Coding);
     const bodySite = ({ system: 'http://snomed.info/sct', code: '12738006', display: 'N/A' } as Coding);
-    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, bodySite));
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, bodySite));
     expect(mappingLogic.getRadiationProcedureValues().includes('wbrt')).toBeTrue();
   });
 
   it('Test EBRT Filter', () => {
     const coding = ({ system: 'http://snomed.info/sct', code: '33356009', display: 'N/A' } as Coding);
     const bodySite = ({ system: 'http://snomed.info/sct', code: 'test', display: 'N/A' } as Coding);
-    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, bodySite));
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, bodySite));
     expect(mappingLogic.getRadiationProcedureValues().includes('ebrt')).toBeTrue();
   });
 
   it('Test ablation Filter', () => {
     const coding = ({ system: 'http://snomed.info/sct', code: '228692005', display: 'N/A' } as Coding);
     const bodySite = ({ system: 'http://snomed.info/sct', code: 'test', display: 'N/A' } as Coding);
-    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, bodySite));
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, bodySite));
     expect(mappingLogic.getRadiationProcedureValues().includes('ablation')).toBeTrue();
   });
 
   it('Test RFA Filter', () => {
     const coding = ({ system: 'http://snomed.info/sct', code: '879916008', display: 'N/A' } as Coding);
     const bodySite = ({ system: 'http://snomed.info/sct', code: 'test', display: 'N/A' } as Coding);
-    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, bodySite));
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, bodySite));
     expect(mappingLogic.getRadiationProcedureValues().includes('rfa')).toBeTrue();
   });
 
   it('Test Destructive procedure (procedure) Filter', () => {
     const coding = ({ system: 'http://snomed.info/sct', code: '64597002', display: 'N/A' } as Coding);
-    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, undefined));
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
     expect(mappingLogic.getRadiationProcedureValues().includes('Destructive procedure (procedure)')).toBeTrue();
   });
 
   it('Test Radiofrequency ablation (procedure) Filter', () => {
     const coding = ({ system: 'http://snomed.info/sct', code: '879916008', display: 'N/A' } as Coding);
-    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, undefined));
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
     expect(mappingLogic.getRadiationProcedureValues().includes('Radiofrequency ablation (procedure)')).toBeTrue();
   });
 
   it('Test External beam radiation therapy procedure (procedure) Filter', () => {
     const coding = ({ system: 'http://snomed.info/sct', code: '33195004', display: 'N/A' } as Coding);
-    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, undefined));
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
     expect(mappingLogic.getRadiationProcedureValues().includes('External beam radiation therapy procedure (procedure)')).toBeTrue();
   });
 
   it('Test Brachytherapy (procedure) Filter', () => {
     const coding = ({ system: 'http://snomed.info/sct', code: '152198000', display: 'N/A' } as Coding);
-    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, undefined));
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
     expect(mappingLogic.getRadiationProcedureValues().includes('Brachytherapy (procedure)')).toBeTrue();
   });
 
   it('Test Interstitial brachytherapy (procedure) Filter', () => {
     const coding = ({ system: 'http://snomed.info/sct', code: '113120007', display: 'N/A' } as Coding);
-    const mappingLogic = new TrialjectoryMappingLogic(createRadiationBundle(coding, undefined));
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
     expect(mappingLogic.getRadiationProcedureValues().includes('Interstitial brachytherapy (procedure)')).toBeTrue();
   });
 

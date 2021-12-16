@@ -251,9 +251,13 @@ export class APIQuery {
     this.surgicalProcedures = mappingLogic.getSurgicalProcedureValues() as string[];
     this.metastasis = mappingLogic.getSecondaryCancerValues() as string[];
     this.age = mappingLogic.getAgeValue() as number;
-    // Extraneous Fields
-    this.phase = "";
-    this.recruitmentStatus = "Active";
+    // Extraneous required fields.
+    if(this.phase === undefined){
+      this.phase = "";
+    }
+    if(this.recruitmentStatus === undefined){
+      this.recruitmentStatus = "Active";
+    }
   }
 
   /**
@@ -395,7 +399,7 @@ function sendQuery(
                 )
               );
             } else {
-              reject(new Error("Unable to parse response from server. Raw response: " + JSON.stringify(responseBody)));
+              reject(new Error("Unable to parse response from server"));
             }
           } else {
             reject(

@@ -113,15 +113,15 @@ describe("isQueryResponse()", () => {
     expect(isQueryResponse(true)).toBeFalse();
     expect(isQueryResponse("string")).toBeFalse();
     expect(isQueryResponse(42)).toBeFalse();
-    expect(isQueryResponse({ invalid: true })).toBeFalse();
+    expect(isQueryResponse({ data: {invalid: true }})).toBeFalse();
   });
 
   it("returns true on a matching object", () => {
-    expect(isQueryResponse({ trials: [] })).toBeTrue();
-    expect(isQueryResponse({ trials: [{ name: "Trial" }] })).toBeTrue();
+    expect(isQueryResponse({ data: { trials: [] }})).toBeTrue();
+    expect(isQueryResponse({ data: {trials: [{ name: "Trial" }] }})).toBeTrue();
     // Currently this is true. It may make sense to make it false, but for now,
     // a single invalid trial does not invalidate the array.
-    expect(isQueryResponse({ trials: [{ invalid: true }] })).toBeTrue();
+    expect(isQueryResponse({ data: {trials: [{ invalid: true }] }})).toBeTrue();
   });
 });
 
@@ -131,7 +131,7 @@ describe("isQueryErrorResponse()", () => {
     expect(isQueryErrorResponse(true)).toBeFalse();
     expect(isQueryErrorResponse("string")).toBeFalse();
     expect(isQueryErrorResponse(42)).toBeFalse();
-    expect(isQueryErrorResponse({ invalid: true })).toBeFalse();
+    expect(isQueryErrorResponse({ data: {invalid: true }})).toBeFalse();
   });
 
   it("returns true on a matching object", () => {
@@ -473,7 +473,7 @@ describe("ClinicalTrialLookup", () => {
   });
 
   it("generates a request", () => {
-    mockRequest.reply(200, { trials: [] });
+    mockRequest.reply(200, { data: {trials: [] }});
     return expectAsync(matcher(patientBundle)).toBeResolved();
   });
 
@@ -495,9 +495,9 @@ describe("ClinicalTrialLookup", () => {
 
   it("rejects with an error if the response is invalid", () => {
     // Simulate a valid response with something that can't be parsed as JSON
-    mockRequest.reply(200, { missingAllKnownKeys: true });
+    mockRequest.reply(200, { data: {missingAllKnownKeys: true }});
     return expectAsync(matcher(patientBundle)).toBeRejectedWithError(
-      "Unable to parse response from server"
+      "Unable to parse response from server."
     );
   });
 

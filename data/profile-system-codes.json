@@ -7723,7 +7723,7 @@
       "22687000"
     ]
   },
-  " Large cell neuroendocrine carcinoma (morphologic abnormality)": {
+  "Large cell neuroendocrine carcinoma (morphologic abnormality)": {
     "SNOMED": [
       "128628002"
     ]
@@ -7928,17 +7928,17 @@
       "372244006"
     ]
   },
-  " Lentigo maligna melanoma (disorder)": {
-    "": [
-      "sCT#302837001"
+  "Lentigo maligna melanoma (disorder)": {
+    "SNOMED": [
+      "302837001"
     ]
   },
   "Desmoplastic malignant melanoma (disorder)": {
-    "": [
-      "sCT#403924008"
+    "SNOMED": [
+      "403924008"
     ]
   },
-  " Spindle cell malignant melanoma (disorder)": {
+  "Spindle cell malignant melanoma (disorder)": {
     "SNOMED": [
       "403923002"
     ]
@@ -8004,8 +8004,8 @@
     ]
   },
   "Myelosclerosis with myeloid metaplasia (morphologic abnormality)": {
-    "": [
-      "SCT128843003"
+    "SNOMED": [
+      "128843003"
     ]
   },
   "Essential thrombocythemia (morphologic abnormality)": {
@@ -8109,8 +8109,8 @@
     ]
   },
   "Mantle cell lymphoma (morphologic abnormality)": {
-    "": [
-      "SCT374654000"
+    "SNOMED": [
+      "374654000"
     ]
   },
   "Nodal marginal zone B-cell lymphoma (morphologic abnormality)": {
