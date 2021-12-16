@@ -479,7 +479,7 @@ describe("ClinicalTrialLookup", () => {
 
   it("rejects with an error if an error is returned by the server", () => {
     // Simulate an error response
-    mockRequest.reply(200, { error: "Test error" });
+    mockRequest.reply(200, {data: { error: "Test error" }});
     return expectAsync(matcher(patientBundle)).toBeRejectedWithError(
       "Error from service: Test error"
     );

@@ -1433,10 +1433,10 @@ describe('checkHistologyMorphologyFilterLogic', () => {
     const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
     expect(mappingLogic.getHistologyMorphologyValue()).toBe('Nodular melanoma (morphologic abnormality)');
   });
-  it('Test Hutchinsons melanotic freckle (morphologic abnormality) - Melanoma', () => {
+  it('Test Hutchinson\'s melanotic freckle (morphologic abnormality) - Melanoma', () => {
     const histologyBehavior = { system: 'http://snomed.info/sct', code: '61217001', display: 'N/A' } as Coding;
     const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
-    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Hutchinsons melanotic freckle (morphologic abnormality)');
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe("Hutchinson's melanotic freckle (morphologic abnormality)");
   });
   it('Test Acral lentiginous melanoma, malignant (morphologic abnormality) - Melanoma', () => {
     const histologyBehavior = { system: 'http://snomed.info/sct', code: '16974005', display: 'N/A' } as Coding;
@@ -1463,6 +1463,250 @@ describe('checkHistologyMorphologyFilterLogic', () => {
     const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
     expect(mappingLogic.getHistologyMorphologyValue()).toBe('Amelanotic melanoma (morphologic abnormality)');
   });
+
+  it('Test Polycythemia vera (morphologic abnormality) - MPN', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '128841001', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Polycythemia vera (morphologic abnormality)');
+  });
+  it('Test Myelosclerosis with myeloid metaplasia (morphologic abnormality) - MPN', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '128843003', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Myelosclerosis with myeloid metaplasia (morphologic abnormality)');
+  });
+  it('Test Essential thrombocythemia (morphologic abnormality) - MPN', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '128844009', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Essential thrombocythemia (morphologic abnormality)');
+  });
+  it('Test Chronic neutrophilic leukemia (morphologic abnormality) - MPN', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '128834007', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Chronic neutrophilic leukemia (morphologic abnormality)');
+  });
+  it('Test Chronic eosinophilic leukemia (morphologic abnormality) - MPN', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '413836008', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Chronic eosinophilic leukemia (morphologic abnormality)');
+  });
+
+  it('Test Multiple myeloma, no International Classification of Diseases for Oncology subtype (morphologic abnormality) - Myeloma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '55921005', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe(' Multiple myeloma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)');
+  });
+
+  it('Test Non-Hodgkin lymphoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '1929004', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Non-Hodgkin lymphoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)');
+  });
+  it('Test Non-Hodgkin lymphoma - category (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '128929007', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Non-Hodgkin lymphoma - category (morphologic abnormality)');
+  });
+  it('Test Malignant lymphoma, large B-cell, diffuse, no International Classification of Diseases for Oncology subtype (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '46732000', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Malignant lymphoma, large B-cell, diffuse, no International Classification of Diseases for Oncology subtype (morphologic abnormality)');
+  });
+  it('Test Diffuse large B-cell lymphoma - category (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '413990004', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Diffuse large B-cell lymphoma - category (morphologic abnormality)');
+  });
+  it('Test Diffuse large B-cell lymphoma activated B-cell subtype (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '787565006', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Diffuse large B-cell lymphoma activated B-cell subtype (morphologic abnormality)');
+  });
+  it('Test Follicular lymphoma (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '55150002', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Follicular lymphoma (morphologic abnormality)');
+  });
+  it('Test B-cell chronic lymphocytic leukemia/small lymphocytic lymphoma (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '51092000', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('B-cell chronic lymphocytic leukemia/small lymphocytic lymphoma (morphologic abnormality)');
+  });
+  it('Test Mantle cell lymphoma (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '374654000', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Mantle cell lymphoma (morphologic abnormality)');
+  });
+  it('Test Nodal marginal zone B-cell lymphoma (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '397349003', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Nodal marginal zone B-cell lymphoma (morphologic abnormality)');
+  });
+  it('Test Burkitt lymphoma (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '77381001', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Burkitt lymphoma (morphologic abnormality)');
+  });
+  it('Test Malignant lymphoma, lymphoplasmacytic (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '19340000', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Malignant lymphoma, lymphoplasmacytic (morphologic abnormality)');
+  });
+  it('Test Hairy cell leukemia (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '54087003', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Hairy cell leukemia (morphologic abnormality)');
+  });
+  it('Test Precursor T cell lymphoblastic leukemia/lymphoblastic lymphoma (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '397348006', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Precursor T cell lymphoblastic leukemia/lymphoblastic lymphoma (morphologic abnormality)');
+  });
+  it('Test Cutaneous T-cell lymphoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '28054005', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Cutaneous T-cell lymphoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)');
+  });
+  it('Test Angioimmunoblastic T-cell lymphoma (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '835009', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Angioimmunoblastic T-cell lymphoma (morphologic abnormality)');
+  });
+  it('Test Primary cutaneous anaplastic large T-cell lymphoma, CD30-positive (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '397352006', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Primary cutaneous anaplastic large T-cell lymphoma, CD30-positive (morphologic abnormality)');
+  });
+  it('Test Peripheral T-cell lymphoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality) - Non-Hodgkin Lymphoma', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '3172003', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Peripheral T-cell lymphoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)');
+  });
+
+  it('Test Astrocytoma (morphologic abnormality) - Brain', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '1157043006', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Astrocytoma (morphologic abnormality)');
+  });
+  it('Test Oligodendroglioma (morphologic abnormality) - Brain', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '1156974002', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Oligodendroglioma (morphologic abnormality)');
+  });
+  it('Test Malignant ependymoma (morphologic abnormality) - Brain', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '1156903009', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Malignant ependymoma (morphologic abnormality)');
+  });
+  it('Test Glioblastoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality) - Brain', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '63634009', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Glioblastoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)');
+  });
+  it('Test Astrocytoma, anaplastic (morphologic abnormality) - Brain', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '55353007', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Astrocytoma, anaplastic (morphologic abnormality)');
+  });
+  it('Test Oligodendroglioma, anaplastic (morphologic abnormality) - Brain', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '3102004', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Oligodendroglioma, anaplastic (morphologic abnormality)');
+  });
+  it('Test Ependymoma, anaplastic (morphologic abnormality) - Brain', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '21589007', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Ependymoma, anaplastic (morphologic abnormality)');
+  });
+  it('Test Meningioma, malignant (morphologic abnormality) - Brain', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '78303004', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Meningioma, malignant (morphologic abnormality)');
+  });
+  it('Test Primary malignant meningioma (disorder) - Brain', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '722718001', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Primary malignant meningioma (disorder)');
+  });
+  it('Test Medulloblastoma (morphologic abnormality) - Brain', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '1156923005', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Medulloblastoma (morphologic abnormality)');
+  });
+  it('Test Ganglioglioma, anaplastic (morphologic abnormality) - Brain', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '128912009', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Ganglioglioma, anaplastic (morphologic abnormality)');
+  });
+  it('Test Melanotic malignant peripheral nerve sheath tumor (morphologic abnormality) - Brain', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '253094006', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Melanotic malignant peripheral nerve sheath tumor (morphologic abnormality)');
+  });
+
+  it('Test Adenocarcinoma, no subtype (morphologic abnormality) - Uterine', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '35917007', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Adenocarcinoma, no subtype (morphologic abnormality)');
+  });
+  it('Test Carcinosarcoma (morphologic abnormality) - Uterine', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '63264007', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Carcinosarcoma (morphologic abnormality)');
+  });
+  it('Test Squamous cell carcinoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality) - Uterine', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '28899001', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Squamous cell carcinoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)');
+  });
+  it('Test Small cell carcinoma (morphologic abnormality) - Uterine', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '74364000', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Small cell carcinoma (morphologic abnormality)');
+  });
+  it('Test Transitional cell carcinoma (morphologic abnormality) - Uterine', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '27090000', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Transitional cell carcinoma (morphologic abnormality)');
+  });
+  it('Test Serous carcinoma (morphologic abnormality) - Uterine', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '90725004', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Serous carcinoma (morphologic abnormality)');
+  });
+  it('Test Leiomyosarcoma, no subtype (morphologic abnormality) - Uterine', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '51549004', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Leiomyosarcoma, no subtype (morphologic abnormality)');
+  });
+  it('Test Endometrial stromal sarcoma, high grade (morphologic abnormality) - Uterine', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '70555003', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Endometrial stromal sarcoma, high grade (morphologic abnormality)');
+  });
+
+  it('Test Small cell carcinoma (morphologic abnormality) - Prostate', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '74364000', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Small cell carcinoma (morphologic abnormality)');
+  });
+  it('Test Neuroendocrine tumor (morphologic abnormality) - Prostate', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '55937004', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Neuroendocrine tumor (morphologic abnormality)');
+  });
+  it('Test Transitional cell carcinoma (morphologic abnormality) - Prostate', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '27090000', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Transitional cell carcinoma (morphologic abnormality)');
+  });
+  it('Test Sarcoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality) - Prostate', () => {
+    const histologyBehavior = { system: 'http://snomed.info/sct', code: '2424003', display: 'N/A' } as Coding;
+    const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Sarcoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)');
+  });
+
+
+
   
 });
 

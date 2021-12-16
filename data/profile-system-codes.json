@@ -7703,11 +7703,6 @@
       "1597592"
     ]
   },
-  "Adenocarcinoma ": {
-    "SNOMED": [
-      "35917007"
-    ]
-  },
   "Adenocarcinoma in situ (morphologic abnormality)": {
     "SNOMED": [
       "51642000"
@@ -8128,7 +8123,7 @@
       "19340000"
     ]
   },
-  " Hairy cell leukemia (morphologic abnormality)": {
+  "Hairy cell leukemia (morphologic abnormality)": {
     "SNOMED": [
       "54087003"
     ]
@@ -8288,7 +8283,7 @@
       "1157043006"
     ]
   },
-  " Oligodendroglioma (morphologic abnormality)": {
+  "Oligodendroglioma (morphologic abnormality)": {
     "SNOMED": [
       "1156974002"
     ]
