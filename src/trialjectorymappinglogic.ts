@@ -97,7 +97,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
         "Large cell anaplastic lymphoma (disorder)",
         "Primary cutaneous anaplastic large cell lymphoma (disorder)",
         "Anaplastic large T-cell systemic malignant lymphoma (disorder)",
-        "Breast implant–associated anaplastic large-cell lymphoma (disorder)",
+        "Breast implant associated anaplastic large-cell lymphoma (disorder)",
         "Peripheral T-cell lymphoma (disorder)"]);
       // Valid Brain Values.
       validPrimaryConditionMappings.push(...["Primary malignant neoplasm of brain (disorder)",

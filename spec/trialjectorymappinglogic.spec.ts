@@ -218,6 +218,336 @@ describe('Check Primary Cancer Logic', () => {
     );
   });
 
+  it('Test Malignant melanoma (disorder) - Melanoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '372244006', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Malignant melanoma (disorder)'
+    );
+  });
+  it('Test Lentigo maligna melanoma (disorder) - Melanoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '302837001', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Lentigo maligna melanoma (disorder)'
+    );
+  });
+  it('Test Desmoplastic malignant melanoma (disorder) - Melanoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '403924008', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Desmoplastic malignant melanoma (disorder)'
+    );
+  });
+  it('Test Spindle cell malignant melanoma (disorder) - Melanoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '403923002', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Spindle cell malignant melanoma (disorder)'
+    );
+  });
+  it('Test Amelanotic malignant melanoma of skin (disorder) - Melanoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '276751004', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Amelanotic malignant melanoma of skin (disorder)'
+    );
+  });
+
+  it('Test Polycythemia vera (disorder) - Melanoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '109992005', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Polycythemia vera (disorder)'
+    );
+  });
+  it('Test Myelosclerosis with myeloid metaplasia (disorder) - Melanoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '307651005', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Myelosclerosis with myeloid metaplasia (disorder)'
+    );
+  });
+  it('Test Essential thrombocythemia (disorder) - Melanoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '109994006', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Essential thrombocythemia (disorder)'
+    );
+  });
+  it('Test Chronic neutrophilic leukemia (disorder) - Melanoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '188734009', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Chronic neutrophilic leukemia (disorder)'
+    );
+  });
+  it('Test Chronic eosinophilic leukemia (disorder) - Melanoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '188733003', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Chronic eosinophilic leukemia (disorder)'
+    );
+  });
+
+  it('Test Multiple myeloma (disorder) - Multiple Myeloma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '109989006', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Multiple myeloma (disorder)'
+    );
+  });
+
+  it("Test Non-Hodgkin's lymphoma (disorder) - Non-Hodgkin Lymphoma", () => {
+    const coding = { system: 'http://snomed.info/sct', code: '118601006', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      "Non-Hodgkin's lymphoma (disorder)"
+    );
+  });
+  it('Test Primary mediastinal (thymic) large B-cell lymphoma (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '444910004', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Primary mediastinal (thymic) large B-cell lymphoma (disorder)'
+    );
+  });
+  it("Test Follicular non-Hodgkin's lymphoma (disorder) - Non-Hodgkin Lymphoma", () => {
+    const coding = { system: 'http://snomed.info/sct', code: '308121000', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      "Follicular non-Hodgkin's lymphoma (disorder)"
+    );
+  });
+  it('Test Chronic lymphoid leukemia, disease (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '92814006', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Chronic lymphoid leukemia, disease (disorder)'
+    );
+  });
+  it('Test T-cell chronic lymphocytic leukemia (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '277545003', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'T-cell chronic lymphocytic leukemia (disorder)'
+    );
+  });
+  it('Test B-cell chronic lymphocytic leukemia (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '277473004', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'B-cell chronic lymphocytic leukemia (disorder)'
+    );
+  });
+  it('Test Mantle cell lymphoma (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '443487006', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Mantle cell lymphoma (disorder)'
+    );
+  });
+  it('Test Mucosa-associated lymphoma (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '277622004', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Mucosa-associated lymphoma (disorder)'
+    );
+  });
+  it('Test Nodal marginal zone B-cell lymphoma (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '726721002', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Nodal marginal zone B-cell lymphoma (disorder)'
+    );
+  });
+  it('Test Splenic marginal zone B-cell lymphoma (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '763666008', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Splenic marginal zone B-cell lymphoma (disorder)'
+    );
+  });
+  it('Test Malignant lymphoma - lymphoplasmacytic (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '307623001', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Malignant lymphoma - lymphoplasmacytic (disorder)'
+    );
+  }); it('Test Hairy cell leukemia (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '118613001', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Hairy cell leukemia (disorder)'
+    );
+  });
+  it('Test Microglioma (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '307649006', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Microglioma (disorder)'
+    );
+  });
+  it('Test Intraocular non-Hodgkin malignant lymphoma (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '420788006', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Intraocular non-Hodgkin malignant lymphoma (disorder)'
+    );
+  });
+  it('Test Primary cutaneous T-cell lymphoma (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '400122007', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Primary cutaneous T-cell lymphoma (disorder)'
+    );
+  });
+  it('Test Adult T-cell leukemia/lymphoma (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '110007008', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Adult T-cell leukemia/lymphoma (disorder)'
+    );
+  });
+  it('Test Angioimmunoblastic T-cell lymphoma (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '413537009', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Angioimmunoblastic T-cell lymphoma (disorder)'
+    );
+  });
+  it('Test Extranodal natural killer/T-cell lymphoma, nasal type (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '414166008', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Extranodal natural killer/T-cell lymphoma, nasal type (disorder)'
+    );
+  });
+  it('Test Enteropathy-associated T-cell lymphoma (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '277654008', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Enteropathy-associated T-cell lymphoma (disorder)'
+    );
+  });
+  it('Test Large cell anaplastic lymphoma (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '277637000', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Large cell anaplastic lymphoma (disorder)'
+    );
+  });
+  it('Test Primary cutaneous anaplastic large cell lymphoma (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '773995001', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Primary cutaneous anaplastic large cell lymphoma (disorder)'
+    );
+  });
+  it('Test Anaplastic large T-cell systemic malignant lymphoma (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '404134006', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Anaplastic large T-cell systemic malignant lymphoma (disorder)'
+    );
+  });
+  it('Test Breast implant associated anaplastic large-cell lymphoma (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '783541009', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Breast implant associated anaplastic large-cell lymphoma (disorder)'
+    );
+  });
+  it('Test Peripheral T-cell lymphoma (disorder) - Non-Hodgkin Lymphoma', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '109977009', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Peripheral T-cell lymphoma (disorder)'
+    );
+  });
+
+  it('Test Primary malignant neoplasm of brain (disorder) - Brain', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '93727008', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Primary malignant neoplasm of brain (disorder)'
+    );
+  });
+  it('Test Malignant neoplasm of brain (disorder) - Brain', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '428061005', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Malignant neoplasm of brain (disorder)'
+    );
+  });
+  it('Test Astrocytoma of brain (disorder) - Brain', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '254938000', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Astrocytoma of brain (disorder)'
+    );
+  });
+  it('Test Oligodendroglioma (disorder) - Brain', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '443936004', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Oligodendroglioma (disorder)'
+    );
+  });
+  it('Test Oligodendroglioma of brain (disorder) - Brain', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '254940005', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Oligodendroglioma of brain (disorder)'
+    );
+  });
+  it('Test Glioblastoma multiforme of brain - Brain', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '276828006', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Glioblastoma multiforme of brain'
+    );
+  });
+  it('Test Anaplastic astrocytoma of brain (disorder) - Brain', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '277461004', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Anaplastic astrocytoma of brain (disorder)'
+    );
+  });
+  it('Test Medulloblastoma (disorder) - Brain', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '443333004', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Medulloblastoma (disorder)'
+    );
+  });
+  it('Test Anaplastic ganglioglioma (disorder) - Brain', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '1157071000', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Anaplastic ganglioglioma (disorder)'
+    );
+  });
+  it('Test Malignant peripheral nerve sheath tumor (disorder) - Brain', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '404037002', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Malignant peripheral nerve sheath tumor (disorder)'
+    );
+  });
+
+  it('Test Malignant neoplasm of uterus (disorder) - Uterine', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '371973000', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Malignant neoplasm of uterus (disorder)'
+    );
+  });
+  it('Test Sarcoma of uterus (disorder) - Uterine', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '254877001', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Sarcoma of uterus (disorder)'
+    );
+  });
+  it('Test Adenocarcinoma of uterus (disorder) - Uterine', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '309245001', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Adenocarcinoma of uterus (disorder)'
+    );
+  });
+  it('Test Carcinosarcoma of uterus (disorder) - Uterine', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '702369008', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Carcinosarcoma of uterus (disorder)'
+    );
+  });
+  it('Test Squamous cell carcinoma (disorder) - Uterine', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '402815007', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Squamous cell carcinoma (disorder)'
+    );
+  });
+  it('Test Endometrial stromal sarcoma (disorder) - Uterine', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '699356008', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Endometrial stromal sarcoma (disorder)'
+    );
+  });
+
+  it('Test Primary malignant neoplasm of prostate (disorder) - Prostate', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '93974005', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Primary malignant neoplasm of prostate (disorder)'
+    );
+  });
+  it('Test Malignant tumor of prostate (disorder) - Prostate', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '399068003', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Malignant tumor of prostate (disorder)'
+    );
+  });
+  it('Test Small cell carcinoma of prostate (disorder) - Prostate', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '396198006', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Small cell carcinoma of prostate (disorder)'
+    );
+  });
+
 });
 
 describe("Test Medication Logic", () => {
