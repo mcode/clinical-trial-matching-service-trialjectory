@@ -44,13 +44,86 @@ export class TrialjectoryMappingLogic extends MappingLogic {
    */
   getPrimaryCancerValues(): string {
 
-    /** Colorectal Primary Cancer Conditions */
     const fullPrimaryCancerMappings = TrialjectoryMappingLogic.codeMapper.extractCodeMappings([].concat(...this.getExtractedPrimaryCancerConditions().map(pcc => pcc.coding)));
     if(fullPrimaryCancerMappings.length > 0) {
-      const validColorectalPrimaries = ["Malignant neoplasm of colon and/or rectum (disorder)", "Microsatellite instability-high colorectal cancer", "Hereditary nonpolyposis colon cancer"];
-      const colorectalPrimaryMappings = fullPrimaryCancerMappings.filter(mapping => validColorectalPrimaries.includes(mapping));
-      if(colorectalPrimaryMappings.length > 0){
-        return colorectalPrimaryMappings[0];
+      // Valid Colorectal Values.
+      const validPrimaryConditionMappings = ["Malignant neoplasm of colon and/or rectum (disorder)", "Microsatellite instability-high colorectal cancer", "Hereditary nonpolyposis colon cancer"];
+      // Valid Lung Values.
+      validPrimaryConditionMappings.push(...["Adenocarcinoma of lung (disorder)",
+        "Adenocarcinoma of left lung (disorder)",
+        "Adenocarcinoma of right lung (disorder)",
+        "Primary adenocarcinoma of lung (disorder)",
+        "Squamous cell carcinoma of lung (disorder)",
+        "Squamous cell carcinoma of left lung (disorder)",
+        "Squamous cell carcinoma of right lung (disorder)",
+        "Large cell carcinoma of lung (disorder)",
+        "Small cell carcinoma of lung (disorder)",
+        "Primary malignant neoplasm of lung (disorder)",
+        "Malignant tumor of lung (disorder)"]);
+      // Valid Melanoma Values.
+      validPrimaryConditionMappings.push(...["Malignant melanoma (disorder)",
+        "Lentigo maligna melanoma (disorder)",
+        "Desmoplastic malignant melanoma (disorder)",
+        "Spindle cell malignant melanoma (disorder)",
+        "Amelanotic malignant melanoma of skin (disorder)"]);
+      // Valid MPN Values.
+      validPrimaryConditionMappings.push(...["Polycythemia vera (disorder)",
+        "Myelosclerosis with myeloid metaplasia (disorder)",
+        "Essential thrombocythemia (disorder)",
+        "Chronic neutrophilic leukemia (disorder)",
+        "Chronic eosinophilic leukemia (disorder)"]);
+      // Valid Multiple Myeloma Values.
+      validPrimaryConditionMappings.push(...["Multiple myeloma (disorder)"]);
+      // Valid MPN Values.
+      validPrimaryConditionMappings.push(...["Non-Hodgkin's lymphoma (disorder)",
+        "Primary mediastinal (thymic) large B-cell lymphoma (disorder)",
+        "Follicular non-Hodgkin's lymphoma (disorder)",
+        "Chronic lymphoid leukemia, disease (disorder)",
+        "T-cell chronic lymphocytic leukemia (disorder)",
+        "B-cell chronic lymphocytic leukemia (disorder)",
+        "Mantle cell lymphoma (disorder)",
+        "Mucosa-associated lymphoma (disorder)",
+        "Nodal marginal zone B-cell lymphoma (disorder)",
+        "Splenic marginal zone B-cell lymphoma (disorder)",
+        "Malignant lymphoma - lymphoplasmacytic (disorder)",
+        "Hairy cell leukemia (disorder)",
+        "Microglioma (disorder)",
+        "Intraocular non-Hodgkin malignant lymphoma (disorder)",
+        "Primary cutaneous T-cell lymphoma (disorder)",
+        "Adult T-cell leukemia/lymphoma (disorder)",
+        "Angioimmunoblastic T-cell lymphoma (disorder)",
+        "Extranodal natural killer/T-cell lymphoma, nasal type (disorder)",
+        "Enteropathy-associated T-cell lymphoma (disorder)",
+        "Large cell anaplastic lymphoma (disorder)",
+        "Primary cutaneous anaplastic large cell lymphoma (disorder)",
+        "Anaplastic large T-cell systemic malignant lymphoma (disorder)",
+        "Breast implant–associated anaplastic large-cell lymphoma (disorder)",
+        "Peripheral T-cell lymphoma (disorder)"]);
+      // Valid Brain Values.
+      validPrimaryConditionMappings.push(...["Primary malignant neoplasm of brain (disorder)",
+        "Malignant neoplasm of brain (disorder)",
+        "Astrocytoma of brain (disorder)",
+        "Oligodendroglioma (disorder)",
+        "Oligodendroglioma of brain (disorder)",
+        "Glioblastoma multiforme of brain",
+        "Anaplastic astrocytoma of brain (disorder)",
+        "Medulloblastoma (disorder)",
+        "Anaplastic ganglioglioma (disorder)",
+        "Malignant peripheral nerve sheath tumor (disorder)"]);
+      // Valid Uterine Values.
+      validPrimaryConditionMappings.push(...["Malignant neoplasm of uterus (disorder)",
+        "Sarcoma of uterus (disorder)",
+        "Adenocarcinoma of uterus (disorder)",
+        "Carcinosarcoma of uterus (disorder)",
+        "Squamous cell carcinoma (disorder)",
+        "Endometrial stromal sarcoma (disorder)"]);
+      // Valid Prostate Values.
+      validPrimaryConditionMappings.push(...["Primary malignant neoplasm of prostate (disorder)",
+        "Malignant tumor of prostate (disorder)",
+        "Small cell carcinoma of prostate (disorder)"]);
+      const primaryCancerMappings = fullPrimaryCancerMappings.filter(mapping => validPrimaryConditionMappings.includes(mapping));
+      if(primaryCancerMappings.length > 0){
+        return primaryCancerMappings[0];
       }
     }
 

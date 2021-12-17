@@ -4291,11 +4291,6 @@
       "1597884"
     ]
   },
-  "Adenocarcinoma": {
-    "SNOMED": [
-      "35917007"
-    ]
-  },
   "Mucinous adenocarcinoma": {
     "SNOMED": [
       "72495009"
@@ -8413,7 +8408,7 @@
       "1156530009"
     ]
   },
-  "   Craniotomy (procedure)": {
+  "Craniotomy (procedure)": {
     "SNOMED": [
       "25353009"
     ]

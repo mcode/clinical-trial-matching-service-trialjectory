@@ -118,7 +118,7 @@ const createPrimaryCancerResource = (
   return primaryCancerBundle;
 };
 
-describe('checkPrimaryCancerFilterLogic', () => {
+describe('Check Primary Cancer Logic', () => {
   const createPrimaryCancerValues = (
     primaryCoding: Coding,
     histologyBehavior: Coding,
@@ -138,20 +138,86 @@ describe('checkPrimaryCancerFilterLogic', () => {
       'Malignant neoplasm of colon and/or rectum (disorder)'
     );
   });
-
   it('Test Microsatellite instability-high colorectal cancer - Colorectal', () => {
     const coding = { system: 'http://snomed.info/sct', code: '737058005', display: 'N/A' } as Coding;
     expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
       'Microsatellite instability-high colorectal cancer'
     );
   });
-
   it('Test Hereditary nonpolyposis colon cancer - Colorectal', () => {
     const coding = { system: 'http://snomed.info/sct', code: '315058005', display: 'N/A' } as Coding;
     expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
       'Hereditary nonpolyposis colon cancer'
     );
   });
+
+  it('Test Adenocarcinoma of lung (disorder) - Lung', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '254626006', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Adenocarcinoma of lung (disorder)'
+    );
+  });
+  it('Test Adenocarcinoma of left lung (disorder) - Lung', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '15956341000119105', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Adenocarcinoma of left lung (disorder)'
+    );
+  });
+  it('Test Adenocarcinoma of right lung (disorder) - Lung', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '15956381000119100', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Adenocarcinoma of right lung (disorder)'
+    );
+  });
+  it('Test Primary adenocarcinoma of lung (disorder) - Lung', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '707451005', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Primary adenocarcinoma of lung (disorder)'
+    );
+  });
+  it('Test Squamous cell carcinoma of lung (disorder) - Lung', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '254634000', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Squamous cell carcinoma of lung (disorder)'
+    );
+  });
+  it('Test Squamous cell carcinoma of left lung (disorder) - Lung', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '12240951000119107', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Squamous cell carcinoma of left lung (disorder)'
+    );
+  });
+  it('Test Squamous cell carcinoma of right lung (disorder) - Lung', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '12240991000119102', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Squamous cell carcinoma of right lung (disorder)'
+    );
+  });
+  it('Test Large cell carcinoma of lung (disorder) - Lung', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '254629004', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Large cell carcinoma of lung (disorder)'
+    );
+  });
+  it('Test Small cell carcinoma of lung (disorder) - Lung', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '254632001', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Small cell carcinoma of lung (disorder)'
+    );
+  });
+  it('Test Primary malignant neoplasm of lung (disorder) - Lung', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '93880001', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Primary malignant neoplasm of lung (disorder)'
+    );
+  });
+  it('Test Malignant tumor of lung (disorder) - Lung', () => {
+    const coding = { system: 'http://snomed.info/sct', code: '363358000', display: 'N/A' } as Coding;
+    expect(createPrimaryCancerValues(coding, undefined, undefined, undefined, undefined)).toBe(
+      'Malignant tumor of lung (disorder)'
+    );
+  });
+
 });
 
 describe("Test Medication Logic", () => {
@@ -1357,10 +1423,10 @@ describe('checkHistologyMorphologyFilterLogic', () => {
     expect(mappingLogic.getHistologyMorphologyValue()).toBe('lcis');
   });
 
-  it('Test Adenocarcinoma Filter - Colorectal', () => {
+  it('Test Adenocarcinoma, no subtype (morphologic abnormality) Filter - Colorectal', () => {
     const histologyBehavior = { system: 'http://snomed.info/sct', code: '35917007', display: 'N/A' } as Coding;
     const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
-    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Adenocarcinoma');
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Adenocarcinoma, no subtype (morphologic abnormality)');
   });
 
   it('Test Mucinous adenocarcinoma Filter - Colorectal', () => {
@@ -1393,10 +1459,10 @@ describe('checkHistologyMorphologyFilterLogic', () => {
     expect(mappingLogic.getHistologyMorphologyValue()).toBe('Sarcoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)');
   });
 
-  it('Test Adenocarcinoma - Lung', () => {
+  it('Test Adenocarcinoma, no subtype (morphologic abnormality) - Lung', () => {
     const histologyBehavior = { system: 'http://snomed.info/sct', code: '35917007', display: 'N/A' } as Coding;
     const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
-    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Adenocarcinoma');
+    expect(mappingLogic.getHistologyMorphologyValue()).toBe('Adenocarcinoma, no subtype (morphologic abnormality)');
   });
 
   it('Test Adenocarcinoma in situ (morphologic abnormality) - Lung', () => {
@@ -1704,9 +1770,6 @@ describe('checkHistologyMorphologyFilterLogic', () => {
     const mappingLogic = new TrialjectoryMappingLogic(createHistologyMorphologyResource(undefined, histologyBehavior));
     expect(mappingLogic.getHistologyMorphologyValue()).toBe('Sarcoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)');
   });
-
-
-
   
 });
 
