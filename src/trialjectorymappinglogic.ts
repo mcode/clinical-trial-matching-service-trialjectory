@@ -687,14 +687,29 @@ export class TrialjectoryMappingLogic extends MappingLogic {
       tumorMarkerArray.push('NTRK_FUSION-');
     }
 
-    /** Colorectal Primary Cancer Conditions */
+    /** Valid one-to-one cancer genetic variant mappings */
     const geneStudiedCodings: fhir.Coding[] = [].concat(...cancerGeneticVariant.map(cgv => [].concat(...cgv.component.geneStudied.map(gs => gs.valueCodeableConcept.coding))));
     const fullCancerGeneticVariantGeneStudied = TrialjectoryMappingLogic.codeMapper.extractCodeMappings(geneStudiedCodings);
     if(fullCancerGeneticVariantGeneStudied.length > 0) {
-      const validColorectalValues = ["APC gene", "MLH1 gene", "MSH2", "MSH6", "PMS2", "EPCAM", "STK11", "MUTYH"];
-      const colorectalMappings = fullCancerGeneticVariantGeneStudied.filter(mapping => validColorectalValues.includes(mapping));
-      if(colorectalMappings.length > 0){
-        tumorMarkerArray.push(...colorectalMappings);
+      // Colorectal Values.
+      const validGeneticVariantValues = ["APC gene", "MLH1 gene", "MSH2", "MSH6", "PMS2", "EPCAM", "STK11", "MUTYH"];
+      // Lung Values.
+      validGeneticVariantValues.push(...["EGFR","RB1","TP53","KRAS","ALK","ROS1","RET","BRAF","MET"]);
+      // Melanoma Values.
+      validGeneticVariantValues.push(...["BRAF","NRAS","CDKN2A","NF1","KIT","CDK4"]);
+      // Multiple Myeloma Values.
+      validGeneticVariantValues.push(...["MYC","TP53"]);
+      // Non-Hodgkin Lymphoma Values.
+      validGeneticVariantValues.push(...["BCL2"]);
+      // Brain Values.
+      validGeneticVariantValues.push(...["NF1","NF2","TSC1","TSC2","MLH1 gene","PMS2"]);
+      // Uterine Values.
+      validGeneticVariantValues.push(...["RB1"]);
+      // Prostate Values.
+      validGeneticVariantValues.push(...["BRCA1","BRCA2","CHEK2","ATM","PALB2","RAD51D","MSH2","MSH6","MLH1","PMS2","RNASEL","HOXB13"]);
+      const oneToOneGeneticVariantMappings = fullCancerGeneticVariantGeneStudied.filter(mapping => validGeneticVariantValues.includes(mapping));
+      if(oneToOneGeneticVariantMappings.length > 0){
+        tumorMarkerArray.push(...oneToOneGeneticVariantMappings);
       }
     }
 
