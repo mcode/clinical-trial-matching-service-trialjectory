@@ -2380,7 +2380,7 @@ describe('checkSecondaryCancerConditionLogic', () => {
   });
 });
 
-describe('checkRadiationProcedureFilterLogic', () => {
+describe('Check Radiation Procedure Logic', () => {
 
   const createradiationBundle = (coding: Coding, bodySite: Coding): Bundle => {
     const radiationBundle: Bundle = {
@@ -2447,35 +2447,158 @@ describe('checkRadiationProcedureFilterLogic', () => {
     const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, bodySite));
     expect(mappingLogic.getRadiationProcedureValues().includes('rfa')).toBeTrue();
   });
-
-  it('Test Destructive procedure (procedure) Filter', () => {
+  it('Test Destructive procedure (procedure) Filter - Colorectal', () => {
     const coding = ({ system: 'http://snomed.info/sct', code: '64597002', display: 'N/A' } as Coding);
     const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
     expect(mappingLogic.getRadiationProcedureValues().includes('Destructive procedure (procedure)')).toBeTrue();
   });
-
-  it('Test Radiofrequency ablation (procedure) Filter', () => {
+  it('Test Radiofrequency ablation (procedure) Filter - Colorectal', () => {
     const coding = ({ system: 'http://snomed.info/sct', code: '879916008', display: 'N/A' } as Coding);
     const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
     expect(mappingLogic.getRadiationProcedureValues().includes('Radiofrequency ablation (procedure)')).toBeTrue();
   });
+  it('Test External beam radiation therapy procedure (procedure) Filter - Colorectal', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '33195004', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('External beam radiation therapy procedure (procedure)')).toBeTrue();
+  });
+  it('Test Brachytherapy (procedure) Filter - Colorectal', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '152198000', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Brachytherapy (procedure)')).toBeTrue();
+  });
+  it('Test Interstitial brachytherapy (procedure) Filter - Colorectal', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '113120007', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Interstitial brachytherapy (procedure)')).toBeTrue();
+  });
 
-  it('Test External beam radiation therapy procedure (procedure) Filter', () => {
+  it('Test Destructive procedure (procedure) - Lung', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '64597002', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Destructive procedure (procedure)')).toBeTrue();
+  });
+  it('Test Radiofrequency ablation (procedure) - Lung', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '879916008', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Radiofrequency ablation (procedure)')).toBeTrue();
+  });
+  it('Test External beam radiation therapy procedure (procedure) - Lung', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '33195004', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('External beam radiation therapy procedure (procedure)')).toBeTrue();
+  });
+  it('Test Brachytherapy (procedure) - Lung', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '152198000', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Brachytherapy (procedure)')).toBeTrue();
+  });
+  it('Test Interstitial brachytherapy (procedure) - Lung', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '113120007', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Interstitial brachytherapy (procedure)')).toBeTrue();
+  });
+  it('Test Intensity modulated radiation therapy (procedure) - Lung', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '441799006', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Intensity modulated radiation therapy (procedure)')).toBeTrue();
+  });
+  it('Test Stereotactic radiosurgery (procedure) - Lung', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '115959002', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Stereotactic radiosurgery (procedure)')).toBeTrue();
+  });
+
+  it('Test External beam radiation therapy procedure (procedure) - Melanoma', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '33195004', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('External beam radiation therapy procedure (procedure)')).toBeTrue();
+  });
+  it('Test Stereotactic radiosurgery (procedure) - Melanoma', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '115959002', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Stereotactic radiosurgery (procedure)')).toBeTrue();
+  });
+
+  it('Test Splenectomy (procedure) - MPN', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '234319005', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Splenectomy (procedure)')).toBeTrue();
+  });
+  it('Test Total splenectomy (procedure) - MPN', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '174776001', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Total splenectomy (procedure)')).toBeTrue();
+  });
+
+  it('Test External beam radiation therapy procedure (procedure) - Multiple Myeloma', () => {
     const coding = ({ system: 'http://snomed.info/sct', code: '33195004', display: 'N/A' } as Coding);
     const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
     expect(mappingLogic.getRadiationProcedureValues().includes('External beam radiation therapy procedure (procedure)')).toBeTrue();
   });
 
-  it('Test Brachytherapy (procedure) Filter', () => {
+  it('Test External beam radiation therapy procedure (procedure) - Non-Hodkgins Lymphoma', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '33195004', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('External beam radiation therapy procedure (procedure)')).toBeTrue();
+  });
+
+  it('Test External beam radiation therapy procedure (procedure) - Brain', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '33195004', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('External beam radiation therapy procedure (procedure)')).toBeTrue();
+  });
+  it('Test Intensity modulated radiation therapy (procedure) - Brain', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '441799006', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Intensity modulated radiation therapy (procedure)')).toBeTrue();
+  });
+  it('Test Volumetric modulated arc therapy (procedure) - Brain', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '1156530009', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Volumetric modulated arc therapy (procedure)')).toBeTrue();
+  });
+  it('Test Stereotactic radiosurgery (procedure) - Brain', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '115959002', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Stereotactic radiosurgery (procedure)')).toBeTrue();
+  });
+  it('Test Brachytherapy (procedure) - Brain', () => {
     const coding = ({ system: 'http://snomed.info/sct', code: '152198000', display: 'N/A' } as Coding);
     const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
     expect(mappingLogic.getRadiationProcedureValues().includes('Brachytherapy (procedure)')).toBeTrue();
   });
 
-  it('Test Interstitial brachytherapy (procedure) Filter', () => {
-    const coding = ({ system: 'http://snomed.info/sct', code: '113120007', display: 'N/A' } as Coding);
+  it('Test External beam radiation therapy procedure (procedure) - Uterine', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '33195004', display: 'N/A' } as Coding);
     const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
-    expect(mappingLogic.getRadiationProcedureValues().includes('Interstitial brachytherapy (procedure)')).toBeTrue();
+    expect(mappingLogic.getRadiationProcedureValues().includes('External beam radiation therapy procedure (procedure)')).toBeTrue();
+  });
+  it('Test Brachytherapy (procedure) - Uterine', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '152198000', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Brachytherapy (procedure)')).toBeTrue();
+  });
+
+  it('Test External beam radiation therapy procedure (procedure) - Uterine', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '33195004', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('External beam radiation therapy procedure (procedure)')).toBeTrue();
+  });
+  it('Test Brachytherapy (procedure) - Prostate', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '152198000', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Brachytherapy (procedure)')).toBeTrue();
+  });
+  it('Test Intensity modulated radiation therapy (procedure) - Brain', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '441799006', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('Intensity modulated radiation therapy (procedure)')).toBeTrue();
+  });
+  it('Test External beam radiation therapy protons (procedure) - Brain', () => {
+    const coding = ({ system: 'http://snomed.info/sct', code: '10611004', display: 'N/A' } as Coding);
+    const mappingLogic = new TrialjectoryMappingLogic(createradiationBundle(coding, undefined));
+    expect(mappingLogic.getRadiationProcedureValues().includes('External beam radiation therapy protons (procedure)')).toBeTrue();
   });
 
 });
