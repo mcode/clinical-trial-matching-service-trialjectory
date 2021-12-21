@@ -868,7 +868,7 @@ describe("Test Stage Logic", () => {
   });
 });
 
-describe("Test Tumor Marker Logic", () => {
+describe("Test Tumor Marker and Biomarker Logic", () => {
 
   const createTumorMarkerValues = (
     valueRatio: Ratio,
@@ -1570,11 +1570,10 @@ describe("Test Tumor Marker Logic", () => {
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
     expect(tumorMarkerValues[0]).toBe('apc gene');
   });
-
-  it('Test mlh1 gene Filter - Colorectal', () => {
+  it('Test mlh1 Filter - Colorectal', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7127', display: 'N/A' };
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
-    expect(tumorMarkerValues[0]).toBe('mlh1 gene');
+    expect(tumorMarkerValues[0]).toBe('mlh1');
   });
 
   it('Test msh2 Filter - Colorectal', () => {
@@ -1588,29 +1587,217 @@ describe("Test Tumor Marker Logic", () => {
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
     expect(tumorMarkerValues[0]).toBe('msh6');
   });
-
   it('Test pms2 Filter - Colorectal', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '9122', display: 'N/A' };
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
     expect(tumorMarkerValues[0]).toBe('pms2');
   });
-
   it('Test epcam Filter - Colorectal', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '11529', display: 'N/A' };
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
     expect(tumorMarkerValues[0]).toBe('epcam');
   });
-
   it('Test stk11 Filter - Colorectal', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '11389', display: 'N/A' };
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
     expect(tumorMarkerValues[0]).toBe('stk11');
   });
-
   it('Test mutyh Filter - Colorectal', () => {
     const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7527', display: 'N/A' };
     const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
     expect(tumorMarkerValues[0]).toBe('mutyh');
+  });
+
+  it('Test EGFR - Lung', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '3236', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('egfr');
+  });
+  it('Test RB1 - Lung', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '9884', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('rb1');
+  });
+  it('Test TP53 - Lung', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '11998', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('tp53');
+  });
+  it('Test KRAS - Lung', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '6407', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('kras');
+  });
+  it('Test ALK - Lung', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '427', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('alk');
+  });
+  it('Test ROS1 - Lung', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '10261', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('ros1');
+  });
+  it('Test RET - Lung', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '9967', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('ret');
+  });
+  it('Test BRAF - Lung', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1097', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('braf');
+  });
+  it('Test MET - Lung', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7029', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('met');
+  });
+
+  it('Test BRAF - Melanoma', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1097', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('braf');
+  });
+  it('Test NRAS - Melanoma', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7989', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('nras');
+  });
+  it('Test CDKN2A - Melanoma', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1787', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('cdkn2a');
+  });
+  it('Test NF1 - Melanoma', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7765', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('nf1');
+  });
+  it('Test KIT - Melanoma', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '6342', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('kit');
+  });
+  it('Test CDK4 - Melanoma', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1773', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('cdk4');
+  });
+
+  it('Test MYC - Multiple Myeloma', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7553', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('myc');
+  });
+  it('Test TP53 - Multiple Myeloma', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '11998', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('tp53');
+  });
+
+  it('Test BCL2 - Non-Hodgkin Lymphoma', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '990', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('bcl2');
+  });
+
+  it('Test NF1 - Brain', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7765', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('nf1');
+  });
+  it('Test NF2 - Brain', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7773', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('nf2');
+  });
+  it('Test TSC1 - Brain', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '12362', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('tsc1');
+  });
+  it('Test TSC2 - Brain', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '12363', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('tsc2');
+  });
+  it('Test MLH1 - Brain', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7127', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('mlh1');
+  });
+  it('Test PMS2 - Brain', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '9122', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('pms2');
+  });
+
+  it('Test RB1 - Uterine', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '9884', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('rb1');
+  });
+
+  it('Test BRCA1 - Prostate', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1100', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('brca1');
+  });
+  it('Test BRCA2 - Prostate', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '1101', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('brca2');
+  });
+  it('Test CHEK2 - Prostate', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '16627', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('chek2');
+  });
+  it('Test ATM - Prostate', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '795', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('atm');
+  });
+  it('Test PALB2 - Prostate', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '26144', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('palb2');
+  });
+  it('Test RAD51D - Prostate', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '9823', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('rad51d');
+  });
+  it('Test MSH2 - Prostate', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7325', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('msh2');
+  });
+  it('Test MSH6 - Prostate', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7329', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('msh6');
+  });
+  it('Test MLH1 - Prostate', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '7127', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('mlh1');
+  });
+  it('Test PMS2 - Prostate', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '9122', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('pms2');
+  });
+  it('Test RNASEL - Prostate', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '10050', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('rnasel');
+  });
+  it('Test HOXB13 - Prostate', () => {
+    const cgvGeneStudiedVcc: Coding = { system: 'hgnc', code: '5112', display: 'N/A' };
+    const tumorMarkerValues = createCgvTumorMarkerValues(cgvGeneStudiedVcc, undefined, undefined, undefined, undefined);
+    expect(tumorMarkerValues[0]).toBe('hoxb13');
   });
 
 });

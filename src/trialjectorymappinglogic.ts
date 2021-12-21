@@ -692,7 +692,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
     const fullCancerGeneticVariantGeneStudied = TrialjectoryMappingLogic.codeMapper.extractCodeMappings(geneStudiedCodings);
     if(fullCancerGeneticVariantGeneStudied.length > 0) {
       // Colorectal Values.
-      const validGeneticVariantValues = ["APC gene", "MLH1 gene", "MSH2", "MSH6", "PMS2", "EPCAM", "STK11", "MUTYH"];
+      const validGeneticVariantValues = ["APC gene", "MLH1", "MSH2", "MSH6", "PMS2", "EPCAM", "STK11", "MUTYH"];
       // Lung Values.
       validGeneticVariantValues.push(...["EGFR","RB1","TP53","KRAS","ALK","ROS1","RET","BRAF","MET"]);
       // Melanoma Values.
@@ -702,7 +702,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
       // Non-Hodgkin Lymphoma Values.
       validGeneticVariantValues.push(...["BCL2"]);
       // Brain Values.
-      validGeneticVariantValues.push(...["NF1","NF2","TSC1","TSC2","MLH1 gene","PMS2"]);
+      validGeneticVariantValues.push(...["NF1","NF2","TSC1","TSC2","MLH1","PMS2"]);
       // Uterine Values.
       validGeneticVariantValues.push(...["RB1"]);
       // Prostate Values.
