@@ -615,39 +615,33 @@ describe("Test Medication Logic", () => {
   it("Test medication 5-Fluorouracil - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "224945", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
-    expect(medications.includes("5-Fluorouracil")).toBeTrue();
+    expect(medications).toContain("5-Fluorouracil");
   });
-
   it("Test medication Xeloda - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "220961", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
-    expect(medications.includes("Xeloda")).toBeTrue();
+    expect(medications).toContain("Xeloda");
   });
-
   it("Test medication Camptosar - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1172305", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
-    expect(medications.includes("Camptosar")).toBeTrue();
+    expect(medications).toContain("Camptosar");
   });
-
   it("Test medication Eloxatin - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "32592", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Eloxatin");
   });
-
   it("Test medication Lonsurf - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1670311", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Lonsurf");
   });
-
-  it("Test medication Avastin - Colorectal", () => {
+  it("Test medication avastin - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "337521", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
-    expect(medications.includes("Avastin")).toBeTrue();
+    expect(medications).toContain("avastin");
   });
-
   it("Test medication Cyramza - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1535996", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
@@ -671,30 +665,218 @@ describe("Test Medication Logic", () => {
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Vectibix");
   });
-
   it("Test medication Braftovi - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "2049112", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Braftovi");
   });
-
   it("Test medication Keytruda - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1547553", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
-    expect(medications.includes("Keytruda")).toBeTrue();
+    expect(medications).toContain("Keytruda");
   });
-
   it("Test medication Opdivo - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "2569081", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Opdivo");
   });
-
   it("Test medication Yervoy - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1094837", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Yervoy");
   });
+
+  it("Test Carboplatin - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "152200", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("carboplatin");
+  });
+  it("Test Cisplatin  - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1736852", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("cisplatin");
+  });
+  it("Test PAClitaxel - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "583218", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("paclitaxel");
+  });
+  it("Test Abraxane - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1165953", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("abraxane");
+  });
+  it("Test Docetaxel - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1001406", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("docetaxel");
+  });
+  it("Test Gemcitabine - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "12574", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("gemcitabine");
+  });
+  it("Test Vinorelbine - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "53557", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("vinorelbine");
+  });
+  it("Test Etoposide - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1157929", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("etoposide");
+  });
+  it("Test Pemetrexed - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1175526", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("pemetrexed");
+  });
+  it("Test avastin - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "337521", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("avastin");
+  });
+  it("Test Cyramza - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1657776", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Cyramza");
+  });
+  it("Test Sotorasib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2550723", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Sotorasib");
+  });
+  it("Test Erlotinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "337526", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Erlotinib");
+  });
+  it("Test Afatinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1430272", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Afatinib");
+  });
+  it("Test Gefitinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "402435", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Gefitinib");
+  });
+  it("Test Osimertinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1721566", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Osimertinib");
+  });
+  it("Test Dacomitinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2058930", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Dacomitinib");
+  });
+  it("Test Mobocertinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2570743", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Mobocertinib");
+  });
+  it("Test Necitumumab - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1723746", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Necitumumab");
+  });
+  it("Test Crizotinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1186299", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Crizotinib");
+  });
+  it("Test Ceritinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1535468", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Ceritinib");
+  });
+  it("Test Alectinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1727480", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Alectinib");
+  });
+  it("Test Brigatinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1988786", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Brigatinib");
+  });
+  it("Test Lorlatinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2103173", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Lorlatinib");
+  });
+  it("Test Entrectinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2197877", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Entrectinib");
+  });
+  it("Test Dabrafenib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1425223", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Dabrafenib");
+  });
+  it("Test Trametinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1425109", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Trametinib");
+  });
+  it("Test Selpercatinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2370169", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Selpercatinib");
+  });
+  it("Test Pralsetinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2394945", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Pralsetinib");
+  });
+  it("Test Capmatinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2362235", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Capmatinib");
+  });
+  it("Test Tepotinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2477264", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Tepotinib");
+  });
+  it("Test Larotrectinib - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2105652", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Larotrectinib");
+  });
+  it("Test Cemiplimab - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2058826", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Cemiplimab");
+  });
+  it("Test Atezolizumab - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1792779", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("atezolizumab");
+  });
+  it("Test Durvalumab - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1919512", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Durvalumab");
+  });
+  it("Test Yervoy - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1094833", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Yervoy");
+  });
+  it("Test Camptosar - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1726333", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("Camptosar");
+  });
+  it("Test Lurbinectedin - Lung", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2374729", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Lurbinectedin");
+  });
+
 
   it("Test 8 medications together with one duplicate (372571)", () => {
     const coding: Coding[] = [
@@ -708,14 +890,14 @@ describe("Test Medication Logic", () => {
     ];
     const medications = createMedicationsToTest(...coding);
     expect(medications.length).toBe(8);
-    expect(medications.indexOf("letrozole") > -1).toBeTrue();
-    expect(medications.indexOf("lapatinib") > -1).toBeTrue();
-    expect(medications.indexOf("tucatinib") > -1).toBeTrue();
-    expect(medications.indexOf("topotecan") > -1).toBeTrue();
-    expect(medications.indexOf("palbociclib") > -1).toBeTrue();
-    expect(medications.indexOf("abemaciclib") > -1).toBeTrue();
-    expect(medications.indexOf("alpelisib") > -1).toBeTrue();
-    expect(medications.indexOf("Femara") > -1).toBeTrue();
+    expect(medications).toContain("letrozole");
+    expect(medications).toContain("lapatinib");
+    expect(medications).toContain("tucatinib");
+    expect(medications).toContain("topotecan");
+    expect(medications).toContain("palbociclib");
+    expect(medications).toContain("abemaciclib");
+    expect(medications).toContain("alpelisib");
+    expect(medications).toContain("Femara");
   });
 });
 
