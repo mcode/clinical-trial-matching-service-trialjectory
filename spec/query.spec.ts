@@ -497,7 +497,7 @@ describe("ClinicalTrialLookup", () => {
     // Simulate a valid response with something that can't be parsed as JSON
     mockRequest.reply(200, { data: {missingAllKnownKeys: true }});
     return expectAsync(matcher(patientBundle)).toBeRejectedWithError(
-      "Unable to parse response from server."
+      "Unable to parse response from server"
     );
   });
 
