@@ -678,7 +678,7 @@ describe("Test Medication Logic", () => {
   it("Test medication Opdivo - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "2569081", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
-    expect(medications[0]).toBe("Opdivo");
+    expect(medications[0]).toBe("opdivo");
   });
   it("Test medication Yervoy - Colorectal", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1094837", display: "N/A"}];
@@ -877,6 +877,782 @@ describe("Test Medication Logic", () => {
     expect(medications[0]).toBe("Lurbinectedin");
   });
 
+  it("Test Keytruda - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1657751", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("Keytruda");
+  });
+  it("Test Opdivo - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1597884", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("opdivo");
+  });
+  it("Test Atezolizumab - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1792784", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("atezolizumab");
+  });
+  it("Test Cobimetinib - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1722371", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Cobimetinib");
+  });
+  it("Test vemurafenib - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1147224", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("vemurafenib");
+  });
+  it("Test Yervoy - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1186646", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Yervoy");
+  });
+  it("Test imlygic - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1721282", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("imlygic");
+  });
+  it("Test imiquimod - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "215085", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("imiquimod");
+  });
+  it("Test Dabrafenib - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1425227", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Dabrafenib");
+  });
+  it("Test Braftovi - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2049109", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Braftovi");
+  });
+  it("Test Trametinib - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1425107", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Trametinib");
+  });
+  it("Test binimetinib - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2049122", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("binimetinib");
+  });
+  it("Test imatinib - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "282388", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("imatinib");
+  });
+  it("Test nilotinib - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1179058", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("nilotinib");
+  });
+  it("Test dacarbazine - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "3098", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("dacarbazine");
+  });
+  it("Test temozolomide - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1181415", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("temozolomide");
+  });
+  it("Test Cisplatin - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2555", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("cisplatin");
+  });
+  it("Test Carboplatin - Melanoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1182364", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("carboplatin");
+  });
+
+  it("Test adriamycin - MPN", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "42512", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("adriamycin");
+  });
+  it("Test arsenic trioxide - MPN", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1992545", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("arsenic trioxide");
+  });
+  it("Test azaCITIDine - MPN", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "545203", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("azaCITIDine");
+  });
+  it("Test DAUNOrubicin hydrochloride - MPN", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "3109", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("DAUNOrubicin hydrochloride");
+  });
+  it("Test cyclophosphamide - MPN", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "315747", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("cyclophosphamide");
+  });
+  it("Test cytarabine - MPN", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1942747", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("cytarabine");
+  });
+  it("Test Dacogen - MPN", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "636242", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Dacogen");
+  });
+  it("Test dasatinib - MPN", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "643171", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("dasatinib");
+  });
+  it("Test cedazuridine - MPN", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2384459", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("cedazuridine");
+  });
+  it("Test fedratinib hydrochloride - MPN", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2197594", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("fedratinib hydrochloride");
+  });
+  it("Test imatinib - MPN", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1171231", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("imatinib");
+  });
+  it("Test jakafi - MPN", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1193332", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("jakafi");
+  });
+  it("Test nilotinib - MPN", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "735866", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("nilotinib");
+  });
+
+  it("Test cyclophosphamide - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "3002", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("cyclophosphamide");
+  });
+  it("Test Etoposide - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "310248", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("etoposide");
+  });
+  it("Test adriamycin - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1799304", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("adriamycin");
+  });
+  it("Test Melphalan - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "151325", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Melphalan");
+  });
+  it("Test Bendamustine - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "741098", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Bendamustine");
+  });
+  it("Test thalidomide - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1184930", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("thalidomide");
+  });
+  it("Test lenalidomide - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "337535", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("lenalidomide");
+  });
+  it("Test Pomalidomide - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1369723", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Pomalidomide");
+  });
+  it("Test Bortezomib - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "356733", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Bortezomib");
+  });
+  it("Test Carfilzomib - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1302974", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Carfilzomib");
+  });
+  it("Test Ixazomib - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1723758", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Ixazomib");
+  });
+  it("Test Daratumumab - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1721952", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Daratumumab");
+  });
+  it("Test Isatuximab - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2282022", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Isatuximab");
+  });
+  it("Test Elotuzumab - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1726111", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Elotuzumab");
+  });
+  it("Test Blenrep - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2387834", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Blenrep");
+  });
+  it("Test Selinexor - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2548742", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Selinexor");
+  });
+  it("Test Idecabtagene vicleucel - Multuple Myeloma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2536438", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Idecabtagene vicleucel");
+  });
+
+  it("Test cyclophosphamide - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "3002", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("cyclophosphamide");
+  });
+  it("Test chlorambucil - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1166067", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("chlorambucil");
+  });
+  it("Test Bendamustine - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1805002", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Bendamustine");
+  });
+  it("Test Ifosfamide - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "352384", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("ifosfamide");
+  });
+  it("Test Carboplatin - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "597195", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("carboplatin");
+  });
+  it("Test Eloxatin - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1736775", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Eloxatin");
+  });
+  it("Test Fludarabine - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "828705", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Fludarabine");
+  });
+  it("Test Pentostatin - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "240573", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Pentostatin");
+  });
+  it("Test cladribine - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2122650", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("cladribine");
+  });
+  it("Test cytarabine - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1942744", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("cytarabine");
+  });
+  it("Test Gemcitabine - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1167718", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("gemcitabine");
+  });
+  it("Test Methotrexate - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1921596", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("methotrexate");
+  });
+  it("Test PRALAtrexate - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "865180", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("PRALAtrexate");
+  });
+  it("Test adriamycin - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1790095", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("adriamycin");
+  });
+  it("Test Vincristine - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1304990", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Vincristine");
+  });
+  it("Test Mitoxantrone - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1165375", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Mitoxantrone");
+  });
+  it("Test Etoposide - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1178005", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("etoposide");
+  });
+  it("Test Bleomycin - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1622", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Bleomycin");
+  });
+  it("Test riTUXimab - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2105831", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("riTUXimab");
+  });
+  it("Test obinutuzumab - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1442697", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("obinutuzumab");
+  });
+  it("Test ofatumumab - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2390953", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("ofatumumab");
+  });
+  it("Test ibritumomab tiuxetan - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "262323", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("ibritumomab tiuxetan");
+  });
+  it("Test Tafasitamab - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2387339", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Tafasitamab");
+  });
+  it("Test loncastuximab tesirine-lpyl - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2540968", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("loncastuximab tesirine-lpyl");
+  });
+  it("Test alemtuzumab - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "284679", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("alemtuzumab");
+  });
+  it("Test brentuximab vedotin - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1170611", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("brentuximab vedotin");
+  });
+  it("Test polatuzumab vedotin - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2174090", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("polatuzumab vedotin");
+  });
+  it("Test thalidomide - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "374072", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("thalidomide");
+  });
+  it("Test lenalidomide - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "337535", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("lenalidomide");
+  });
+  it("Test axicabtagene ciloleucel - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1987403", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("axicabtagene ciloleucel");
+  });
+  it("Test Tisagenlecleucel - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2044973", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Tisagenlecleucel");
+  });
+  it("Test Lisocabtagene Maraleucel - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2479143", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Lisocabtagene Maraleucel");
+  });
+  it("Test brexucabtagene autoleucel - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2387277", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("brexucabtagene autoleucel");
+  });
+  it("Test Bortezomib - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1187756", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Bortezomib");
+  });
+  it("Test belinostat - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1543547", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("belinostat");
+  });
+  it("Test ibrutinib - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1442991", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("ibrutinib");
+  });
+  it("Test Calquence - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1986814", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Calquence");
+  });
+  it("Test zanubrutinib - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2262445", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("zanubrutinib");
+  });
+  it("Test idelalisib - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1544468", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("idelalisib");
+  });
+  it("Test Copanlisib - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1945085", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Copanlisib");
+  });
+  it("Test Duvelisib - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2058524", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Duvelisib");
+  });
+  it("Test umbralisib - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2478445", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("umbralisib");
+  });
+  it("Test tazemetostat - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2274378", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("tazemetostat");
+  });
+  it("Test Selinexor - Non-Hodgkin Lymphoma", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2178401", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Selinexor");
+  });
+
+  it("Test Avastin - Brain", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "544556", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("avastin");
+  });
+  it("Test everolimus - Brain", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "141704", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("everolimus");
+  });
+  it("Test Carboplatin - Brain", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "378363", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("carboplatin");
+  });
+  it("Test Carmustine - Brain", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "378774", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Carmustine");
+  });
+  it("Test Cisplatin - Brain", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "376433", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("cisplatin");
+  });
+  it("Test cyclophosphamide - Brain", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1156183", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("cyclophosphamide");
+  });
+  it("Test Etoposide - Brain", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "372132", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("etoposide");
+  });
+  it("Test Camptosar - Brain", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1161334", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("Camptosar");
+  });
+  it("Test Lomustine - Brain", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "316162", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Lomustine");
+  });
+  it("Test Methotrexate - Brain", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1544398", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("methotrexate");
+  });
+  it("Test Procarbazine - Brain", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1161733", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Procarbazine");
+  });
+  it("Test temozolomide - Brain", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "317160", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("temozolomide");
+  });
+  it("Test Vincristine - Brain", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1186612", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Vincristine");
+  });
+ 
+  it("Test PAClitaxel - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "589511", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("paclitaxel");
+  });
+  it("Test Carboplatin - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1182364", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("carboplatin");
+  });
+  it("Test adriamycin - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1799307", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("adriamycin");
+  });
+  it("Test Cisplatin - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1152129", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("cisplatin");
+  });
+  it("Test Docetaxel - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1180259", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("docetaxel");
+  });
+  it("Test tamoxifen - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "281964", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("tamoxifen");
+  });
+  it("Test Provera - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1000114", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("Provera");
+  });
+  it("Test Megace - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "203000", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("Megace");
+  });
+  it("Test Goserelin - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "105641", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Goserelin");
+  });
+  it("Test Lupron - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "825334", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Lupron");
+  });
+  it("Test Femara - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "153124", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("Femara");
+  });
+  it("Test Arimidex - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "367866", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("Arimidex");
+  });
+  it("Test Exemestane - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "330333", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("exemestane");
+  });
+  it("Test Lenvima - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1604346", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Lenvima");
+  });
+  it("Test Avastin - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1161185", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("avastin");
+  });
+  it("Test everolimus - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1310137", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("everolimus");
+  });
+  it("Test temsirolimus - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "723805", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("temsirolimus");
+  });
+  it("Test Keytruda - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1547550", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("Keytruda");
+  });
+  it("Test Jemperli - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2539976", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Jemperli");
+  });
+  it("Test dacarbazine - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "3098", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("dacarbazine");
+  });
+  it("Test Docetaxel - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1860481", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("docetaxel");
+  });
+  it("Test adriamycin - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1799310", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("adriamycin");
+  });
+  it("Test Ellence - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "203766", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("Ellence");
+  });
+  it("Test Gemcitabine - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2058859", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("gemcitabine");
+  });
+  it("Test Ifosfamide - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1791593", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("ifosfamide");
+  });
+  it("Test PAClitaxel - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1663181", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("paclitaxel");
+  });
+  it("Test temozolomide - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "261289", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("temozolomide");
+  });
+  it("Test Yondelis - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1718592", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Yondelis");
+  });
+  it("Test Vinorelbine - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1729404", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("vinorelbine");
+  });
+  it("Test PAZOPanib - Uterine", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1187596", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("PAZOPanib");
+  });
+
+  it("Test Lupron - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "825333", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Lupron");
+  });
+  it("Test Goserelin - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "564142", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Goserelin");
+  });
+  it("Test Trelstar - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "905054", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Trelstar");
+  });
+  it("Test degarelix - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1169000", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("degarelix");
+  });
+  it("Test relugolix - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2472781", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("relugolix");
+  });
+  it("Test Zytiga - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1100079", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Zytiga");
+  });
+  it("Test Nizoral - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1296820", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Nizoral");
+  });
+  it("Test Flutamide - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1161459", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Flutamide");
+  });
+  it("Test bicalutamide - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "371070", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("bicalutamide");
+  });
+  it("Test Nilandron - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "218741", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Nilandron");
+  });
+  it("Test enzalutamide - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1307304", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("enzalutamide");
+  });
+  it("Test apalutamide - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1999582", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("apalutamide");
+  });
+  it("Test darolutamide - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "2180335", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("darolutamide");
+  });
+  it("Test Docetaxel - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1101770", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("docetaxel");
+  });
+  it("Test Jevtana - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1167866", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Jevtana");
+  });
+  it("Test Mitoxantrone - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "7005", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("Mitoxantrone");
+  });
+  it("Test Keytruda - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1547545", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications).toContain("Keytruda");
+  });
+  it("Test rucaparib - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1862589", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("rucaparib");
+  });
+  it("Test olaparib - Prostate", () => {
+    const coding: Coding[] = [{system: "RxNorm", code: "1597592", display: "N/A"}];
+    const medications = createMedicationsToTest(...coding);
+    expect(medications[0]).toBe("olaparib");
+  });
 
   it("Test 8 medications together with one duplicate (372571)", () => {
     const coding: Coding[] = [
