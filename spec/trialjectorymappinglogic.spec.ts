@@ -1034,87 +1034,87 @@ describe("Test Medication Logic", () => {
     expect(medications[0]).toBe("nilotinib");
   });
 
-  it("Test cyclophosphamide - Multuple Myeloma", () => {
+  it("Test cyclophosphamide - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "3002", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("cyclophosphamide");
   });
-  it("Test Etoposide - Multuple Myeloma", () => {
+  it("Test Etoposide - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "310248", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("etoposide");
   });
-  it("Test adriamycin - Multuple Myeloma", () => {
+  it("Test adriamycin - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1799304", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications).toContain("adriamycin");
   });
-  it("Test Melphalan - Multuple Myeloma", () => {
+  it("Test Melphalan - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "151325", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Melphalan");
   });
-  it("Test Bendamustine - Multuple Myeloma", () => {
+  it("Test Bendamustine - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "741098", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Bendamustine");
   });
-  it("Test thalidomide - Multuple Myeloma", () => {
+  it("Test thalidomide - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1184930", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("thalidomide");
   });
-  it("Test lenalidomide - Multuple Myeloma", () => {
+  it("Test lenalidomide - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "337535", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("lenalidomide");
   });
-  it("Test Pomalidomide - Multuple Myeloma", () => {
+  it("Test Pomalidomide - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1369723", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Pomalidomide");
   });
-  it("Test Bortezomib - Multuple Myeloma", () => {
+  it("Test Bortezomib - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "356733", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Bortezomib");
   });
-  it("Test Carfilzomib - Multuple Myeloma", () => {
+  it("Test Carfilzomib - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1302974", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Carfilzomib");
   });
-  it("Test Ixazomib - Multuple Myeloma", () => {
+  it("Test Ixazomib - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1723758", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Ixazomib");
   });
-  it("Test Daratumumab - Multuple Myeloma", () => {
+  it("Test Daratumumab - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1721952", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Daratumumab");
   });
-  it("Test Isatuximab - Multuple Myeloma", () => {
+  it("Test Isatuximab - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "2282022", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Isatuximab");
   });
-  it("Test Elotuzumab - Multuple Myeloma", () => {
+  it("Test Elotuzumab - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "1726111", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Elotuzumab");
   });
-  it("Test Blenrep - Multuple Myeloma", () => {
+  it("Test Blenrep - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "2387834", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Blenrep");
   });
-  it("Test Selinexor - Multuple Myeloma", () => {
+  it("Test Selinexor - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "2548742", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Selinexor");
   });
-  it("Test Idecabtagene vicleucel - Multuple Myeloma", () => {
+  it("Test Idecabtagene vicleucel - Multiple Myeloma", () => {
     const coding: Coding[] = [{system: "RxNorm", code: "2536438", display: "N/A"}];
     const medications = createMedicationsToTest(...coding);
     expect(medications[0]).toBe("Idecabtagene vicleucel");
