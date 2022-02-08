@@ -1,0 +1,46 @@
+{
+    "resourceType": "Bundle",
+    "type": "transaction",
+    "entry": [
+        {
+            "resource": {
+                "resourceType": "MedicationStatement",
+                "meta": {
+                    "profile": [
+                        "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement"
+                    ]
+                },
+                "status": "completed",
+                "medicationCodeableConcept": {
+                    "coding": [
+                        {
+                            "system": "RxNorm",
+                            "code": "341545345",
+                            "display": "N/A"
+                        },
+                        {
+                            "system": "RxNorm",
+                            "code": "563563",
+                            "display": "N/A"
+                        },
+                        {
+                            "system": "RxNorm",
+                            "code": "35635463",
+                            "display": "N/A"
+                        },
+                        {
+                            "system": "RxNorm",
+                            "code": "5365712",
+                            "display": "N/A"
+                        },
+                        {
+                            "system": "RxNorm",
+                            "code": "2452456",
+                            "display": "N/A"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
