@@ -19,7 +19,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
    * @returns 
    */
   getECOGScore(): number {
-    const ecog = this.getExtractedEcogPerformaceStatus();
+    const ecog = this.getExtractedEcogPerformanceStatus();
     if(ecog == -1) {
       return null;
     }
