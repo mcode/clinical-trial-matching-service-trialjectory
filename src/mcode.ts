@@ -8,6 +8,8 @@ import system_metastasis_codes_json from '../data/system-metastasis-codes-json.j
 const metastasis_codes = system_metastasis_codes_json as {[key:string]: {[key:string]: string}};
 
 export type FHIRPath = string;
+// fhirpath now has official TypeScript types. Unfortunately, the result they use is "any"
+export type PathLookupResult = Record<string, unknown> | string | number;
 
 export interface Coding {
   system?: string;
@@ -165,7 +167,7 @@ export class ExtractedMCODE {
               count++;
             }
           }
-          
+
           this.primaryCancerCondition.push(tempPrimaryCancerCondition);
         }
 
@@ -327,10 +329,10 @@ export class ExtractedMCODE {
     resource: fhirclient.FHIR.Resource,
     path: FHIRPath,
     environment?: { [key: string]: string }
-  ): fhirpath.PathLookupResult[] {
+  ): PathLookupResult[] {
     return fhirpath.evaluate(resource, path, environment);
   }
-  resourceProfile(profiles: fhirpath.PathLookupResult[], key: string): boolean {
+  resourceProfile(profiles: PathLookupResult[], key: string): boolean {
     for (const profile of profiles) {
       if ((profile as string).includes(key)) {
         return true;
@@ -376,7 +378,7 @@ export class ExtractedMCODE {
 
   /**
    * ECOG Score.
-   * @returns 
+   * @returns
    */
   getECOGScore(): number {
     if(this.ecogPerformaceStatus == -1) {
@@ -387,7 +389,7 @@ export class ExtractedMCODE {
 
   /**
    * Karnofsky Score.
-   * @returns 
+   * @returns
    */
   getKarnofskyScore(): number {
     if(this.karnofskyPerformanceStatus == -1) {
@@ -398,7 +400,7 @@ export class ExtractedMCODE {
 
   /**
    * Primary Cancer Mapping.
-   * @returns 
+   * @returns
    */
   getPrimaryCancerValue(): string {
     // TODO - Awaiting primary cancer values from Trialjectory.
@@ -425,7 +427,7 @@ export class ExtractedMCODE {
           if (code.system && code.code && code.system.includes("snomed")) {
             // Look to see if the code is in the mapping
             const organ = metastasis_codes.SNOMED[code.code];
-            
+
             if (organ) {
               cancerConditions.push(organ);
               // If we were successful, let's move on to the next one
@@ -451,7 +453,7 @@ export class ExtractedMCODE {
 
   /**
    * Returns the histology morphology mappings of this resource.
-   * @returns 
+   * @returns
    */
   getHistologyMorphologyValue(): string {
     if (
@@ -547,7 +549,7 @@ export class ExtractedMCODE {
 
   /**
    * Returns the radiation procedure mappings for these radiation procedure resources.
-   * @returns 
+   * @returns
    */
   getRadiationProcedureValue(): string[] {
 
@@ -595,7 +597,7 @@ export class ExtractedMCODE {
 
   /**
    * Returns the surgical procedure mappings for these surgical procedure resources.
-   * @returns 
+   * @returns
    */
   getSurgicalProcedureValue(): string[] {
 
@@ -649,7 +651,7 @@ export class ExtractedMCODE {
   /**
    * Reeturns the list of coding's associated with the given base fhir resource.
    * @param resources The fhir resources to pull coding's from.
-   * @returns 
+   * @returns
    */
   extractCodings(resources: BaseFhirResource[]): Coding[] {
     const codingList: Coding[] = []
@@ -725,7 +727,7 @@ export class ExtractedMCODE {
   }
 
   /**
-   * 
+   *
    * @returns Gets the tumor marker mappings from the codes in this resource.
    */
   getTumorMarkerValue(): string[] {
@@ -758,7 +760,7 @@ export class ExtractedMCODE {
         // NOTE: ER- check always uses 1 as the metric parameter by default.
         tumorMarkerArray.push('ER-');
       }
-  
+
       // PR
       if (this.isPRPositive(currentTumorMarker, 1, basicTumorMapping)){
         // NOTE: PR+ check always uses 1 as the metric parameter by default.
@@ -768,7 +770,7 @@ export class ExtractedMCODE {
         // NOTE: PR- check always uses 1 as the metric parameter by default.
         tumorMarkerArray.push('PR-');
       }
-  
+
       // RB
       if (this.isRBPositive(currentTumorMarker, 50, basicTumorMapping)) {
         // NOTE: RB+ check always uses 50 as the matric parameter by default.
@@ -778,7 +780,7 @@ export class ExtractedMCODE {
         // NOTE: RB- check always uses 50 as the matric parameter by default.
         tumorMarkerArray.push('RB-');
       }
-  
+
       // HER
       if (this.isHER2Positive(currentTumorMarker, basicTumorMapping)){
         tumorMarkerArray.push('HER2+')
@@ -787,7 +789,7 @@ export class ExtractedMCODE {
         // NOTE: HER2- check always uses ['0', '1', '2', '1+', '2+'] as the quantities by default.
         tumorMarkerArray.push('HER2-');
       }
-  
+
       // FGFR
       if (this.isFGFRPositive(currentTumorMarker, 1, basicTumorMapping)) {
         tumorMarkerArray.push('FGFR+');
@@ -828,7 +830,7 @@ export class ExtractedMCODE {
       if (this.isBioMarkerPositiveCombo2(currentTumorMarker, 'Biomarker-CHK2', basicTumorMapping) ||
         this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '16627')) ){
         tumorMarkerArray.push('CHEK2+');
-      }  
+      }
       if (this.isBioMarkerNegativeCombo2(currentTumorMarker, 'Biomarker-CHK2', basicTumorMapping) ||
         this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '16627')) ){
         tumorMarkerArray.push('CHEK2-');
@@ -843,7 +845,7 @@ export class ExtractedMCODE {
         this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '7652')) ){
         tumorMarkerArray.push('NBN-');
       }
-  
+
       // NF1
       if (this.isBioMarkerPositiveCombo2(currentTumorMarker, 'Biomarker-NF1', basicTumorMapping) ||
         this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '7765')) ){
@@ -853,7 +855,7 @@ export class ExtractedMCODE {
         this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '7765')) ){
         tumorMarkerArray.push('NF1-');
       }
-  
+
       // PALB2
       if (this.isBioMarkerPositiveCombo2(currentTumorMarker, 'Biomarker-PALB2', basicTumorMapping) ||
         this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '26144')) ){
@@ -863,7 +865,7 @@ export class ExtractedMCODE {
         this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '26144')) ){
         tumorMarkerArray.push('PALB2-');
       }
-  
+
       // PTEN
       if (this.isBioMarkerPositiveCombo2(currentTumorMarker, 'Biomarker-PTEN', basicTumorMapping) ||
         this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '9588')) ){
@@ -873,7 +875,7 @@ export class ExtractedMCODE {
         this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '9588')) ){
         tumorMarkerArray.push('PTEN-');
       }
-  
+
       // STK11
       if (this.isBioMarkerPositiveCombo2(currentTumorMarker, 'Biomarker-STK11', basicTumorMapping) ||
         this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '11389')) ){
@@ -883,7 +885,7 @@ export class ExtractedMCODE {
         this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '11389')) ){
         tumorMarkerArray.push('STK11-');
       }
-  
+
       // P53
       if (this.isBioMarkerPositiveCombo2(currentTumorMarker, 'Biomarker-P53', basicTumorMapping) ||
         this.cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '11998')) ){
