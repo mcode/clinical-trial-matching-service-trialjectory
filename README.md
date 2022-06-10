@@ -11,4 +11,4 @@ Open `.env` and make sure the configruation matches your environment. If it does
 # Running the Server
 1. Run `npm install`
 2. Run `npm start`
-3. The service will now be running at http://localhost:3000/
+3. The service will now be running at http://localhost:3001/
