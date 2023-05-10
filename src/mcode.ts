@@ -1,6 +1,5 @@
-import { fhirclient } from 'fhirclient/lib/types';
 import * as fhirpath from 'fhirpath';
-import { fhir } from 'clinical-trial-matching-service';
+import { Bundle, FhirResource, Condition, MedicationStatement, Observation, Patient, Procedure } from 'fhir/r4';
 import { CodeMapper, CodeSystemEnum } from './codeMapper';
 import profile_system_codes from '../data/profile-system-codes.json';
 import system_metastasis_codes_json from '../data/system-metastasis-codes-json.json';
@@ -116,7 +115,7 @@ export class ExtractedMCODE {
    * Constructor.
    * @param patientBundle The patient bundle to build the mCODE mapping from.
    */
-  constructor(patientBundle: fhir.Bundle) {
+  constructor(patientBundle: Bundle | null) {
 
     // Initialize fields to defaults.
     this.primaryCancerCondition = [] as PrimaryCancerCondition[];
@@ -326,11 +325,11 @@ export class ExtractedMCODE {
   }
 
   lookup(
-    resource: fhirclient.FHIR.Resource,
+    resource: FhirResource,
     path: FHIRPath,
     environment?: { [key: string]: string }
   ): PathLookupResult[] {
-    return fhirpath.evaluate(resource, path, environment);
+    return fhirpath.evaluate(resource, path, environment) as PathLookupResult[];
   }
   resourceProfile(profiles: PathLookupResult[], key: string): boolean {
     for (const profile of profiles) {

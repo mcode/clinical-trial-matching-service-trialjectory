@@ -4,8 +4,8 @@
  */
 import https from "https";
 import { IncomingMessage } from "http";
+import { Bundle } from 'fhir/r4';
 import {
-  fhir,
   ClinicalTrialsGovService,
   ServiceConfiguration,
   ResearchStudy,
@@ -30,7 +30,7 @@ export interface QueryConfiguration extends ServiceConfiguration {
 export function createClinicalTrialLookup(
   configuration: QueryConfiguration,
   ctgService?: ClinicalTrialsGovService
-): (patientBundle: fhir.Bundle) => Promise<SearchSet> {
+): (patientBundle: Bundle) => Promise<SearchSet> {
   // Raise errors on missing configuration
   if (typeof configuration.endpoint !== "string") {
     throw new Error("Missing endpoint in configuration");
@@ -41,7 +41,7 @@ export function createClinicalTrialLookup(
   const endpoint = configuration.endpoint;
   const bearerToken = configuration.auth_token;
   return function getMatchingClinicalTrials(
-    patientBundle: fhir.Bundle
+    patientBundle: Bundle
   ): Promise<SearchSet> {
     // Create the query based on the patient bundle:
     const query = new APIQuery(patientBundle);
@@ -211,7 +211,7 @@ export class APIQuery {
    * Create a new query object.
    * @param patientBundle the patient bundle to use for field values
    */
-  constructor(patientBundle: fhir.Bundle) { // this goes through the patient bundle twice - should be revised
+  constructor(patientBundle: Bundle) { // this goes through the patient bundle twice - should be revised
 
     for (const entry of patientBundle.entry) {
       if (!("resource" in entry)) {

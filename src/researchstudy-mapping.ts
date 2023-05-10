@@ -3,7 +3,8 @@
  * the underlying service to the FHIR ResearchStudy type.
  */
 
-import { fhir, ResearchStudy } from 'clinical-trial-matching-service';
+import { CodeableConcept, ResearchStudyObjective } from 'fhir/r4';
+import { ResearchStudy } from 'clinical-trial-matching-service';
 import { QueryTrial, TJFacility } from './query';
 
 export const phaseCodeMap = new Map<string, string>([
@@ -18,16 +19,16 @@ export const phaseCodeMap = new Map<string, string>([
   ["Phase 4", "phase-4"],
 ]);
 
-function convertArrayToCodeableConcept(trialstringArray: string[]): fhir.CodeableConcept[] {
-  const fhirstringArray: fhir.CodeableConcept[] = [];
+function convertArrayToCodeableConcept(trialstringArray: string[]): CodeableConcept[] {
+  const fhirstringArray: CodeableConcept[] = [];
   for (const trialstring of trialstringArray) {
     fhirstringArray.push({ text: trialstring });
   }
   return fhirstringArray;
 }
 
-function convertArrayToObjective(trialstringArray: string[]): fhir.Objective[] {
-  const fhirObjectiveArray: fhir.Objective[] = [];
+function convertArrayToObjective(trialstringArray: string[]): ResearchStudyObjective[] {
+  const fhirObjectiveArray: ResearchStudyObjective[] = [];
   for (const trialstring of trialstringArray) {
     fhirObjectiveArray.push({ name: trialstring });
   }
