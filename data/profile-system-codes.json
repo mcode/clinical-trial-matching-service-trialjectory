@@ -24,173 +24,74 @@
     ]
   },
   "Biomarker-PR": {
-    "LOINC": [
-      "85339-0",
-      "40557-1",
-      "16113-3",
-      "10861-3",
-      "31207-4",
-      "85331-7"
-    ]
+    "LOINC": ["85339-0", "40557-1", "16113-3", "10861-3", "31207-4", "85331-7"]
   },
   "Stage-3": {
-    "AJCC": [
-      "3",
-      "III",
-      "c3"
-    ],
-    "SNOMED": [
-      "258224005"
-    ]
+    "AJCC": ["3", "III", "c3"],
+    "SNOMED": ["258224005"]
   },
   "Stage-3A": {
-    "AJCC": [
-      "3a",
-      "IIIA"
-    ],
-    "SNOMED": [
-      "261638004"
-    ]
+    "AJCC": ["3a", "3A", "IIIA"],
+    "SNOMED": ["261638004"]
   },
   "Stage-3B": {
-    "AJCC": [
-      "3b",
-      "IIIB"
-    ],
-    "SNOMED": [
-      "261639007"
-    ]
+    "AJCC": ["3b", "3B", "IIIB"],
+    "SNOMED": ["261639007"]
   },
   "Stage-3C": {
-    "AJCC": [
-      "3C",
-      "3c",
-      "c3c",
-      "IIIC"
-    ],
-    "SNOMED": [
-      "261640009"
-    ]
+    "AJCC": ["3C", "3c", "c3c", "IIIC"],
+    "SNOMED": ["261640009"]
   },
   "Stage-4": {
-    "AJCC": [
-      "4",
-      "IV",
-      "4P"
-    ],
-    "SNOMED": [
-      "258228008",
-      "261616001"
-    ]
+    "AJCC": ["4", "IV", "4P"],
+    "SNOMED": ["258228008", "261616001"]
   },
   "Stage-4A": {
-    "AJCC": [
-      "4a"
-    ],
-    "SNOMED": [
-      "261642001"
-    ]
+    "AJCC": ["4a", "4A"],
+    "SNOMED": ["261642001"]
   },
   "Stage-4B": {
-    "AJCC": [
-      "4b"
-    ],
-    "SNOMED": [
-      "261643006"
-    ]
+    "AJCC": ["4b", "4B"],
+    "SNOMED": ["261643006"]
   },
   "Stage-4C": {
-    "AJCC": [
-      "4C",
-      "4c"
-    ],
-    "SNOMED": [
-      "313046007"
-    ]
+    "AJCC": ["4C", "4c"],
+    "SNOMED": ["313046007"]
   },
   "Stage-4D": {
-    "AJCC": [
-      "4d"
-    ]
+    "AJCC": ["4d", "4D"]
   },
   "Stage-1": {
-    "AJCC": [
-      "1",
-      "I",
-      "c1",
-      "1P"
-    ],
-    "SNOMED": [
-      "313143001",
-      "261641008",
-      "17691001"
-    ]
+    "AJCC": ["1", "I", "c1", "1P"],
+    "SNOMED": ["313143001", "261641008", "17691001"]
   },
   "Stage-1A": {
-    "AJCC": [
-      "c1A",
-      "1a",
-      "IA"
-    ],
-    "SNOMED": [
-      "261634002",
-      "261633008",
-      "261632003"
-    ]
+    "AJCC": ["c1A", "1a", "IA", "1A"],
+    "SNOMED": ["261634002", "261633008", "261632003"]
   },
   "Stage-1B": {
-    "AJCC": [
-      "IB"
-    ],
-    "SNOMED": [
-      "313114009",
-      "313112008",
-      "261635001"
-    ]
+    "AJCC": ["IB", "1b", "1B"],
+    "SNOMED": ["313114009", "313112008", "261635001"]
   },
   "Stage-1C": {
-    "AJCC": [
-      "1C"
-    ],
-    "SNOMED": [
-      "261636000"
-    ]
+    "AJCC": ["1C", "1c"],
+    "SNOMED": ["261636000"]
   },
   "Stage-2": {
-    "AJCC": [
-      "2",
-      "II",
-      "2P"
-    ],
-    "SNOMED": [
-      "258219007"
-    ]
+    "AJCC": ["2", "II", "2P"],
+    "SNOMED": ["258219007"]
   },
   "Stage-2A": {
-    "AJCC": [
-      "2a",
-      "IIA"
-    ],
-    "SNOMED": [
-      "261614003"
-    ]
+    "AJCC": ["2a", "2A", "IIA"],
+    "SNOMED": ["261614003"]
   },
   "Stage-2B": {
-    "AJCC": [
-      "2b",
-      "IIB"
-    ],
-    "SNOMED": [
-      "261615002"
-    ]
+    "AJCC": ["2b", "2B", "IIB"],
+    "SNOMED": ["261615002"]
   },
   "Stage-2C": {
-    "AJCC": [
-      "2C"
-    ],
-    "SNOMED": [
-      "261637009"
-    ]
+    "AJCC": ["2C", "2c"],
+    "SNOMED": ["261637009"]
   },
   "Biomarker-HER2": {
     "LOINC": [
@@ -210,24 +111,12 @@
     ]
   },
   "Stage-0": {
-    "AJCC": [
-      "0",
-      "0C",
-      "0P"
-    ],
-    "SNOMED": [
-      "261645004",
-      "261613009",
-      "7184655002"
-    ]
+    "AJCC": ["0", "0C", "0P"],
+    "SNOMED": ["261645004", "261613009", "7184655002"]
   },
   "Stage-0A": {
-    "AJCC": [
-      "0a"
-    ],
-    "SNOMED": [
-      "261644000"
-    ]
+    "AJCC": ["0a", "0A"],
+    "SNOMED": ["261644000"]
   },
   "Morphology-Invasive-Carcinoma": {
     "SNOMED": [
@@ -468,12 +357,7 @@
     ]
   },
   "Biomarker-RB": {
-    "LOINC": [
-      "42795-5",
-      "21732-3",
-      "47416-3",
-      "21731-5"
-    ]
+    "LOINC": ["42795-5", "21732-3", "47416-3", "21731-5"]
   },
   "Cancer-Invasive-Carcinoma": {
     "SNOMED": [
@@ -498,59 +382,215 @@
       "408643008"
     ]
   },
-  "Biomarker-FGFR": {
-    "LOINC": [
-      "42785-6",
-      "78917-2",
-      "78916-4",
-      "78915-6"
+  "Intraductal papillary neoplasm with invasive carcinoma (morphologic abnormality)": {
+    "SNOMED": ["734075007"]
+  },
+  "Mucinous cystic neoplasm with invasive carcinoma (morphologic abnormality)": {
+    "SNOMED": ["734074006"]
+  },
+  "Non-mucinous minimally invasive adenocarcinoma (morphologic abnormality)": {
+    "SNOMED": ["733885003"]
+  },
+  "Solid papillary carcinoma with invasion (morphologic abnormality)": {
+    "SNOMED": ["703594003"]
+  },
+  "Invasive micropapillary carcinoma of breast (morphologic abnormality)": {
+    "SNOMED": ["703578005"]
+  },
+  "Encapsulated papillary carcinoma with invasion (morphologic abnormality)": {
+    "SNOMED": ["703547006"]
+  },
+  "Ductal carcinoma in situ with microinvasion and involving nipple skin (morphologic abnormality)": {
+    "SNOMED": ["444134008"]
+  },
+  "Lobular carcinoma in situ with microinvasion (morphologic abnormality)": {
+    "SNOMED": ["443757001"]
+  },
+  "Follicular carcinoma, grossly encapsulated with angioinvasion (morphologic abnormality)": {
+    "SNOMED": ["422350000"]
+  },
+  "Follicular carcinoma, widely invasive (morphologic abnormality)": {
+    "SNOMED": ["420301000"]
+  },
+  "Intraductal papillary-mucinous carcinoma, invasive (morphologic abnormality)": {
+    "SNOMED": ["128692006"]
+  },
+  "Follicular carcinoma, minimally invasive (morphologic abnormality)": {
+    "SNOMED": ["128671006"]
+  },
+  "Intraductal papillary adenocarcinoma with invasion (morphologic abnormality)": {
+    "SNOMED": ["64524002"]
+  },
+  "Squamous cell carcinoma in situ with questionable stromal invasion (morphologic abnormality)": {
+    "SNOMED": ["5688000"]
+  },
+  "Leukemic infiltration (morphologic abnormality)": {
+    "SNOMED": ["446688004"]
+  },
+  "Lymphomatous infiltration (morphologic abnormality)": {
+    "SNOMED": ["445925008"]
+  },
+  "Infiltrating carcinoma with ductal and lobular features (morphologic abnormality)": {
+    "SNOMED": ["444057000"]
+  },
+  "Infiltrating lobular mixed with other types of carcinoma (morphologic abnormality)": {
+    "SNOMED": ["128701002"]
+  },
+  "Infiltrating duct mixed with other types of carcinoma (morphologic abnormality)": {
+    "SNOMED": ["128700001"]
+  },
+  "Paget's disease and infiltrating duct carcinoma of breast (morphologic abnormality)": {
+    "SNOMED": ["82591005"]
+  },
+  "Infiltrating ductular carcinoma (morphologic abnormality)": {
+    "SNOMED": ["58477004"]
+  },
+  "Infiltrating basal cell carcinoma (morphologic abnormality)": {
+    "SNOMED": ["56665009"]
+  },
+  "Infiltrating duct and lobular carcinoma (morphologic abnormality)": {
+    "SNOMED": ["35232005"]
+  },
+  "Metastasis to brain of unknown primary (disorder)": {
+    "SNOMED": ["285641009"]
+  },
+  "Secondary malignant neoplasm of brain and spinal cord (disorder)": {
+    "SNOMED": ["188462001"]
+  },
+  "Secondary malignant neoplasm of temporal lobe (disorder)": {
+    "SNOMED": ["94622002"]
+  },
+  "Secondary malignant neoplasm of pituitary gland (disorder)": {
+    "SNOMED": ["94491007"]
+  },
+  "Secondary malignant neoplasm of pineal gland (disorder)": {
+    "SNOMED": ["94489004"]
+  },
+  "Secondary malignant neoplasm of parietal lobe (disorder)": {
+    "SNOMED": ["94471000"]
+  },
+  "Secondary malignant neoplasm of occipital lobe (disorder)": {
+    "SNOMED": ["94448002"]
+  },
+  "Secondary malignant neoplasm of frontal lobe (disorder)": {
+    "SNOMED": ["94309003"]
+  },
+  "Secondary malignant neoplasm of craniopharyngeal duct (disorder)": {
+    "SNOMED": ["94267001"]
+  },
+  "Secondary malignant neoplasm of cerebrum (disorder)": {
+    "SNOMED": ["94248000"]
+  },
+  "Secondary malignant neoplasm of cerebral ventricle (disorder)": {
+    "SNOMED": ["94247005"]
+  },
+  "Secondary malignant neoplasm of cerebellum (disorder)": {
+    "SNOMED": ["94245002"]
+  },
+  "Secondary malignant neoplasm of brain (disorder)": {
+    "SNOMED": ["94225005"]
+  },
+  "Secondary malignant neoplasm of brain stem (disorder)": {
+    "SNOMED": ["94224009"]
+  },
+  "Intraductal papillary neoplasm with high grade intraepithelial neoplasia": {
+    "SNOMED": ["﻿734133009"]
+  },
+  "Intraductal papilloma with ductal carcinoma in situ": {
+    "SNOMED": ["703576009"]
+  },
+  "Cystic hypersecretory carcinoma, intraductal": { "SNOMED": ["703573001"] },
+  "Clinging intraductal carcinoma": { "SNOMED": ["444732004"] },
+  "Apocrine intraductal carcinoma": { "SNOMED": ["444689005"] },
+  "Ductal carcinoma in situ - category": { "SNOMED": ["399935008"] },
+  "Ductal carcinoma in situ, solid type": { "SNOMED": ["128880009"] },
+  "Intraductal micropapillary carcinoma": { "SNOMED": ["128696009"] },
+  "Intraductal papillary-mucinous carcinoma, non-invasive": {
+    "SNOMED": ["128691004"]
+  },
+  "Intraductal carcinoma, noninfiltrating": { "SNOMED": ["86616005"] },
+  "Noninfiltrating intraductal papillary adenocarcinoma": {
+    "SNOMED": ["30566004"]
+  },
+  "Intraductal carcinoma and lobular carcinoma in situ": {
+    "SNOMED": ["18680006"]
+  },
+  "Cancer-Skin-Cervical": {
+    "ICD10": ["C530", "C531", "C538", "C539"],
+    "SNOMED": [
+      "208041000119100",
+      "184781000119102",
+      "773775004",
+      "773283006",
+      "766930002",
+      "766248004",
+      "764951002",
+      "764847000",
+      "763771009",
+      "763408003",
+      "763064007",
+      "763063001",
+      "733834006",
+      "722683006",
+      "449059000",
+      "448774004",
+      "448607004",
+      "423973006",
+      "385478001",
+      "372100004",
+      "372099007",
+      "372098004",
+      "372097009",
+      "372024009",
+      "369574004",
+      "369501008",
+      "369500009",
+      "369499000",
+      "369498008",
+      "369497003",
+      "363354003",
+      "314970000",
+      "285432005",
+      "254889004",
+      "254888007",
+      "254887002",
+      "254886006",
+      "188184006",
+      "188183000",
+      "188180002",
+      "188177003",
+      "188176007",
+      "123842006",
+      "109880006",
+      "93789008",
+      "93779009",
+      "80914001"
     ]
+  },
+
+  "Biomarker-FGFR": {
+    "LOINC": ["42785-6", "78917-2", "78916-4", "78915-6"]
   },
   "Biomarker-ER": {
-    "LOINC": [
-      "85337-4",
-      "40556-3",
-      "16112-5",
-      "14130-9",
-      "85310-1"
-    ]
+    "LOINC": ["85337-4", "40556-3", "16112-5", "14130-9", "85310-1"]
   },
   "Biomarker-ATM": {
-    "LOINC": [
-      "21625-9",
-      "21624-2"
-    ]
+    "LOINC": ["21625-9", "21624-2"]
   },
   "Biomarker-CDH1": {
-    "LOINC": [
-      "94240-9",
-      "21653-1",
-      "21652-3",
-      "29540-2"
-    ]
+    "LOINC": ["94240-9", "21653-1", "21652-3", "29540-2"]
   },
   "Biomarker-CHK2": {
-    "LOINC": [
-      "89038-4",
-      "72518-4"
-    ]
+    "LOINC": ["89038-4", "72518-4"]
   },
   "Biomarker-NBN": {
-    "LOINC": [
-      "82515-8"
-    ]
+    "LOINC": ["82515-8"]
   },
   "Biomarker-NF1": {
-    "LOINC": [
-      "21718-2",
-      "45331-6",
-      "21717-4"
-    ]
+    "LOINC": ["21718-2", "45331-6", "21717-4"]
   },
   "Biomarker-PALB2": {
-    "LOINC": [
-      "81845-0"
-    ]
+    "LOINC": ["81845-0"]
   },
   "Biomarker-PTEN": {
     "LOINC": [
@@ -565,10 +605,7 @@
     ]
   },
   "Biomarker-STK11": {
-    "LOINC": [
-      "94216-9",
-      "53795-1"
-    ]
+    "LOINC": ["94216-9", "53795-1"]
   },
   "Biomarker-P53": {
     "LOINC": [
@@ -585,13 +622,13 @@
     ]
   },
   "Biomarker-PIK3CA": {
-    "LOINC": [
-      "63419-6",
-      "60033-8",
-      "83062-0",
-      "60034-6",
-      "85507-2"
-    ]
+    "LOINC": ["63419-6", "60033-8", "83062-0", "60034-6", "85507-2"]
+  },
+  "PIK3": {
+    "HGNC": ["8975"]
+  },
+  "PIK3R1": {
+    "HGNC": ["8979"]
   },
   "Biomarker-PDL1": {
     "LOINC": [
@@ -626,12 +663,7 @@
     ]
   },
   "Morphology-Invas_Carc_Mix": {
-    "SNOMED": [
-      "128701002",
-      "128700001",
-      "444057000",
-      "35232005"
-    ]
+    "SNOMED": ["128701002", "128700001", "444057000", "35232005"]
   },
   "Morphology-Duct_Car_In_Situ": {
     "SNOMED": [
@@ -650,17 +682,10 @@
     ]
   },
   "Cancer-Invas_Lob_Carc": {
-    "SNOMED": [
-      "1080341000119105",
-      "1080261000119100",
-      "722524005"
-    ]
+    "SNOMED": ["1080341000119105", "1080261000119100", "722524005"]
   },
   "Morphology-Invas_Lob_Carc": {
-    "SNOMED": [
-      "443757001",
-      "89740008"
-    ]
+    "SNOMED": ["443757001", "89740008"]
   },
   "Morphology-Invas_Duct_Carc": {
     "SNOMED": [
@@ -934,14 +959,7 @@
     ]
   },
   "trastuzumab_deruxtecan_conjugate": {
-    "RxNorm": [
-      "224905",
-      "2267582",
-      "2267574",
-      "2267578",
-      "2267576",
-      "2267575"
-    ]
+    "RxNorm": ["224905", "2267582", "2267574", "2267578", "2267576", "2267575"]
   },
   "pertuzumab": {
     "RxNorm": [
@@ -1293,14 +1311,7 @@
     ]
   },
   "vinblastine_sulfate": {
-    "RxNorm": [
-      "11198",
-      "11199",
-      "239178",
-      "1804772",
-      "376857",
-      "1160527"
-    ]
+    "RxNorm": ["11198", "11199", "239178", "1804772", "376857", "1160527"]
   },
   "sacituzumab_govitecan_hziy": {
     "RxNorm": [
@@ -3856,9 +3867,7 @@
     ]
   },
   "lumpectomy": {
-    "SNOMED": [
-      "392022002"
-    ]
+    "SNOMED": ["392022002"]
   },
   "mastectomy": {
     "SNOMED": [
@@ -3916,10 +3925,7 @@
     ]
   },
   "alnd-procedure": {
-    "SNOMED": [
-      "234262008",
-      "79544006"
-    ]
+    "SNOMED": ["234262008", "79544006"]
   },
   "alnd-bodysite": {
     "SNOMED": [
@@ -3945,22 +3951,13 @@
     ]
   },
   "general-reconstruction": {
-    "SNOMED": [
-      "122465003"
-    ]
+    "SNOMED": ["122465003"]
   },
   "lcis-histology": {
-    "SNOMED": [
-      "77284006",
-      "444739008"
-    ]
+    "SNOMED": ["77284006", "444739008"]
   },
   "lcis-condition": {
-    "SNOMED": [
-      "109888004",
-      "354341000119108",
-      "354471000119108"
-    ]
+    "SNOMED": ["109888004", "354341000119108", "354471000119108"]
   },
   "breast-reconstruction": {
     "SNOMED": [
@@ -4056,11 +4053,7 @@
     ]
   },
   "rfa-procedure": {
-    "SNOMED": [
-      "879916008",
-      "709588001",
-      "433058002"
-    ]
+    "SNOMED": ["879916008", "709588001", "433058002"]
   },
   "ebrt-procedure": {
     "SNOMED": [
@@ -4292,159 +4285,46 @@
     ]
   },
   "Mucinous adenocarcinoma": {
-    "SNOMED": [
-      "72495009"
-    ]
+    "SNOMED": ["72495009"]
   },
   "Signet ring cell carcinoma (morphologic abnormality)": {
-    "SNOMED": [
-      "87737001"
-    ]
+    "SNOMED": ["87737001"]
   },
   "Carcinoid tumor - morphology (morphologic abnormality)": {
-    "SNOMED": [
-      "189607006"
-    ]
+    "SNOMED": ["189607006"]
   },
   "Gastrointestinal stromal tumor, uncertain malignant potential (morphologic abnormality)": {
-    "SNOMED": [
-      "128755003"
-    ]
+    "SNOMED": ["128755003"]
   },
   "Sarcoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
-    "SNOMED": [
-      "2424003"
-    ]
+    "SNOMED": ["2424003"]
   },
   "Malignant neoplasm of colon and/or rectum (disorder)": {
-    "SNOMED": [
-      "781382000"
-    ]
+    "SNOMED": ["781382000"]
   },
   "Microsatellite instability-high colorectal cancer": {
-    "SNOMED": [
-      "737058005"
-    ]
+    "SNOMED": ["737058005"]
   },
   "Hereditary nonpolyposis colon cancer": {
-    "SNOMED": [
-      "315058005"
-    ]
+    "SNOMED": ["315058005"]
   },
   "APC gene": {
-    "HGNC": [
-      "583"
-    ]
+    "HGNC": ["583"]
   },
   "MSH2": {
-    "HGNC": [
-      "7325"
-    ]
+    "HGNC": ["7325"]
   },
   "PMS2": {
-    "HGNC": [
-      "9122"
-    ]
+    "HGNC": ["9122"]
   },
   "EPCAM": {
-    "HGNC": [
-      "11529"
-    ]
+    "HGNC": ["11529"]
   },
   "STK11": {
-    "HGNC": [
-      "11389"
-    ]
+    "HGNC": ["11389"]
   },
   "MUTYH": {
-    "HGNC": [
-      "7527"
-    ]
-  },
-  "Resection of polyp (procedure)": {
-    "SNOMED": [
-      "82035006"
-    ]
-  },
-  "Left colectomy (procedure)": {
-    "SNOMED": [
-      "82619000"
-    ]
-  },
-  "Right colectomy (procedure)": {
-    "SNOMED": [
-      "359571009"
-    ]
-  },
-  "Partial resection of colon (procedure)": {
-    "SNOMED": [
-      "43075005"
-    ]
-  },
-  "Multiple segmental resections of large intestine (procedure)": {
-    "SNOMED": [
-      "54747001"
-    ]
-  },
-  "Total colectomy (procedure)": {
-    "SNOMED": [
-      "26390003"
-    ]
-  },
-  "Excision of malignant tumor of rectum by transanal approach (procedure)": {
-    "SNOMED": [
-      "33507007"
-    ]
-  },
-  "Low anterior resection of rectum (procedure)": {
-    "SNOMED": [
-      "314592008"
-    ]
-  },
-  "Resection of rectum (procedure)": {
-    "SNOMED": [
-      "87677003"
-    ]
-  },
-  "Total proctectomy (procedure)": {
-    "SNOMED": [
-      "235364003"
-    ]
-  },
-  "Excision of part of rectum (procedure)": {
-    "SNOMED": [
-      "12827003"
-    ]
-  },
-  "Abdominoperineal resection of rectum (procedure)": {
-    "SNOMED": [
-      "265414003"
-    ]
-  },
-  "Destructive procedure (procedure)": {
-    "SNOMED": [
-      "64597002"
-    ]
-  },
-  "Radiofrequency ablation (procedure)": {
-    "SNOMED": [
-      "879916008"
-    ]
-  },
-  "External beam radiation therapy procedure (procedure)": {
-    "SNOMED": [
-      "33195004"
-    ]
-  },
-  "Brachytherapy (procedure)": {
-    "SNOMED": [
-      "152198000"
-    ]
-  },
-  "Interstitial brachytherapy (procedure)": {
-    "SNOMED": [
-      "113120007"
-    ]
+    "HGNC": ["7527"]
   },
   "abraxane": {
     "RxNorm": [
@@ -5346,10 +5226,7 @@
     ]
   },
   "DAUNOrubicin hydrochloride": {
-    "RxNorm": [
-      "3109",
-      "81992"
-    ]
+    "RxNorm": ["3109", "81992"]
   },
   "cyclophosphamide": {
     "RxNorm": [
@@ -5506,10 +5383,7 @@
     ]
   },
   "fedratinib hydrochloride": {
-    "RxNorm": [
-      "2197490",
-      "2197594"
-    ]
+    "RxNorm": ["2197490", "2197594"]
   },
   "jakafi": {
     "RxNorm": [
@@ -6047,14 +5921,7 @@
     ]
   },
   "Mitoxantrone": {
-    "RxNorm": [
-      "7005",
-      "203129",
-      "197989",
-      "328493",
-      "375173",
-      "1165375"
-    ]
+    "RxNorm": ["7005", "203129", "197989", "328493", "375173", "1165375"]
   },
   "Bleomycin": {
     "RxNorm": [
@@ -7299,928 +7166,4164 @@
     ]
   },
   "Adenocarcinoma in situ (morphologic abnormality)": {
-    "SNOMED": [
-      "51642000"
-    ]
+    "SNOMED": ["51642000"]
   },
   "Squamous cell carcinoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
-    "SNOMED": [
-      "28899001"
-    ]
+    "SNOMED": ["28899001"]
   },
   "Large cell carcinoma (morphologic abnormality)": {
-    "SNOMED": [
-      "22687000"
-    ]
+    "SNOMED": ["22687000"]
   },
   "Large cell neuroendocrine carcinoma (morphologic abnormality)": {
-    "SNOMED": [
-      "128628002"
-    ]
+    "SNOMED": ["128628002"]
   },
   "Adenocarcinoma of lung (disorder)": {
-    "SNOMED": [
-      "254626006"
-    ]
+    "SNOMED": ["254626006"]
   },
   "Adenocarcinoma of left lung (disorder)": {
-    "SNOMED": [
-      "15956341000119105"
-    ]
+    "SNOMED": ["15956341000119105"]
   },
   "Adenocarcinoma of right lung (disorder)": {
-    "SNOMED": [
-      "15956381000119100"
-    ]
+    "SNOMED": ["15956381000119100"]
   },
   "Primary adenocarcinoma of lung (disorder)": {
-    "SNOMED": [
-      "707451005"
-    ]
+    "SNOMED": ["707451005"]
   },
   "Squamous cell carcinoma of lung (disorder)": {
-    "SNOMED": [
-      "254634000"
-    ]
+    "SNOMED": ["254634000"]
   },
   "Squamous cell carcinoma of left lung (disorder)": {
-    "SNOMED": [
-      "12240951000119107"
-    ]
+    "SNOMED": ["12240951000119107"]
   },
   "Squamous cell carcinoma of right lung (disorder)": {
-    "SNOMED": [
-      "12240991000119102"
-    ]
+    "SNOMED": ["12240991000119102"]
   },
   "Large cell carcinoma of lung (disorder)": {
-    "SNOMED": [
-      "254629004"
-    ]
+    "SNOMED": ["254629004"]
   },
   "Small cell carcinoma of lung (disorder)": {
-    "SNOMED": [
-      "254632001"
-    ]
+    "SNOMED": ["254632001"]
   },
   "Primary malignant neoplasm of lung (disorder)": {
-    "SNOMED": [
-      "93880001"
-    ]
+    "SNOMED": ["93880001"]
   },
   "Malignant tumor of lung (disorder)": {
-    "SNOMED": [
-      "363358000"
-    ]
+    "SNOMED": ["363358000"]
   },
   "EGFR": {
-    "HGNC": [
-      "3236"
-    ]
+    "HGNC": ["3236"]
   },
   "RB1": {
-    "HGNC": [
-      "9884"
-    ]
+    "HGNC": ["9884"]
   },
   "TP53": {
-    "HGNC": [
-      "11998"
-    ]
+    "HGNC": ["11998"]
   },
   "KRAS": {
-    "HGNC": [
-      "6407"
-    ]
+    "HGNC": ["6407"]
   },
   "ALK": {
-    "HGNC": [
-      "427"
-    ]
+    "HGNC": ["427"]
   },
   "ROS1": {
-    "HGNC": [
-      "10261"
-    ]
+    "HGNC": ["10261"]
   },
   "RET": {
-    "HGNC": [
-      "9967"
-    ]
+    "HGNC": ["9967"]
   },
   "BRAF": {
-    "HGNC": [
-      "1097"
-    ]
+    "HGNC": ["1097"]
   },
   "MET": {
-    "HGNC": [
-      "7029"
-    ]
-  },
-  "Total pneumonectomy (procedure)": {
-    "SNOMED": [
-      "49795001"
-    ]
-  },
-  "Complete excision of left lung (procedure)": {
-    "SNOMED": [
-      "735015005"
-    ]
-  },
-  "Completion pneumonectomy (procedure)": {
-    "SNOMED": [
-      "232646009"
-    ]
-  },
-  "Complete excision of right lung (procedure)": {
-    "SNOMED": [
-      "735016006"
-    ]
-  },
-  "Lobectomy (procedure)": {
-    "SNOMED": [
-      "125571002"
-    ]
-  },
-  "Lobectomy of lung (procedure)": {
-    "SNOMED": [
-      "173171007"
-    ]
-  },
-  "Wedge resection (procedure)": {
-    "SNOMED": [
-      "20418004"
-    ]
-  },
-  "Thoracoscopic wedge resection of lung (procedure)": {
-    "SNOMED": [
-      "444188003"
-    ]
-  },
-  "Pneumonectomy with tracheobronchoplasty (procedure)": {
-    "SNOMED": [
-      "232647000"
-    ]
-  },
-  "Intensity modulated radiation therapy (procedure)": {
-    "SNOMED": [
-      "441799006"
-    ]
-  },
-  "Stereotactic radiosurgery (procedure)": {
-    "SNOMED": [
-      "115959002"
-    ]
+    "HGNC": ["7029"]
   },
   "Superficial spreading melanoma (morphologic abnormality)": {
-    "SNOMED": [
-      "55320002"
-    ]
+    "SNOMED": ["55320002"]
   },
   "Nodular melanoma (morphologic abnormality)": {
-    "SNOMED": [
-      "2142002"
-    ]
+    "SNOMED": ["2142002"]
   },
   "Hutchinson's melanotic freckle (morphologic abnormality)": {
-    "SNOMED": [
-      "61217001"
-    ]
+    "SNOMED": ["61217001"]
   },
   "Acral lentiginous melanoma, malignant (morphologic abnormality)": {
-    "SNOMED": [
-      "16974005"
-    ]
+    "SNOMED": ["16974005"]
   },
   "Desmoplastic melanoma, malignant (morphologic abnormality)": {
-    "SNOMED": [
-      "51757004"
-    ]
+    "SNOMED": ["51757004"]
   },
   "Spindle cell melanoma (morphologic abnormality)": {
-    "SNOMED": [
-      "68827007"
-    ]
+    "SNOMED": ["68827007"]
   },
   "Minimal deviation melanoma (morphologic abnormality)": {
-    "SNOMED": [
-      "399475009"
-    ]
+    "SNOMED": ["399475009"]
   },
   "Amelanotic melanoma (morphologic abnormality)": {
-    "SNOMED": [
-      "70594002"
-    ]
+    "SNOMED": ["70594002"]
   },
   "Malignant melanoma (disorder)": {
-    "SNOMED": [
-      "372244006"
-    ]
+    "SNOMED": ["372244006"]
   },
   "Lentigo maligna melanoma (disorder)": {
-    "SNOMED": [
-      "302837001"
-    ]
+    "SNOMED": ["302837001"]
   },
   "Desmoplastic malignant melanoma (disorder)": {
-    "SNOMED": [
-      "403924008"
-    ]
+    "SNOMED": ["403924008"]
   },
   "Spindle cell malignant melanoma (disorder)": {
-    "SNOMED": [
-      "403923002"
-    ]
+    "SNOMED": ["403923002"]
   },
   "Amelanotic malignant melanoma of skin (disorder)": {
-    "SNOMED": [
-      "276751004"
-    ]
+    "SNOMED": ["276751004"]
   },
   "NRAS": {
-    "HGNC": [
-      "7989"
-    ]
+    "HGNC": ["7989"]
   },
   "CDKN2A": {
-    "HGNC": [
-      "1787"
-    ]
+    "HGNC": ["1787"]
   },
   "NF1": {
-    "HGNC": [
-      "7765"
-    ]
+    "HGNC": ["7765"]
   },
   "KIT": {
-    "HGNC": [
-      "6342"
-    ]
+    "HGNC": ["6342"]
   },
   "CDK4": {
-    "HGNC": [
-      "1773"
-    ]
-  },
-  "Wide excision (procedure)": {
-    "SNOMED": [
-      "787439005"
-    ]
-  },
-  "Wide excision of skin lesion (procedure)": {
-    "SNOMED": [
-      "177302005"
-    ]
-  },
-  "Mohs surgery (procedure)": {
-    "SNOMED": [
-      "418024000"
-    ]
-  },
-  "Amputation (procedure)": {
-    "SNOMED": [
-      "81723002"
-    ]
-  },
-  "Dissection of lymph node (procedure)": {
-    "SNOMED": [
-      "11971000224104"
-    ]
+    "HGNC": ["1773"]
   },
   "Polycythemia vera (morphologic abnormality)": {
-    "SNOMED": [
-      "128841001"
-    ]
+    "SNOMED": ["128841001"]
   },
   "Myelosclerosis with myeloid metaplasia (morphologic abnormality)": {
-    "SNOMED": [
-      "128843003"
-    ]
+    "SNOMED": ["128843003"]
   },
   "Essential thrombocythemia (morphologic abnormality)": {
-    "SNOMED": [
-      "128844009"
-    ]
+    "SNOMED": ["128844009"]
   },
   "Chronic neutrophilic leukemia (morphologic abnormality)": {
-    "SNOMED": [
-      "128834007"
-    ]
+    "SNOMED": ["128834007"]
   },
   "Chronic eosinophilic leukemia (morphologic abnormality)": {
-    "SNOMED": [
-      "413836008"
-    ]
+    "SNOMED": ["413836008"]
   },
   "Polycythemia vera (disorder)": {
-    "SNOMED": [
-      "109992005"
-    ]
+    "SNOMED": ["109992005"]
   },
   "Myelosclerosis with myeloid metaplasia (disorder)": {
-    "SNOMED": [
-      "307651005"
-    ]
+    "SNOMED": ["307651005"]
   },
   "Essential thrombocythemia (disorder)": {
-    "SNOMED": [
-      "109994006"
-    ]
+    "SNOMED": ["109994006"]
   },
   "Chronic neutrophilic leukemia (disorder)": {
-    "SNOMED": [
-      "188734009"
-    ]
+    "SNOMED": ["188734009"]
   },
   "Chronic eosinophilic leukemia (disorder)": {
-    "SNOMED": [
-      "188733003"
-    ]
-  },
-  "Splenectomy (procedure)": {
-    "SNOMED": [
-      "234319005"
-    ]
-  },
-  "Total splenectomy (procedure)": {
-    "SNOMED": [
-      "174776001"
-    ]
+    "SNOMED": ["188733003"]
   },
   " Multiple myeloma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
-    "SNOMED": [
-      "55921005"
-    ]
+    "SNOMED": ["55921005"]
   },
   "Multiple myeloma (disorder)": {
-    "SNOMED": [
-      "109989006"
-    ]
+    "SNOMED": ["109989006"]
   },
   "MYC": {
-    "HGNC": [
-      "7553"
-    ]
+    "HGNC": ["7553"]
   },
   "Non-Hodgkin lymphoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
-    "SNOMED": [
-      "1929004"
-    ]
+    "SNOMED": ["1929004"]
   },
   "Non-Hodgkin lymphoma - category (morphologic abnormality)": {
-    "SNOMED": [
-      "128929007"
-    ]
+    "SNOMED": ["128929007"]
   },
   "Malignant lymphoma, large B-cell, diffuse, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
-    "SNOMED": [
-      "46732000"
-    ]
+    "SNOMED": ["46732000"]
   },
   "Diffuse large B-cell lymphoma - category (morphologic abnormality)": {
-    "SNOMED": [
-      "413990004"
-    ]
+    "SNOMED": ["413990004"]
   },
   "Diffuse large B-cell lymphoma activated B-cell subtype (morphologic abnormality)": {
-    "SNOMED": [
-      "787565006"
-    ]
+    "SNOMED": ["787565006"]
   },
   "Follicular lymphoma (morphologic abnormality)": {
-    "SNOMED": [
-      "55150002"
-    ]
+    "SNOMED": ["55150002"]
   },
   "B-cell chronic lymphocytic leukemia/small lymphocytic lymphoma (morphologic abnormality)": {
-    "SNOMED": [
-      "51092000"
-    ]
+    "SNOMED": ["51092000"]
   },
   "Mantle cell lymphoma (morphologic abnormality)": {
-    "SNOMED": [
-      "374654000"
-    ]
+    "SNOMED": ["374654000"]
   },
   "Nodal marginal zone B-cell lymphoma (morphologic abnormality)": {
-    "SNOMED": [
-      "397349003"
-    ]
+    "SNOMED": ["397349003"]
   },
   "Burkitt lymphoma (morphologic abnormality)": {
-    "SNOMED": [
-      "77381001"
-    ]
+    "SNOMED": ["77381001"]
   },
   "Malignant lymphoma, lymphoplasmacytic (morphologic abnormality)": {
-    "SNOMED": [
-      "19340000"
-    ]
+    "SNOMED": ["19340000"]
   },
   "Hairy cell leukemia (morphologic abnormality)": {
-    "SNOMED": [
-      "54087003"
-    ]
+    "SNOMED": ["54087003"]
   },
   "Precursor T cell lymphoblastic leukemia/lymphoblastic lymphoma (morphologic abnormality)": {
-    "SNOMED": [
-      "397348006"
-    ]
+    "SNOMED": ["397348006"]
   },
   "Cutaneous T-cell lymphoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
-    "SNOMED": [
-      "28054005"
-    ]
+    "SNOMED": ["28054005"]
   },
   "Angioimmunoblastic T-cell lymphoma (morphologic abnormality)": {
-    "SNOMED": [
-      "835009"
-    ]
+    "SNOMED": ["835009"]
   },
   "Primary cutaneous anaplastic large T-cell lymphoma, CD30-positive (morphologic abnormality)": {
-    "SNOMED": [
-      "397352006"
-    ]
+    "SNOMED": ["397352006"]
   },
   "Peripheral T-cell lymphoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
-    "SNOMED": [
-      "3172003"
-    ]
+    "SNOMED": ["3172003"]
   },
   "Non-Hodgkin's lymphoma (disorder)": {
-    "SNOMED": [
-      "118601006"
-    ]
+    "SNOMED": ["118601006"]
   },
   "Primary mediastinal (thymic) large B-cell lymphoma (disorder)": {
-    "SNOMED": [
-      "444910004"
-    ]
+    "SNOMED": ["444910004"]
   },
   "Follicular non-Hodgkin's lymphoma (disorder)": {
-    "SNOMED": [
-      "308121000"
-    ]
+    "SNOMED": ["308121000"]
   },
   "Chronic lymphoid leukemia, disease (disorder)": {
-    "SNOMED": [
-      "92814006"
-    ]
+    "SNOMED": ["92814006"]
   },
   "T-cell chronic lymphocytic leukemia (disorder)": {
-    "SNOMED": [
-      "277545003"
-    ]
+    "SNOMED": ["277545003"]
   },
   "B-cell chronic lymphocytic leukemia (disorder)": {
-    "SNOMED": [
-      "277473004"
-    ]
+    "SNOMED": ["277473004"]
   },
   "Mantle cell lymphoma (disorder)": {
-    "SNOMED": [
-      "443487006"
-    ]
+    "SNOMED": ["443487006"]
   },
   "Mucosa-associated lymphoma (disorder)": {
-    "SNOMED": [
-      "277622004"
-    ]
+    "SNOMED": ["277622004"]
   },
   "Nodal marginal zone B-cell lymphoma (disorder)": {
-    "SNOMED": [
-      "726721002"
-    ]
+    "SNOMED": ["726721002"]
   },
   "Splenic marginal zone B-cell lymphoma (disorder)": {
-    "SNOMED": [
-      "763666008"
-    ]
+    "SNOMED": ["763666008"]
   },
   "Malignant lymphoma - lymphoplasmacytic (disorder)": {
-    "SNOMED": [
-      "307623001"
-    ]
+    "SNOMED": ["307623001"]
   },
   "Hairy cell leukemia (disorder)": {
-    "SNOMED": [
-      "118613001"
-    ]
+    "SNOMED": ["118613001"]
   },
   "Microglioma (disorder)": {
-    "SNOMED": [
-      "307649006"
-    ]
+    "SNOMED": ["307649006"]
   },
   "Intraocular non-Hodgkin malignant lymphoma (disorder)": {
-    "SNOMED": [
-      "420788006"
-    ]
+    "SNOMED": ["420788006"]
   },
   "Primary cutaneous T-cell lymphoma (disorder)": {
-    "SNOMED": [
-      "400122007"
-    ]
+    "SNOMED": ["400122007"]
   },
   "Adult T-cell leukemia/lymphoma (disorder)": {
-    "SNOMED": [
-      "110007008"
-    ]
+    "SNOMED": ["110007008"]
   },
   "Angioimmunoblastic T-cell lymphoma (disorder)": {
-    "SNOMED": [
-      "413537009"
-    ]
+    "SNOMED": ["413537009"]
   },
   "Extranodal natural killer/T-cell lymphoma, nasal type (disorder)": {
-    "SNOMED": [
-      "414166008"
-    ]
+    "SNOMED": ["414166008"]
   },
   "Enteropathy-associated T-cell lymphoma (disorder)": {
-    "SNOMED": [
-      "277654008"
-    ]
+    "SNOMED": ["277654008"]
   },
   "Large cell anaplastic lymphoma (disorder)": {
-    "SNOMED": [
-      "277637000"
-    ]
+    "SNOMED": ["277637000"]
   },
   "Primary cutaneous anaplastic large cell lymphoma (disorder)": {
-    "SNOMED": [
-      "773995001"
-    ]
+    "SNOMED": ["773995001"]
   },
   "Anaplastic large T-cell systemic malignant lymphoma (disorder)": {
-    "SNOMED": [
-      "404134006"
-    ]
+    "SNOMED": ["404134006"]
   },
   "Breast implant associated anaplastic large-cell lymphoma (disorder)": {
-    "SNOMED": [
-      "783541009"
-    ]
+    "SNOMED": ["783541009"]
   },
   "Peripheral T-cell lymphoma (disorder)": {
-    "SNOMED": [
-      "109977009"
-    ]
+    "SNOMED": ["109977009"]
   },
   "BCL2": {
-    "HGNC": [
-      "990"
-    ]
+    "HGNC": ["990"]
   },
   "Astrocytoma (morphologic abnormality)": {
-    "SNOMED": [
-      "1157043006"
-    ]
+    "SNOMED": ["1157043006"]
   },
   "Oligodendroglioma (morphologic abnormality)": {
-    "SNOMED": [
-      "1156974002"
-    ]
+    "SNOMED": ["1156974002"]
   },
   "Malignant ependymoma (morphologic abnormality)": {
-    "SNOMED": [
-      "1156903009"
-    ]
+    "SNOMED": ["1156903009"]
   },
   "Glioblastoma, no International Classification of Diseases for Oncology subtype (morphologic abnormality)": {
-    "SNOMED": [
-      "63634009"
-    ]
+    "SNOMED": ["63634009"]
   },
   "Astrocytoma, anaplastic (morphologic abnormality)": {
-    "SNOMED": [
-      "55353007"
-    ]
+    "SNOMED": ["55353007"]
   },
   "Oligodendroglioma, anaplastic (morphologic abnormality)": {
-    "SNOMED": [
-      "3102004"
-    ]
+    "SNOMED": ["3102004"]
   },
   "Ependymoma, anaplastic (morphologic abnormality)": {
-    "SNOMED": [
-      "21589007"
-    ]
+    "SNOMED": ["21589007"]
   },
   "Meningioma, malignant (morphologic abnormality)": {
-    "SNOMED": [
-      "78303004"
-    ]
+    "SNOMED": ["78303004"]
   },
   "Primary malignant meningioma (disorder)": {
-    "SNOMED": [
-      "722718001"
-    ]
+    "SNOMED": ["722718001"]
   },
   "Medulloblastoma (morphologic abnormality)": {
-    "SNOMED": [
-      "1156923005"
-    ]
+    "SNOMED": ["1156923005"]
   },
   "Ganglioglioma, anaplastic (morphologic abnormality)": {
-    "SNOMED": [
-      "128912009"
-    ]
+    "SNOMED": ["128912009"]
   },
   "Melanotic malignant peripheral nerve sheath tumor (morphologic abnormality)": {
-    "SNOMED": [
-      "253094006"
-    ]
+    "SNOMED": ["253094006"]
   },
   "Primary malignant neoplasm of brain (disorder)": {
-    "SNOMED": [
-      "93727008"
-    ]
+    "SNOMED": ["93727008"]
   },
   "Malignant neoplasm of brain (disorder)": {
-    "SNOMED": [
-      "428061005"
-    ]
+    "SNOMED": ["428061005"]
   },
   "Astrocytoma of brain (disorder)": {
-    "SNOMED": [
-      "254938000"
-    ]
+    "SNOMED": ["254938000"]
   },
   "Oligodendroglioma (disorder)": {
-    "SNOMED": [
-      "443936004"
-    ]
+    "SNOMED": ["443936004"]
   },
   "Oligodendroglioma of brain (disorder)": {
-    "SNOMED": [
-      "254940005"
-    ]
+    "SNOMED": ["254940005"]
   },
   "Glioblastoma multiforme of brain": {
-    "SNOMED": [
-      "276828006"
-    ]
+    "SNOMED": ["276828006"]
   },
   "Anaplastic astrocytoma of brain (disorder)": {
-    "SNOMED": [
-      "277461004"
-    ]
+    "SNOMED": ["277461004"]
   },
   "Medulloblastoma (disorder)": {
-    "SNOMED": [
-      "443333004"
-    ]
+    "SNOMED": ["443333004"]
   },
   "Anaplastic ganglioglioma (disorder)": {
-    "SNOMED": [
-      "1157071000"
-    ]
+    "SNOMED": ["1157071000"]
   },
   "Malignant peripheral nerve sheath tumor (disorder)": {
-    "SNOMED": [
-      "404037002"
-    ]
+    "SNOMED": ["404037002"]
   },
   "NF2": {
-    "HGNC": [
-      "7773"
-    ]
+    "HGNC": ["7773"]
   },
   "TSC1": {
-    "HGNC": [
-      "12362"
-    ]
+    "HGNC": ["12362"]
   },
   "TSC2": {
-    "HGNC": [
-      "12363"
-    ]
-  },
-  " Intensity modulated radiation therapy (procedure)": {
-    "SNOMED": [
-      "441799006"
-    ]
-  },
-  "Volumetric modulated arc therapy (procedure)": {
-    "SNOMED": [
-      "1156530009"
-    ]
-  },
-  "Craniotomy (procedure)": {
-    "SNOMED": [
-      "25353009"
-    ]
+    "HGNC": ["12363"]
   },
   "Adenocarcinoma, no subtype (morphologic abnormality)": {
-    "SNOMED": [
-      "35917007"
-    ]
+    "SNOMED": ["35917007"]
   },
   "Carcinosarcoma (morphologic abnormality)": {
-    "SNOMED": [
-      "63264007"
-    ]
+    "SNOMED": ["63264007"]
   },
   "Small cell carcinoma (morphologic abnormality)": {
-    "SNOMED": [
-      "74364000"
-    ]
+    "SNOMED": ["74364000"]
   },
   "Transitional cell carcinoma (morphologic abnormality)": {
-    "SNOMED": [
-      "27090000"
-    ]
+    "SNOMED": ["27090000"]
   },
   "Serous carcinoma (morphologic abnormality)": {
-    "SNOMED": [
-      "90725004"
-    ]
+    "SNOMED": ["90725004"]
   },
   "Leiomyosarcoma, no subtype (morphologic abnormality)": {
-    "SNOMED": [
-      "51549004"
-    ]
+    "SNOMED": ["51549004"]
   },
   "Endometrial stromal sarcoma, high grade (morphologic abnormality)": {
-    "SNOMED": [
-      "70555003"
-    ]
+    "SNOMED": ["70555003"]
   },
   "Malignant neoplasm of uterus (disorder)": {
-    "SNOMED": [
-      "371973000"
-    ]
+    "SNOMED": ["371973000"]
   },
   "Sarcoma of uterus (disorder)": {
-    "SNOMED": [
-      "254877001"
-    ]
+    "SNOMED": ["254877001"]
   },
   "Adenocarcinoma of uterus (disorder)": {
-    "SNOMED": [
-      "309245001"
-    ]
+    "SNOMED": ["309245001"]
   },
   "Carcinosarcoma of uterus (disorder)": {
-    "SNOMED": [
-      "702369008"
-    ]
+    "SNOMED": ["702369008"]
   },
   "Squamous cell carcinoma (disorder)": {
-    "SNOMED": [
-      "402815007"
-    ]
+    "SNOMED": ["402815007"]
   },
   "Endometrial stromal sarcoma (disorder)": {
-    "SNOMED": [
-      "699356008"
-    ]
-  },
-  "Hysterectomy (procedure)": {
-    "SNOMED": [
-      "236886002"
-    ]
-  },
-  "Total hysterectomy (procedure)": {
-    "SNOMED": [
-      "116140006"
-    ]
-  },
-  "Abdominal hysterectomy (procedure)": {
-    "SNOMED": [
-      "116141005"
-    ]
-  },
-  "Total abdominal hysterectomy (procedure)": {
-    "SNOMED": [
-      "116143008"
-    ]
-  },
-  "Vaginal hysterectomy (procedure)": {
-    "SNOMED": [
-      "265056007"
-    ]
-  },
-  "Total hysterectomy via vaginal approach (procedure)": {
-    "SNOMED": [
-      "767610009"
-    ]
-  },
-  "Radical hysterectomy (procedure)": {
-    "SNOMED": [
-      "116142003"
-    ]
-  },
-  "Bilateral salpingectomy with oophorectomy (procedure)": {
-    "SNOMED": [
-      "29827000"
-    ]
+    "SNOMED": ["699356008"]
   },
   "Neuroendocrine tumor (morphologic abnormality)": {
-    "SNOMED": [
-      "55937004"
-    ]
+    "SNOMED": ["55937004"]
   },
   "Primary malignant neoplasm of prostate (disorder)": {
-    "SNOMED": [
-      "93974005"
-    ]
+    "SNOMED": ["93974005"]
   },
   "Malignant tumor of prostate (disorder)": {
-    "SNOMED": [
-      "399068003"
-    ]
+    "SNOMED": ["399068003"]
   },
   "Small cell carcinoma of prostate (disorder)": {
-    "SNOMED": [
-      "396198006"
-    ]
+    "SNOMED": ["396198006"]
   },
   "BRCA1": {
-    "HGNC": [
-      "1100"
-    ]
+    "HGNC": ["1100"]
   },
   "BRCA2": {
-    "HGNC": [
-      "1101"
-    ]
+    "HGNC": ["1101"]
   },
   "CHEK2": {
-    "HGNC": [
-      "16627"
-    ]
+    "HGNC": ["16627"]
   },
   "ATM": {
-    "HGNC": [
-      "795"
-    ]
+    "HGNC": ["795"]
   },
   "PALB2": {
-    "HGNC": [
-      "26144"
-    ]
+    "HGNC": ["26144"]
   },
   "RAD51D": {
-    "HGNC": [
-      "9823"
-    ]
+    "HGNC": ["9823"]
   },
   "MSH6": {
-    "HGNC": [
-      "7329"
-    ]
+    "HGNC": ["7329"]
   },
   "MLH1": {
-    "HGNC": [
-      "7127"
-    ]
+    "HGNC": ["7127"]
   },
   "RNASEL": {
-    "HGNC": [
-      "10050"
-    ]
+    "HGNC": ["10050"]
   },
   "HOXB13": {
-    "HGNC": [
-      "5112"
+    "HGNC": ["5112"]
+  },
+  "Non-small cell carcinoma of lung, TNM stage 1 (disorder)": {
+    "SNOMED": ["424132000"]
+  },
+  "Primary non-small cell carcinoma of left lung (disorder)": {
+    "SNOMED": ["16527641000119107"]
+  },
+  "Non-small cell carcinoma of lung, TNM stage 2 (disorder)": {
+    "SNOMED": ["425048006"]
+  },
+  "Non-small cell carcinoma of lung, TNM stage 3 (disorder)": {
+    "SNOMED": ["422968005"]
+  },
+  "Non-small cell carcinoma of lung, TNM stage 4 (disorder)": {
+    "SNOMED": ["423121009"]
+  },
+  "Primary non-small cell carcinoma of right lung (disorder)": {
+    "SNOMED": ["16527601000119105"]
+  },
+  "Non-small cell lung carcinoma with neuregulin 1 gene fusion (disorder)": {
+    "SNOMED": ["1141627001"]
+  },
+  "Primary non-small cell carcinoma of upper lobe of left lung (disorder)": {
+    "SNOMED": ["16527521000119100"]
+  },
+  "Primary non-small cell carcinoma of lower lobe of left lung (disorder)": {
+    "SNOMED": ["16527441000119105"]
+  },
+  "Primary non-small cell carcinoma of lower lobe of right lung (disorder)": {
+    "SNOMED": ["16527561000119105"]
+  },
+  "Primary non-small cell carcinoma of upper lobe of right lung (disorder)": {
+    "SNOMED": ["16527721000119108"]
+  },
+  "Primary non-small cell carcinoma of middle lobe of right lung (disorder)": {
+    "SNOMED": ["16527481000119100"]
+  },
+  "Primary mucinous adenocarcinoma of lung (disorder)": {
+    "SNOMED": ["707452003"]
+  },
+  "Primary papillary adenocarcinoma of lung (disorder)": {
+    "SNOMED": ["707411007"]
+  },
+  "Primary clear cell adenocarcinoma of lung (disorder)": {
+    "SNOMED": ["711414003"]
+  },
+  "Non-mucinous adenocarcinoma in situ of lung (disorder)": {
+    "SNOMED": ["789695003"]
+  },
+  "Primary adenocarcinoma of lower lobe of left lung (disorder)": {
+    "SNOMED": ["1078881000119102"]
+  },
+  "Primary adenocarcinoma of upper lobe of left lung (disorder)": {
+    "SNOMED": ["1078901000119100"]
+  },
+  "Primary adenocarcinoma of lower lobe of right lung (disorder)": {
+    "SNOMED": ["1078931000119107"]
+  },
+  "Primary adenocarcinoma of upper lobe of right lung (disorder)": {
+    "SNOMED": ["1078961000119104"]
+  },
+  "Primary adenocarcinoma of middle lobe of right lung (disorder)": {
+    "SNOMED": ["1078951000119101"]
+  },
+  "Primary basaloid squamous cell carcinoma of lung (disorder)": {
+    "SNOMED": ["707454002"]
+  },
+  "Primary papillary squamous cell carcinoma of lung (disorder)": {
+    "SNOMED": ["707455001"]
+  },
+  "Primary clear cell squamous cell carcinoma of lung (disorder)": {
+    "SNOMED": ["707453008"]
+  },
+  "Squamous cell carcinoma of lung, TNM stage 4 (disorder)": {
+    "SNOMED": ["425376008"]
+  },
+  "Squamous cell carcinoma of lung, TNM stage 3 (disorder)": {
+    "SNOMED": ["425230006"]
+  },
+  "Squamous cell carcinoma of lung, TNM stage 1 (disorder)": {
+    "SNOMED": ["423295000"]
+  },
+  "Squamous cell carcinoma of lung, TNM stage 2 (disorder)": {
+    "SNOMED": ["423468007"]
+  },
+  "Primary squamous cell carcinoma of upper lobe of left lung (disorder)": {
+    "SNOMED": ["1082141000119108"]
+  },
+  "Primary squamous cell carcinoma of lower lobe of left lung (disorder)": {
+    "SNOMED": ["1082111000119109"]
+  },
+  "Primary squamous cell carcinoma of lower lobe of right lung (disorder)": {
+    "SNOMED": ["1082231000119109"]
+  },
+  "Primary squamous cell carcinoma of upper lobe of right lung (disorder)": {
+    "SNOMED": ["1082271000119107"]
+  },
+  "Primary squamous cell carcinoma of middle lobe of right lung (disorder)": {
+    "SNOMED": ["1082251000119103"]
+  },
+  "Large cell carcinoma of lung, TNM stage 1 (disorder)": {
+    "SNOMED": ["424938000"]
+  },
+  "Large cell carcinoma of lung, TNM stage 2 (disorder)": {
+    "SNOMED": ["423050000"]
+  },
+  "Large cell carcinoma of lung, TNM stage 3 (disorder)": {
+    "SNOMED": ["424970000"]
+  },
+  "Large cell carcinoma of lung, TNM stage 4 (disorder)": {
+    "SNOMED": ["423600008"]
+  },
+  "Primary large cell carcinoma of upper lobe of left lung (disorder)": {
+    "SNOMED": ["1080471000119100"]
+  },
+  "Primary large cell carcinoma of lower lobe of left lung (disorder)": {
+    "SNOMED": ["1080451000119100"]
+  },
+  "Primary large cell carcinoma of upper lobe of right lung (disorder)": {
+    "SNOMED": ["1080531000119100"]
+  },
+  "Primary large cell carcinoma of lower lobe of right lung (disorder)": {
+    "SNOMED": ["1080501000119100"]
+  },
+  "Primary adenosquamous carcinoma of lung (disorder)": {
+    "SNOMED": ["707405009"]
+  },
+  "Primary pseudosarcomatous carcinoma of lung (disorder)": {
+    "SNOMED": ["707460002"]
+  },
+  "Kaposi sarcoma of bilateral lungs (disorder)": {
+    "SNOMED": ["15957261000119100"]
+  },
+  "Primary small cell carcinoma of left lung (disorder)": {
+    "SNOMED": ["15955941000119100"]
+  },
+  "Primary small cell carcinoma of right lung (disorder)": {
+    "SNOMED": ["15955901000119100"]
+  },
+  "Primary small cell carcinoma of upper lobe of right lung (disorder)": {
+    "SNOMED": ["1081921000119100"]
+  },
+  "Primary small cell carcinoma of middle lobe of right lung (disorder)": {
+    "SNOMED": ["1081911000119100"]
+  },
+  "Primary small cell carcinoma of lower lobe of right lung (disorder)": {
+    "SNOMED": ["1081891000119100"]
+  },
+  "Primary small cell carcinoma of upper lobe of left lung (disorder)": {
+    "SNOMED": ["1081861000119100"]
+  },
+  "Primary small cell carcinoma of lower lobe of left lung (disorder)": {
+    "SNOMED": ["1081841000119100"]
+  },
+  "Extensive stage primary small cell carcinoma of lung (disorder)": {
+    "SNOMED": ["683991000119103"]
+  },
+  "Kaposi sarcoma of right lung (disorder)": { "SNOMED": ["354461000119102"] },
+  "Kaposi sarcoma of left lung (disorder)": { "SNOMED": ["354391000119100"] },
+  "Primary small cell malignant neoplasm of lung, TNM stage 4 (disorder)": {
+    "SNOMED": ["67841000119103"]
+  },
+  "Primary small cell malignant neoplasm of lung, TNM stage 3 (disorder)": {
+    "SNOMED": ["67831000119107"]
+  },
+  "Primary small cell malignant neoplasm of lung, TNM stage 2 (disorder)": {
+    "SNOMED": ["67821000119109"]
+  },
+  "Primary small cell malignant neoplasm of lung, TNM stage 1 (disorder)": {
+    "SNOMED": ["67811000119102"]
+  },
+  "Malignant neoplasm of middle lobe of right lung (disorder)": {
+    "SNOMED": ["1179762006"]
+  },
+  "Primary malignant neoplasm of bilateral lungs (disorder)": {
+    "SNOMED": ["890534002"]
+  },
+  "Primary malignant neoplasm of right lung (disorder)": {
+    "SNOMED": ["890529001"]
+  },
+  "Primary malignant neoplasm of left lung (disorder)": {
+    "SNOMED": ["890528009"]
+  },
+  "Anaplastic lymphoma kinase fusion oncogene positive non-small cell lung cancer (disorder)": {
+    "SNOMED": ["830151004"]
+  },
+  "Reactive oxygen species 1 negative non-small cell lung cancer (disorder)": {
+    "SNOMED": ["830060005"]
+  },
+  "Anaplastic lymphoma kinase fusion oncogene negative non-small cell lung cancer (disorder)": {
+    "SNOMED": ["830055006"]
+  },
+  "Acinar cell cystadenocarcinoma of lung (disorder)": {
+    "SNOMED": ["822969007"]
+  },
+  "Malignant neoplasm of right upper lobe of lung (disorder)": {
+    "SNOMED": ["724060008"]
+  },
+  "Malignant neoplasm of lower lobe of left lung (disorder)": {
+    "SNOMED": ["724059003"]
+  },
+  "Malignant neoplasm of upper lobe of left lung (disorder)": {
+    "SNOMED": ["724058006"]
+  },
+  "Malignant neoplasm of lower lobe of right lung (disorder)": {
+    "SNOMED": ["724056005"]
+  },
+  "Squamous non-small cell lung cancer (disorder)": { "SNOMED": ["723301009"] },
+  "Primary malignant neuroendocrine neoplasm of lung (disorder)": {
+    "SNOMED": ["722528008"]
+  },
+  "Reactive oxygen species 1 positive non-small cell lung cancer (disorder)": {
+    "SNOMED": ["722425009"]
+  },
+  "Pleuropulmonary blastoma type III (disorder)": { "SNOMED": ["707673006"] },
+  "Pleuropulmonary blastoma type II (disorder)": { "SNOMED": ["707672001"] },
+  "Pleuropulmonary blastoma type I (disorder)": { "SNOMED": ["707671008"] },
+  "Pleuropulmonary blastoma (disorder)": { "SNOMED": ["707670009"] },
+  "Primary carcinosarcoma of lung (disorder)": { "SNOMED": ["707596000"] },
+  "Primary mucinous cystadenocarcinoma of lung (disorder)": {
+    "SNOMED": ["707595001"]
+  },
+  "Primary mucinous bronchiolo-alveolar carcinoma of lung (disorder)": {
+    "SNOMED": ["707470000"]
+  },
+  "Primary non-mucinous bronchiolo-alveolar carcinoma of lung (disorder)": {
+    "SNOMED": ["707469001"]
+  },
+  "Primary mixed mucinous and non-mucinous bronchiolo-alveolar carcinoma of lung (disorder)": {
+    "SNOMED": ["707468009"]
+  },
+  "Primary salivary gland type carcinoma of lung (disorder)": {
+    "SNOMED": ["707467004"]
+  },
+  "Primary adenoid cystic carcinoma of lung (disorder)": {
+    "SNOMED": ["707466008"]
+  },
+  "Primary mucoepidermoid carcinoma of lung (disorder)": {
+    "SNOMED": ["707465007"]
+  },
+  "Primary myoepithelial carcinoma of lung (disorder)": {
+    "SNOMED": ["707464006"]
+  },
+  "Primary pleomorphic carcinoma of lung (disorder)": {
+    "SNOMED": ["707458004"]
+  },
+  "Primary spindle cell carcinoma of lung (disorder)": {
+    "SNOMED": ["707457009"]
+  },
+  "Primary undifferentiated carcinoma of lung (disorder)": {
+    "SNOMED": ["707456000"]
+  },
+  "Primary solid carcinoma of lung (disorder)": { "SNOMED": ["707410008"] },
+  "Primary acinar cell carcinoma of lung (disorder)": {
+    "SNOMED": ["707409003"]
+  },
+  "Primary small cell non-keratinizing squamous cell carcinoma of lung (disorder)": {
+    "SNOMED": ["707408006"]
+  },
+  "Primary signet ring cell carcinoma of lung (disorder)": {
+    "SNOMED": ["707407001"]
+  },
+  "Primary mixed subtype adenocarcinoma of lung (disorder)": {
+    "SNOMED": ["707404008"]
+  },
+  "Primary fetal adenocarcinoma of lung (disorder)": {
+    "SNOMED": ["707403002"]
+  },
+  "Non-small cell lung cancer without mutation in epidermal growth factor receptor (disorder)": {
+    "SNOMED": ["703230006"]
+  },
+  "Non-small cell lung cancer with mutation in epidermal growth factor receptor (disorder)": {
+    "SNOMED": ["703228009"]
+  },
+  "Malignant epithelial neoplasm of lung (disorder)": {
+    "SNOMED": ["448993007"]
+  },
+  "Diffuse non-Hodgkin's lymphoma of lung (disorder)": {
+    "SNOMED": ["448867004"]
+  },
+  "Follicular non-Hodgkin's lymphoma of lung (disorder)": {
+    "SNOMED": ["448672006"]
+  },
+  "Non-Hodgkin's lymphoma of lung (disorder)": { "SNOMED": ["448372003"] },
+  "Nonsquamous nonsmall cell neoplasm of lung (disorder)": {
+    "SNOMED": ["440173001"]
+  },
+  "Non-small cell lung cancer, negative for epidermal growth factor receptor expression (disorder)": {
+    "SNOMED": ["427038005"]
+  },
+  "Non-small cell lung cancer, positive for epidermal growth factor receptor expression (disorder)": {
+    "SNOMED": ["426964009"]
+  },
+  "Carcinoma of lower lobe, bronchus or lung (disorder)": {
+    "SNOMED": ["372111007"]
+  },
+  "Primary malignant neoplasm of lower lobe, bronchus or lung (disorder)": {
+    "SNOMED": ["372110008"]
+  },
+  "Local recurrence of malignant tumor of lung (disorder)": {
+    "SNOMED": ["314954002"]
+  },
+  "Squamous cell carcinoma of bronchus in right upper lobe (disorder)": {
+    "SNOMED": ["313357008"]
+  },
+  "Squamous cell carcinoma of bronchus in right middle lobe (disorder)": {
+    "SNOMED": ["313356004"]
+  },
+  "Squamous cell carcinoma of bronchus in right lower lobe (disorder)": {
+    "SNOMED": ["313355000"]
+  },
+  "Squamous cell carcinoma of bronchus in left upper lobe (disorder)": {
+    "SNOMED": ["313354001"]
+  },
+  "Squamous cell carcinoma of bronchus in left lower lobe (disorder)": {
+    "SNOMED": ["313353007"]
+  },
+  "Malignant neoplasm of upper lobe, bronchus or lung (disorder)": {
+    "SNOMED": ["269464000"]
+  },
+  "Pancoast tumor (disorder)": { "SNOMED": ["254638002"] },
+  "Non-small cell lung cancer (disorder)": { "SNOMED": ["254637007"] },
+  "Epithelioid hemangioendothelioma of lung (disorder)": {
+    "SNOMED": ["254635004"]
+  },
+  "Oat cell carcinoma of lung (disorder)": { "SNOMED": ["254633006"] },
+  "Giant cell carcinoma of lung (disorder)": { "SNOMED": ["254631008"] },
+  "Malignant tumor of lung parenchyma (disorder)": { "SNOMED": ["254625005"] },
+  "Pulmonary tumor embolism (disorder)": { "SNOMED": ["233940007"] },
+  "Pulmonary blastoma (disorder)": { "SNOMED": ["189815007"] },
+  "Malignant neoplasm of lower lobe of lung (disorder)": {
+    "SNOMED": ["187870002"]
+  },
+  "Malignant neoplasm of middle lobe bronchus (disorder)": {
+    "SNOMED": ["187865009"]
+  },
+  "Malignant neoplasm of upper lobe of lung (disorder)": {
+    "SNOMED": ["187862007"]
+  },
+  "Kaposi's sarcoma of lung (disorder)": { "SNOMED": ["109390005"] },
+  "Overlapping malignant neoplasm of bronchus and lung (disorder)": {
+    "SNOMED": ["109371002"]
+  },
+  "Primary malignant neoplasm of upper lobe of right lung (disorder)": {
+    "SNOMED": ["93993007"]
+  },
+  "Primary malignant neoplasm of right middle lobe of lung (disorder)": {
+    "SNOMED": ["93992002"]
+  },
+  "Primary malignant neoplasm of right lower lobe of lung (disorder)": {
+    "SNOMED": ["93991009"]
+  },
+  "Primary malignant neoplasm of upper lobe of left lung (disorder)": {
+    "SNOMED": ["93865007"]
+  },
+  "Primary malignant neoplasm of lower lobe of left lung (disorder)": {
+    "SNOMED": ["93864006"]
+  },
+  "Primary malignant neoplasm of hilus of lung (disorder)": {
+    "SNOMED": ["93827000"]
+  },
+  "Primary malignant neoplasm of bronchus of right upper lobe (disorder)": {
+    "SNOMED": ["93733004"]
+  },
+  "Primary malignant neoplasm of bronchus of right middle lobe (disorder)": {
+    "SNOMED": ["93732009"]
+  },
+  "Primary malignant neoplasm of bronchus of right lower lobe (disorder)": {
+    "SNOMED": ["93731002"]
+  },
+  "Primary malignant neoplasm of bronchus of left upper lobe (disorder)": {
+    "SNOMED": ["93730001"]
+  },
+  "Primary malignant neoplasm of bronchus of left lower lobe (disorder)": {
+    "SNOMED": ["93729006"]
+  },
+  "Alpha heavy chain disease, respiratory form (disorder)": {
+    "SNOMED": ["25050002"]
+  },
+  "Carcinoid tumor of lung (disorder)": { "SNOMED": ["254627002"] },
+  "Small cell neuroendocrine carcinoma (morphologic abnormality)": {
+    "SNOMED": ["719105002"]
+  },
+  "Small cell eccrine carcinoma (morphologic abnormality)": {
+    "SNOMED": ["400134004"]
+  },
+  "Malignant carcinoid tumor (morphologic abnormality)": {
+    "SNOMED": ["1157139005"]
+  },
+  "Carcinoid bronchial adenoma (morphologic abnormality)": {
+    "SNOMED": ["1157138002"]
+  },
+  "Monodermal teratoma, carcinoid (morphologic abnormality)": {
+    "SNOMED": ["399702005"]
+  },
+  "Carcinoid tumor - argentaffin (morphologic abnormality)": {
+    "SNOMED": ["274904007"]
+  },
+  "Tubular carcinoid (morphologic abnormality)": { "SNOMED": ["128889005"] },
+  "Atypical carcinoid tumor (morphologic abnormality)": {
+    "SNOMED": ["128658008"]
+  },
+  "Enterochromaffin-like cell carcinoid (morphologic abnormality)": {
+    "SNOMED": ["128656007"]
+  },
+  "Adenocarcinoid tumor (morphologic abnormality)": { "SNOMED": ["86293007"] },
+  "Composite carcinoid (morphologic abnormality)": { "SNOMED": ["51465000"] },
+  "Enterochromaffin cell carcinoid (morphologic abnormality)": {
+    "SNOMED": ["48554007"]
+  },
+  "Strumal carcinoid (morphologic abnormality)": { "SNOMED": ["32071008"] },
+  "Goblet cell carcinoid (morphologic abnormality)": { "SNOMED": ["31396002"] },
+  "Adenocarcinoma (morphologic abnormality)": { "SNOMED": ["1187332001"] },
+  "High grade adenocarcinoma (morphologic abnormality)": {
+    "SNOMED": ["1187331008"]
+  },
+  "Low grade adenocarcinoma (morphologic abnormality)": {
+    "SNOMED": ["1187330009"]
+  },
+  "Intermediate grade adenocarcinoma (morphologic abnormality)": {
+    "SNOMED": ["1187329004"]
+  },
+  "Cholangiocarcinoma (morphologic abnormality)": { "SNOMED": ["70179006"] },
+  "Combined hepatocellular carcinoma and cholangiocarcinoma (morphologic abnormality)": {
+    "SNOMED": ["52178006"]
+  },
+  "Malignant keratoacanthoma (morphologic abnormality)": {
+    "SNOMED": ["1187092008"]
+  },
+  "Squamous cell carcinoma (morphologic abnormality)": {
+    "SNOMED": ["1162767002"]
+  },
+  "Human papillomavirus negative squamous cell carcinoma (morphologic abnormality)": {
+    "SNOMED": ["783213006"]
+  },
+  "Human papillomavirus positive squamous cell carcinoma (morphologic abnormality)": {
+    "SNOMED": ["783212001"]
+  },
+  "Pseudovascular squamous cell carcinoma (morphologic abnormality)": {
+    "SNOMED": ["733897002"]
+  },
+  "Undifferentiated nonkeratinizing squamous cell carcinoma (morphologic abnormality)": {
+    "SNOMED": ["449778005"]
+  },
+  "Grade III squamous intraepithelial neoplasia with microinvasive squamous cell carcinoma (morphologic abnormality)": {
+    "SNOMED": ["448406002"]
+  },
+  "Metaplastic squamous cell carcinoma (morphologic abnormality)": {
+    "SNOMED": ["399739006"]
+  },
+  "Squamous cell carcinoma, nonkeratinizing, mixed differentiated and undifferentiated (morphologic abnormality)": {
+    "SNOMED": ["399694008"]
+  },
+  "Squamous cell carcinoma, nonkeratinizing, differentiated (morphologic abnormality)": {
+    "SNOMED": ["399582005"]
+  },
+  "Squamous cell carcinoma in post-traumatic skin lesion (morphologic abnormality)": {
+    "SNOMED": ["399494004"]
+  },
+  "Warty (condylomatous) carcinoma (morphologic abnormality)": {
+    "SNOMED": ["399408005"]
+  },
+  "Squamous cell carcinoma, clear cell type (morphologic abnormality)": {
+    "SNOMED": ["128635005"]
+  },
+  "Basaloid squamous cell carcinoma (morphologic abnormality)": {
+    "SNOMED": ["128634009"]
+  },
+  "Squamous cell carcinoma with horn formation (morphologic abnormality)": {
+    "SNOMED": ["128633003"]
+  },
+  "Verrucous carcinoma (morphologic abnormality)": { "SNOMED": ["89906000"] },
+  "Adenoid squamous cell carcinoma (morphologic abnormality)": {
+    "SNOMED": ["85956000"]
+  },
+  "Squamous cell carcinoma, large cell, nonkeratinizing (morphologic abnormality)": {
+    "SNOMED": ["45490001"]
+  },
+  "Papillary squamous cell carcinoma (morphologic abnormality)": {
+    "SNOMED": ["39056008"]
+  },
+  "Squamous cell carcinoma, small cell, nonkeratinizing (morphologic abnormality)": {
+    "SNOMED": ["35718007"]
+  },
+  "Squamous cell carcinoma, keratinizing (morphologic abnormality)": {
+    "SNOMED": ["18048008"]
+  },
+  "Squamous cell carcinoma, microinvasive (morphologic abnormality)": {
+    "SNOMED": ["12478003"]
+  },
+  "Squamous cell carcinoma, spindle cell (morphologic abnormality)": {
+    "SNOMED": ["10288008"]
+  },
+  "Lymphoepithelial carcinoma (morphologic abnormality)": {
+    "SNOMED": ["7300000"]
+  },
+  "Giant cell carcinoma (morphologic abnormality)": { "SNOMED": ["42596004"] },
+  "Combined large cell neuroendocrine carcinoma (morphologic abnormality)": {
+    "SNOMED": ["448546006"]
+  },
+  "Adenosquamous carcinoma (morphologic abnormality)": {
+    "SNOMED": ["59367005"]
+  },
+  "Pseudosarcomatous carcinoma (morphologic abnormality)": {
+    "SNOMED": ["23109009"]
+  },
+  "Malignant neoplasm of colon (disorder)": { "SNOMED": ["363406005"] },
+  "Malignant tumor of sigmoid colon (disorder)": { "SNOMED": ["363410008"] },
+  "Malignant tumor of ascending colon (disorder)": { "SNOMED": ["363412000"] },
+  "Malignant tumor of transverse colon (disorder)": { "SNOMED": ["363408006"] },
+  "Malignant tumor of descending colon (disorder)": { "SNOMED": ["363409003"] },
+  "Malignant tumor of rectosigmoid junction (disorder)": {
+    "SNOMED": ["363414004"]
+  },
+  "Malignant tumor of hepatic flexure (disorder)": { "SNOMED": ["363407001"] },
+  "Malignant tumor of splenic flexure (disorder)": { "SNOMED": ["363413005"] },
+  "Hereditary nonpolyposis colon cancer (disorder)": {
+    "SNOMED": ["315058005"]
+  },
+  "Overlapping malignant neoplasm of colon (disorder)": {
+    "SNOMED": ["109838007"]
+  },
+  "Primary malignant neoplasm of colon (disorder)": { "SNOMED": ["93761005"] },
+  "Primary malignant neoplasm of sigmoid colon (disorder)": {
+    "SNOMED": ["94006002"]
+  },
+  "Primary malignant neoplasm of ascending colon (disorder)": {
+    "SNOMED": ["93683002"]
+  },
+  "Primary malignant neoplasm of descending colon (disorder)": {
+    "SNOMED": ["93771007"]
+  },
+  "Primary malignant neoplasm of transverse colon (disorder)": {
+    "SNOMED": ["94105000"]
+  },
+  "Primary malignant mesenchymal neoplasm of colon (disorder)": {
+    "SNOMED": ["1197354001"]
+  },
+  "Primary malignant neuroendocrine neoplasm of colon (disorder)": {
+    "SNOMED": ["721698005"]
+  },
+  "Primary malignant neoplasm of hepatic flexure of colon (disorder)": {
+    "SNOMED": ["93826009"]
+  },
+  "Primary malignant neoplasm of splenic flexure of colon (disorder)": {
+    "SNOMED": ["94072004"]
+  },
+  "Primary malignant neoplasm of overlapping sites of colon (disorder)": {
+    "SNOMED": ["1163568002"]
+  },
+  "Primary malignant gastrointestinal stromal neoplasm of colon (disorder)": {
+    "SNOMED": ["16636051000119105"]
+  },
+  "Primary adenocarcinoma of descending colon (disorder)": {
+    "SNOMED": ["681651000119102"]
+  },
+  "Primary adenocarcinoma of ascending colon (disorder)": {
+    "SNOMED": ["681601000119101"]
+  },
+  "Primary adenocarcinoma of rectosigmoid junction (disorder)": {
+    "SNOMED": ["184881000119106"]
+  },
+  "Overlapping malignant neoplasm of colon and rectum (disorder)": {
+    "SNOMED": ["96281000119107"]
+  },
+  "Primary adenocarcinoma of colon (disorder)": { "SNOMED": ["1701000119104"] },
+  "Familial colorectal cancer type X (disorder)": { "SNOMED": ["1197359006"] },
+  "Kaposi sarcoma of colon (disorder)": { "SNOMED": ["1156795003"] },
+  "Leiomyosarcoma of colon (disorder)": { "SNOMED": ["1156788007"] },
+  "Squamous cell carcinoma of colon (disorder)": { "SNOMED": ["766981007"] },
+  "Microsatellite instability-high colorectal cancer (disorder)": {
+    "SNOMED": ["737058005"]
+  },
+  "Malignant carcinoid tumor of colon (disorder)": { "SNOMED": ["726654006"] },
+  "Primary adenocarcinoma of descending colon and splenic flexure (disorder)": {
+    "SNOMED": ["721699002"]
+  },
+  "Primary neuroendocrine carcinoma of colon (disorder)": {
+    "SNOMED": ["721697000"]
+  },
+  "Primary adenocarcinoma of transverse colon (disorder)": {
+    "SNOMED": ["721696009"]
+  },
+  "Primary adenocarcinoma of ascending colon and right flexure (disorder)": {
+    "SNOMED": ["721695008"]
+  },
+  "Adenocarcinoma of rectosigmoid junction (disorder)": {
+    "SNOMED": ["425178004"]
+  },
+  "Local recurrence of malignant tumor of colon (disorder)": {
+    "SNOMED": ["314965007"]
+  },
+  "Carcinoma of splenic flexure (disorder)": { "SNOMED": ["312115000"] },
+  "Carcinoma of hepatic flexure (disorder)": { "SNOMED": ["312114001"] },
+  "Carcinoma of descending colon (disorder)": { "SNOMED": ["312113007"] },
+  "Carcinoma of transverse colon (disorder)": { "SNOMED": ["312112002"] },
+  "Carcinoma of ascending colon (disorder)": { "SNOMED": ["312111009"] },
+  "Adenocarcinoma of sigmoid colon (disorder)": { "SNOMED": ["301756000"] },
+  "Metastasis to colon of unknown primary (disorder)": {
+    "SNOMED": ["285611007"]
+  },
+  "Carcinoma of sigmoid colon (disorder)": { "SNOMED": ["285312008"] },
+  "Carcinoma of the rectosigmoid junction (disorder)": {
+    "SNOMED": ["269544008"]
+  },
+  "Carcinoma of colon (disorder)": { "SNOMED": ["269533000"] },
+  "Malignant tumor of rectum (disorder)": { "SNOMED": ["363351006"] },
+  "Primary malignant mesenchymal neoplasm of rectum (disorder)": {
+    "SNOMED": ["1197355000"]
+  },
+  "Kaposi sarcoma of rectum (disorder)": { "SNOMED": ["1156797006"] },
+  "Leiomyosarcoma of rectum (disorder)": { "SNOMED": ["1156783003"] },
+  "Malignant epithelial neoplasm of upper rectum (disorder)": {
+    "SNOMED": ["448994001"]
+  },
+  "Squamous cell carcinoma of rectum (disorder)": { "SNOMED": ["766979005"] },
+  "Primary neuroendocrine carcinoma of rectum (disorder)": {
+    "SNOMED": ["721701002"]
+  },
+  "Primary malignant neuroendocrine neoplasm of rectum (disorder)": {
+    "SNOMED": ["721700001"]
+  },
+  "Malignant tumor involving rectum by separate metastasis from vagina (disorder)": {
+    "SNOMED": ["369461007"]
+  },
+  "Malignant tumor involving rectum by separate metastasis from uterus (disorder)": {
+    "SNOMED": ["369460008"]
+  },
+  "Malignant tumor involving rectum by separate metastasis from uterine cervix (disorder)": {
+    "SNOMED": ["369459003"]
+  },
+  "Malignant tumor involving rectum by separate metastasis from prostate (disorder)": {
+    "SNOMED": ["369458006"]
+  },
+  "Malignant tumor involving rectum by separate metastasis from ovary (disorder)": {
+    "SNOMED": ["369457001"]
+  },
+  "Malignant tumor involving rectum by separate metastasis from fallopian tube (disorder)": {
+    "SNOMED": ["369456005"]
+  },
+  "Malignant tumor involving rectum by separate metastasis from endometrium (disorder)": {
+    "SNOMED": ["369455009"]
+  },
+  "Malignant tumor involving rectum by direct extension from vagina (disorder)": {
+    "SNOMED": ["369454008"]
+  },
+  "Malignant tumor involving rectum by direct extension from uterus (disorder)": {
+    "SNOMED": ["369453002"]
+  },
+  "Malignant tumor involving rectum by direct extension from uterine cervix (disorder)": {
+    "SNOMED": ["369452007"]
+  },
+  "Malignant tumor involving rectum by direct extension from prostate (disorder)": {
+    "SNOMED": ["369451000"]
+  },
+  "Malignant tumor involving rectum by direct extension from ovary (disorder)": {
+    "SNOMED": ["369450004"]
+  },
+  "Malignant tumor involving rectum by direct extension from fallopian tube (disorder)": {
+    "SNOMED": ["369449004"]
+  },
+  "Malignant tumor involving rectum by direct extension from endometrium (disorder)": {
+    "SNOMED": ["369448007"]
+  },
+  "Malignant neoplasm of rectum, rectosigmoid junction and anus (disorder)": {
+    "SNOMED": ["187760008"]
+  },
+  "Overlapping malignant neoplasm of rectum, anus and anal canal (disorder)": {
+    "SNOMED": ["109839004"]
+  },
+  "Primary malignant neoplasm of rectum (disorder)": { "SNOMED": ["93984006"] },
+  "Primary malignant neoplasm of rectosigmoid junction (disorder)": {
+    "SNOMED": ["93980002"]
+  },
+  "Local recurrence of malignant tumor of rectum (disorder)": {
+    "SNOMED": ["314966008"]
+  },
+  "Metastasis to rectum of unknown primary (disorder)": {
+    "SNOMED": ["285612000"]
+  },
+  "Malignant melanoma of rectum (disorder)": { "SNOMED": ["276822007"] },
+  "Malignant tumor of anorectal junction (disorder)": {
+    "SNOMED": ["254586002"]
+  },
+  "Adenocarcinoma of rectum (disorder)": { "SNOMED": ["254582000"] },
+  "Attenuated familial adenomatous polyposis (disorder)": {
+    "SNOMED": ["715866009"]
+  },
+  "Lynch syndrome (disorder)": { "SNOMED": ["716318002"] },
+  "Pilocytic astrocytoma (disorder)": { "SNOMED": ["763865009"] },
+  "Pilomyxoid astrocytoma (disorder)": { "SNOMED": ["1157070004"] },
+  "Astrocytoma of cerebrum (disorder)": { "SNOMED": ["99131000119108"] },
+  "Diffuse astrocytoma of brain (disorder)": { "SNOMED": ["1157060001"] },
+  "Low grade astrocytoma of brain (disorder)": {
+    "SNOMED": ["100731000119107"]
+  },
+  "High grade astrocytoma of brain (disorder)": {
+    "SNOMED": ["100721000119109"]
+  },
+  "Fibrillary astrocytoma of brain (disorder)": { "SNOMED": ["1156417006"] },
+  "Pilomyxoid astrocytoma of brain (disorder)": { "SNOMED": ["1156456000"] },
+  "Protoplasmic astrocytoma of brain (disorder)": { "SNOMED": ["1156415003"] },
+  "Gemistocytic astrocytoma of brain (disorder)": { "SNOMED": ["1156416002"] },
+  "Primary astrocytoma of frontal lobe (disorder)": {
+    "SNOMED": ["682451000119107"]
+  },
+  "Pilocytic astrocytoma of cerebellum (disorder)": { "SNOMED": ["277507004"] },
+  "Primary astrocytoma of temporal lobe (disorder)": {
+    "SNOMED": ["682481000119100"]
+  },
+  "Primary astrocytoma of parietal lobe (disorder)": {
+    "SNOMED": ["682471000119103"]
+  },
+  "Primary malignant astrocytoma of brain (disorder)": {
+    "SNOMED": ["1196844004"]
+  },
+  "Primary anaplastic astrocytoma of cerebrum (disorder)": {
+    "SNOMED": ["682221000119103"]
+  },
+  "Primary anaplastic astrocytoma of frontal lobe (disorder)": {
+    "SNOMED": ["682231000119100"]
+  },
+  "Primary anaplastic astrocytoma of parietal lobe (disorder)": {
+    "SNOMED": ["682251000119106"]
+  },
+  "Anaplastic astrocytoma of central nervous system (disorder)": {
+    "SNOMED": ["82501000119102"]
+  },
+  "Primary anaplastic astrocytoma of occipital lobe (disorder)": {
+    "SNOMED": ["682241000119109"]
+  },
+  "Primary oligodendroglioma of temporal lobe (disorder)": {
+    "SNOMED": ["687361000119101"]
+  },
+  "Anaplastic oligodendroglioma of central nervous system (disorder)": {
+    "SNOMED": ["1156406005"]
+  },
+  "Mixed oligoastrocytoma (disorder)": { "SNOMED": ["716647001"] },
+  "Giant cell glioblastoma of brain (disorder)": { "SNOMED": ["1156414004"] },
+  "Primary glioblastoma multiforme of cerebrum (disorder)": {
+    "SNOMED": ["684901000119107"]
+  },
+  "Primary glioblastoma multiforme of brainstem (disorder)": {
+    "SNOMED": ["16845341000119100"]
+  },
+  "Primary glioblastoma multiforme of cerebellum (disorder)": {
+    "SNOMED": ["16845301000119100"]
+  },
+  "Primary glioblastoma multiforme of frontal lobe (disorder)": {
+    "SNOMED": ["684911000119105"]
+  },
+  "Primary glioblastoma multiforme of parietal lobe (disorder)": {
+    "SNOMED": ["684931000119100"]
+  },
+  "Primary glioblastoma multiforme of temporal lobe (disorder)": {
+    "SNOMED": ["684941000119109"]
+  },
+  "Primary glioblastoma multiforme of occipital lobe (disorder)": {
+    "SNOMED": ["684921000119103"]
+  },
+  "Primary oligodendroglioma of parietal lobe (disorder)": {
+    "SNOMED": ["687351000119103"]
+  },
+  "Primary malignant glioma of temporal lobe (disorder)": {
+    "SNOMED": ["686461000119108"]
+  },
+  "Primary malignant glioma of parietal lobe (disorder)": {
+    "SNOMED": ["686451000119106"]
+  },
+  "Primary malignant glioma of occipital lobe (disorder)": {
+    "SNOMED": ["686441000119109"]
+  },
+  "Primary malignant glioma of frontal lobe (disorder)": {
+    "SNOMED": ["686431000119100"]
+  },
+  "Primary ependymoma of parietal lobe (disorder)": {
+    "SNOMED": ["683791000119100"]
+  },
+  "Primary ependymoma of brain ventricle (disorder)": {
+    "SNOMED": ["683761000119107"]
+  },
+  "Primary anaplastic astrocytoma of temporal lobe (disorder)": {
+    "SNOMED": ["682261000119108"]
+  },
+  "Astrocytoma of brain stem (disorder)": { "SNOMED": ["107581000119103"] },
+  "Oligodendroglioma of cerebrum (disorder)": { "SNOMED": ["104981000119104"] },
+  "Malignant neoplasm of rectosigmoid junction metastatic to brain (disorder)": {
+    "SNOMED": ["96981000119102"]
+  },
+  "Grade 4 malignant glioma of brain (disorder)": {
+    "SNOMED": ["90831000119105"]
+  },
+  "Low grade malignant glioma of brain (disorder)": {
+    "SNOMED": ["90811000119100"]
+  },
+  "Malignant glioma of cerebellum (disorder)": { "SNOMED": ["87121000119102"] },
+  "Malignant glioma of hypothalamus (disorder)": {
+    "SNOMED": ["87111000119109"]
+  },
+  "Malignant glioma of cerebrum (disorder)": { "SNOMED": ["87091000119101"] },
+  "Diffuse intrinsic pontine glioma (disorder)": {
+    "SNOMED": ["11471000224106"]
+  },
+  "Primary teratoma of brain (disorder)": { "SNOMED": ["1197343006"] },
+  "Primary malignant melanoma of central nervous system (disorder)": {
+    "SNOMED": ["1197332003"]
+  },
+  "Primary malignant germ cell neoplasm of pineal gland (disorder)": {
+    "SNOMED": ["1197298003"]
+  },
+  "Primary malignant atypical teratoid rhabdoid neoplasm of brain (disorder)": {
+    "SNOMED": ["1196898000"]
+  },
+  "Primary anaplastic large cell medulloblastoma of brain (disorder)": {
+    "SNOMED": ["1196860000"]
+  },
+  "Primary embryonal carcinoma of brain (disorder)": {
+    "SNOMED": ["1196839006"]
+  },
+  "Adenocarcinoma of pituitary gland (disorder)": { "SNOMED": ["1179377000"] },
+  "Papillary tumor of pineal region (disorder)": { "SNOMED": ["1156472008"] },
+  "Choroid plexus carcinoma (disorder)": { "SNOMED": ["1156471001"] },
+  "Large cell medulloblastoma of brain (disorder)": {
+    "SNOMED": ["1156469001"]
+  },
+  "Gliosarcoma of brain (disorder)": { "SNOMED": ["1156461003"] },
+  "Desmoplastic nodular medulloblastoma of brain (disorder)": {
+    "SNOMED": ["1156460002"]
+  },
+  "Pleomorphic xanthoastrocytoma of brain (disorder)": {
+    "SNOMED": ["1156455001"]
+  },
+  "Gliomatosis cerebri (disorder)": { "SNOMED": ["1156413005"] },
+  "Malignant pituitary blastoma (disorder)": { "SNOMED": ["816205008"] },
+  "Pineoblastoma (disorder)": { "SNOMED": ["767448007"] },
+  "Astroblastoma of brain (disorder)": { "SNOMED": ["762457009"] },
+  "Primary ganglioneuroblastoma of brain (disorder)": {
+    "SNOMED": ["735757008"]
+  },
+  "Pineal parenchymal tumor of intermediate differentiation (disorder)": {
+    "SNOMED": ["715904005"]
+  },
+  "Primary cerebral lymphoma co-occurrent with human immunodeficiency virus infection (disorder)": {
+    "SNOMED": ["713325002"]
+  },
+  "Classic medulloblastoma (disorder)": { "SNOMED": ["699704002"] },
+  "Supratentorial primitive neuroectodermal tumor (disorder)": {
+    "SNOMED": ["699318007"]
+  },
+  "Malignant neoplasm of cerebellum (disorder)": { "SNOMED": ["449420002"] },
+  "Malignant epithelial neoplasm of hypothalamus (disorder)": {
+    "SNOMED": ["449253005"]
+  },
+  "Malignant epithelial neoplasm of brain (disorder)": {
+    "SNOMED": ["448989001"]
+  },
+  "Malignant epithelial neoplasm of pineal gland (disorder)": {
+    "SNOMED": ["448863000"]
+  },
+  "Malignant teratoma of pineal region (disorder)": { "SNOMED": ["448250003"] },
+  "Malignant neoplasm of axial suprasellar region of brain (disorder)": {
+    "SNOMED": ["448248006"]
+  },
+  "Malignant neoplasm of cerebellopontine angle (disorder)": {
+    "SNOMED": ["448218008"]
+  },
+  "Malignant neoplasm of cerebrum (disorder)": { "SNOMED": ["429033009"] },
+  "Primary malignant neoplasm of occipital lobe (disorder)": {
+    "SNOMED": ["93928006"]
+  },
+  "Primary malignant neoplasm of frontal lobe (disorder)": {
+    "SNOMED": ["93807001"]
+  },
+  "Primary malignant neoplasm of craniopharyngeal duct (disorder)": {
+    "SNOMED": ["93768004"]
+  },
+  "Primary malignant neoplasm of cerebrum (disorder)": {
+    "SNOMED": ["93749002"]
+  },
+  "Primary malignant neoplasm of cerebral ventricle (disorder)": {
+    "SNOMED": ["93748005"]
+  },
+  "Primary malignant neoplasm of cerebellum (disorder)": {
+    "SNOMED": ["93746009"]
+  },
+  "Primary malignant neoplasm of brain stem (disorder)": {
+    "SNOMED": ["93726004"]
+  },
+  "Malignant glioma of brainstem (disorder)": { "SNOMED": ["424276002"] },
+  "Anaplastic glioma of brain (disorder)": { "SNOMED": ["424151006"] },
+  "Malignant tumor of pineal gland (disorder)": { "SNOMED": ["363483004"] },
+  "Malignant tumor of pituitary gland (disorder)": { "SNOMED": ["363482009"] },
+  "Malignant neoplasm of brainstem (disorder)": { "SNOMED": ["363473003"] },
+  "Malignant neoplasm of cerebral ventricles (disorder)": {
+    "SNOMED": ["363471001"]
+  },
+  "Malignant neoplasm of occipital lobe (disorder)": {
+    "SNOMED": ["363470000"]
+  },
+  "Malignant neoplasm of parietal lobe (disorder)": { "SNOMED": ["363469001"] },
+  "Malignant neoplasm of temporal lobe (disorder)": { "SNOMED": ["363468009"] },
+  "Malignant neoplasm of frontal lobe (disorder)": { "SNOMED": ["363467004"] },
+  "Neuroblastoma of brain (disorder)": { "SNOMED": ["281560004"] },
+  "Medulloblastoma of cerebellum (disorder)": { "SNOMED": ["277505007"] },
+  "Primary cerebral lymphoma (disorder)": { "SNOMED": ["276836002"] },
+  "Glioblastoma multiforme of brain (disorder)": { "SNOMED": ["276828006"] },
+  "Malignant glioma of brain (disorder)": { "SNOMED": ["276826005"] },
+  "Malignant tumor of pituitary and hypothalamus (disorder)": {
+    "SNOMED": ["255112006"]
+  },
+  "Malignant tumor of olfactory tract (disorder)": { "SNOMED": ["254969001"] },
+  "Pituitary carcinoma (disorder)": { "SNOMED": ["254955001"] },
+  "Malignant tumor of craniopharyngeal duct (disorder)": {
+    "SNOMED": ["188340000"]
+  },
+  "Malignant neoplasm of pituitary gland and craniopharyngeal duct (disorder)": {
+    "SNOMED": ["188339002"]
+  },
+  "Malignant neoplasm of olfactory bulb (disorder)": {
+    "SNOMED": ["188308004"]
+  },
+  "Malignant neoplasm of tapetum (disorder)": { "SNOMED": ["188302003"] },
+  "Malignant neoplasm of corpus callosum (disorder)": {
+    "SNOMED": ["188301005"]
+  },
+  "Malignant neoplasm of pons (disorder)": { "SNOMED": ["188298006"] },
+  "Malignant neoplasm of midbrain (disorder)": { "SNOMED": ["188297001"] },
+  "Malignant neoplasm of medulla oblongata (disorder)": {
+    "SNOMED": ["188296005"]
+  },
+  "Malignant neoplasm of cerebral peduncle (disorder)": {
+    "SNOMED": ["188295009"]
+  },
+  "Malignant neoplasm of floor of cerebral ventricle (disorder)": {
+    "SNOMED": ["188293002"]
+  },
+  "Malignant tumor of choroid plexus (disorder)": { "SNOMED": ["188292007"] },
+  "Malignant neoplasm of uncus (disorder)": { "SNOMED": ["188290004"] },
+  "Malignant neoplasm of hippocampus (disorder)": { "SNOMED": ["188289008"] },
+  "Malignant neoplasm of thalamus (disorder)": { "SNOMED": ["188287005"] },
+  "Malignant tumor of hypothalamus (disorder)": { "SNOMED": ["188286001"] },
+  "Malignant neoplasm of globus pallidus (disorder)": {
+    "SNOMED": ["188285002"]
+  },
+  "Malignant neoplasm of corpus striatum (disorder)": {
+    "SNOMED": ["188283009"]
+  },
+  "Malignant neoplasm of cerebral cortex (disorder)": {
+    "SNOMED": ["188282004"]
+  },
+  "Malignant neoplasm of basal ganglia (disorder)": { "SNOMED": ["188281006"] },
+  "Malignant neoplasm of cerebrum (excluding lobes and ventricles) (disorder)": {
+    "SNOMED": ["188280007"]
+  },
+  "Overlapping malignant neoplasm of brain (disorder)": {
+    "SNOMED": ["109912006"]
+  },
+  "Primary malignant neoplasm of temporal lobe (disorder)": {
+    "SNOMED": ["94086000"]
+  },
+  "Primary malignant neoplasm of pituitary gland (disorder)": {
+    "SNOMED": ["93964007"]
+  },
+  "Primary malignant neoplasm of pineal gland (disorder)": {
+    "SNOMED": ["93962006"]
+  },
+  "Primary malignant neoplasm of parietal lobe (disorder)": {
+    "SNOMED": ["93946000"]
+  },
+  "Glioblastoma multiforme of central nervous system (disorder)": {
+    "SNOMED": ["147131000119101"]
+  },
+  "Giant cell glioblastoma of central nervous system (disorder)": {
+    "SNOMED": ["1157062009"]
+  },
+  "Glioblastoma multiforme (disorder)": { "SNOMED": ["393563007"] },
+  "Glioblastoma multiforme of spinal cord (disorder)": {
+    "SNOMED": ["276829003"]
+  },
+  "Astrocytoma low grade (morphologic abnormality)": {
+    "SNOMED": ["1157041008"]
+  },
+  "Glioblastoma (morphologic abnormality)": { "SNOMED": ["1163375002"] },
+  "Giant cell glioblastoma (morphologic abnormality)": {
+    "SNOMED": ["44529004"]
+  },
+  "Small cell glioblastoma (morphologic abnormality)": {
+    "SNOMED": ["384992008"]
+  },
+  "Epithelioid glioblastoma (morphologic abnormality)": {
+    "SNOMED": ["733837004"]
+  },
+  "Gliosarcoma (morphologic abnormality)": { "SNOMED": ["35262004"] },
+  "Glioblastoma isocitrate dehydrogenase wildtype (morphologic abnormality)": {
+    "SNOMED": ["733889009"]
+  },
+  "Glioblastoma isocitrate dehydrogenase 1 mutation (morphologic abnormality)": {
+    "SNOMED": ["733888001"]
+  },
+  "Monstrocellular sarcoma (morphologic abnormality)": {
+    "SNOMED": ["189923008"]
+  },
+  "Carcinoma of prostate (disorder)": { "SNOMED": ["254900004"] },
+  "Familial malignant neoplasm of prostate (disorder)": {
+    "SNOMED": ["715412008"]
+  },
+  "Hormone sensitive prostate cancer (disorder)": { "SNOMED": ["722103009"] },
+  "Adenocarcinoma of prostate (disorder)": { "SNOMED": ["399490008"] },
+  "Infiltrating duct carcinoma of prostate (disorder)": {
+    "SNOMED": ["823017009"]
+  },
+  "Recurrent malignant neoplasm of prostate (disorder)": {
+    "SNOMED": ["1.09898E+15"]
+  },
+  "Acinar cell cystadenocarcinoma of prostate (disorder)": {
+    "SNOMED": ["822970008"]
+  },
+  "Primary malignant neoplasm of prostate metastatic to bone (disorder)": {
+    "SNOMED": ["712849003"]
+  },
+  "Hormone refractory prostate cancer (disorder)": { "SNOMED": ["427492003"] },
+  "Squamous cell carcinoma of prostate (disorder)": { "SNOMED": ["399590005"] },
+  "Malignant tumor involving prostate by separate metastasis from bladder (disorder)": {
+    "SNOMED": ["369486003"]
+  },
+  "Malignant tumor involving prostate by direct extension from bladder (disorder)": {
+    "SNOMED": ["369485004"]
+  },
+  "Local recurrence of malignant tumor of prostate (disorder)": {
+    "SNOMED": ["314969001"]
+  },
+  "Endometrioid carcinoma of prostate (disorder)": { "SNOMED": ["278060005"] },
+  "Infiltrating duct carcinoma (morphologic abnormality)": {
+    "SNOMED": ["82711006"]
+  },
+  "Salivary duct carcinoma (morphologic abnormality)": {
+    "SNOMED": ["397082006"]
+  },
+  "Invasive ductal carcinoma with an extensive intraductal component (morphologic abnormality)": {
+    "SNOMED": ["373395001"]
+  },
+  "Malignant tumor, clear cell type (morphologic abnormality)": {
+    "SNOMED": ["128627007"]
+  },
+  "Mucinous adenocarcinoma (morphologic abnormality)": {
+    "SNOMED": ["72495009"]
+  },
+  "Mucinous minimally invasive adenocarcinoma (morphologic abnormality)": {
+    "SNOMED": ["733884004"]
+  },
+  "Mucinous adenocarcinoma, endocervical, gastric type (morphologic abnormality)": {
+    "SNOMED": ["703569004"]
+  },
+  "Mucinous eccrine carcinoma (morphologic abnormality)": {
+    "SNOMED": ["399540006"]
+  },
+  "Mucinous adenocarcinoma, intestinal type (morphologic abnormality)": {
+    "SNOMED": ["399449005"]
+  },
+  "Mucinous adenocarcinoma, endocervical type (morphologic abnormality)": {
+    "SNOMED": ["128695008"]
+  },
+  "Atypical medullary carcinoma (morphologic abnormality)": {
+    "SNOMED": ["128698005"]
+  },
+  "Indolent multiple myeloma (disorder)": { "SNOMED": ["441313008"] },
+  "Asymptomatic multiple myeloma (disorder)": { "SNOMED": ["440422002"] },
+  "Osteosclerotic myeloma (disorder)": { "SNOMED": ["425657001"] },
+  "Plasma cell myeloma/plasmacytoma (disorder)": { "SNOMED": ["415110002"] },
+  "Kappa light chain myeloma (disorder)": { "SNOMED": ["414553000"] },
+  "Smoldering myeloma (disorder)": { "SNOMED": ["413587002"] },
+  "Lambda light chain myeloma (disorder)": { "SNOMED": ["313427003"] },
+  "Immunoglobulin D myeloma (disorder)": { "SNOMED": ["285422003"] },
+  "Immunoglobulin G myeloma (disorder)": { "SNOMED": ["285421005"] },
+  "Immunoglobulin A myeloma (disorder)": { "SNOMED": ["285420006"] },
+  "Non-secretory myeloma (disorder)": { "SNOMED": ["277580004"] },
+  "Light chain myeloma (disorder)": { "SNOMED": ["277579002"] },
+  "Plasma cell leukemia, disease (disorder)": { "SNOMED": ["95210003"] },
+  "Brachytherapy-radiation": {
+    "SNOMED": [
+      "152198000",
+      "14473006",
+      "228685000",
+      "228689006",
+      "228687008",
+      "228692005",
+      "836429007",
+      "394902000",
+      "228681009",
+      "700357007",
+      "228690002",
+      "700356003",
+      "228677009",
+      "228696008",
+      "228684001",
+      "113120007",
+      "384691004",
+      "228694006",
+      "228695007",
+      "384692006",
+      "228691003",
+      "228693000",
+      "228686004",
+      "228688003",
+      "448137007",
+      "714029009",
+      "228682002",
+      "438629002",
+      "773335005",
+      "448552007",
+      "312244008",
+      "312243002",
+      "449157000",
+      "448467008",
+      "431399005"
     ]
   },
-  "External beam radiation therapy protons (procedure)": {
+  "Pneumonectomy-surgery": {
     "SNOMED": [
-      "10611004"
+      "49795001",
+      "232646009",
+      "232647000",
+      "232643001",
+      "232642006",
+      "735015005",
+      "35016006",
+      "232644007",
+      "25321000",
+      "91596000",
+      "232647000",
+      "43232006"
     ]
   },
-  "Radical prostatectomy (procedure)": {
+  "Lobectomy-surgery": {
     "SNOMED": [
-      "26294005"
+      "125571002",
+      "173171007",
+      "359623004",
+      "359615001",
+      "75935006",
+      "726426008",
+      "726427004",
+      "726425007",
+      "726428009",
+      "736974006",
+      "119000",
+      "739139005",
+      "739141006",
+      "84840003",
+      "232641004"
     ]
   },
-  "Open prostatectomy (procedure)": {
+  "Segmentectomy_wedge_resection-surgery": {
+    "SNOMED": ["20418004", "444188003", "173172000"]
+  },
+  "Sleeve_resection-surgery": {
+    "SNOMED": ["232647000", "447975009", "116165008"]
+  },
+  "Colectomy-surgery": {
     "SNOMED": [
-      "176258007"
+      "10371000132109",
+      "858579005",
+      "787876003",
+      "787875004",
+      "787874000",
+      "787109009",
+      "787108001",
+      "773129000",
+      "773128008",
+      "771568007",
+      "738552004",
+      "738551006",
+      "713165008",
+      "450462007",
+      "450461000",
+      "448050005",
+      "447946003",
+      "447166008",
+      "446747005",
+      "446521004",
+      "446472006",
+      "446228006",
+      "446223002",
+      "446222007",
+      "445884009",
+      "444165004",
+      "443909001",
+      "443480008",
+      "440033009",
+      "427997001",
+      "426699005",
+      "425851003",
+      "386197003",
+      "359571009",
+      "315327002",
+      "315326006",
+      "315325005",
+      "315324009",
+      "315322008",
+      "315321001",
+      "311774002",
+      "307669001",
+      "307667004",
+      "307666008",
+      "307662005",
+      "307659007",
+      "307658004",
+      "307657009",
+      "307656000",
+      "307654002",
+      "307648003",
+      "307645000",
+      "307644001",
+      "307586000",
+      "307507006",
+      "304587000",
+      "304583001",
+      "301699000",
+      "287815004",
+      "276190007",
+      "275017002",
+      "274025005",
+      "265412004",
+      "265411006",
+      "235325001",
+      "174207007",
+      "174171002",
+      "174101001",
+      "174100000",
+      "174094003",
+      "174093009",
+      "174087001",
+      "174086005",
+      "174081000",
+      "174080004",
+      "174073001",
+      "174072006",
+      "174071004",
+      "174059005",
+      "89339008",
+      "87602008",
+      "87279008",
+      "84952009",
+      "84604002",
+      "82900007",
+      "82619000",
+      "81092009",
+      "80294005",
+      "75404005",
+      "75312003",
+      "73996007",
+      "73509004",
+      "54164009",
+      "53003006",
+      "50774009",
+      "44751009",
+      "44642007",
+      "44378008",
+      "43075005",
+      "41330009"
     ]
   },
-  "Radical retropubic prostatectomy (procedure)": {
+  "Colostomy-surgery": {
     "SNOMED": [
-      "65551008"
+      "1186912002",
+      "448653006",
+      "447982008",
+      "398740003",
+      "387607004",
+      "387606008",
+      "386829005",
+      "386828002",
+      "386651004",
+      "307657009",
+      "307645000",
+      "299682000",
+      "299681007",
+      "261766001",
+      "89642006",
+      "89339008",
+      "73509004",
+      "62069000",
+      "54629001",
+      "51977003",
+      "49924002",
+      "46295004",
+      "44642007",
+      "37828009",
+      "35535008",
+      "25196007",
+      "24221008",
+      "17671008",
+      "16564004",
+      "11626008",
+      "9905009",
+      "4044002"
     ]
   },
-  "Radical perineal prostatectomy (procedure)": {
-    "SNOMED": [
-      "8782006"
+  "ramucirumab": {
+    "RxNorm": [
+      "1535993",
+      "1535922",
+      "1657777",
+      "1657781",
+      "1535994",
+      "1657776",
+      "1535996",
+      "1657775",
+      "1657780",
+      "1535989",
+      "1657774",
+      "1535990"
     ]
   },
-  "Laparoscopic radical prostatectomy using robotic assistance (procedure)": {
-    "SNOMED": [
-      "708919000"
+  "erlotinib": {
+    "RxNorm": [
+      "337526",
+      "337525",
+      "477320",
+      "1088251",
+      "1088253",
+      "1088255",
+      "1088250",
+      "1088252",
+      "1088254",
+      "540423",
+      "603208",
+      "603206",
+      "603203",
+      "603202",
+      "603205",
+      "603207",
+      "477321",
+      "1162503",
+      "1162504",
+      "1179040",
+      "1179041"
     ]
   },
-  "Total orchidectomy (procedure)": {
+  "afatinib": {
+    "RxNorm": [
+      "1430268",
+      "1430438",
+      "1430441",
+      "1430453",
+      "1430457",
+      "1430449",
+      "1430447",
+      "1430452",
+      "1430456",
+      "1430448",
+      "1430451",
+      "1430446",
+      "1430455",
+      "1430442",
+      "1430450",
+      "1430454",
+      "1430445",
+      "1430443",
+      "1430444",
+      "1430271",
+      "1430272"
+    ]
+  },
+  "gefitinib": {
+    "RxNorm": [
+      "281883",
+      "328134",
+      "402091",
+      "576099",
+      "402435",
+      "349472",
+      "358777",
+      "378629",
+      "1156708",
+      "1156709",
+      "1176762",
+      "1176763"
+    ]
+  },
+  "osimertinib": {
+    "RxNorm": [
+      "1721566",
+      "1721560",
+      "1721559",
+      "1721583",
+      "1721571",
+      "1721567",
+      "1721582",
+      "1721568",
+      "1721581",
+      "1721565",
+      "1721561",
+      "1721580",
+      "1721564",
+      "1721562",
+      "1721563",
+      "1721569",
+      "1721570"
+    ]
+  },
+  "dacomitinib": {
+    "RxNorm": [
+      "2058916",
+      "2058849",
+      "2058848",
+      "2058932",
+      "2058926",
+      "2058922",
+      "2058917",
+      "2058925",
+      "2058931",
+      "2058919",
+      "2058930",
+      "2058915",
+      "2058924",
+      "2058910",
+      "2058923",
+      "2058929",
+      "2058914",
+      "2058911",
+      "2058913",
+      "2058920",
+      "2058921"
+    ]
+  },
+  "tak_788": {
+    "RxNorm": [
+      "2570743",
+      "316965",
+      "2570736",
+      "2570737",
+      "2570748",
+      "2570744",
+      "2570747",
+      "2570742",
+      "2570738",
+      "2570741",
+      "2570739",
+      "2570740",
+      "2570745",
+      "2570746"
+    ]
+  },
+  "vandetanib": {
+    "RxNorm": [
+      "1114071",
+      "1098413",
+      "1114074",
+      "1114096",
+      "1114072",
+      "1114095",
+      "1114073",
+      "1172982",
+      "1173663",
+      "1098416",
+      "1098418",
+      "1098414",
+      "1098417",
+      "1098415",
+      "1160503",
+      "1160504"
+    ]
+  },
+  "panitumumab": {
+    "RxNorm": [
+      "675979",
+      "263034",
+      "1657723",
+      "1657705",
+      "667895",
+      "1657704",
+      "1657703",
+      "1657722",
+      "667879",
+      "1657702",
+      "1160730",
+      "1187748"
+    ]
+  },
+  "cetuximab": {
+    "RxNorm": [
+      "355460",
+      "318341",
+      "1657660",
+      "1657664",
+      "544717",
+      "1657659",
+      "1657663",
+      "1657658",
+      "485253",
+      "1657657",
+      "1161239",
+      "1168274"
+    ]
+  },
+  "necitumumab": {
+    "RxNorm": [
+      "1723746",
+      "1723738",
+      "1723750",
+      "1723747",
+      "1723748",
+      "1723745",
+      "1723741",
+      "1723744",
+      "1723742",
+      "1723749"
+    ]
+  },
+  "capmatinib": {
+    "RxNorm": [
+      "2362235",
+      "2362165",
+      "2362259",
+      "2362244",
+      "2362240",
+      "2362236",
+      "2362243",
+      "2362237",
+      "2362234",
+      "2362242",
+      "2362230",
+      "2362241",
+      "2362233",
+      "2362231",
+      "2362232",
+      "2362238",
+      "2362239"
+    ]
+  },
+  "pralsetinib": {
+    "RxNorm": [
+      "2394942",
+      "2394936",
+      "2394947",
+      "2394943",
+      "2394944",
+      "2394941",
+      "2394937",
+      "2394940",
+      "2394938",
+      "2394939",
+      "2394945",
+      "2394946"
+    ]
+  },
+  "ado_trastuzumab_emtansine": {
+    "RxNorm": [
+      "1371046",
+      "224905",
+      "1371041",
+      "1658087",
+      "1658091",
+      "1658085",
+      "1658090",
+      "1658086",
+      "1371049",
+      "1658084",
+      "1658089",
+      "1658082",
+      "1658088",
+      "1922508",
+      "1162762"
+    ]
+  },
+  "crizotinib": {
+    "RxNorm": [
+      "1148499",
+      "316965",
+      "1148495",
+      "1148506",
+      "1148502",
+      "1148500",
+      "1148505",
+      "1148501",
+      "1148504",
+      "1148498",
+      "1148496",
+      "1148503",
+      "1148497",
+      "1165616",
+      "1165617",
+      "1186298",
+      "1186299"
+    ]
+  },
+  "ceritinib": {
+    "RxNorm": [
+      "1535463",
+      "1535457",
+      "2121061",
+      "1535468",
+      "1535464",
+      "1535465",
+      "2121060",
+      "1535462",
+      "2121059",
+      "1535458",
+      "1535461",
+      "2121058",
+      "1535459",
+      "1535460",
+      "1535466",
+      "1535467"
+    ]
+  },
+  "alectinib": {
+    "RxNorm": [
+      "1727480",
+      "1727455",
+      "1727454",
+      "1727485",
+      "1727481",
+      "1727482",
+      "1727479",
+      "1727475",
+      "1727478",
+      "1727476",
+      "1727477",
+      "1727483",
+      "1727484"
+    ]
+  },
+  "brigatinib": {
+    "RxNorm": [
+      "1921223",
+      "1988786",
+      "1988785",
+      "1921217",
+      "1988768",
+      "1921228",
+      "1988772",
+      "1988767",
+      "1988771",
+      "1921224",
+      "1921225",
+      "1921222",
+      "1925494",
+      "1988770",
+      "1988769",
+      "1921218",
+      "1925493",
+      "1921221",
+      "1921219",
+      "1921220",
+      "1921226",
+      "1921227"
+    ]
+  },
+  "lorlatinib": {
+    "RxNorm": [
+      "2103170",
+      "2103164",
+      "2103179",
+      "2103175",
+      "2103171",
+      "2103178",
+      "2103172",
+      "2103169",
+      "2103177",
+      "2103165",
+      "2103176",
+      "2103168",
+      "2103166",
+      "2103167",
+      "2103173",
+      "2103174"
+    ]
+  },
+  "dabrafenib": {
+    "RxNorm": [
+      "1425223",
+      "1424911",
+      "1425222",
+      "1425228",
+      "1425230",
+      "1425224",
+      "1425229",
+      "1425225",
+      "1424918",
+      "1424916",
+      "1424912",
+      "1424917",
+      "1424915",
+      "1424913",
+      "1424914",
+      "1425226",
+      "1425227"
+    ]
+  },
+  "trametinib": {
+    "RxNorm": [
+      "1425105",
+      "1425099",
+      "1425098",
+      "1425118",
+      "1425110",
+      "1425106",
+      "1425117",
+      "1425107",
+      "1425116",
+      "1425104",
+      "1425100",
+      "1425115",
+      "1425103",
+      "1425101",
+      "1425102",
+      "1425108",
+      "1425109"
+    ]
+  },
+  "larotrectinib": {
+    "RxNorm": [
+      "2105640",
+      "2105628",
+      "2104548",
+      "2105645",
+      "2105653",
+      "2105657",
+      "2105641",
+      "2105650",
+      "2105656",
+      "2105642",
+      "2105651",
+      "2105633",
+      "2105655",
+      "2105649",
+      "2105629",
+      "2105646",
+      "2105654",
+      "2105632",
+      "2105648",
+      "2105630",
+      "2105631",
+      "2105647",
+      "2105643",
+      "2105644",
+      "2105652"
+    ]
+  },
+  "entrectinib": {
+    "RxNorm": [
+      "2197868",
+      "2197862",
+      "2197873",
+      "2197877",
+      "2197869",
+      "2197876",
+      "2197870",
+      "2197875",
+      "2197867",
+      "2197863",
+      "2197874",
+      "2197866",
+      "2197864",
+      "2197865",
+      "2197871",
+      "2197872"
+    ]
+  },
+  "durvalumab": {
+    "RxNorm": [
+      "1919508",
+      "1919503",
+      "1919512",
+      "1919516",
+      "1919509",
+      "1919510",
+      "1919515",
+      "1919507",
+      "1919504",
+      "1919506",
+      "1919505",
+      "1919511"
+    ]
+  },
+  "ipilimumab": {
+    "RxNorm": [
+      "1094837",
+      "1094833",
+      "1657013",
+      "1657007",
+      "1094838",
+      "1657006",
+      "1657012",
+      "1657005",
+      "1094834",
+      "1657004",
+      "1161327",
+      "1186646"
+    ]
+  },
+  "other_pd1_pdl1": {
+    "RxNorm": [
+      "2058831",
+      "2058826",
+      "2058825",
+      "2058835",
+      "2058832",
+      "2058833",
+      "2058834",
+      "2058830",
+      "2058827",
+      "2058829",
+      "2058828",
+      "2539973",
+      "2539967",
+      "2539968",
+      "2539977",
+      "2539974",
+      "2539975",
+      "2539976",
+      "2539972",
+      "2539969",
+      "2539971",
+      "2539970",
+      "1875543",
+      "1875534",
+      "1875547",
+      "1875544",
+      "1875545",
+      "1875546",
+      "1875542",
+      "1875539",
+      "1875541",
+      "1875540"
+    ]
+  },
+  "eloxatin": {
+    "RxNorm": [
+      "32592",
+      "1736781",
+      "1736784",
+      "1736776",
+      "1797528",
+      "1736786",
+      "358819",
+      "1736783",
+      "1736785",
+      "1736775",
+      "1160121"
+    ]
+  },
+  "zaltrap": {
+    "RxNorm": [
+      "1304480",
+      "1232150",
+      "1304475",
+      "1723194",
+      "1723189",
+      "1304481",
+      "1723188",
+      "1723193",
+      "1723187",
+      "1304476",
+      "1723180",
+      "1232152",
+      "1304483"
+    ]
+  },
+  "encorafenib": {
+    "RxNorm": [
+      "2049112",
+      "2049106",
+      "2049117",
+      "2049121",
+      "2049113",
+      "2049120",
+      "2049114",
+      "2049119",
+      "2049111",
+      "2049107",
+      "2049118",
+      "2049110",
+      "2049108",
+      "2049109",
+      "2049115",
+      "2049116"
+    ]
+  },
+  "lonsurf": {
+    "RxNorm": [
+      "1670317",
+      "10803",
+      "1670304",
+      "1670310",
+      "1670322",
+      "1670324",
+      "1670318",
+      "1670323",
+      "1670319",
+      "1670320",
+      "1670321",
+      "1670311",
+      "1670316",
+      "1670305",
+      "1670306",
+      "1670314",
+      "1670315",
+      "1670309",
+      "1670307",
+      "1670308"
+    ]
+  },
+  "stivarga": {
+    "RxNorm": [
+      "1312403",
+      "1312397",
+      "1371319",
+      "1312408",
+      "1312404",
+      "1312405",
+      "1312406",
+      "1312407",
+      "1312402",
+      "1312398",
+      "1312401",
+      "1312399",
+      "1312400"
+    ]
+  },
+  "lomustine": {
+    "RxNorm": [
+      "1545771",
+      "6466",
+      "1545778",
+      "1720737",
+      "1545776",
+      "1545780",
+      "1545772",
+      "1545777",
+      "1545779",
+      "1720736",
+      "1545773",
+      "1720735",
+      "197896",
+      "197894",
+      "197895",
+      "316160",
+      "316161",
+      "316162",
+      "1720734",
+      "372631",
+      "1165319",
+      "1165320",
+      "1545774",
+      "1545775"
+    ]
+  },
+  "carmustine": {
+    "RxNorm": [
+      "217357",
+      "343027",
+      "657710",
+      "2105",
+      "105552",
+      "212994",
+      "572946",
+      "1729370",
+      "405951",
+      "1729371",
+      "309013",
+      "309012",
+      "340520",
+      "1729367",
+      "378774",
+      "1729368",
+      "1151413",
+      "1151727",
+      "1171232",
+      "1173621"
+    ]
+  },
+  "procarbazine": {
+    "RxNorm": [
+      "203801",
+      "8702",
+      "66925",
+      "207588",
+      "568345",
+      "366728",
+      "314167",
+      "328546",
+      "373602",
+      "1161732",
+      "1161733",
+      "1181565",
+      "1181566"
+    ]
+  },
+  "vincristine": {
+    "RxNorm": [
+      "227575",
+      "1304996",
+      "11202",
+      "11203",
+      "1304990",
+      "1304991",
+      "1863347",
+      "1305000",
+      "1863355",
+      "894894",
+      "1304997",
+      "1863346",
+      "2284505",
+      "1304995",
+      "1863343",
+      "1863354",
+      "894892",
+      "1304992",
+      "1863342",
+      "1160531",
+      "1304999",
+      "1186612"
+    ]
+  },
+  "other_anti_angiogenic": {
+    "RxNorm": [
+      "1232155",
+      "1304480",
+      "1232150",
+      "1304475",
+      "1232159",
+      "1723189",
+      "1723194",
+      "1232156",
+      "1304481",
+      "1723182",
+      "1723188",
+      "1232158",
+      "1304483",
+      "1232154",
+      "1723187",
+      "1723193",
+      "1232151",
+      "1304476",
+      "1723180",
+      "1232152",
+      "1535993",
+      "1649574",
+      "1151126",
+      "1535922",
+      "1657777",
+      "1657781",
+      "1535994",
+      "1657776",
+      "1535996",
+      "1657775",
+      "1657780",
+      "1535989",
+      "1657774",
+      "1535990",
+      "616274",
+      "357977",
+      "616275",
+      "1541928",
+      "616283",
+      "616287",
+      "616292",
+      "1541927",
+      "616281",
+      "616286",
+      "616291",
+      "616282",
+      "1185474",
+      "1185475",
+      "1541890",
+      "616279",
+      "616285",
+      "616289",
+      "1541889",
+      "616277",
+      "616284",
+      "616288",
+      "616278",
+      "1160852",
+      "1160853",
+      "619985",
+      "495881",
+      "597744",
+      "615979",
+      "615977",
+      "615978",
+      "1182862",
+      "1182863",
+      "597747",
+      "597745",
+      "597746",
+      "1159691",
+      "1159692",
+      "1243005",
+      "1242999",
+      "1243010",
+      "1243014",
+      "1243006",
+      "1243013",
+      "1243007",
+      "1243008",
+      "1243009",
+      "1243004",
+      "1243012",
+      "1243000",
+      "1243011",
+      "1243003",
+      "1243001",
+      "1243002",
+      "1312403",
+      "1312397",
+      "1371319",
+      "1312408",
+      "1312404",
+      "1312405",
+      "1312406",
+      "1312407",
+      "1312402",
+      "1312398",
+      "1312401",
+      "1312399",
+      "1312400",
+      "1363274",
+      "1790162",
+      "1363408",
+      "1363410",
+      "1364581",
+      "1363312",
+      "1363409",
+      "1364580",
+      "1363268",
+      "1363267",
+      "1363279",
+      "1363284",
+      "1790167",
+      "1790171",
+      "1790175",
+      "1363275",
+      "1363283",
+      "1790163",
+      "1790170",
+      "1790174",
+      "1363276",
+      "1790164",
+      "1363277",
+      "1363278",
+      "1790165",
+      "1790166",
+      "1363273",
+      "1363281",
+      "1790161",
+      "1790169",
+      "1790173",
+      "1363269",
+      "1363280",
+      "1790168",
+      "1790172",
+      "1363272",
+      "1790160",
+      "1363270",
+      "1363271"
+    ]
+  },
+  "other_anti_pd_antibody": {
+    "RxNorm": [
+      "2058831",
+      "2058826",
+      "2058825",
+      "2058835",
+      "2058832",
+      "2058833",
+      "2058834",
+      "2058830",
+      "2058827",
+      "2058829",
+      "2058828",
+      "1792781",
+      "1792776",
+      "1792785",
+      "2119696",
+      "1792782",
+      "1792783",
+      "1792784",
+      "1792780",
+      "2119695",
+      "1792777",
+      "1792779",
+      "1792778",
+      "2539973",
+      "2539967",
+      "2539968",
+      "2539977",
+      "2539974",
+      "2539975",
+      "2539976",
+      "2539972",
+      "2539969",
+      "2539971",
+      "2539970",
+      "1919508",
+      "1649574",
+      "1151126",
+      "1919503",
+      "1919512",
+      "1919516",
+      "1919509",
+      "1919510",
+      "1919511",
+      "1919507",
+      "1919515",
+      "1919504",
+      "1919506",
+      "1919505",
+      "1875543",
+      "1875534",
+      "1875547",
+      "1875544",
+      "1875545",
+      "1875546",
+      "1875542",
+      "1875539",
+      "1875541",
+      "1875540"
+    ]
+  },
+  "interferon": {
+    "RxNorm": [
+      "5879",
+      "284174",
+      "331515",
+      "374394",
+      "1158018",
+      "545290",
+      "5880",
+      "1251596",
+      "1720881",
+      "207029",
+      "207035",
+      "545293",
+      "1720879",
+      "1720887",
+      "1720909",
+      "545291",
+      "567825",
+      "1720880",
+      "362563",
+      "1173444",
+      "1232574",
+      "1720878",
+      "204445",
+      "311078",
+      "545289",
+      "1720876",
+      "1720885",
+      "1720907",
+      "346254",
+      "346257",
+      "1720877",
+      "370692",
+      "1158020",
+      "612937",
+      "314687",
+      "202912",
+      "261717",
+      "215103",
+      "598014",
+      "598012",
+      "598013",
+      "1175509",
+      "615136",
+      "615134",
+      "615135",
+      "1158022",
+      "59744",
+      "1160699",
+      "153326",
+      "228271",
+      "1650282",
+      "795749",
+      "1650268",
+      "758030",
+      "75917",
+      "153324",
+      "1649996",
+      "1650004",
+      "1650012",
+      "1650901",
+      "727816",
+      "758027",
+      "758032",
+      "795748",
+      "1651246",
+      "575912",
+      "575913",
+      "727814",
+      "1649995",
+      "1650900",
+      "1651247",
+      "727815",
+      "758026",
+      "1175701",
+      "1178325",
+      "153323",
+      "1649994",
+      "1650003",
+      "1650011",
+      "1650899",
+      "727813",
+      "758025",
+      "758028",
+      "758029",
+      "1651243",
+      "358790",
+      "358791",
+      "727811",
+      "1649993",
+      "1651244",
+      "727812",
+      "1158024",
+      "82828",
+      "860241",
+      "72257",
+      "72258",
+      "207059",
+      "860244",
+      "1721325",
+      "1721328",
+      "1721326",
+      "1721329",
+      "1172925",
+      "1173906",
+      "198360",
+      "1721322",
+      "1721323",
+      "1160700",
+      "1421648",
+      "1421647",
+      "1314240",
+      "258348",
+      "5882",
+      "751970",
+      "751968",
+      "1720958",
+      "1169907",
+      "240448",
+      "360572",
+      "1720955",
+      "1158025",
+      "5885",
+      "4381"
+    ]
+  },
+  "il_2": {
+    "RxNorm": [
+      "203760",
+      "70223",
+      "105648",
+      "1719783",
+      "1719784",
+      "1180698",
+      "307816",
+      "1719780",
+      "1719781",
+      "1154611"
+    ]
+  },
+  "mtor": {
+    "RxNorm": [
+      "845509",
+      "1151137",
+      "141704",
+      "1119402",
+      "1310138",
+      "1310144",
+      "1310147",
+      "845512",
+      "845518",
+      "998191",
+      "1119401",
+      "1869515",
+      "1869520",
+      "845510",
+      "845517",
+      "998190",
+      "1869516",
+      "845511",
+      "1172066",
+      "1172067",
+      "1310137",
+      "1119400",
+      "1308428",
+      "1308430",
+      "1308432",
+      "845507",
+      "845515",
+      "998189",
+      "1119399",
+      "1869512",
+      "1869518",
+      "845505",
+      "845514",
+      "998188",
+      "1869513",
+      "845506",
+      "1163786",
+      "1163787",
+      "1308426",
+      "723805",
+      "657797",
+      "725108",
+      "725106",
+      "1724306",
+      "1178590",
+      "722289",
+      "722287",
+      "1724304",
+      "1161488",
+      "977428",
+      "2056897",
+      "977431",
+      "977436",
+      "977440",
+      "2056896",
+      "977429",
+      "977435",
+      "977439",
+      "977430",
+      "1186316",
+      "1186317",
+      "2056895",
+      "977427",
+      "977434",
+      "977438",
+      "2056894",
+      "977426",
+      "977433",
+      "977437",
+      "258355",
+      "2586864",
+      "35302",
+      "2586868",
+      "351901",
+      "351989",
+      "404432",
+      "905160",
+      "2586865",
+      "575659",
+      "575733",
+      "576390",
+      "905159",
+      "2586867",
+      "364904",
+      "368672",
+      "1177701",
+      "1177702",
+      "1177703",
+      "2586866",
+      "2586863",
+      "314230",
+      "349208",
+      "360110",
+      "905158",
+      "2586860",
+      "333296",
+      "350512",
+      "360318",
+      "905157",
+      "2586862",
+      "375278",
+      "378277",
+      "1158757",
+      "1158758",
+      "1158759",
+      "2586861"
+    ]
+  },
+  "dexamethasone": {
+    "RxNorm": [
+      "1009389",
+      "1049383",
+      "134920",
+      "203704",
+      "203705",
+      "2045405",
+      "2108016",
+      "219289",
+      "220330",
+      "227682",
+      "2286256",
+      "404930",
+      "854178",
+      "1998481",
+      "1998482",
+      "2118829",
+      "2118835",
+      "2121735",
+      "2387356",
+      "795716",
+      "797022",
+      "797023",
+      "847225",
+      "1869595",
+      "1943550",
+      "2121587",
+      "2387355",
+      "759481",
+      "759696",
+      "759697",
+      "846192",
+      "3264",
+      "1007105",
+      "1007256",
+      "1007423",
+      "1007483",
+      "1007628",
+      "1007854",
+      "1008217",
+      "1008930",
+      "1009150",
+      "1009387",
+      "214478",
+      "216524",
+      "216525",
+      "465397",
+      "687304",
+      "813683",
+      "814504",
+      "815833",
+      "818139",
+      "820465",
+      "821542",
+      "822000",
+      "883815",
+      "22690",
+      "22694",
+      "235486",
+      "2378841",
+      "3265",
+      "48933",
+      "1009392",
+      "1011080",
+      "1049386",
+      "105392",
+      "1087757",
+      "1087919",
+      "2045409",
+      "205669",
+      "205712",
+      "205717",
+      "208591",
+      "208593",
+      "208601",
+      "208602",
+      "208813",
+      "208821",
+      "2108020",
+      "2286261",
+      "343040",
+      "404630",
+      "755976",
+      "854181",
+      "1009390",
+      "1011079",
+      "1049384",
+      "1087756",
+      "1087918",
+      "2045406",
+      "2108017",
+      "2286257",
+      "545158",
+      "564044",
+      "566561",
+      "566581",
+      "566603",
+      "566608",
+      "569262",
+      "569264",
+      "569272",
+      "569273",
+      "569462",
+      "569470",
+      "575233",
+      "854179",
+      "1009391",
+      "1049385",
+      "2045407",
+      "2108018",
+      "2286258",
+      "363482",
+      "365818",
+      "365842",
+      "367266",
+      "369461",
+      "405941",
+      "757087",
+      "854180",
+      "93249",
+      "93250",
+      "94334",
+      "94335",
+      "1170296",
+      "1170297",
+      "1170298",
+      "1170903",
+      "1175250",
+      "1175843",
+      "1177629",
+      "1179099",
+      "1179675",
+      "1181604",
+      "1182730",
+      "1182982",
+      "2045408",
+      "2108019",
+      "2286259",
+      "2286260",
+      "1009388",
+      "1049400",
+      "1116927",
+      "1249712",
+      "1374372",
+      "1812079",
+      "1812095",
+      "1812194",
+      "197576",
+      "197577",
+      "197579",
+      "197580",
+      "197581",
+      "197582",
+      "197583",
+      "2045404",
+      "2099700",
+      "2108015",
+      "2261802",
+      "226343",
+      "227142",
+      "248175",
+      "309679",
+      "309680",
+      "309682",
+      "309683",
+      "309684",
+      "309686",
+      "309692",
+      "309696",
+      "343033",
+      "388755",
+      "403908",
+      "435681",
+      "849115",
+      "854177",
+      "880649",
+      "1049399",
+      "1116926",
+      "1249711",
+      "1374371",
+      "1812078",
+      "2045403",
+      "2261801",
+      "2265538",
+      "315773",
+      "315774",
+      "315775",
+      "315776",
+      "315777",
+      "315778",
+      "315779",
+      "317346",
+      "317629",
+      "332981",
+      "332984",
+      "335766",
+      "339981",
+      "345816",
+      "438889",
+      "451789",
+      "854175",
+      "1009386",
+      "1812073",
+      "1812094",
+      "371721",
+      "371723",
+      "371725",
+      "371728",
+      "371729",
+      "374438",
+      "374698",
+      "374699",
+      "377418",
+      "377456",
+      "378984",
+      "393151",
+      "393542",
+      "405942",
+      "854176",
+      "1152113",
+      "1154245",
+      "1154246",
+      "1154247",
+      "1154249",
+      "1154524",
+      "1154525",
+      "1154527",
+      "1154528",
+      "1154529",
+      "1154531",
+      "1154532",
+      "1154533",
+      "1154534",
+      "1154535",
+      "1154536",
+      "1154537",
+      "1154539"
+    ]
+  },
+  "cabazitaxel": {
+    "RxNorm": [
+      "996055",
+      "996051",
+      "1376084",
+      "1376083",
+      "1812334",
+      "1001433",
+      "1001432",
+      "1812332",
+      "1164944",
+      "1167866"
+    ]
+  },
+  "mitoxantrone": {
+    "RxNorm": ["7005", "203129", "197989", "328493", "375173", "1165375"]
+  },
+  "triptorelin": {
+    "RxNorm": [
+      "905054",
+      "38782",
+      "338529",
+      "905060",
+      "905064",
+      "905057",
+      "905059",
+      "1863373",
+      "1863378",
+      "1863382",
+      "1863374",
+      "905053",
+      "199821",
+      "905062",
+      "1863370",
+      "1863376",
+      "1863380",
+      "1863371",
+      "1159353",
+      "1179671"
+    ]
+  },
+  "abiraterone": {
+    "RxNorm": [
+      "1100076",
+      "1100072",
+      "1100071",
+      "1918044",
+      "1100079",
+      "1100077",
+      "1918043",
+      "1100078",
+      "1100075",
+      "1918042",
+      "1100073",
+      "1918041",
+      "1100074",
+      "1163656",
+      "1163657",
+      "1186683",
+      "1186684"
+    ]
+  },
+  "ketoconazole": {
+    "RxNorm": [
+      "202692",
+      "6135",
+      "206978",
+      "608844",
+      "564507",
+      "608843",
+      "402946",
+      "106336",
+      "240812",
+      "330469",
+      "335100",
+      "377504",
+      "1160957",
+      "1295391",
+      "1184476",
+      "1296820"
+    ]
+  },
+  "flutamide": {
+    "RxNorm": [
+      "4508",
+      "199609",
+      "197726",
+      "315960",
+      "332500",
+      "372251",
+      "372252",
+      "1161458",
+      "1161459"
+    ]
+  },
+  "nilutamide": {
+    "RxNorm": [
+      "218741",
+      "31805",
+      "284551",
+      "574979",
+      "367745",
+      "311982",
+      "331558",
+      "373082",
+      "1158946",
+      "1158947",
+      "1183905",
+      "1183906"
+    ]
+  },
+  "strontium_89": {
+    "RxNorm": ["10122", "81638"]
+  },
+  "estramustine": {
+    "RxNorm": [
+      "3815",
+      "4089",
+      "105556",
+      "4090",
+      "205562",
+      "566462",
+      "366197",
+      "1175302",
+      "1175303",
+      "310194",
+      "330431",
+      "372082",
+      "1165764",
+      "1165765"
+    ]
+  },
+  "histrelin": {
+    "RxNorm": [
+      "220125",
+      "606382",
+      "50975",
+      "1294622",
+      "1294626",
+      "1294641",
+      "1740434",
+      "1740438",
+      "606384",
+      "726764",
+      "1184859",
+      "1187561",
+      "1740433",
+      "1740437",
+      "1740432",
+      "1740436",
+      "597332",
+      "1159514"
+    ]
+  },
+  "dexamethasone_prednisone": {
+    "RxNorm": [
+      "1009389",
+      "1049383",
+      "134920",
+      "203704",
+      "203705",
+      "2045405",
+      "2108016",
+      "219289",
+      "220330",
+      "227682",
+      "2286256",
+      "404930",
+      "854178",
+      "1998481",
+      "1998482",
+      "2118829",
+      "2118835",
+      "2121735",
+      "2387356",
+      "795716",
+      "797022",
+      "797023",
+      "847225",
+      "1869595",
+      "1943550",
+      "2121587",
+      "2387355",
+      "759481",
+      "759696",
+      "759697",
+      "846192",
+      "3264",
+      "1007105",
+      "1007256",
+      "1007423",
+      "1007483",
+      "1007628",
+      "1007854",
+      "1008217",
+      "1008930",
+      "1009150",
+      "1009387",
+      "214478",
+      "216524",
+      "216525",
+      "465397",
+      "687304",
+      "813683",
+      "814504",
+      "815833",
+      "818139",
+      "820465",
+      "821542",
+      "822000",
+      "883815",
+      "22690",
+      "22694",
+      "235486",
+      "2378841",
+      "3265",
+      "48933",
+      "1009392",
+      "1011080",
+      "1049386",
+      "105392",
+      "1087757",
+      "1087919",
+      "2045409",
+      "205669",
+      "205712",
+      "205717",
+      "208591",
+      "208593",
+      "208601",
+      "208602",
+      "208813",
+      "208821",
+      "2108020",
+      "2286261",
+      "343040",
+      "404630",
+      "755976",
+      "854181",
+      "1009390",
+      "1011079",
+      "1049384",
+      "1087756",
+      "1087918",
+      "2045406",
+      "2108017",
+      "2286257",
+      "545158",
+      "564044",
+      "566561",
+      "566581",
+      "566603",
+      "566608",
+      "569262",
+      "569264",
+      "569272",
+      "569273",
+      "569462",
+      "569470",
+      "575233",
+      "854179",
+      "1009391",
+      "1049385",
+      "2045407",
+      "2108018",
+      "2286258",
+      "363482",
+      "365818",
+      "365842",
+      "367266",
+      "369461",
+      "405941",
+      "757087",
+      "854180",
+      "93249",
+      "93250",
+      "94334",
+      "94335",
+      "1170296",
+      "1170297",
+      "1170298",
+      "1170903",
+      "1175250",
+      "1175843",
+      "1177629",
+      "1179099",
+      "1179675",
+      "1181604",
+      "1182730",
+      "1182982",
+      "2045408",
+      "2108019",
+      "2286259",
+      "2286260",
+      "1009388",
+      "1049400",
+      "1116927",
+      "1249712",
+      "1374372",
+      "1812079",
+      "1812095",
+      "1812194",
+      "197576",
+      "197577",
+      "197579",
+      "197580",
+      "197581",
+      "197582",
+      "197583",
+      "2045404",
+      "2099700",
+      "2108015",
+      "2261802",
+      "226343",
+      "227142",
+      "248175",
+      "309679",
+      "309680",
+      "309682",
+      "309683",
+      "309684",
+      "309686",
+      "309692",
+      "309696",
+      "343033",
+      "388755",
+      "403908",
+      "435681",
+      "849115",
+      "854177",
+      "880649",
+      "1049399",
+      "1116926",
+      "1249711",
+      "1374371",
+      "1812078",
+      "2045403",
+      "2261801",
+      "2265538",
+      "315773",
+      "315774",
+      "315775",
+      "315776",
+      "315777",
+      "315778",
+      "315779",
+      "317346",
+      "317629",
+      "332981",
+      "332984",
+      "335766",
+      "339981",
+      "345816",
+      "438889",
+      "451789",
+      "854175",
+      "1009386",
+      "1812073",
+      "1812094",
+      "371721",
+      "371723",
+      "371725",
+      "371728",
+      "371729",
+      "374438",
+      "374698",
+      "374699",
+      "377418",
+      "377456",
+      "378984",
+      "393151",
+      "393542",
+      "405942",
+      "854176",
+      "1152113",
+      "1154245",
+      "1154246",
+      "1154247",
+      "1154249",
+      "1154524",
+      "1154525",
+      "1154527",
+      "1154528",
+      "1154529",
+      "1154531",
+      "1154532",
+      "1154533",
+      "1154534",
+      "1154535",
+      "1154536",
+      "1154537",
+      "1154539",
+      "1303126",
+      "227730",
+      "10312",
+      "763179",
+      "763181",
+      "763183",
+      "763185",
+      "8640",
+      "1008942",
+      "815961",
+      "1303131",
+      "1303134",
+      "1303137",
+      "206997",
+      "1303127",
+      "1303133",
+      "1303136",
+      "567793",
+      "1303128",
+      "92354",
+      "1172410",
+      "1172411",
+      "1303129",
+      "1303130",
+      "1303125",
+      "1303132",
+      "1303135",
+      "198144",
+      "198145",
+      "198146",
+      "198148",
+      "205301",
+      "312615",
+      "312617",
+      "315187",
+      "316580",
+      "316581",
+      "316582",
+      "316584",
+      "316585",
+      "316586",
+      "317475",
+      "317663",
+      "335473",
+      "1303124",
+      "373583",
+      "373585",
+      "1161704",
+      "1161705",
+      "1161706"
+    ]
+  },
+  "bendamustine": {
+    "RxNorm": [
+      "1726098",
+      "2178262",
+      "741098",
+      "134547",
+      "1114693",
+      "1726102",
+      "1805004",
+      "1805009",
+      "2178266",
+      "1726099",
+      "1805002",
+      "1805008",
+      "2178263",
+      "1726100",
+      "1805003",
+      "2178264",
+      "1179668",
+      "1726101",
+      "2178265",
+      "1726097",
+      "1805001",
+      "1805007",
+      "1726096",
+      "1804999",
+      "1805006",
+      "1805000",
+      "790322",
+      "1160009"
+    ]
+  },
+  "melphalan": {
+    "RxNorm": [
+      "151325",
+      "1745086",
+      "6718",
+      "235857",
+      "105562",
+      "1745090",
+      "876399",
+      "1740951",
+      "1745087",
+      "564088",
+      "1740952",
+      "1745088",
+      "368873",
+      "1176189",
+      "1176190",
+      "1176191",
+      "1745089",
+      "197919",
+      "311487",
+      "1740948",
+      "317646",
+      "1740949",
+      "372756",
+      "1159787",
+      "1159788",
+      "1159789"
+    ]
+  },
+  "panobinostat": {
+    "RxNorm": [
+      "1603356",
+      "1603350",
+      "1603349",
+      "1603361",
+      "1603365",
+      "1603369",
+      "1603357",
+      "1603364",
+      "1603368",
+      "1603358",
+      "1603359",
+      "1603360",
+      "1603355",
+      "1603363",
+      "1603367",
+      "1603351",
+      "1603362",
+      "1603366",
+      "1603354",
+      "1603352",
+      "1603353"
+    ]
+  },
+  "bortezomib": {
+    "RxNorm": [
+      "356733",
+      "358258",
+      "402244",
+      "1804996",
+      "1804997",
+      "1187756",
+      "402243",
+      "1804993",
+      "1804994",
+      "1163075"
+    ]
+  },
+  "carfilzomib": {
+    "RxNorm": [
+      "1302971",
+      "1302966",
+      "1806937",
+      "1806942",
+      "2046644",
+      "1806935",
+      "1806941",
+      "2046643",
+      "1806936",
+      "1302974",
+      "1806934",
+      "1806940",
+      "2046642",
+      "1806932",
+      "1806939",
+      "2046641",
+      "1806933",
+      "1302968"
+    ]
+  },
+  "ixazomib": {
+    "RxNorm": [
+      "1723758",
+      "1723735",
+      "1723734",
+      "1723763",
+      "1723767",
+      "1723772",
+      "1723759",
+      "1723766",
+      "1723771",
+      "1723760",
+      "1723761",
+      "1723762",
+      "1723757",
+      "1723765",
+      "1723770",
+      "1723753",
+      "1723764",
+      "1723769",
+      "1723756",
+      "1723754",
+      "1723755"
+    ]
+  },
+  "daratumumab": {
+    "RxNorm": [
+      "1721952",
+      "2375137",
+      "1721947",
+      "2372199",
+      "2375130",
+      "1721956",
+      "1726440",
+      "2375141",
+      "1721953",
+      "2375138",
+      "1721954",
+      "2375139",
+      "1721955",
+      "2375140",
+      "1721951",
+      "1726439",
+      "2375136",
+      "1721948",
+      "2375131",
+      "1721950",
+      "2375135",
+      "1721949",
+      "2375134"
+    ]
+  },
+  "elotuzumab": {
+    "RxNorm": [
+      "1726111",
+      "1726104",
+      "1726115",
+      "1726119",
+      "1726112",
+      "1726118",
+      "1726113",
+      "1726114",
+      "1726110",
+      "1726117",
+      "1726107",
+      "1726116",
+      "1726109",
+      "1726108"
+    ]
+  },
+  "isatuximab": {
+    "RxNorm": [
+      "2282024",
+      "2282018",
+      "2282019",
+      "2282028",
+      "2282032",
+      "2282025",
+      "2282026",
+      "2282027",
+      "2282023",
+      "2282031",
+      "2282020",
+      "2282022",
+      "2282021"
+    ]
+  },
+  "pomalidomide": {
+    "RxNorm": [
+      "1369719",
+      "1369713",
+      "1369728",
+      "1369724",
+      "1369736",
+      "1369732",
+      "1369720",
+      "1369727",
+      "1369731",
+      "1369735",
+      "1369721",
+      "1369730",
+      "1369718",
+      "1369726",
+      "1369734",
+      "1369714",
+      "1369725",
+      "1369729",
+      "1369733",
+      "1369717",
+      "1369715",
+      "1369716",
+      "1369722",
+      "1369723"
+    ]
+  },
+  "selinexor": {
+    "RxNorm": [
+      "2178397",
+      "2178403",
+      "2548742",
+      "2382993",
+      "2178409",
+      "2548736",
+      "2548769",
+      "2178407",
+      "2382991",
+      "2382990",
+      "2548767",
+      "2178405",
+      "2548766",
+      "2548763",
+      "2382989",
+      "2178396",
+      "2548739",
+      "2178408",
+      "2178406",
+      "2382992",
+      "2548768",
+      "2178404",
+      "2548733",
+      "2178390",
+      "2178402",
+      "2548765",
+      "2548741",
+      "2548735",
+      "2178398",
+      "2548734",
+      "2548740",
+      "2548764",
+      "2178399",
+      "2548732",
+      "2548762",
+      "2178395",
+      "2548738",
+      "2178391",
+      "2548731",
+      "2548737",
+      "2548761",
+      "2178394",
+      "2178392",
+      "2178393",
+      "2178400",
+      "2178401"
+    ]
+  },
+  "abecma": {
+    "RxNorm": [
+      "2536435",
+      "2536430",
+      "2536439",
+      "2536451",
+      "2536445",
+      "2536436",
+      "2536444",
+      "2536450",
+      "2536437",
+      "2536449",
+      "2536443",
+      "2536434",
+      "2536431",
+      "2536442",
+      "2536448",
+      "2536433",
+      "2536432",
+      "2536438"
+    ]
+  },
+  "venetoclax": {
+    "RxNorm": [
+      "1747562",
+      "1747580",
+      "1747575",
+      "1747556",
+      "1747567",
+      "1747577",
+      "1747579",
+      "1747563",
+      "1747576",
+      "1747578",
+      "1747564",
+      "1747565",
+      "1747566",
+      "1747561",
+      "1747572",
+      "1747574",
+      "1747557",
+      "1747571",
+      "1747573",
+      "1747560",
+      "1747558",
+      "1747559"
+    ]
+  },
+  "belantamab": {
+    "RxNorm": [
+      "1597263",
+      "1597258",
+      "1597267",
+      "1651252",
+      "1651253",
+      "1597266",
+      "1597262",
+      "1651249",
+      "1651250",
+      "1597260"
+    ]
+  },
+  "bite": {
+    "RxNorm": [
+      "1597263",
+      "1597258",
+      "1597267",
+      "1651252",
+      "1651253",
+      "1597266",
+      "1597262",
+      "1651249",
+      "1651250",
+      "1597260"
+    ]
+  },
+  "Biomarker-erbb2_her2": {
+    "LOINC": [
+      "96893-3",
+      "74885-5",
+      "31150-6",
+      "74860-8",
+      "85318-4",
+      "49683-6",
+      "42783-1"
+    ]
+  },
+  "ERBB2_HER2": {
+    "HGNC": ["3430"]
+  },
+  "Biomarker-kras": {
+    "LOINC": [
+      "81420-2",
+      "83059-6",
+      "21703-4",
+      "75974-6",
+      "21702-6",
+      "53620-1",
+      "85509-8",
+      "82535-6"
+    ]
+  },
+  "Biomarker-nras": {
+    "LOINC": ["83060-4", "85510-6", "81420-2", "21720-8", "21719-0", "53621-9"]
+  },
+  "Biomarker-braf": {
+    "LOINC": [
+      "93690-6",
+      "97025-1",
+      "58415-1",
+      "85101-4",
+      "89861-9",
+      "85299-6",
+      "83061-2",
+      "53844-7",
+      "58483-9",
+      "85511-4",
+      "81705-6"
+    ]
+  },
+  "Biomarker-pi3k": {
+    "LOINC": ["83062-0", "60034-6", "85507-2", "63419-6", "60033-8"]
+  },
+  "Biomarker-egfr": {
+    "LOINC": [
+      "55770-2",
+      "55768-6",
+      "85383-8",
+      "55766-0",
+      "55767-8",
+      "55769-4",
+      "55764-5",
+      "55765-2",
+      "21665-5",
+      "21666-3",
+      "42782-3",
+      "13659-8",
+      "14050-9",
+      "45066-8",
+      "39004-7",
+      "32581-1"
+    ]
+  },
+  "Biomarker-her3": {
+    "LOINC": ["42786-4"]
+  },
+  "HER3": {
+    "HGNC": ["3431"]
+  },
+  "Biomarker-msi": {
+    "LOINC": [
+      "81708-0",
+      "81711-4",
+      "81696-7",
+      "81697-5",
+      "81698-3",
+      "81704-9",
+      "81702-3",
+      "81703-1",
+      "81701-5",
+      "81699-1",
+      "81700-7",
+      "81709-8",
+      "43368-0",
+      "81695-9",
+      "62862-8"
+    ]
+  },
+  "Biomarker-ret": {
+    "LOINC": ["90927-5", "21734-9", "40693-4", "21733-1", "94224-3"]
+  },
+  "Biomarker-fgfr1": {
+    "LOINC": ["78916-4", "78915-6", "42785-6", "78917-2"]
+  },
+  "Biomarker-fgfr2": {
+    "LOINC": ["95784-5", "38412-3", "21674-7", "21675-4", "48972-4"]
+  },
+  "Biomarker-fgfr3": {
+    "LOINC": [
+      "21678-8",
+      "21679-6",
+      "82137-1",
+      "21677-0",
+      "22074-9",
+      "38413-1",
+      "21676-2",
+      "75391-3"
+    ]
+  },
+  "FGFR1": {
+    "HGNC": ["3688"]
+  },
+  "FGFR2": {
+    "HGNC": ["3689"]
+  },
+  "FGFR3": {
+    "HGNC": ["3690"]
+  },
+  "Biomarker-idh1": {
+    "LOINC": ["95772-0", "100022-3"]
+  },
+  "Biomarker-atrx": {
+    "LOINC": ["53841-3"]
+  },
+  "Biomarker-tert": {
+    "LOINC": ["95778-7"]
+  },
+  "Biomarker-pdgfra": {
+    "LOINC": ["77170-9", "55092-1", "71357-8"]
+  },
+  "Biomarker-c_met": {
+    "LOINC": [
+      "90926-7",
+      "92906-7",
+      "92907-5",
+      "100026-4",
+      "82264-3",
+      "82268-4",
+      "82273-4",
+      "82260-1"
+    ]
+  },
+  "WNT": {
+    "HGNC": ["12774"]
+  },
+  "NRG1": {
+    "HGNC": ["7997"]
+  },
+  "IDH1": {
+    "HGNC": ["5382"]
+  },
+  "ATRX": {
+    "HGNC": ["886"]
+  },
+  "TERT": {
+    "HGNC": ["11730"]
+  },
+  "H3F3A": {
+    "HGNC": ["4764"]
+  },
+  "RELA": {
+    "HGNC": ["9955"]
+  },
+  "PDGFRA": {
+    "HGNC": ["8803"]
+  },
+  "C_MET": {
+    "HGNC": ["7029"]
+  },
+  "Metastasis-Brain": {
+    "ICD10": ["C7931"],
     "SNOMED": [
-      "236334001"
+      "96981000119102",
+      "285641009",
+      "188462001",
+      "94622002",
+      "94491007",
+      "94489004",
+      "94471000",
+      "94448002",
+      "94309003",
+      "94267001",
+      "94248000",
+      "94247005",
+      "94245002",
+      "94225005",
+      "94224009"
     ]
   }
 }

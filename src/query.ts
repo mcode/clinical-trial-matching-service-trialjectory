@@ -5,15 +5,20 @@
 import https from "https";
 import { IncomingMessage } from "http";
 import {
-  fhir,
   ClinicalTrialsGovService,
   ServiceConfiguration,
   ResearchStudy,
   SearchSet,
   MappingLogic
 } from "clinical-trial-matching-service";
+import * as fhir from 'fhir/r4';
 import convertToResearchStudy from "./researchstudy-mapping";
 import { TrialjectoryMappingLogic } from "./trialjectorymappinglogic";
+import { GeolibInputCoordinates } from 'geolib/es/types';
+import data from 'us-zips';
+import allowable_values_json from '../data/allowable-values.json';
+
+const allowable_values = allowable_values_json as {[key:string]: {[key:string]: (string[]|number[])}};
 
 export interface QueryConfiguration extends ServiceConfiguration {
   endpoint?: string;
@@ -160,6 +165,18 @@ export function isQueryErrorResponse(o: unknown): o is QueryErrorResponse {
   return typeof (o as QueryErrorResponse).error === "string";
 }
 
+/**
+ * Convert a zipcode to lat/long
+ * 
+ * Returns [lat, long]
+ * @param zipCode 
+ */
+export function convertZip(zipCode: string): string[] {
+  const point:GeolibInputCoordinates = data[zipCode] || null;
+
+  return point == null ? [null, null] : [point['latitude'].toString(), point['longitude'].toString()];
+}
+
 // Generic type that represents a JSON object - that is, an object parsed from
 // JSON. Note that the return value from JSON.parse is an any, this does not
 // represent that.
@@ -185,22 +202,31 @@ export class APIQuery {
   /**
    * US zip code
    */
-  zipCode: string;
+  // zipCode: string;
+  /**
+   * Latitude of zipCode
+   */
+  lat: string;
+  /**
+   * Longitude of zipCode
+   */
+  lng: string;
   /**
    * Distance in miles a user has indicated they're willing to travel
    */
   travelRadius: number;
-  /**
-   * A FHIR ResearchStudy phase
-   */
-  phase: string;
-  /**
-   * A FHIR ResearchStudy status
-   */
-  recruitmentStatus: string;
+  // /**
+  //  * A FHIR ResearchStudy phase
+  //  */
+  // phase: string;
+  // /**
+  //  * A FHIR ResearchStudy status
+  //  */
+  // recruitmentStatus: string;
   // Additional fields which need to be extracted from the bundle to construct query
   biomarkers: string[];
-  stage: string;
+  stage: number;
+  cancerName: string;
   cancerType: string;
   cancerSubType: string;
   ecog: number;
@@ -226,22 +252,25 @@ export class APIQuery {
       if (resource.resourceType === "Parameters") {
         for (const parameter of resource.parameter) {
           if (parameter.name === "zipCode") {
-            this.zipCode = parameter.valueString;
+            const zipCode = parameter.valueString;
+            const [lat, lng] = convertZip(zipCode);
+            this.lat = lat;
+            this.lng = lng;
           } else if (parameter.name === "travelRadius") {
             this.travelRadius = parseFloat(parameter.valueString);
-          } else if (parameter.name === "phase") {
-            this.phase = parameter.valueString;
-          } else if (parameter.name === "recruitmentStatus") {
-            this.recruitmentStatus = parameter.valueString;
           }
         }
       }
     }
 
+    // TODO: For now, overwrite the travelRadius to be null regardless!! TJ can't handle distance yet.
+    this.travelRadius = null;
+
     const mappingLogic: MappingLogic = new TrialjectoryMappingLogic(patientBundle);
     console.log(mappingLogic);
     this.biomarkers = mappingLogic.getTumorMarkerValues() as string[];
-    this.stage = mappingLogic.getStageValues() as string;
+    this.stage = parseFloat(mappingLogic.getStageValues() as string);
+    this.cancerName = (mappingLogic as TrialjectoryMappingLogic).getCancerName();
     this.cancerType = mappingLogic.getPrimaryCancerValues();
     this.cancerSubType = mappingLogic.getHistologyMorphologyValue();
     this.ecog = mappingLogic.getECOGScore() as number;
@@ -251,13 +280,34 @@ export class APIQuery {
     this.surgicalProcedures = mappingLogic.getSurgicalProcedureValues() as string[];
     this.metastasis = mappingLogic.getSecondaryCancerValues() as string[];
     this.age = mappingLogic.getAgeValue() as number;
-    // Extraneous required fields.
-    if(this.phase === undefined){
-      this.phase = "";
+  }
+
+    /**
+   * Filters out allowable values based on the cancerName; cancerName is biggest truth
+   * Because TJ is a bit weird on "empty" fields, explicitly return based on whether it's supposed to be 
+   * 
+   * @param cancerName: breast, lung, crc, brain, mm, prostate, or bladder
+   * @param param: "cancerType", "cancerSubType", "biomarkers", "stage", "medications", "procedures"
+   * @param value: mapped values to potentially send to query
+   * @param isArray: isValue an array type
+   * 
+   */
+  filterAllowable(cancerName: string, param: string, value: string[]|string|number, isArray: boolean = false): string[]|string|number {
+    let allowable:(string[]|number[]) = allowable_values[cancerName][param]
+    console.log("Current value for ", param, ":", JSON.stringify(value));
+    console.log("Allowed values for ", cancerName, "|", param, ": ", JSON.stringify(allowable));
+
+    if (allowable == undefined) return isArray ? [] : null;
+
+    if (isArray) { 
+      (<string[]>value).filter(item => (<string[]>allowable).includes(item))
+    } else {
+      if (param == "stage" ) return (<number[]>allowable).includes(<number>value) ? value : null;
+
+      return (<string[]>allowable).includes(<string>value) ? value : null;
     }
-    if(this.recruitmentStatus === undefined){
-      this.recruitmentStatus = "Active";
-    }
+
+    return null;
   }
 
   /**
@@ -265,22 +315,24 @@ export class APIQuery {
    * @return {string} the api query
    */
   toQuery(): QueryRequest {
-    return JSON.stringify({
-      zip: this.zipCode,
+    let query = {
+      lat: this.lat,
+      lng: this.lng,
       distance: this.travelRadius,
-      phase: this.phase,
-      status: this.recruitmentStatus,
-      biomarkers: this.biomarkers,
-      stage: this.stage,
-      cancerType: this.cancerType,
-      cancerSubType: this.cancerSubType,
+      biomarkers: this.filterAllowable(this.cancerName, "biomarkers", this.biomarkers, true),
+      stage: this.filterAllowable(this.cancerName, "stage", this.stage),
+      cancerName: this.cancerName,
+      cancerType: this.filterAllowable(this.cancerName, "cancerType", this.cancerType),
+      cancerSubType: this.filterAllowable(this.cancerName, "cancerSubType", this.cancerSubType),
       ecog: this.ecog,
       karnofsky: this.karnofsky,
-      medications: this.medications,
-      procedures: this.radiationProcedures.concat(this.surgicalProcedures),
+      medications: this.filterAllowable(this.cancerName, "medications", this.medications, true),
+      procedures: this.filterAllowable(this.cancerName, "procedures", this.radiationProcedures.concat(this.surgicalProcedures), true),
       metastasis: this.metastasis,
       age: this.age
-    });
+    }
+
+    return JSON.stringify(query);
   }
 
   tostring(): string {
@@ -358,6 +410,10 @@ function sendQuery(
     console.log("QUERY");
     console.log(query.toQuery());
 
+    if (query.cancerName == null) {
+      reject(new APIError(`Error from service: cancerName is null`,null,""));
+    }
+
     const request = https.request(
       endpoint,
       {
@@ -379,6 +435,7 @@ function sendQuery(
             let json: unknown;
             try {
               json = JSON.parse(responseBody) as unknown;
+              console.log("JSON Response: ", json);
             } catch (ex) {
               reject(
                 new APIError(
