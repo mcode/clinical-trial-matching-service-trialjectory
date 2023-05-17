@@ -24,8 +24,6 @@
   "dependencies": {
     "clinical-trial-matching-service": "^0.0.8",
     "dotenv-flow": "^3.2.0",
-    "fhirclient": "^2.3.1",
-    "fhirpath": "^2.3.0",
     "geolib": "^3.3.3",
     "us-zips": "^2022.9.1"
   },
