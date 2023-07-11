@@ -14,7 +14,6 @@ import {
 import * as fhir from 'fhir/r4';
 import convertToResearchStudy from "./researchstudy-mapping";
 import { TrialjectoryMappingLogic } from "./trialjectorymappinglogic";
-import { GeolibInputCoordinates } from 'geolib/es/types';
 import data from 'us-zips';
 import allowable_values_json from '../data/allowable-values.json';
 
@@ -167,20 +166,15 @@ export function isQueryErrorResponse(o: unknown): o is QueryErrorResponse {
 
 /**
  * Convert a zipcode to lat/long
- * 
+ *
  * Returns [lat, long]
- * @param zipCode 
+ * @param zipCode
  */
 export function convertZip(zipCode: string): string[] {
-  const point:GeolibInputCoordinates = data[zipCode] || null;
+  const point = data[zipCode] || null;
 
   return point == null ? [null, null] : [point['latitude'].toString(), point['longitude'].toString()];
 }
-
-// Generic type that represents a JSON object - that is, an object parsed from
-// JSON. Note that the return value from JSON.parse is an any, this does not
-// represent that.
-type JsonObject = Record<string, unknown>;
 
 // API RESPONSE SECTION
 export class APIError extends Error {
@@ -284,22 +278,22 @@ export class APIQuery {
 
     /**
    * Filters out allowable values based on the cancerName; cancerName is biggest truth
-   * Because TJ is a bit weird on "empty" fields, explicitly return based on whether it's supposed to be 
-   * 
+   * Because TJ is a bit weird on "empty" fields, explicitly return based on whether it's supposed to be
+   *
    * @param cancerName: breast, lung, crc, brain, mm, prostate, or bladder
    * @param param: "cancerType", "cancerSubType", "biomarkers", "stage", "medications", "procedures"
    * @param value: mapped values to potentially send to query
    * @param isArray: isValue an array type
-   * 
+   *
    */
-  filterAllowable(cancerName: string, param: string, value: string[]|string|number, isArray: boolean = false): string[]|string|number {
-    let allowable:(string[]|number[]) = allowable_values[cancerName][param]
+  filterAllowable(cancerName: string, param: string, value: string[]|string|number, isArray = false): string[]|string|number {
+    const allowable:(string[]|number[]) = allowable_values[cancerName][param]
     console.log("Current value for ", param, ":", JSON.stringify(value));
     console.log("Allowed values for ", cancerName, "|", param, ": ", JSON.stringify(allowable));
 
     if (allowable == undefined) return isArray ? [] : null;
 
-    if (isArray) { 
+    if (isArray) {
       (<string[]>value).filter(item => (<string[]>allowable).includes(item))
     } else {
       if (param == "stage" ) return (<number[]>allowable).includes(<number>value) ? value : null;
@@ -315,7 +309,7 @@ export class APIQuery {
    * @return {string} the api query
    */
   toQuery(): QueryRequest {
-    let query = {
+    const query = {
       lat: this.lat,
       lng: this.lng,
       distance: this.travelRadius,
