@@ -1,12 +1,12 @@
 {
-    "SNOMED": {
-        "94222008": "bone",
-        "94381002": "liver",
-        "94253005": "chest wall",
-        "94391008": "lung",
-        "94392001": "lymph node",
-        "94606003": "stomach",
-        "94579000": "skin",
-        "94399005": "main bronchus"
-    }
+  "SNOMED": {
+    "94222008": "METASTATIC",
+    "94381002": "METASTATIC",
+    "94253005": "METASTATIC",
+    "94391008": "METASTATIC",
+    "94392001": "METASTATIC",
+    "94606003": "METASTATIC",
+    "94579000": "METASTATIC",
+    "94399005": "METASTATIC"
+  }
 }
