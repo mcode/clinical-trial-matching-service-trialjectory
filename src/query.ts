@@ -258,7 +258,7 @@ export class APIQuery {
     }
 
     // TODO: For now, overwrite the travelRadius to be null regardless!! TJ can't handle distance yet.
-    this.travelRadius = null;
+    // this.travelRadius = null;
 
     const mappingLogic: MappingLogic = new TrialjectoryMappingLogic(patientBundle);
     console.log(mappingLogic);
