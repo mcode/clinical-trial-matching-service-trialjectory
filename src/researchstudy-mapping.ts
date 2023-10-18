@@ -44,9 +44,15 @@ export function convertToResearchStudy(trial: QueryTrial, id: number): ResearchS
     result.title = trial.title;
   }
 
-  if(trial.nct_number) {
-    result.identifier = [{ use: 'official', system: 'http://clinicaltrials.gov', value: trial.nct_number }];
-    result.id = trial.nct_number;
+  if (trial.nct_number) {
+    let nctNumber = trial.nct_number;
+    // Some NCT IDs come back with a "-number" - remove anything if there's a
+    // dash-something past a valid NCT
+    if (/^NCT[0-9]{8}-/.test(nctNumber)) {
+      nctNumber = nctNumber.substring(0, 11);
+    }
+    result.identifier = [{ use: 'official', system: 'http://clinicaltrials.gov', value: nctNumber }];
+    result.id = nctNumber;
   }
 
   if (trial.phases) { // Needs mapping verified
