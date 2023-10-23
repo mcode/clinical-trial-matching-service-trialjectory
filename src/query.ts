@@ -8,8 +8,7 @@ import {
   ClinicalTrialsGovService,
   ServiceConfiguration,
   ResearchStudy,
-  SearchSet,
-  MappingLogic
+  SearchSet
 } from "clinical-trial-matching-service";
 import * as fhir from 'fhir/r4';
 import convertToResearchStudy from "./researchstudy-mapping";
@@ -260,20 +259,20 @@ export class APIQuery {
     // TODO: For now, overwrite the travelRadius to be null regardless!! TJ can't handle distance yet.
     // this.travelRadius = null;
 
-    const mappingLogic: MappingLogic = new TrialjectoryMappingLogic(patientBundle);
+    const mappingLogic = new TrialjectoryMappingLogic(patientBundle);
     console.log(mappingLogic);
-    this.biomarkers = mappingLogic.getTumorMarkerValues() as string[];
-    this.stage = parseFloat(mappingLogic.getStageValues() as string);
-    this.cancerName = (mappingLogic as TrialjectoryMappingLogic).getCancerName();
+    this.biomarkers = mappingLogic.getTumorMarkerValues();
+    this.stage = parseFloat(mappingLogic.getStageValues());
+    this.cancerName = mappingLogic.getCancerName();
     this.cancerType = mappingLogic.getPrimaryCancerValues();
     this.cancerSubType = mappingLogic.getHistologyMorphologyValue();
-    this.ecog = mappingLogic.getECOGScore() as number;
-    this.karnofsky = mappingLogic.getKarnofskyScore() as number;
+    this.ecog = mappingLogic.getECOGScore();
+    this.karnofsky = mappingLogic.getKarnofskyScore();
     this.medications = mappingLogic.getMedicationStatementValues();
-    this.radiationProcedures = mappingLogic.getRadiationProcedureValues() as string[];
-    this.surgicalProcedures = mappingLogic.getSurgicalProcedureValues() as string[];
-    this.metastasis = mappingLogic.getSecondaryCancerValues() as string[];
-    this.age = mappingLogic.getAgeValue() as number;
+    this.radiationProcedures = mappingLogic.getRadiationProcedureValues();
+    this.surgicalProcedures = mappingLogic.getSurgicalProcedureValues();
+    this.metastasis = [mappingLogic.getSecondaryCancerValues()];
+    this.age = mappingLogic.getAgeValue();
   }
 
     /**

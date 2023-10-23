@@ -1,28 +1,34 @@
-import { CodeMapper, CodeSystemEnum, Quantity, TumorMarker, CancerGeneticVariant, Ratio, BaseFhirResource, CancerRelatedSurgicalProcedure, CancerRelatedRadiationProcedure, SecondaryCancerCondition, MappingLogic, PrimaryCancerCondition } from 'clinical-trial-matching-service';
+import { CodeMapper, CodeSystemEnum, Quantity, TumorMarker, CancerGeneticVariant, Ratio, BaseFhirResource, CancerRelatedSurgicalProcedure, CancerRelatedRadiationProcedure, PrimaryCancerCondition, mCODEextractor } from 'clinical-trial-matching-service';
 import * as fhir from 'fhir/r4';
 import profile_system_codes from '../data/profile-system-codes.json';
-import system_metastasis_codes_json from '../data/system-metastasis-codes-json.json';
+//import system_metastasis_codes_json from '../data/system-metastasis-codes-json.json';
 import primary_cancer_condition_mapping_json from '../data/primary-cancer-condition-type-mapping.json';
 
-const metastasis_codes = system_metastasis_codes_json as {[key:string]: {[key:string]: string}};
+//const metastasis_codes = system_metastasis_codes_json as {[key:string]: {[key:string]: string}};
 const primary_cancer_condition_mapping = primary_cancer_condition_mapping_json as {[key:string]: string};
 
 /**
  * A class that describes the mapping logic for Trialjectory.
  */
-export class TrialjectoryMappingLogic extends MappingLogic {
+export class TrialjectoryMappingLogic {
 
   /**
    * The code mapping object that maps profiles to codes.
    */
-  static codeMapper = new CodeMapper(profile_system_codes)
+  static codeMapper = new CodeMapper(profile_system_codes);
+
+  protected extractedMcode: mCODEextractor;
+
+  constructor(patientBundle: fhir.Bundle) {
+    this.extractedMcode = new mCODEextractor(patientBundle);
+  }
 
   /**
    * ECOG Score.
-   * @returns 
+   * @returns
    */
-  getECOGScore(): number {
-    const ecog = this.getExtractedEcogPerformanceStatus();
+  getECOGScore(): number | null {
+    const ecog = this.extractedMcode.ecogPerformanceStatus;
     if(ecog == -1) {
       return null;
     }
@@ -31,10 +37,10 @@ export class TrialjectoryMappingLogic extends MappingLogic {
 
   /**
    * Karnofsky Score.
-   * @returns 
+   * @returns
    */
   getKarnofskyScore(): number {
-    const karnofsky = this.getExtractedKarnofskyPerformanceStatus();
+    const karnofsky = this.extractedMcode.karnofskyPerformanceStatus;
     if(karnofsky == -1) {
       return null;
     }
@@ -43,10 +49,10 @@ export class TrialjectoryMappingLogic extends MappingLogic {
 
   /**
    * Primary Cancer Mapping.
-   * @returns 
+   * @returns
    */
-  getPrimaryCancerValues(): string {   
-    const extractedPrimaryCancerConditions = this.getExtractedPrimaryCancerConditions();
+  getPrimaryCancerValues(): string {
+    const extractedPrimaryCancerConditions = this.extractedMcode.primaryCancerConditions;
     const stage:string = this.getStageValues();
 
     console.log("Extracted", extractedPrimaryCancerConditions);
@@ -74,7 +80,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
       const statuses:string[] = primaryCancerCondition.clinicalStatus.map(code => code?.display?.toLowerCase());
 
       // --------------------------------------------------
-      // BREAST      
+      // BREAST
       if (majorType == "breast") {
         console.log("BREAST");
         // Not on "Cancer-Breast" sheet and clinical status is current
@@ -88,7 +94,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
             return "other_malignancy_except_skin_or_cervical";
           }
         }
-        
+
         if (pccNames.includes("Cancer-Invasive-Breast") && statuses.includes("recurrent")) {
           return "invasive_breast_cancer_and_recurrent";
         }
@@ -220,111 +226,111 @@ export class TrialjectoryMappingLogic extends MappingLogic {
         console.log("COLON");
         // Subgroups of colon cancer:
         const colon:string[] = [
-          "Malignant neoplasm of colon (disorder)", 
-          "Malignant tumor of sigmoid colon (disorder)", 
-          "Malignant tumor of ascending colon (disorder)", 
-          "Malignant tumor of transverse colon (disorder)", 
-          "Malignant tumor of descending colon (disorder)", 
-          "Malignant tumor of rectosigmoid junction (disorder)", 
-          "Malignant tumor of hepatic flexure (disorder)", 
-          "Malignant tumor of splenic flexure (disorder)", 
-          "Hereditary nonpolyposis colon cancer (disorder)", 
-          "Overlapping malignant neoplasm of colon (disorder)", 
-          "Primary malignant neoplasm of colon (disorder)", 
-          "Primary malignant neoplasm of sigmoid colon (disorder)", 
-          "Primary malignant neoplasm of ascending colon (disorder)", 
-          "Primary malignant neoplasm of descending colon (disorder)", 
-          "Primary malignant neoplasm of transverse colon (disorder)", 
-          "Primary malignant mesenchymal neoplasm of colon (disorder)", 
-          "Primary malignant neuroendocrine neoplasm of colon (disorder)", 
-          "Primary malignant neoplasm of hepatic flexure of colon (disorder)", 
-          "Primary malignant neoplasm of splenic flexure of colon (disorder)", 
-          "Primary malignant neoplasm of overlapping sites of colon (disorder)", 
-          "Primary malignant gastrointestinal stromal neoplasm of colon (disorder)", 
-          "Primary adenocarcinoma of descending colon (disorder)", 
-          "Primary adenocarcinoma of ascending colon (disorder)", 
-          "Primary adenocarcinoma of rectosigmoid junction (disorder)", 
-          "Overlapping malignant neoplasm of colon and rectum (disorder)", 
-          "Primary adenocarcinoma of colon (disorder)", 
-          "Familial colorectal cancer type X (disorder)", 
-          "Kaposi sarcoma of colon (disorder)", 
-          "Leiomyosarcoma of colon (disorder)", 
-          "Malignant neoplasm of colon and/or rectum (disorder)", 
-          "Squamous cell carcinoma of colon (disorder)", 
-          "Microsatellite instability-high colorectal cancer (disorder)", 
-          "Malignant carcinoid tumor of colon (disorder)", 
-          "Primary adenocarcinoma of descending colon and splenic flexure (disorder)", 
-          "Primary neuroendocrine carcinoma of colon (disorder)", 
-          "Primary adenocarcinoma of transverse colon (disorder)", 
-          "Primary adenocarcinoma of ascending colon and right flexure (disorder)", 
-          "Adenocarcinoma of rectosigmoid junction (disorder)", 
-          "Local recurrence of malignant tumor of colon (disorder)", 
-          "Carcinoma of splenic flexure (disorder)", 
-          "Carcinoma of hepatic flexure (disorder)", 
-          "Carcinoma of descending colon (disorder)", 
-          "Carcinoma of transverse colon (disorder)", 
-          "Carcinoma of ascending colon (disorder)", 
-          "Adenocarcinoma of sigmoid colon (disorder)", 
-          "Metastasis to colon of unknown primary (disorder)", 
-          "Carcinoma of sigmoid colon (disorder)", 
-          "Carcinoma of the rectosigmoid junction (disorder)", 
+          "Malignant neoplasm of colon (disorder)",
+          "Malignant tumor of sigmoid colon (disorder)",
+          "Malignant tumor of ascending colon (disorder)",
+          "Malignant tumor of transverse colon (disorder)",
+          "Malignant tumor of descending colon (disorder)",
+          "Malignant tumor of rectosigmoid junction (disorder)",
+          "Malignant tumor of hepatic flexure (disorder)",
+          "Malignant tumor of splenic flexure (disorder)",
+          "Hereditary nonpolyposis colon cancer (disorder)",
+          "Overlapping malignant neoplasm of colon (disorder)",
+          "Primary malignant neoplasm of colon (disorder)",
+          "Primary malignant neoplasm of sigmoid colon (disorder)",
+          "Primary malignant neoplasm of ascending colon (disorder)",
+          "Primary malignant neoplasm of descending colon (disorder)",
+          "Primary malignant neoplasm of transverse colon (disorder)",
+          "Primary malignant mesenchymal neoplasm of colon (disorder)",
+          "Primary malignant neuroendocrine neoplasm of colon (disorder)",
+          "Primary malignant neoplasm of hepatic flexure of colon (disorder)",
+          "Primary malignant neoplasm of splenic flexure of colon (disorder)",
+          "Primary malignant neoplasm of overlapping sites of colon (disorder)",
+          "Primary malignant gastrointestinal stromal neoplasm of colon (disorder)",
+          "Primary adenocarcinoma of descending colon (disorder)",
+          "Primary adenocarcinoma of ascending colon (disorder)",
+          "Primary adenocarcinoma of rectosigmoid junction (disorder)",
+          "Overlapping malignant neoplasm of colon and rectum (disorder)",
+          "Primary adenocarcinoma of colon (disorder)",
+          "Familial colorectal cancer type X (disorder)",
+          "Kaposi sarcoma of colon (disorder)",
+          "Leiomyosarcoma of colon (disorder)",
+          "Malignant neoplasm of colon and/or rectum (disorder)",
+          "Squamous cell carcinoma of colon (disorder)",
+          "Microsatellite instability-high colorectal cancer (disorder)",
+          "Malignant carcinoid tumor of colon (disorder)",
+          "Primary adenocarcinoma of descending colon and splenic flexure (disorder)",
+          "Primary neuroendocrine carcinoma of colon (disorder)",
+          "Primary adenocarcinoma of transverse colon (disorder)",
+          "Primary adenocarcinoma of ascending colon and right flexure (disorder)",
+          "Adenocarcinoma of rectosigmoid junction (disorder)",
+          "Local recurrence of malignant tumor of colon (disorder)",
+          "Carcinoma of splenic flexure (disorder)",
+          "Carcinoma of hepatic flexure (disorder)",
+          "Carcinoma of descending colon (disorder)",
+          "Carcinoma of transverse colon (disorder)",
+          "Carcinoma of ascending colon (disorder)",
+          "Adenocarcinoma of sigmoid colon (disorder)",
+          "Metastasis to colon of unknown primary (disorder)",
+          "Carcinoma of sigmoid colon (disorder)",
+          "Carcinoma of the rectosigmoid junction (disorder)",
           "Carcinoma of colon (disorder)"
         ];
         const rectal:string[] = [
-          "Malignant neoplasm of colon (disorder)", 
-          "Malignant tumor of sigmoid colon (disorder)", 
-          "Malignant tumor of ascending colon (disorder)", 
-          "Malignant tumor of transverse colon (disorder)", 
-          "Malignant tumor of descending colon (disorder)", 
-          "Malignant tumor of rectosigmoid junction (disorder)", 
-          "Malignant tumor of hepatic flexure (disorder)", 
-          "Malignant tumor of splenic flexure (disorder)", 
-          "Hereditary nonpolyposis colon cancer (disorder)", 
-          "Overlapping malignant neoplasm of colon (disorder)", 
-          "Primary malignant neoplasm of colon (disorder)", 
-          "Primary malignant neoplasm of sigmoid colon (disorder)", 
-          "Primary malignant neoplasm of ascending colon (disorder)", 
-          "Primary malignant neoplasm of descending colon (disorder)", 
-          "Primary malignant neoplasm of transverse colon (disorder)", 
-          "Primary malignant mesenchymal neoplasm of colon (disorder)", 
-          "Primary malignant neuroendocrine neoplasm of colon (disorder)", 
-          "Primary malignant neoplasm of hepatic flexure of colon (disorder)", 
-          "Primary malignant neoplasm of splenic flexure of colon (disorder)", 
-          "Primary malignant neoplasm of overlapping sites of colon (disorder)", 
-          "Primary malignant gastrointestinal stromal neoplasm of colon (disorder)", 
-          "Primary adenocarcinoma of descending colon (disorder)", 
-          "Primary adenocarcinoma of ascending colon (disorder)", 
-          "Primary adenocarcinoma of rectosigmoid junction (disorder)", 
-          "Overlapping malignant neoplasm of colon and rectum (disorder)", 
-          "Primary adenocarcinoma of colon (disorder)", 
-          "Familial colorectal cancer type X (disorder)", 
-          "Kaposi sarcoma of colon (disorder)", 
-          "Leiomyosarcoma of colon (disorder)", 
-          "Malignant neoplasm of colon and/or rectum (disorder)", 
-          "Squamous cell carcinoma of colon (disorder)", 
-          "Microsatellite instability-high colorectal cancer (disorder)", 
-          "Malignant carcinoid tumor of colon (disorder)", 
-          "Primary adenocarcinoma of descending colon and splenic flexure (disorder)", 
-          "Primary neuroendocrine carcinoma of colon (disorder)", 
-          "Primary adenocarcinoma of transverse colon (disorder)", 
-          "Primary adenocarcinoma of ascending colon and right flexure (disorder)", 
-          "Adenocarcinoma of rectosigmoid junction (disorder)", 
-          "Local recurrence of malignant tumor of colon (disorder)", 
-          "Carcinoma of splenic flexure (disorder)", 
-          "Carcinoma of hepatic flexure (disorder)", 
-          "Carcinoma of descending colon (disorder)", 
-          "Carcinoma of transverse colon (disorder)", 
-          "Carcinoma of ascending colon (disorder)", 
-          "Adenocarcinoma of sigmoid colon (disorder)", 
-          "Metastasis to colon of unknown primary (disorder)", 
-          "Carcinoma of sigmoid colon (disorder)", 
-          "Carcinoma of the rectosigmoid junction (disorder)", 
-          "Carcinoma of colon (disorder)" 
+          "Malignant neoplasm of colon (disorder)",
+          "Malignant tumor of sigmoid colon (disorder)",
+          "Malignant tumor of ascending colon (disorder)",
+          "Malignant tumor of transverse colon (disorder)",
+          "Malignant tumor of descending colon (disorder)",
+          "Malignant tumor of rectosigmoid junction (disorder)",
+          "Malignant tumor of hepatic flexure (disorder)",
+          "Malignant tumor of splenic flexure (disorder)",
+          "Hereditary nonpolyposis colon cancer (disorder)",
+          "Overlapping malignant neoplasm of colon (disorder)",
+          "Primary malignant neoplasm of colon (disorder)",
+          "Primary malignant neoplasm of sigmoid colon (disorder)",
+          "Primary malignant neoplasm of ascending colon (disorder)",
+          "Primary malignant neoplasm of descending colon (disorder)",
+          "Primary malignant neoplasm of transverse colon (disorder)",
+          "Primary malignant mesenchymal neoplasm of colon (disorder)",
+          "Primary malignant neuroendocrine neoplasm of colon (disorder)",
+          "Primary malignant neoplasm of hepatic flexure of colon (disorder)",
+          "Primary malignant neoplasm of splenic flexure of colon (disorder)",
+          "Primary malignant neoplasm of overlapping sites of colon (disorder)",
+          "Primary malignant gastrointestinal stromal neoplasm of colon (disorder)",
+          "Primary adenocarcinoma of descending colon (disorder)",
+          "Primary adenocarcinoma of ascending colon (disorder)",
+          "Primary adenocarcinoma of rectosigmoid junction (disorder)",
+          "Overlapping malignant neoplasm of colon and rectum (disorder)",
+          "Primary adenocarcinoma of colon (disorder)",
+          "Familial colorectal cancer type X (disorder)",
+          "Kaposi sarcoma of colon (disorder)",
+          "Leiomyosarcoma of colon (disorder)",
+          "Malignant neoplasm of colon and/or rectum (disorder)",
+          "Squamous cell carcinoma of colon (disorder)",
+          "Microsatellite instability-high colorectal cancer (disorder)",
+          "Malignant carcinoid tumor of colon (disorder)",
+          "Primary adenocarcinoma of descending colon and splenic flexure (disorder)",
+          "Primary neuroendocrine carcinoma of colon (disorder)",
+          "Primary adenocarcinoma of transverse colon (disorder)",
+          "Primary adenocarcinoma of ascending colon and right flexure (disorder)",
+          "Adenocarcinoma of rectosigmoid junction (disorder)",
+          "Local recurrence of malignant tumor of colon (disorder)",
+          "Carcinoma of splenic flexure (disorder)",
+          "Carcinoma of hepatic flexure (disorder)",
+          "Carcinoma of descending colon (disorder)",
+          "Carcinoma of transverse colon (disorder)",
+          "Carcinoma of ascending colon (disorder)",
+          "Adenocarcinoma of sigmoid colon (disorder)",
+          "Metastasis to colon of unknown primary (disorder)",
+          "Carcinoma of sigmoid colon (disorder)",
+          "Carcinoma of the rectosigmoid junction (disorder)",
+          "Carcinoma of colon (disorder)"
         ];
         const familial:string[] = [
-          "Hereditary nonpolyposis colon cancer (disorder)", 
-          "Familial colorectal cancer type X (disorder)", 
-          "Hereditary nonpolyposis colon cancer (disorder)" 
+          "Hereditary nonpolyposis colon cancer (disorder)",
+          "Familial colorectal cancer type X (disorder)",
+          "Hereditary nonpolyposis colon cancer (disorder)"
         ]
 
         // Colon is one-to-one mapping so just return what subgroup it is in
@@ -376,7 +382,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
 
         if (pccNames.some(pcc => grade_1_astro.includes(pcc))) return "grade_1_astro";
         if (pccNames.some(pcc => grade_3_astro.includes(pcc))) return "grade_3_astro";
-        if (pccNames.some(pcc => gbm.includes(pcc))) return "gbm"; 
+        if (pccNames.some(pcc => gbm.includes(pcc))) return "gbm";
 
 
         // Didn't fulfill any of the other logic but brain -- so return basic mapping
@@ -477,19 +483,19 @@ export class TrialjectoryMappingLogic extends MappingLogic {
         console.log("MULTIPLE MYELOMA");
         // Subgroups of multiple myeloma cancer:
         const active_mm:string[] = [
-          "Indolent multiple myeloma (disorder)", 
-          "Asymptomatic multiple myeloma (disorder)", 
-          "Osteosclerotic myeloma (disorder)", 
-          "Plasma cell myeloma/plasmacytoma (disorder)", 
-          "Kappa light chain myeloma (disorder)", 
-          "Smoldering myeloma (disorder)", 
-          "Lambda light chain myeloma (disorder)", 
-          "Immunoglobulin D myeloma (disorder)", 
-          "Immunoglobulin G myeloma (disorder)", 
-          "Immunoglobulin A myeloma (disorder)", 
-          "Non-secretory myeloma (disorder)", 
-          "Light chain myeloma (disorder)", 
-          "Multiple myeloma (disorder)", 
+          "Indolent multiple myeloma (disorder)",
+          "Asymptomatic multiple myeloma (disorder)",
+          "Osteosclerotic myeloma (disorder)",
+          "Plasma cell myeloma/plasmacytoma (disorder)",
+          "Kappa light chain myeloma (disorder)",
+          "Smoldering myeloma (disorder)",
+          "Lambda light chain myeloma (disorder)",
+          "Immunoglobulin D myeloma (disorder)",
+          "Immunoglobulin G myeloma (disorder)",
+          "Immunoglobulin A myeloma (disorder)",
+          "Non-secretory myeloma (disorder)",
+          "Light chain myeloma (disorder)",
+          "Multiple myeloma (disorder)",
           "Plasma cell leukemia, disease (disorder)"
         ];
         const smoldering_mm = ["Smoldering myeloma (disorder)"];
@@ -508,8 +514,8 @@ export class TrialjectoryMappingLogic extends MappingLogic {
    * @returns METASTATIC,LEPTOMENINGEAL_METASTATIC_DISEASE,BRAIN_METASTASIS,INVASIVE_BREAST_CANCER_AND_METASTATIC
    */
   getSecondaryCancerValues(): string {
-    const extractedPrimaryCancerConditions = this.getExtractedPrimaryCancerConditions();
-    const extractedSecondaryCancerConditions = this.getExtractedSecondaryCancerConditions();
+    const extractedPrimaryCancerConditions = this.extractedMcode.primaryCancerConditions;
+    const extractedSecondaryCancerConditions = this.extractedMcode.secondaryCancerConditions;
     const stage:string = this.getStageValues();
 
     // Just combine all of the primary conditions
@@ -521,7 +527,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
       const sccNames:string[] = TrialjectoryMappingLogic.codeMapper.extractCodeMappings(secondaryCancerCondition.coding);
 
       const statuses:string[] = secondaryCancerCondition.clinicalStatus.map(code => code?.display?.toLowerCase());
-      
+
       console.log("Secondary Cancer Conditions", sccNames);
       //SecondaryCancerCondition code = any code on sheet "Metastasis-Brain" and clinicalStatus = "active"
       if (sccNames.some(scc => scc == "Metastasis-Brain") && statuses.includes("active")) {
@@ -584,11 +590,11 @@ export class TrialjectoryMappingLogic extends MappingLogic {
   }
 
   /**
-   * Returns the histology morphology mappings of this resource. 
-   * @returns 
+   * Returns the histology morphology mappings of this resource.
+   * @returns
    */
   getHistologyMorphologyValue(): string {
-    const extractedPrimaryCancerConditions = this.getExtractedPrimaryCancerConditions();
+    const extractedPrimaryCancerConditions = this.extractedMcode.primaryCancerConditions;
     const stage:string = this.getStageValues();
 
     // If no primaryCancerCondition -- go ahead and return null
@@ -709,7 +715,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
           if (histologyMorphologies.some(hm => morphologyInvasiveCarcinoma.includes(hm))) {
             return "invasive_carcinoma";
           }
-          
+
           if (histologyMorphologies.some(hm => morphologyInvasive.includes(hm))) {
             return "invasive_breast_cancer";
           }
@@ -917,11 +923,11 @@ export class TrialjectoryMappingLogic extends MappingLogic {
 
   /**
    * Returns the radiation procedure mappings for these radiation procedure resources.
-   * @returns 
+   * @returns
    */
   getRadiationProcedureValues(): string[] {
 
-    const cancerRelatedRadiationProcedures: CancerRelatedRadiationProcedure[] = this.getExtractedCancerRelatedRadiationProcedures();
+    const cancerRelatedRadiationProcedures: CancerRelatedRadiationProcedure[] = this.extractedMcode.cancerRelatedRadiationProcedures;
 
     const radiation_codes: fhir.Coding[] = this.extractCodings(cancerRelatedRadiationProcedures);
     // Perform the basic mapping.
@@ -965,11 +971,11 @@ export class TrialjectoryMappingLogic extends MappingLogic {
 
   /**
    * Returns the surgical procedure mappings for these surgical procedure resources.
-   * @returns 
+   * @returns
    */
   getSurgicalProcedureValues(): string[] {
 
-    const cancerRelatedSurgicalProcedures: CancerRelatedSurgicalProcedure[] = this.getExtractedCancerRelatedSurgicalProcedures();
+    const cancerRelatedSurgicalProcedures = this.extractedMcode.cancerRelatedSurgicalProcedures;
 
     if(cancerRelatedSurgicalProcedures == null){
       return [];
@@ -1017,7 +1023,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
     }
 
     // Metastasis Resection complex logic.
-    if(cancerRelatedSurgicalProcedures.some((surgicalProcedure) => surgicalProcedure.reasonReference != null && surgicalProcedure.reasonReference.meta_profile == 'mcode-secondary-cancer-condition')){
+    if(cancerRelatedSurgicalProcedures.some((surgicalProcedure) => surgicalProcedure.reasonReference != null && surgicalProcedure.reasonReference.some(rr => rr.meta_profile == 'mcode-secondary-cancer-condition'))){
       surgicalProcedureValues.push('metastasis_resection');
     }
 
@@ -1030,7 +1036,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
   /**
    * Reeturns the list of coding's associated with the given base fhir resource.
    * @param resources The fhir resources to pull coding's from.
-   * @returns 
+   * @returns
    */
   extractCodings(resources: BaseFhirResource[]): fhir.Coding[] {
     const codingList: fhir.Coding[] = []
@@ -1047,7 +1053,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
    * @returns Returns the age of the patient in this resource.
    */
   getAgeValue(): number {
-    const birthDate = this.getExtractedBirthDate();
+    const birthDate = this.extractedMcode.birthDate;
     if (birthDate == 'NA' || birthDate == null || birthDate == undefined) {
       return null;
     }
@@ -1067,23 +1073,23 @@ export class TrialjectoryMappingLogic extends MappingLogic {
   getStageValues(): string {
 
     // Perform the basic extraction mappings.
-    let stageValues: string[] = TrialjectoryMappingLogic.codeMapper.extractCodeMappings(this.getExtractedTNMclinicalStageGroup());
-    stageValues.push(...TrialjectoryMappingLogic.codeMapper.extractCodeMappings(this.getExtractedTNMpathologicalStageGroup()));
+    let stageValues: string[] = TrialjectoryMappingLogic.codeMapper.extractCodeMappings(this.extractedMcode.TNMClinicalStageGroups);
+    stageValues.push(...TrialjectoryMappingLogic.codeMapper.extractCodeMappings(this.extractedMcode.TNMPathologicalStageGroups));
 
     console.log("Stages", JSON.stringify(stageValues));
     if(stageValues.length < 1){
       return null;
     }
-    
+
     // Set the stage conversions.
     // TrialJectory uses decimal stages
     // Supports: 0.1,0.2,1,2,3,3.1,3.2,4,0,2.1,2.2,3.3,3.4
     const stageConverter = new Map<string, string>()
     stageConverter.set('Stage-0', '0');
-    stageConverter.set('Stage-0A', '0.1'); 
-    stageConverter.set('Stage-0B', '0.2'); 
-    stageConverter.set('0A', '0.1'); 
-    stageConverter.set('0B', '0.2'); 
+    stageConverter.set('Stage-0A', '0.1');
+    stageConverter.set('Stage-0B', '0.2');
+    stageConverter.set('0A', '0.1');
+    stageConverter.set('0B', '0.2');
 
     stageConverter.set('Stage-1', '1');
     stageConverter.set('Stage-1A', '1');
@@ -1131,13 +1137,13 @@ export class TrialjectoryMappingLogic extends MappingLogic {
   }
 
   /**
-   * 
+   *
    * @returns Gets the tumor marker mappings from the codes in this resource.
    */
   getTumorMarkerValues(): string[] {
 
-    const tumorMarker: TumorMarker[] = this.getExtractedTumorMarkers();
-    const cancerGeneticVariant: CancerGeneticVariant[] = this.getExtractedCancerGeneticVariants();
+    const tumorMarker = this.extractedMcode.tumorMarkers;
+    const cancerGeneticVariant = this.extractedMcode.cancerGeneticVariants;
 
     console.log("Tumor Markers!", JSON.stringify(tumorMarker));
 
@@ -1166,13 +1172,13 @@ export class TrialjectoryMappingLogic extends MappingLogic {
         // NOTE: ER+ check always uses 1 as the metric parameter by default.
         tumorMarkerArray.push('ER+');
       }
-  
+
       // PR
       if (this.isPRPositive(currentTumorMarker, 1, basicTumorMapping)){
         // NOTE: PR+ check always uses 1 as the metric parameter by default.
         tumorMarkerArray.push('PR+');
       }
-  
+
       // HER
       if (this.isHER2Positive(currentTumorMarker, basicTumorMapping)){
         tumorMarkerArray.push('HER2+')
@@ -1273,7 +1279,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
         cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '11998')) ){
         tumorMarkerArray.push('p53_tp53_mutation');
       }
-      
+
       if (this.isBioMarkerNegativeCombo2(currentTumorMarker, 'Biomarker-P53', basicTumorMapping) ||
         cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '11998')) ){
         tumorMarkerArray.push('p53_tp53_deletion');
@@ -1297,7 +1303,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
     if (cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '16627')) ||
       cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantNegative(cancGenVar, '16627'))){
       tumorMarkerArray.push('CHEK2');
-    }  
+    }
 
     // NBN
     /** TJ No longer supports NBN- or +; just nbn */
@@ -1418,7 +1424,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
     if (cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '7997'))) {
       tumorMarkerArray.push('nrg1');
     }
-    
+
     // idh1
     if (cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '5382'))) {
       tumorMarkerArray.push('idh1');
@@ -1453,11 +1459,11 @@ export class TrialjectoryMappingLogic extends MappingLogic {
     if (cancerGeneticVariant.some((cancGenVar) => this.isGeneticVariantPositive(cancGenVar, '7029'))) {
       tumorMarkerArray.push('c_met');
     }
-    
+
 
 
     /** Valid one-to-one cancer genetic variant mappings */
-    const geneStudiedCodings: fhir.Coding[] = [].concat(...cancerGeneticVariant.map(cgv => [].concat(...cgv.component.geneStudied.map(gs => gs.valueCodeableConcept.coding))));
+    const geneStudiedCodings: fhir.Coding[] = cancerGeneticVariant.flatMap(cgv => cgv.component.geneStudied.flatMap(gs => gs.valueCodeableConcept.coding));
     const fullCancerGeneticVariantGeneStudied = TrialjectoryMappingLogic.codeMapper.extractCodeMappings(geneStudiedCodings);
     if(fullCancerGeneticVariantGeneStudied.length > 0) {
       // Colorectal Values.
@@ -1565,9 +1571,9 @@ export class TrialjectoryMappingLogic extends MappingLogic {
           (interp) => interp.code == 'CAR' || interp.code == 'A' || interp.code == 'POS'
         ) ||
         cancGenVar.component.geneStudied.some((geneStud) =>
-          geneStud.interpretation.coding.some(
+          geneStud.interpretation.some(interpretation => interpretation.coding.some(
             (interp) => interp.code == 'CAR' || interp.code == 'A' || interp.code == 'POS'
-          )
+          ))
         ))
     );
   }
@@ -1589,9 +1595,9 @@ export class TrialjectoryMappingLogic extends MappingLogic {
           (interp) => interp.code == 'N' || interp.code == 'NEG'
         ) ||
         cancGenVar.component.geneStudied.some((geneStud) =>
-          geneStud.interpretation.coding.some(
+          geneStud.interpretation.some(interpretation => interpretation.coding.some(
             (interp) => interp.code == 'N' || interp.code == 'NEG'
-          )
+          ))
         ))
     );
   }
@@ -1622,7 +1628,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
       return false;
     }
   }
-  
+
   ratioMatch(numerator: Quantity, denominator: Quantity, metricValue: number, metricComparator: string): boolean {
     if (!numerator || !denominator || !numerator.value || !denominator.value) {
       return false;
@@ -1641,16 +1647,16 @@ export class TrialjectoryMappingLogic extends MappingLogic {
       return false;
     }
   }
-  
+
   /** -------------- HELPER FUNCTIONS: Determine POS/NEG on Tumor Marker -------------- **/
 
   isERPositive(tumorMarker: TumorMarker, metric: number, basicTumorMapping: string[]): boolean {
     return (
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
-        tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '>=')) ||
+        (tumorMarker.valueRatio && this.ratioMatch(tumorMarker.valueRatio.numerator, tumorMarker.valueRatio.denominator, metric, '>=')) ||
         this.isInterpretationPositive(tumorMarker.interpretation) ||
-        tumorMarker.valueQuantity.some((valQuant) =>
-          this.quantityMatch(valQuant.value, valQuant.code, [metric], '>=', '%')
+        (tumorMarker.valueQuantity &&
+          this.quantityMatch(tumorMarker.valueQuantity.value, tumorMarker.valueQuantity.code, [metric], '>=', '%')
         )) &&
         basicTumorMapping.includes('Biomarker-ER')
     );
@@ -1658,12 +1664,11 @@ export class TrialjectoryMappingLogic extends MappingLogic {
   isERNegative(tumorMarker: TumorMarker, metric: number, basicTumorMapping: string[]): boolean {
     return (
       (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
-        tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '<')) ||
+        (tumorMarker.valueRatio && this.ratioMatch(tumorMarker.valueRatio.numerator, tumorMarker.valueRatio.denominator, metric, '<'))) ||
         this.isInterpretationNegative(tumorMarker.interpretation) ||
-        tumorMarker.valueQuantity.some(
-          (valQuant) =>
-            this.quantityMatch(valQuant.value, valQuant.code, [metric], '<', '%') ||
-            this.quantityMatch(valQuant.value, valQuant.code, [0], '=')
+        (tumorMarker.valueQuantity && (
+            this.quantityMatch(tumorMarker.valueQuantity.value, tumorMarker.valueQuantity.code, [metric], '<', '%') ||
+            this.quantityMatch(tumorMarker.valueQuantity.value, tumorMarker.valueQuantity.code, [0], '=')
         )) &&
         basicTumorMapping.includes('Biomarker-ER')
     );
@@ -1672,10 +1677,10 @@ export class TrialjectoryMappingLogic extends MappingLogic {
     return (
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationPositive(tumorMarker.interpretation) ||
-        tumorMarker.valueQuantity.some((valQuant) =>
-          this.quantityMatch(valQuant.value, valQuant.code, [metric], '>=', '%')
+        (tumorMarker.valueQuantity &&
+          this.quantityMatch(tumorMarker.valueQuantity.value, tumorMarker.valueQuantity.code, [metric], '>=', '%')
         ) ||
-        tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '>='))) &&
+        (tumorMarker.valueRatio && this.ratioMatch(tumorMarker.valueRatio.numerator, tumorMarker.valueRatio.denominator, metric, '>='))) &&
       basicTumorMapping.includes('Biomarker-PR')
     );
   }
@@ -1683,12 +1688,11 @@ export class TrialjectoryMappingLogic extends MappingLogic {
     return (
       (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationNegative(tumorMarker.interpretation) ||
-        tumorMarker.valueQuantity.some(
-          (valQuant) =>
-            this.quantityMatch(valQuant.value, valQuant.code, [metric], '<', '%') ||
-            this.quantityMatch(valQuant.value, valQuant.code, [0], '=')
+        (tumorMarker.valueQuantity &&
+            this.quantityMatch(tumorMarker.valueQuantity.value, tumorMarker.valueQuantity.code, [metric], '<', '%') ||
+            this.quantityMatch(tumorMarker.valueQuantity.value, tumorMarker.valueQuantity.code, [0], '=')
         ) ||
-        tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '<'))) &&
+        (tumorMarker.valueRatio && this.ratioMatch(tumorMarker.valueRatio.numerator, tumorMarker.valueRatio.denominator, metric, '<'))) &&
       basicTumorMapping.includes('Biomarker-PR')
     );
   }
@@ -1708,25 +1712,24 @@ export class TrialjectoryMappingLogic extends MappingLogic {
   }
   isRBPositive(tumorMarker: TumorMarker, metric: number, basicTumorMapping: string[]): boolean {
     return (
-      (tumorMarker.valueQuantity.some((valQuant) =>
-        this.quantityMatch(valQuant.value, valQuant.code, [metric], '>', '%')
+      ((tumorMarker.valueQuantity &&
+        this.quantityMatch(tumorMarker.valueQuantity.value, tumorMarker.valueQuantity.code, [metric], '>', '%')
       ) ||
         this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
-        tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '>')) ||
+        (tumorMarker.valueRatio && this.ratioMatch(tumorMarker.valueRatio.numerator, tumorMarker.valueRatio.denominator, metric, '>')) ||
         this.isInterpretationPositive(tumorMarker.interpretation)) &&
         basicTumorMapping.includes('Biomarker-RB')
-        );
+    );
   }
   isRBNegative(tumorMarker: TumorMarker, metric: number, basicTumorMapping: string[]): boolean {
     return (
       (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
-        tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '<')) ||
+        (tumorMarker.valueRatio && this.ratioMatch(tumorMarker.valueRatio.numerator, tumorMarker.valueRatio.denominator, metric, '<')) ||
         this.isInterpretationNegativeCombo3(tumorMarker.interpretation) ||
-        tumorMarker.valueQuantity.some(
-          (valQuant) =>
-            this.quantityMatch(valQuant.value, valQuant.code, [metric], '<', '%') ||
-            this.quantityMatch(valQuant.value, valQuant.code, [0], '=')
-        )) &&
+        (tumorMarker.valueQuantity && (
+            this.quantityMatch(tumorMarker.valueQuantity.value, tumorMarker.valueQuantity.code, [metric], '<', '%') ||
+            this.quantityMatch(tumorMarker.valueQuantity.value, tumorMarker.valueQuantity.code, [0], '=')
+        ))) &&
       basicTumorMapping.includes('Biomarker-RB')
     );
   }
@@ -1735,8 +1738,8 @@ export class TrialjectoryMappingLogic extends MappingLogic {
       basicTumorMapping.includes('Biomarker-HER2') &&
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationPositive(tumorMarker.interpretation) ||
-        tumorMarker.valueQuantity.some((valQuant) =>
-          this.quantityMatch(valQuant.value, valQuant.code, ['3', '3+'], '=')
+        (tumorMarker.valueQuantity &&
+          this.quantityMatch(tumorMarker.valueQuantity.value, tumorMarker.valueQuantity.code, ['3', '3+'], '=')
         ))
     );
   }
@@ -1744,8 +1747,8 @@ export class TrialjectoryMappingLogic extends MappingLogic {
     return (
       (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
         this.isInterpretationNegative(tumorMarker.interpretation) || // Information on Interpretation values can be found at: http://hl7.org/fhir/R4/valueset-observation-interpretation.html
-        tumorMarker.valueQuantity.some((valQuant) =>
-          this.quantityMatch(valQuant.value, valQuant.code, quantities, '=')
+        (tumorMarker.valueQuantity &&
+          this.quantityMatch(tumorMarker.valueQuantity.value, tumorMarker.valueQuantity.code, quantities, '=')
         )) &&
         basicTumorMapping.includes('Biomarker-HER2')
     );
@@ -1753,10 +1756,10 @@ export class TrialjectoryMappingLogic extends MappingLogic {
   isFGFRPositive(tumorMarker: TumorMarker, metric: number, basicTumorMapping: string[]): boolean {
     return (
       (this.isValueCodeableConceptPositive(tumorMarker.valueCodeableConcept) ||
-        tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '>=')) ||
+        (tumorMarker.valueRatio && this.ratioMatch(tumorMarker.valueRatio.numerator, tumorMarker.valueRatio.denominator, metric, '>=')) ||
         this.isInterpretationPositive(tumorMarker.interpretation) ||
-        tumorMarker.valueQuantity.some((valQuant) =>
-          this.quantityMatch(valQuant.value, valQuant.code, [metric], '>=', '%')
+        (tumorMarker.valueQuantity &&
+          this.quantityMatch(tumorMarker.valueQuantity.value, tumorMarker.valueQuantity.code, [metric], '>=', '%')
         )) &&
         basicTumorMapping.includes('Biomarker-FGFR')
     );
@@ -1764,12 +1767,11 @@ export class TrialjectoryMappingLogic extends MappingLogic {
   isFGFRNegative(tumorMarker: TumorMarker, metric: number, basicTumorMapping: string[]): boolean {
     return (
       (this.isValueCodeableConceptNegative(tumorMarker.valueCodeableConcept) ||
-        tumorMarker.valueRatio.some((valRat) => this.ratioMatch(valRat.numerator, valRat.denominator, metric, '<')) ||
+        (tumorMarker.valueRatio && this.ratioMatch(tumorMarker.valueRatio.numerator, tumorMarker.valueRatio.denominator, metric, '<')) ||
         this.isInterpretationNegativeCombo3(tumorMarker.interpretation) ||
-        tumorMarker.valueQuantity.some(
-          (valQuant) =>
-            this.quantityMatch(valQuant.value, valQuant.code, [metric], '<', '%') ||
-            this.quantityMatch(valQuant.value, valQuant.code, [0], '=')
+        (tumorMarker.valueQuantity &&
+            (this.quantityMatch(tumorMarker.valueQuantity.value, tumorMarker.valueQuantity.code, [metric], '<', '%') ||
+            this.quantityMatch(tumorMarker.valueQuantity.value, tumorMarker.valueQuantity.code, [0], '='))
         )) &&
         basicTumorMapping.includes('Biomarker-FGFR')
     );
@@ -1820,7 +1822,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
     // ('leuprolide', 'leuprolide') // THIS MEDICATION IS NOT CURRENTLY SUPPORTED BY TRIALJECTORY. WE WILL NEED TO DISCUSS THIS WITH THEM.
     // WE HAVE SINCE DISCUSSED THESE MEDICATIONS WITH THEM, WAITING FOR THEM TO PROCEED.
 
-    const medicationValues: string[] = TrialjectoryMappingLogic.codeMapper.extractCodeMappings(this.getExtractedCancerRelatedMedicationStatements());
+    const medicationValues: string[] = TrialjectoryMappingLogic.codeMapper.extractCodeMappings(this.extractedMcode.cancerRelatedMedicationStatements);
     // Filter any duplicate values.
     medicationValues.filter((a, b) => medicationValues.indexOf(a) === b)
     return medicationValues;
@@ -1831,7 +1833,7 @@ export class TrialjectoryMappingLogic extends MappingLogic {
    * @returns The main cancer group type
    *  */
   getCancerName(): string {
-    const extractedPrimaryCancerConditions = this.getExtractedPrimaryCancerConditions();
+    const extractedPrimaryCancerConditions = this.extractedMcode.primaryCancerConditions;
 
     // If no primaryCancerCondition -- go ahead and return null
     if (extractedPrimaryCancerConditions.length == 0) {
