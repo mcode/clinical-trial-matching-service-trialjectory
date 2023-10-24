@@ -271,7 +271,8 @@ export class APIQuery {
     this.medications = mappingLogic.getMedicationStatementValues();
     this.radiationProcedures = mappingLogic.getRadiationProcedureValues();
     this.surgicalProcedures = mappingLogic.getSurgicalProcedureValues();
-    this.metastasis = [mappingLogic.getSecondaryCancerValues()];
+    const metastasis = mappingLogic.getSecondaryCancerValues();
+    this.metastasis = metastasis == null ? [] : [metastasis];
     this.age = mappingLogic.getAgeValue();
   }
 
@@ -322,8 +323,8 @@ export class APIQuery {
       medications: this.filterAllowable(this.cancerName, "medications", this.medications, true),
       procedures: this.filterAllowable(this.cancerName, "procedures", this.radiationProcedures.concat(this.surgicalProcedures), true),
       metastasis: this.metastasis,
-      age: this.age
-    }
+      age: this.age,
+    };
 
     return JSON.stringify(query);
   }
