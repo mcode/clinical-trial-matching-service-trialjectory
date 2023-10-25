@@ -118,11 +118,15 @@ describe("isQueryResponse()", () => {
   });
 
   it("returns true on a matching object", () => {
-    expect(isQueryResponse({ trials: [] })).toBeTrue();
-    expect(isQueryResponse({ trials: [{ name: "Trial" }] })).toBeTrue();
+    expect(isQueryResponse({ data: { trials: [] } })).toBeTrue();
+    expect(
+      isQueryResponse({ data: { trials: [{ name: "Trial" }] } })
+    ).toBeTrue();
     // Currently this is true. It may make sense to make it false, but for now,
     // a single invalid trial does not invalidate the array.
-    expect(isQueryResponse({ trials: [{ invalid: true }] })).toBeTrue();
+    expect(
+      isQueryResponse({ data: { trials: [{ invalid: true }] } })
+    ).toBeTrue();
   });
 });
 
@@ -173,9 +177,7 @@ describe("APIQuery", () => {
     });
     expect(query.lat).toEqual('42.499332');
     expect(query.lng).toEqual('-71.281901');
-    // FIXME: For now, travelRadius is always null
-    expect(query.travelRadius).toBeNull();
-    //expect(query.travelRadius).toEqual(25);
+    expect(query.travelRadius).toEqual(25);
   });
 
   it("gathers conditions", () => {
@@ -252,9 +254,9 @@ describe("APIQuery", () => {
             },
           },
         ],
-      }).tostring()
+      }).toString()
     ).toEqual(
-      '{"zip":"01730","distance":25,"phase":"phase-1","status":"approved","biomarkers":[],"stage":null,"cancerType":null,"cancerSubType":null,"ecog":null,"karnofsky":null,"medications":[],"procedures":[],"metastasis":null,"age":null}'
+      '{"lat":"42.499332","lng":"-71.281901","distance":25,"biomarkers":null,"stage":null,"cancerName":null,"cancerType":null,"cancerSubType":null,"ecog":null,"karnofsky":null,"medications":null,"procedures":null,"metastasis":[],"age":null}'
     );
   });
 
@@ -451,7 +453,58 @@ describe("ClinicalTrialLookup", () => {
   const patientBundle: Bundle = {
     resourceType: "Bundle",
     type: "batch",
-    entry: [],
+    entry: [
+      {
+        resource: {
+          resourceType: "Condition",
+          subject: {},
+          meta: {
+            profile: [
+              "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-primary-cancer-condition",
+            ],
+          },
+          clinicalStatus: {
+            coding: [
+              {
+                system:
+                  "http://terminology.hl7.org/CodeSystem/condition-clinical",
+                code: "active",
+              },
+            ],
+          },
+          verificationStatus: {
+            coding: [
+              {
+                system:
+                  "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+                code: "confirmed",
+              },
+            ],
+          },
+          category: [
+            {
+              coding: [
+                {
+                  system: "http://snomed.info/sct",
+                  code: "64572001",
+                  display: "Disease (disorder)",
+                },
+              ],
+            },
+          ],
+          code: {
+            coding: [
+              {
+                system: "http://snomed.info/sct",
+                code: "254837009",
+                display: "Malignant neoplasm of breast (disorder)",
+              },
+            ],
+            text: "Malignant neoplasm of breast (disorder)",
+          },
+        },
+      },
+    ],
   };
   let matcher: (patientBundle: Bundle) => Promise<SearchSet>;
   let scope: nock.Scope;
@@ -471,11 +524,13 @@ describe("ClinicalTrialLookup", () => {
   });
   afterEach(() => {
     // Expect the endpoint to have been hit in these tests
-    expect(nock.isDone()).toBeTrue();
+    expect(nock.isDone())
+      .withContext("All expected requests have been sent")
+      .toBeTrue();
   });
 
   it("generates a request", () => {
-    mockRequest.reply(200, { trials: [] });
+    mockRequest.reply(200, { data: { trials: [] } });
     return expectAsync(matcher(patientBundle)).toBeResolved();
   });
 
