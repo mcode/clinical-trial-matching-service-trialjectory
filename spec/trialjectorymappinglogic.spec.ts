@@ -214,5 +214,7 @@ describe('TrialjectoryMappingLogic', () => {
     });
     expect(instance.getPrimaryCancerValues()).toEqual('breast_cancer');
     expect(instance.getSecondaryCancerValues()).toBeNull();
+    expect(instance.getECOGScore()).toEqual(0);
+    expect(instance.getKarnofskyScore()).toEqual(100);
   });
 });
