@@ -1084,48 +1084,49 @@ export class TrialjectoryMappingLogic {
     // Set the stage conversions.
     // TrialJectory uses decimal stages
     // Supports: 0.1,0.2,1,2,3,3.1,3.2,4,0,2.1,2.2,3.3,3.4
-    const stageConverter = new Map<string, string>()
-    stageConverter.set('Stage-0', '0');
-    stageConverter.set('Stage-0A', '0.1');
-    stageConverter.set('Stage-0B', '0.2');
-    stageConverter.set('0A', '0.1');
-    stageConverter.set('0B', '0.2');
+    const stageConverter = new Map<string, string>([
+      ['Stage-0', '0'],
+      ['Stage-0A', '0.1'],
+      ['Stage-0B', '0.2'],
+      ['0A', '0.1'],
+      ['0B', '0.2'],
 
-    stageConverter.set('Stage-1', '1');
-    stageConverter.set('Stage-1A', '1');
-    stageConverter.set('Stage-1B', '1');
-    stageConverter.set('Stage-1C', '1');
-    stageConverter.set('1A', '1');
-    stageConverter.set('1B', '1');
-    stageConverter.set('1C', '1');
+      ['Stage-1', '1'],
+      ['Stage-1A', '1'],
+      ['Stage-1B', '1'],
+      ['Stage-1C', '1'],
+      ['1A', '1'],
+      ['1B', '1'],
+      ['1C', '1'],
 
-    stageConverter.set('Stage-2', '2');
-    stageConverter.set('Stage-2A', '2.1');
-    stageConverter.set('Stage-2B', '2.2');
-    stageConverter.set('Stage-2C', '2');
-    stageConverter.set('2A', '2.1');
-    stageConverter.set('2B', '2.2');
-    stageConverter.set('2C', '2');
+      ['Stage-2', '2'],
+      ['Stage-2A', '2.1'],
+      ['Stage-2B', '2.2'],
+      ['Stage-2C', '2'],
+      ['2A', '2.1'],
+      ['2B', '2.2'],
+      ['2C', '2'],
 
-    stageConverter.set('Stage-3', '3');
-    stageConverter.set('Stage-3A', '3.1');
-    stageConverter.set('Stage-3B', '3.2');
-    stageConverter.set('Stage-3C', '3.3');
-    stageConverter.set('Stage-3D', '3.4');
-    stageConverter.set('3A', '3.1');
-    stageConverter.set('3B', '3.2');
-    stageConverter.set('3C', '3.3');
-    stageConverter.set('3D', '3.4');
+      ['Stage-3', '3'],
+      ['Stage-3A', '3.1'],
+      ['Stage-3B', '3.2'],
+      ['Stage-3C', '3.3'],
+      ['Stage-3D', '3.4'],
+      ['3A', '3.1'],
+      ['3B', '3.2'],
+      ['3C', '3.3'],
+      ['3D', '3.4'],
 
-    stageConverter.set('Stage-4', '4');
-    stageConverter.set('Stage-4A', '4.1');
-    stageConverter.set('Stage-4B', '4.2');
-    stageConverter.set('Stage-4C', '4.3');
-    stageConverter.set('Stage-4D', '4.4');
-    stageConverter.set('4A', '4.1');
-    stageConverter.set('4B', '4.2');
-    stageConverter.set('4C', '4.3');
-    stageConverter.set('4D', '4.4');
+      ['Stage-4', '4'],
+      ['Stage-4A', '4.1'],
+      ['Stage-4B', '4.2'],
+      ['Stage-4C', '4.3'],
+      ['Stage-4D', '4.4'],
+      ['4A', '4.1'],
+      ['4B', '4.2'],
+      ['4C', '4.3'],
+      ['4D', '4.4'],
+    ]);
 
     stageValues = stageValues.map(stage => {
       return stageConverter.get(stage) || stage;

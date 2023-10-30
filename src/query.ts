@@ -14,9 +14,7 @@ import * as fhir from 'fhir/r4';
 import convertToResearchStudy from "./researchstudy-mapping";
 import { TrialjectoryMappingLogic } from "./trialjectorymappinglogic";
 import data from 'us-zips';
-import allowable_values_json from '../data/allowable-values.json';
-
-const allowable_values = allowable_values_json as {[key:string]: {[key:string]: (string[]|number[])}};
+import ALLOWABLE_VALUES from '../data/allowable-values.json';
 
 export interface QueryConfiguration extends ServiceConfiguration {
   endpoint?: string;
@@ -110,11 +108,11 @@ export function isQueryTrial(o: unknown): o is QueryTrial {
       typeof trial.first_submitted === "string" &&
       (!trial.location || typeof trial.locations === "string") &&
       typeof trial.url === "string" &&
-      (typeof trial.phases === "string" || trial.phases === null )&&
+      (typeof trial.phases === "string" || trial.phases === null) &&
       typeof trial.enrollment === "number" &&
       typeof trial.study_type === "string" &&
       (typeof trial.control_type === "string" || trial.control_type === null) &&
-      (!trial.contact_name ||  typeof trial.contact_name === "string") &&
+      (!trial.contact_name || typeof trial.contact_name === "string") &&
       (!trial.conatct_phone || typeof trial.conatct_phone === "string") &&
       (!trial.contact_email || typeof trial.contact_email === "string") &&
       typeof trial.brief_summary === "string" &&
@@ -147,7 +145,8 @@ export function isQueryResponse(o: unknown): o is QueryResponse {
   // makes this type guard or the QueryResponse type sort of invalid. However,
   // the assumption is that a single unparsable trial should not cause the
   // entire response to be thrown away.
-  return Array.isArray((o as QueryResponse).data.trials);
+  const response = o as QueryResponse;
+  return typeof response.data == 'object' && response.data != null && Array.isArray(response.data.trials);
 }
 
 export interface QueryErrorResponse extends Record<string, unknown> {
@@ -271,7 +270,8 @@ export class APIQuery {
     this.medications = mappingLogic.getMedicationStatementValues();
     this.radiationProcedures = mappingLogic.getRadiationProcedureValues();
     this.surgicalProcedures = mappingLogic.getSurgicalProcedureValues();
-    this.metastasis = [mappingLogic.getSecondaryCancerValues()];
+    const metastasis = mappingLogic.getSecondaryCancerValues();
+    this.metastasis = metastasis == null ? [] : [metastasis];
     this.age = mappingLogic.getAgeValue();
   }
 
@@ -286,7 +286,18 @@ export class APIQuery {
    *
    */
   filterAllowable(cancerName: string, param: string, value: string[]|string|number, isArray = false): string[]|string|number {
-    const allowable:(string[]|number[]) = allowable_values[cancerName][param]
+    if (!(cancerName in ALLOWABLE_VALUES)) {
+      // Unable to find cancer name
+      console.log(`Invalid cancer name ${cancerName}`);
+      return null;
+    }
+    const cancerValues = ALLOWABLE_VALUES[cancerName as keyof(typeof ALLOWABLE_VALUES)];
+    if (!(param in cancerValues)) {
+      // Unable to find parameter name
+      console.log(`Invalid parameter ${param} for cancer type ${cancerName}`);
+      return null;
+    }
+    const allowable:(string[]|number[]) = cancerValues[param as keyof(typeof cancerValues)];
     console.log("Current value for ", param, ":", JSON.stringify(value));
     console.log("Allowed values for ", cancerName, "|", param, ": ", JSON.stringify(allowable));
 
@@ -322,14 +333,13 @@ export class APIQuery {
       medications: this.filterAllowable(this.cancerName, "medications", this.medications, true),
       procedures: this.filterAllowable(this.cancerName, "procedures", this.radiationProcedures.concat(this.surgicalProcedures), true),
       metastasis: this.metastasis,
-      age: this.age
-    }
+      age: this.age,
+    };
 
     return JSON.stringify(query);
   }
 
-  tostring(): string {
-    console.log(this.toQuery());
+  toString(): string {
     // Note that if toQuery is no longer a string, this will no longer work
     return this.toQuery();
   }
