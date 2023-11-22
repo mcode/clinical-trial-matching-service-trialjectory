@@ -488,5 +488,11 @@
   "Primary malignant neoplasm of posterior wall of urinary bladder (disorder)": "bladder",
   "Primary malignant neoplasm of lateral wall of urinary bladder (disorder)": "bladder",
   "Primary malignant neoplasm of bladder (disorder)": "bladder",
-  "Primary malignant neoplasm of anterior wall of urinary bladder (disorder)": "bladder"
+  "Primary malignant neoplasm of anterior wall of urinary bladder (disorder)": "bladder",
+  "Micropapillary urothelial carcinoma (disorder)": "bladder",
+  "Transitional cell carcinoma of upper urinary tract (disorder)": "bladder",
+  "Lipid-rich urothelial carcinoma of urinary system (disorder)": "bladder",
+  "Clear cell urothelial carcinoma of urinary system (disorder)": "bladder",
+  "Primary urothelial carcinoma of paraurethral gland (disorder)": "bladder",
+  "Primary urothelial carcinoma of overlapping sites of urinary organs (disorder)": "bladder"
 }

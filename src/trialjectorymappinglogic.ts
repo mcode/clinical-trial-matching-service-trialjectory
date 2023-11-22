@@ -503,6 +503,159 @@ export class TrialjectoryMappingLogic {
         if (pccNames.some(pcc => active_mm.includes(pcc))) return "active_mm";
         if (pccNames.some(pcc => smoldering_mm.includes(pcc))) return "smoldering_mm";
       }
+
+      // --------------------------------------------------
+      // BLADDER
+      else if (majorType == "bladder") {
+        console.log("BLADDER");
+
+        const urothelial_carcinoma:string[] = [
+          "Micropapillary urothelial carcinoma (disorder)",
+          "Transitional cell carcinoma of upper urinary tract (disorder)",
+          "Lipid-rich urothelial carcinoma of urinary system (disorder)",
+          "Clear cell urothelial carcinoma of urinary system (disorder)",
+          "Primary urothelial carcinoma of paraurethral gland (disorder)",
+          "Sarcomatoid urothelial carcinoma of urinary bladder (disorder)",
+          "Plasmacytoid urothelial carcinoma of urinary bladder (disorder)",
+          "Primary urothelial carcinoma of overlapping sites of urinary organs (disorder)"
+        ];
+
+        const urothelial_carcinoma_histo_morph:string[] = [
+          "Clear cell urothelial carcinoma (morphologic abnormality)",
+          "Sarcomatoid urothelial carcinoma (morphologic abnormality)",
+          "Transitional cell carcinoma with glandular differentiation (morphologic abnormality)",
+          "Transitional cell carcinoma with squamous differentiation (morphologic abnormality)",
+          "Transitional cell carcinoma (morphologic abnormality)",
+          "Papillary transitional cell carcinoma (morphologic abnormality)",
+          "Sarcomatoid urothelial carcinoma (morphologic abnormality)",
+          "Micropapillary urothelial carcinoma (morphologic abnormality)",
+          "Low-grade non-invasive papillary urothelial carcinoma (morphologic abnormality)",
+          "High-grade non-invasive papillary urothelial carcinoma (morphologic abnormality)",
+        ];
+
+        const squamous_cell_carcinoma:string[] = [
+          "Primary squamous cell carcinoma of ureteral orifice (disorder)",
+          "Primary squamous cell carcinoma of posterior wall of urinary bladder (disorder)",
+          "Primary squamous cell carcinoma of lateral wall of urinary bladder (disorder)",
+          "Primary squamous cell carcinoma of dome of urinary bladder (disorder)",
+          "Primary squamous cell carcinoma of neck of urinary bladder (disorder)",
+          "Primary squamous cell carcinoma of anterior wall of urinary bladder (disorder)",
+          "Squamous cell carcinoma of bladder (disorder)",
+        ];
+
+        
+        const squamous_cell_carcinoma_histo_morph:string[] = [
+          "Malignant keratoacanthoma (morphologic abnormality)",
+          "Squamous cell carcinoma (morphologic abnormality)",
+          "Human papillomavirus negative squamous cell carcinoma (morphologic abnormality)",
+          "Human papillomavirus positive squamous cell carcinoma (morphologic abnormality)",
+          "Pseudovascular squamous cell carcinoma (morphologic abnormality)",
+          "Undifferentiated nonkeratinizing squamous cell carcinoma (morphologic abnormality)",
+          "Grade III squamous intraepithelial neoplasia with microinvasive squamous cell carcinoma (morphologic abnormality)",
+          "Metaplastic squamous cell carcinoma (morphologic abnormality)",
+          "Squamous cell carcinoma, nonkeratinizing, differentiated (morphologic abnormality)",
+          "Squamous cell carcinoma in post-traumatic skin lesion (morphologic abnormality)",
+          "Warty (condylomatous) carcinoma (morphologic abnormality)",
+          "Squamous cell carcinoma, clear cell type (morphologic abnormality)",
+          "Basaloid squamous cell carcinoma (morphologic abnormality)",
+          "Squamous cell carcinoma with horn formation (morphologic abnormality)",
+          "Verrucous carcinoma (morphologic abnormality)",
+          "Adenoid squamous cell carcinoma (morphologic abnormality)",
+          "Squamous cell carcinoma, large cell, nonkeratinizing (morphologic abnormality)",
+          "Papillary squamous cell carcinoma (morphologic abnormality)",
+          "Squamous cell carcinoma, small cell, nonkeratinizing (morphologic abnormality)",
+          "Squamous cell carcinoma, keratinizing (morphologic abnormality)",
+          "Squamous cell carcinoma, microinvasive (morphologic abnormality)",
+          "Squamous cell carcinoma, spindle cell (morphologic abnormality)",
+          "Lymphoepithelial carcinoma (morphologic abnormality)",
+        ];
+
+        const adenocarcinoma:string[] = [
+          "Adenocarcinoma of bladder (disorder)",
+          "Primary adenocarcinoma of dome of urinary bladder (disorder)",
+          "Primary adenocarcinoma of neck of urinary bladder (disorder)",
+          "Primary adenocarcinoma of trigone of urinary bladder (disorder)",
+          "Primary adenocarcinoma of anterior wall of urinary bladder (disorder)",
+          "Primary adenocarcinoma of posterior wall of urinary bladder (disorder)",
+        ];
+
+        const adenocarcinoma_histo_morph:string[] = [
+          "Adenocarcinoma (morphologic abnormality)",
+          "High grade adenocarcinoma (morphologic abnormality)",
+          "Low grade adenocarcinoma (morphologic abnormality)",
+          "Intermediate grade adenocarcinoma (morphologic abnormality)",
+          "Cholangiocarcinoma (morphologic abnormality)",
+          "Combined hepatocellular carcinoma and cholangiocarcinoma (morphologic abnormality)",
+        ];
+
+        const small_cell_carcinoma:string[] = [
+          "Small cell neuroendocrine carcinoma of bladder (disorder)",
+        ];
+
+        const small_cell_carcinoma_histo_morph:string[] = [
+          "Malignant keratoacanthoma (morphologic abnormality)",
+          "Squamous cell carcinoma (morphologic abnormality)",
+          "Human papillomavirus negative squamous cell carcinoma (morphologic abnormality)",
+          "Human papillomavirus positive squamous cell carcinoma (morphologic abnormality)",
+          "Pseudovascular squamous cell carcinoma (morphologic abnormality)",
+          "Undifferentiated nonkeratinizing squamous cell carcinoma (morphologic abnormality)",
+          "Grade III squamous intraepithelial neoplasia with microinvasive squamous cell carcinoma (morphologic abnormality)",
+          "Metaplastic squamous cell carcinoma (morphologic abnormality)",
+          "Squamous cell carcinoma, nonkeratinizing, differentiated (morphologic abnormality)",
+          "Squamous cell carcinoma in post-traumatic skin lesion (morphologic abnormality)",
+          "Warty (condylomatous) carcinoma (morphologic abnormality)",
+          "Squamous cell carcinoma, clear cell type (morphologic abnormality)",
+          "Basaloid squamous cell carcinoma (morphologic abnormality)",
+          "Squamous cell carcinoma with horn formation (morphologic abnormality)",
+          "Verrucous carcinoma (morphologic abnormality)",
+          "Adenoid squamous cell carcinoma (morphologic abnormality)",
+          "Squamous cell carcinoma, large cell, nonkeratinizing (morphologic abnormality)",
+          "Papillary squamous cell carcinoma (morphologic abnormality)",
+          "Squamous cell carcinoma, small cell, nonkeratinizing (morphologic abnormality)",
+          "Squamous cell carcinoma, keratinizing (morphologic abnormality)",
+          "Squamous cell carcinoma, microinvasive (morphologic abnormality)",
+          "Squamous cell carcinoma, spindle cell (morphologic abnormality)",
+          "Lymphoepithelial carcinoma (morphologic abnormality)",
+        ];
+
+        const mixed_histo_morph:string[] = [
+          "Squamous cell carcinoma, nonkeratinizing, mixed differentiated and undifferentiated (morphologic abnormality)",
+          "Transitional carcinoma with mixed papillary and solid growth pattern (morphologic abnormality)",
+          "Squamous cell carcinoma, nonkeratinizing, mixed differentiated and undifferentiated (morphologic abnormality)",
+        ];
+
+
+        const sarcomatoid_carcinoma:string[] = [
+          "Sarcomatoid urothelial carcinoma of urinary bladder (disorder)",
+        ];
+
+        const sarcomatoid_histo_morph:string[] = [
+          "Pseudosarcomatous carcinoma (morphologic abnormality)",
+          "Sarcomatoid mesothelioma (morphologic abnormality)",
+          "Sarcomatoid urothelial carcinoma (morphologic abnormality)",
+          "Granulosa cell tumor, malignant (morphologic abnormality)",
+          "Squamous cell carcinoma, spindle cell (morphologic abnormality)",
+          "Transitional cell carcinoma, spindle cell (morphologic abnormality)",
+          "Basal cell carcinoma with sarcomatoid differentiation (morphologic abnormality)",
+          "Carcinoma with pleomorphic, sarcomatoid or sarcomatous elements (morphologic abnormality)",
+        ];
+
+        // Specific histomorphs
+        if (histologyMorphologies.some(hm => urothelial_carcinoma_histo_morph.includes(hm))) return "urothelial_carcinoma";
+        if (histologyMorphologies.some(hm => squamous_cell_carcinoma_histo_morph.includes(hm))) return "squamous_cell_carcinoma";
+        if (histologyMorphologies.some(hm => adenocarcinoma_histo_morph.includes(hm))) return "adenocarcinoma";
+        if (histologyMorphologies.some(hm => small_cell_carcinoma_histo_morph.includes(hm))) return "small_cell_carcinoma";
+        if (histologyMorphologies.some(hm => mixed_histo_morph.includes(hm))) return "mixed";
+        if (histologyMorphologies.some(hm => sarcomatoid_histo_morph.includes(hm))) return "sarcomatoid";
+
+        // Specific PrimaryCancerConditions
+        if (pccNames.some(pcc => urothelial_carcinoma.includes(pcc))) return "urothelial_carcinoma";
+        if (pccNames.some(pcc => squamous_cell_carcinoma.includes(pcc))) return "squamous_cell_carcinoma";
+        if (pccNames.some(pcc => adenocarcinoma.includes(pcc))) return "adenocarcinoma";
+        if (pccNames.some(pcc => small_cell_carcinoma.includes(pcc))) return "small_cell_carcinoma";
+        if (pccNames.some(pcc => sarcomatoid_carcinoma.includes(pcc))) return "sarcomatoid_carcinoma";
+
+      }
     }
 
     // No proper mapping so return null
