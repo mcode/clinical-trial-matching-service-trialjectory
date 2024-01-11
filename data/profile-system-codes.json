@@ -8164,6 +8164,9 @@
   "Primary malignant gastrointestinal stromal neoplasm of colon (disorder)": {
     "SNOMED": ["16636051000119105"]
   },
+  "Primary malignant gastrointestinal stromal neoplasm of rectum (disorder)": {
+    "SNOMED": ["16636101000119105"]
+  },
   "Primary adenocarcinoma of descending colon (disorder)": {
     "SNOMED": ["681651000119102"]
   },
@@ -8344,6 +8347,9 @@
   },
   "Primary oligodendroglioma of temporal lobe (disorder)": {
     "SNOMED": ["687361000119101"]
+  },
+  "Primary oligodendroglioma of frontal lobe (disorder)": {
+    "SNOMED": ["687331000119109"]
   },
   "Anaplastic oligodendroglioma of central nervous system (disorder)": {
     "SNOMED": ["1156406005"]
