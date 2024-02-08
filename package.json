@@ -22,17 +22,19 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "clinical-trial-matching-service": "^0.0.13",
+    "clinical-trial-matching-service": "^0.1.0",
     "dotenv-flow": "^4.0.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
     "us-zips": "^2022.9.1"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/express": "^4.17.17",
-    "@types/fhir": "^0.0.37",
+    "@types/fhir": "^0.0.40",
     "@types/jasmine": "^5.1.0",
     "@types/node": "^20.8.6",
-    "@types/supertest": "^2.0.9",
+    "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^6.8.0",
     "@typescript-eslint/parser": "^6.8.0",
     "eslint": "^8.51.0",

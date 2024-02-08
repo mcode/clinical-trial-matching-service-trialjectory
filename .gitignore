@@ -18,4 +18,4 @@
 Thumbs.db
 
 # Cache
-ctgov-cache/*
+/ctgov-cache.db
