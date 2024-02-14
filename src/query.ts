@@ -176,12 +176,15 @@ export function convertZip(zipCode: string): string[] {
 
 // API RESPONSE SECTION
 export class APIError extends Error {
+  public httpStatus: number; //Used by wrapping service to extract HttpErrors
+  public result: IncomingMessage;
+  public body: string;
   constructor(
-    message: string,
-    public result: IncomingMessage,
-    public body: string
+    message: string, httpStatus: number, body: string
   ) {
     super(message);
+    this.httpStatus = httpStatus;
+    this.body = body;
   }
 }
 
@@ -336,6 +339,14 @@ export class APIQuery {
       age: this.age,
     };
 
+    if (query.lat == null || query.lng == null) {
+      throw new APIError(
+        "Invalid zip code -- could not be processed into latitude and longitude",
+        400,
+        "Invalid zip code -- could not be processed into latitude and longitude"
+    );
+    }
+
     return JSON.stringify(query);
   }
 
@@ -443,7 +454,7 @@ function sendQuery(
               reject(
                 new APIError(
                   "Unable to parse response as JSON",
-                  result,
+                  500,
                   responseBody
                 )
               );
@@ -454,7 +465,7 @@ function sendQuery(
               reject(
                 new APIError(
                   `Error from service: ${json.error}`,
-                  result,
+                  500,
                   responseBody
                 )
               );
@@ -465,7 +476,7 @@ function sendQuery(
             reject(
               new APIError(
                 `Server returned ${result.statusCode} ${result.statusMessage}`,
-                result,
+                500,
                 responseBody
               )
             );
