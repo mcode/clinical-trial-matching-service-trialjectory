@@ -37,11 +37,9 @@ export default async function startServer(
     configuration = configFromEnv("MATCHING_SERVICE_");
   }
 
-  // Create a ClinicalTrialsGovService. It takes a path to a temporary directory
-  // that is used to store its cache.
-  const ctgService = await createClinicalTrialsGovService(
-    path.resolve(__dirname, "../ctgov-cache")
-  );
+  // Create a ClinicalTrialsGovService. It takes a path to a SQLite database to
+  // store its cache.
+  const ctgService = await createClinicalTrialsGovService(process.env.CTGOV_CACHE_FILE);
   const getMatchingClinicalTrials = createClinicalTrialLookup(
     configuration,
     ctgService

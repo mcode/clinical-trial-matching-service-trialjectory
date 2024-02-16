@@ -364,12 +364,12 @@ export class APIQuery {
  *     update the returned trials with additional information pulled from
  *     ClinicalTrials.gov
  */
-export function convertResponseToSearchSet(
+export async function convertResponseToSearchSet(
   response: QueryResponse,
   ctgService?: ClinicalTrialsGovService
 ): Promise<SearchSet> {
   // Our final response
-  const studies: ResearchStudy[] = [];
+  let studies: fhir.ResearchStudy[] = [];
   // For generating IDs
   let id = 0;
   for (const trial of response.data.trials) {
@@ -383,23 +383,14 @@ export function convertResponseToSearchSet(
   }
   if (ctgService) {
     // If given a backup service, use it
-    return ctgService.updateResearchStudies(studies).then(() => {
-      const ss = new SearchSet();
-      for (const study of studies) {
-        // If returned from TrialJectory, then the study has a match likelihood of 1
-        ss.addEntry(study, 1);
-      }
-      return ss;
-    });
-  } else {
-    // Otherwise, resolve immediately
-    const ss = new SearchSet();
-    for (const study of studies) {
-      // If returned from TrialJectory, then the study has a match likelihood of 1
-      ss.addEntry(study, 1);
-    }
-    return Promise.resolve(ss);
+    studies = await ctgService.updateResearchStudies(studies);
   }
+  const ss = new SearchSet();
+  for (const study of studies) {
+    // If returned from TrialJectory, then the study has a match likelihood of 1
+    ss.addEntry(study, 1);
+  }
+  return ss;
 }
 
 /**
