@@ -6,7 +6,6 @@ import ClinicalTrialMatchingService, {
   createClinicalTrialsGovService,
 } from "clinical-trial-matching-service";
 import * as dotenv from "dotenv-flow";
-import * as path from "path";
 
 /**
  * Exports a function to start the server. This is also the main entry point -

@@ -7,7 +7,6 @@ import { IncomingMessage } from "http";
 import {
   ClinicalTrialsGovService,
   ServiceConfiguration,
-  ResearchStudy,
   SearchSet
 } from "clinical-trial-matching-service";
 import * as fhir from 'fhir/r4';
