@@ -5,7 +5,7 @@
 
 import { ResearchStudy } from 'clinical-trial-matching-service';
 import * as fhir from 'fhir/r4';
-import { QueryTrial, TJFacility } from './query';
+import { QueryTrial } from './query';
 
 export const phaseCodeMap = new Map<string, string>([
   // this mapping needs to be verified
