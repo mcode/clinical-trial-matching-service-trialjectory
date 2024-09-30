@@ -2,7 +2,7 @@
 
 Wrapper for sending queries to the [TrialJectory](https://www.trialjectory.com/) clinical trial search service.
 
-For more information on the architecture and data schemas of the clinical trial matching system, please visit the clinical-trial-matching-engine [wiki](https://github.com/mcode/clinical-trial-matching-engine/wiki).
+For more information on the architecture and data schemas of the clinical trial matching system, please visit the [clinical-trial-matching-app wiki](https://github.com/mcode/clinical-trial-matching-app/wiki).
 
 ## Configuration:
 
