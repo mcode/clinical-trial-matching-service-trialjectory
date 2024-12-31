@@ -257,9 +257,6 @@ export class APIQuery {
       }
     }
 
-    // TODO: For now, overwrite the travelRadius to be null regardless!! TJ can't handle distance yet.
-    this.travelRadius = null;
-
     const mappingLogic = new TrialjectoryMappingLogic(patientBundle);
     console.log(mappingLogic);
     this.biomarkers = mappingLogic.getTumorMarkerValues();
@@ -277,7 +274,7 @@ export class APIQuery {
     this.age = mappingLogic.getAgeValue();
   }
 
-    /**
+  /**
    * Filters out allowable values based on the cancerName; cancerName is biggest truth
    * Because TJ is a bit weird on "empty" fields, explicitly return based on whether it's supposed to be
    *
@@ -324,7 +321,8 @@ export class APIQuery {
     const query = {
       lat: this.lat,
       lng: this.lng,
-      distance: this.travelRadius,
+      // FIXME: For now, overwrite the travelRadius to be null!! TJ can't handle distance yet.
+      distance: null as number | null, // this.travelRadius,
       biomarkers: this.filterAllowable(this.cancerName, "biomarkers", this.biomarkers, true),
       stage: this.filterAllowable(this.cancerName, "stage", this.stage),
       cancerName: this.cancerName,

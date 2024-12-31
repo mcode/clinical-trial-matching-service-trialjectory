@@ -53,58 +53,63 @@ describe("isQueryTrial()", () => {
   });
 
   it("returns true on a matching object", () => {
-    expect(isQueryTrial({
-                         main_objectives: [
-                           "Extend overall survival" ],
-                         treatment_administration_type: [ "IV infusion",
-                           "Oral Treatment (by mouth)"
-                         ],
-                         nct_number: "NCT03371017",
-                         title: "A Study of the Efficacy and Safety of Atezolizumab Plus Chemotherapy for Patients With Early Relapsing Recurrent Triple-Negative Breast Cancer",
-                         first_submitted: "2017-12-07",
-                         url: "https://clinicaltrials.gov/ct2/show/record/NCT03371017",
-                         phases: "Phase 3",
-                         enrollment: 540,
-                         study_type: "Interventional",
-                         control_type: "Placebo",
-                         contact_name: "Reference Study ID Number: MO39193 www.roche.com/about_roche/roche_worldwide.htm",
-                         conatct_phone: "888-662-6728 (U.S. and Canada)",
-                         contact_email: "global-roche-genentech-trials@gene.com",
-                         brief_summary: "This study will evaluate the efficacy and safety of atezolizumab plus chemotherapy compared with placebo plus chemotherapy in patients with inoperable recurrent triple-negative breast cancer (TNBC).",
-                         groups: [
-                         "Chemotherapy",
-                         "Immunotherapy" ],
-                         countries: [ "United States"],
-                         states: [
-                           "Georgia",
-                           "Tennessee",
-                           "Missouri",
-                           "Florida",
-                           "Pennsylvania",
-                           "Virginia",
-                           "New Jersey"],
-                         cities: [
-                           "Marietta",
-                           "Nashville",
-                           "Kansas City",
-                           "Fort Myers",
-                           "Saint Petersburg",
-                           "Harrisburg",
-                           "Falls Church",
-                           "Paramus",
-                           "Pittsburgh"],
-                         closest_facility: {
-                         facility_name: "Northwest Georgia Oncology Centers PC - Marietta",
-                         facility_status: "Active, not recruiting",
-                         facility_country: "United States",
-                         facility_state: "Georgia",
-                         facility_city: "Marietta",
-                         facility_zip: "30060",
-                         lat: "33.948815",
-                         lng: "-84.537945",
-                         formatted_address: "Marietta, GA 30060, USA"
-                         }
-                       })).toBeTrue();
+    expect(
+      isQueryTrial({
+        main_objectives: ["Extend overall survival"],
+        treatment_administration_type: [
+          "IV infusion",
+          "Oral Treatment (by mouth)",
+        ],
+        nct_number: "NCT03371017",
+        title:
+          "A Study of the Efficacy and Safety of Atezolizumab Plus Chemotherapy for Patients With Early Relapsing Recurrent Triple-Negative Breast Cancer",
+        first_submitted: "2017-12-07",
+        url: "https://clinicaltrials.gov/ct2/show/record/NCT03371017",
+        phases: "Phase 3",
+        enrollment: 540,
+        study_type: "Interventional",
+        control_type: "Placebo",
+        contact_name:
+          "Reference Study ID Number: MO39193 www.roche.com/about_roche/roche_worldwide.htm",
+        conatct_phone: "888-662-6728 (U.S. and Canada)",
+        contact_email: "global-roche-genentech-trials@gene.com",
+        brief_summary:
+          "This study will evaluate the efficacy and safety of atezolizumab plus chemotherapy compared with placebo plus chemotherapy in patients with inoperable recurrent triple-negative breast cancer (TNBC).",
+        groups: ["Chemotherapy", "Immunotherapy"],
+        countries: ["United States"],
+        states: [
+          "Georgia",
+          "Tennessee",
+          "Missouri",
+          "Florida",
+          "Pennsylvania",
+          "Virginia",
+          "New Jersey",
+        ],
+        cities: [
+          "Marietta",
+          "Nashville",
+          "Kansas City",
+          "Fort Myers",
+          "Saint Petersburg",
+          "Harrisburg",
+          "Falls Church",
+          "Paramus",
+          "Pittsburgh",
+        ],
+        closest_facility: {
+          facility_name: "Northwest Georgia Oncology Centers PC - Marietta",
+          facility_status: "Active, not recruiting",
+          facility_country: "United States",
+          facility_state: "Georgia",
+          facility_city: "Marietta",
+          facility_zip: "30060",
+          lat: "33.948815",
+          lng: "-84.537945",
+          formatted_address: "Marietta, GA 30060, USA",
+        },
+      })
+    ).toBeTrue();
   });
 });
 
@@ -175,8 +180,8 @@ describe("APIQuery", () => {
         },
       ],
     });
-    expect(query.lat).toEqual('42.499332');
-    expect(query.lng).toEqual('-71.281901');
+    expect(query.lat).toEqual("42.499332");
+    expect(query.lng).toEqual("-71.281901");
     expect(query.travelRadius).toEqual(25);
   });
 
@@ -212,7 +217,7 @@ describe("APIQuery", () => {
         ],
       }).toString()
     ).toEqual(
-      '{"lat":"42.499332","lng":"-71.281901","distance":25,"biomarkers":null,"stage":null,"cancerName":null,"cancerType":null,"cancerSubType":null,"ecog":null,"karnofsky":null,"medications":null,"procedures":null,"metastasis":[],"age":null}'
+      '{"lat":"42.499332","lng":"-71.281901","distance":null,"biomarkers":null,"stage":null,"cancerName":null,"cancerType":null,"cancerSubType":null,"ecog":null,"karnofsky":null,"medications":null,"procedures":null,"metastasis":[],"age":null}'
     );
   });
 
@@ -245,7 +250,7 @@ describe("APIQuery", () => {
       entry: [],
     };
     // Force an invalid entry in
-    bundle.entry?.push(({ invalid: true } as unknown) as BundleEntry);
+    bundle.entry?.push({ invalid: true } as unknown as BundleEntry);
     new APIQuery(bundle);
     // Passing is not raising an exception
   });
@@ -425,6 +430,17 @@ describe("ClinicalTrialLookup", () => {
     entry: [
       {
         resource: {
+          resourceType: "Parameters",
+          parameter: [
+            {
+              name: "zipCode",
+              valueString: "01730",
+            },
+          ],
+        },
+      },
+      {
+        resource: {
           resourceType: "Condition",
           subject: {},
           meta: {
@@ -545,12 +561,12 @@ describe("ClinicalTrialLookup", () => {
 });
 
 describe("Blank fields in Research Study", () => {
-
   it("All Relevant Fields Blank", () => {
     const trial: Partial<QueryTrial> = {
       main_objectives: undefined,
-      treatment_administration_type: [ "IV infusion",
-        "Oral Treatment (by mouth)"
+      treatment_administration_type: [
+        "IV infusion",
+        "Oral Treatment (by mouth)",
       ],
       nct_number: undefined,
       title: undefined,
@@ -573,7 +589,8 @@ describe("Blank fields in Research Study", () => {
         "Florida",
         "Pennsylvania",
         "Virginia",
-        "New Jersey"],
+        "New Jersey",
+      ],
       cities: [
         "Marietta",
         "Nashville",
@@ -583,7 +600,8 @@ describe("Blank fields in Research Study", () => {
         "Harrisburg",
         "Falls Church",
         "Paramus",
-        "Pittsburgh"],
+        "Pittsburgh",
+      ],
       closest_facility: undefined,
     };
     const researchStudy = convertToResearchStudy(trial as QueryTrial, 0);
@@ -599,27 +617,28 @@ describe("Blank fields in Research Study", () => {
 
   it("Facility Name Field Blank", () => {
     const trial: QueryTrial = {
-      main_objectives: [
-        "Extend overall survival" ],
-      treatment_administration_type: [ "IV infusion",
-        "Oral Treatment (by mouth)"
+      main_objectives: ["Extend overall survival"],
+      treatment_administration_type: [
+        "IV infusion",
+        "Oral Treatment (by mouth)",
       ],
       nct_number: "NCT03371017",
-      title: "A Study of the Efficacy and Safety of Atezolizumab Plus Chemotherapy for Patients With Early Relapsing Recurrent Triple-Negative Breast Cancer",
+      title:
+        "A Study of the Efficacy and Safety of Atezolizumab Plus Chemotherapy for Patients With Early Relapsing Recurrent Triple-Negative Breast Cancer",
       first_submitted: "2017-12-07",
       url: "https://clinicaltrials.gov/ct2/show/record/NCT03371017",
       phases: "Phase 3",
       enrollment: 540,
       study_type: "Interventional",
       control_type: "Placebo",
-      contact_name: "Reference Study ID Number: MO39193 www.roche.com/about_roche/roche_worldwide.htm",
+      contact_name:
+        "Reference Study ID Number: MO39193 www.roche.com/about_roche/roche_worldwide.htm",
       conatct_phone: "888-662-6728 (U.S. and Canada)",
       contact_email: "global-roche-genentech-trials@gene.com",
-      brief_summary: "This study will evaluate the efficacy and safety of atezolizumab plus chemotherapy compared with placebo plus chemotherapy in patients with inoperable recurrent triple-negative breast cancer (TNBC).",
-      groups: [
-      "Chemotherapy",
-      "Immunotherapy" ],
-      countries: [ "United States"],
+      brief_summary:
+        "This study will evaluate the efficacy and safety of atezolizumab plus chemotherapy compared with placebo plus chemotherapy in patients with inoperable recurrent triple-negative breast cancer (TNBC).",
+      groups: ["Chemotherapy", "Immunotherapy"],
+      countries: ["United States"],
       states: [
         "Georgia",
         "Tennessee",
@@ -627,7 +646,8 @@ describe("Blank fields in Research Study", () => {
         "Florida",
         "Pennsylvania",
         "Virginia",
-        "New Jersey"],
+        "New Jersey",
+      ],
       cities: [
         "Marietta",
         "Nashville",
@@ -637,18 +657,19 @@ describe("Blank fields in Research Study", () => {
         "Harrisburg",
         "Falls Church",
         "Paramus",
-        "Pittsburgh"],
+        "Pittsburgh",
+      ],
       closest_facility: {
-      facility_name: '',
-      facility_status: "Active, not recruiting",
-      facility_country: "United States",
-      facility_state: "Georgia",
-      facility_city: "Marietta",
-      facility_zip: "30060",
-      lat: "33.948815",
-      lng: "-84.537945",
-      formatted_address: "Marietta, GA 30060, USA"
-      }
+        facility_name: "",
+        facility_status: "Active, not recruiting",
+        facility_country: "United States",
+        facility_state: "Georgia",
+        facility_city: "Marietta",
+        facility_zip: "30060",
+        lat: "33.948815",
+        lng: "-84.537945",
+        formatted_address: "Marietta, GA 30060, USA",
+      },
     };
     const researchStudy = convertToResearchStudy(trial, 0);
     expect(researchStudy.identifier?.[0].value).toBe("NCT03371017");
